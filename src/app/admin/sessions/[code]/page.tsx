@@ -1,0 +1,93 @@
+import { notFound, redirect } from "next/navigation";
+
+import { requireAdmin } from "@/lib/admin-guard";
+import { createAdmin } from "@/lib/supabase/admin";
+
+export default async function AdminSessionDetail({
+  params,
+}: {
+  params: Promise<{ code: string }>;
+}) {
+  const guard = await requireAdmin();
+  if (!guard.ok) redirect("/admin/login");
+  const { code } = await params;
+  const admin = createAdmin();
+
+  const { data: session } = await admin
+    .from("sessions")
+    .select("id, question, status, created_at")
+    .eq("id", code)
+    .single();
+  if (!session) notFound();
+
+  const { data: participants } = await admin
+    .from("participants")
+    .select("id, phase, created_at, completed_at")
+    .eq("session_id", code)
+    .order("created_at", { ascending: true });
+
+  const { data: themes } = await admin
+    .from("themes")
+    .select("id, short_name, description")
+    .eq("session_id", code)
+    .order("created_at", { ascending: true });
+
+  const { data: assignments } = await admin
+    .from("theme_assignments")
+    .select("theme_id, point_id, themes!inner(session_id)")
+    .eq("themes.session_id", code);
+
+  const counts: Record<string, number> = {};
+  for (const a of assignments ?? []) counts[a.theme_id] = (counts[a.theme_id] ?? 0) + 1;
+
+  const phaseCounts = (participants ?? []).reduce<Record<string, number>>((acc, p) => {
+    acc[p.phase] = (acc[p.phase] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  return (
+    <div className="space-y-8">
+      <header className="space-y-1">
+        <p className="text-xs uppercase tracking-wide text-muted-foreground">
+          {session.id}
+        </p>
+        <h1 className="text-lg font-semibold leading-snug">{session.question}</h1>
+        <p className="text-xs text-muted-foreground">
+          {session.status} · {new Date(session.created_at).toLocaleString()}
+        </p>
+      </header>
+
+      <section className="space-y-2">
+        <h2 className="text-sm font-medium text-muted-foreground">Participants</h2>
+        <p className="text-sm">
+          {(participants ?? []).length} total
+          {Object.entries(phaseCounts).length > 0 && " — "}
+          {Object.entries(phaseCounts)
+            .map(([p, n]) => `${n} ${p.replace("_", " ")}`)
+            .join(", ")}
+        </p>
+      </section>
+
+      <section className="space-y-3">
+        <h2 className="text-sm font-medium text-muted-foreground">Themes</h2>
+        {!themes || themes.length === 0 ? (
+          <p className="text-sm text-muted-foreground/80">No themes yet.</p>
+        ) : (
+          <ul className="space-y-2">
+            {themes.map((t) => (
+              <li key={t.id} className="rounded-lg border bg-card p-3">
+                <div className="flex items-baseline justify-between gap-3">
+                  <h3 className="font-medium">{t.short_name}</h3>
+                  <span className="text-xs tabular-nums text-muted-foreground">
+                    {counts[t.id] ?? 0}
+                  </span>
+                </div>
+                <p className="mt-1 text-sm text-muted-foreground">{t.description}</p>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
+}
