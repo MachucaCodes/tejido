@@ -2,8 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { UIMessage } from "ai";
 import { ArrowDownIcon, DownloadIcon } from "lucide-react";
+
+type UIMessagePart = { type: "text"; text: string } | { type: string; [k: string]: unknown };
+type UIMessage = { role: "user" | "assistant" | "system"; parts: UIMessagePart[] };
 import type { ComponentProps } from "react";
 import { useCallback } from "react";
 import { StickToBottom, useStickToBottomContext } from "use-stick-to-bottom";
@@ -102,8 +104,8 @@ export const ConversationScrollButton = ({
 
 const getMessageText = (message: UIMessage): string =>
   message.parts
-    .filter((part) => part.type === "text")
-    .map((part) => part.text)
+    .filter((p): p is { type: "text"; text: string } => p.type === "text")
+    .map((p) => p.text)
     .join("");
 
 export type ConversationDownloadProps = Omit<

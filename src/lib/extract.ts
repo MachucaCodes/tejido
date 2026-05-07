@@ -1,7 +1,6 @@
-import { anthropic } from "@ai-sdk/anthropic";
-import { generateObject } from "ai";
 import { z } from "zod";
 
+import { EXTRACTION_MODEL, getAnthropic } from "@/lib/anthropic";
 import { renderExtractionPrompt } from "@/lib/prompts/extraction";
 import { createAdmin } from "@/lib/supabase/admin";
 
@@ -12,8 +11,25 @@ const PointSchema = z.object({
   rationale: z.string(),
   doubts: z.array(z.string()),
 });
+const PointsArray = z.array(PointSchema).min(1).max(8);
 
-const PointsSchema = z.object({ points: z.array(PointSchema).min(1).max(8) });
+// Anthropic's structured-outputs JSON schema validator rejects min/maxItems —
+// bounds are enforced client-side via Zod (PointsArray) after parsing.
+const POINTS_JSON_SCHEMA = {
+  type: "array",
+  items: {
+    type: "object",
+    additionalProperties: false,
+    properties: {
+      surface_phrase: { type: "string" },
+      want: { type: "string" },
+      context: { type: "string" },
+      rationale: { type: "string" },
+      doubts: { type: "array", items: { type: "string" } },
+    },
+    required: ["surface_phrase", "want", "context", "rationale", "doubts"],
+  },
+} as const;
 
 export async function extractPointsForParticipant(participantId: string) {
   const admin = createAdmin();
@@ -37,13 +53,22 @@ export async function extractPointsForParticipant(participantId: string) {
     .map((t) => `${t.role === "user" ? "Participant" : "Facilitator"}: ${t.content}`)
     .join("\n\n");
 
-  const { object } = await generateObject({
-    model: anthropic("claude-sonnet-4-5-20250929"),
-    schema: PointsSchema,
-    prompt: renderExtractionPrompt(transcript),
+  const anthropic = getAnthropic();
+  const response = await anthropic.messages.create({
+    model: EXTRACTION_MODEL,
+    max_tokens: 8192,
+    output_config: {
+      format: { type: "json_schema", schema: POINTS_JSON_SCHEMA },
+    },
+    messages: [{ role: "user", content: renderExtractionPrompt(transcript) }],
   });
 
-  const rows = object.points.map((p, idx) => ({
+  const text = response.content
+    .map((b) => (b.type === "text" ? b.text : ""))
+    .join("");
+  const points = PointsArray.parse(JSON.parse(text));
+
+  const rows = points.map((p, idx) => ({
     participant_id: participantId,
     idx,
     surface_phrase: p.surface_phrase,

@@ -15,7 +15,6 @@ export async function POST(req: Request) {
   const { data: userRes } = await supabase.auth.getUser();
   const user = userRes.user;
   if (!user) return new Response("not authenticated", { status: 401 });
-  if (!user.phone) return new Response("phone not verified", { status: 403 });
 
   const admin = createAdmin();
   const { data: participant } = await admin

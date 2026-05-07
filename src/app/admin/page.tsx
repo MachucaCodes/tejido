@@ -11,7 +11,7 @@ export default async function AdminHome() {
   const admin = createAdmin();
   const { data: sessions } = await admin
     .from("sessions")
-    .select("id, question, status, created_at, participants:participants(count)")
+    .select("id, topic, status, created_at, participants:participants(count)")
     .order("created_at", { ascending: false });
 
   return (
@@ -33,29 +33,26 @@ export default async function AdminHome() {
                   ? (s.participants[0] as { count: number }).count
                   : 0;
               return (
-                <li
-                  key={s.id}
-                  className="flex items-center justify-between rounded-lg border bg-card p-3"
-                >
-                  <div className="min-w-0">
-                    <Link
-                      href={`/admin/sessions/${s.id}`}
-                      className="font-medium hover:underline"
-                    >
-                      {s.id}
-                    </Link>
-                    <p className="truncate text-sm text-muted-foreground">
-                      {s.question}
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                    <span>
-                      {count} {count === 1 ? "participant" : "participants"}
-                    </span>
-                    <span className="rounded bg-secondary px-2 py-0.5">
-                      {s.status}
-                    </span>
-                  </div>
+                <li key={s.id}>
+                  <Link
+                    href={`/admin/sessions/${s.id}`}
+                    className="flex items-center justify-between rounded-lg border bg-card p-3 transition-colors hover:bg-accent"
+                  >
+                    <div className="min-w-0">
+                      <p className="font-medium">{s.id}</p>
+                      <p className="truncate text-sm text-muted-foreground">
+                        {s.topic}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                      <span>
+                        {count} {count === 1 ? "participant" : "participants"}
+                      </span>
+                      <span className="rounded bg-secondary px-2 py-0.5">
+                        {s.status}
+                      </span>
+                    </div>
+                  </Link>
                 </li>
               );
             })}

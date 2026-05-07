@@ -9,8 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@ai-sdk/anthropic": "^3.0.76",
-    "@ai-sdk/react": "^3.0.178",
+    "@anthropic-ai/sdk": "^0.95.1",
     "@base-ui/react": "^1.4.1",
     "@radix-ui/react-use-controllable-state": "^1.2.2",
     "@rive-app/react-webgl2": "^4.28.3",
@@ -21,7 +20,6 @@
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.105.3",
     "@xyflow/react": "^12.10.2",
-    "ai": "^6.0.176",
     "ansi-to-react": "^6.2.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

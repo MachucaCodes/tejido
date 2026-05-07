@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import EditSessionForm from "./edit-session-form";
 
 export default async function AdminSessionDetail({
   params,
@@ -15,7 +16,7 @@ export default async function AdminSessionDetail({
 
   const { data: session } = await admin
     .from("sessions")
-    .select("id, question, status, created_at")
+    .select("id, topic, intro_message, instructions, status, created_at")
     .eq("id", code)
     .single();
   if (!session) notFound();
@@ -51,11 +52,21 @@ export default async function AdminSessionDetail({
         <p className="text-xs uppercase tracking-wide text-muted-foreground">
           {session.id}
         </p>
-        <h1 className="text-lg font-semibold leading-snug">{session.question}</h1>
         <p className="text-xs text-muted-foreground">
           {session.status} · {new Date(session.created_at).toLocaleString()}
         </p>
       </header>
+
+      <section className="space-y-3">
+        <h2 className="text-sm font-medium text-muted-foreground">Edit session</h2>
+        <EditSessionForm
+          code={session.id}
+          initialTopic={session.topic ?? ""}
+          initialIntroMessage={session.intro_message ?? ""}
+          initialInstructions={session.instructions ?? ""}
+          initialStatus={session.status as "open" | "closed"}
+        />
+      </section>
 
       <section className="space-y-2">
         <h2 className="text-sm font-medium text-muted-foreground">Participants</h2>

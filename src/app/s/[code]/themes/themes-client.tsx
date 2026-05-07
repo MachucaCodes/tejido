@@ -13,11 +13,11 @@ type Theme = {
 
 export default function ThemesClient({
   sessionCode,
-  question,
+  topic,
   initialThemes,
 }: {
   sessionCode: string;
-  question: string;
+  topic: string;
   initialThemes: Theme[];
 }) {
   const [themes, setThemes] = useState<Theme[]>(initialThemes);
@@ -30,7 +30,7 @@ export default function ThemesClient({
         "postgres_changes",
         {
           event: "*",
-          schema: "tejido_next",
+          schema: "public",
           table: "themes",
           filter: `session_id=eq.${sessionCode}`,
         },
@@ -55,7 +55,7 @@ export default function ThemesClient({
       )
       .on(
         "postgres_changes",
-        { event: "INSERT", schema: "tejido_next", table: "theme_assignments" },
+        { event: "INSERT", schema: "public", table: "theme_assignments" },
         (payload) => {
           const row = payload.new as { theme_id: string };
           setThemes((prev) =>
@@ -76,9 +76,9 @@ export default function ThemesClient({
     <div className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-6 px-4 py-8">
       <header className="space-y-2">
         <p className="text-xs uppercase tracking-wide text-muted-foreground">
-          The question
+          The topic
         </p>
-        <h1 className="text-lg font-medium leading-snug">{question}</h1>
+        <h1 className="text-lg font-medium leading-snug">{topic}</h1>
       </header>
 
       <section className="space-y-2">

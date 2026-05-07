@@ -8,7 +8,8 @@ import { Button } from "@/components/ui/button";
 export default function CreateSessionForm() {
   const router = useRouter();
   const [code, setCode] = useState("");
-  const [question, setQuestion] = useState("");
+  const [topic, setTopic] = useState("");
+  const [introMessage, setIntroMessage] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -19,7 +20,7 @@ export default function CreateSessionForm() {
     const res = await fetch("/api/admin/sessions", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ code, question }),
+      body: JSON.stringify({ code, topic, intro_message: introMessage }),
     });
     setBusy(false);
     if (!res.ok) {
@@ -27,18 +28,19 @@ export default function CreateSessionForm() {
       return;
     }
     setCode("");
-    setQuestion("");
+    setTopic("");
+    setIntroMessage("");
     router.refresh();
   };
 
   return (
     <form onSubmit={submit} className="space-y-3 rounded-lg border bg-card p-4">
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="code">
-          Session code
+        <label className="text-xs font-medium" htmlFor="slug">
+          Slug
         </label>
         <input
-          id="code"
+          id="slug"
           value={code}
           onChange={(e) => setCode(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))}
           placeholder="commons-2026-05"
@@ -46,20 +48,32 @@ export default function CreateSessionForm() {
           required
         />
         <p className="text-xs text-muted-foreground">
-          Lowercase, used in /s/&lt;code&gt; URLs.
+          Lowercase, used in /s/&lt;slug&gt; URLs.
         </p>
       </div>
       <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="q">
-          Question
+          Topic
         </label>
-        <textarea
+        <input
           id="q"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          rows={3}
+          value={topic}
+          onChange={(e) => setTopic(e.target.value)}
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           required
+        />
+      </div>
+      <div className="space-y-1">
+        <label className="text-xs font-medium" htmlFor="intro">
+          Intro message
+        </label>
+        <textarea
+          id="intro"
+          value={introMessage}
+          onChange={(e) => setIntroMessage(e.target.value)}
+          rows={3}
+          placeholder="Shown as the first message in the chat. Leave blank for the default."
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>
       {error && <p className="text-xs text-destructive">{error}</p>}

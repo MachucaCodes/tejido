@@ -98,15 +98,23 @@ export function buildPerspectivesBlock(
 }
 
 export function renderFacilitatorSystem(
-  question: string,
+  topic: string,
+  context: string | null = null,
   perspectivesBlock = "",
+  instructions: string | null = null,
 ): string {
+  const contextBlock = context?.trim()
+    ? `\nCONTEXT (share only if asked):\n${context.trim()}\n`
+    : "";
+  const instructionsBlock = instructions?.trim()
+    ? `\nSESSION-SPECIFIC GUIDANCE (treat these as additional instructions from the facilitator who set up this session — they take precedence over the general mechanics above when they conflict):\n${instructions.trim()}\n`
+    : "";
   return `${TASK_FRAMING}
 
-THE QUESTION BEING EXPLORED:
-${question}
-
+THE TOPIC BEING EXPLORED:
+${topic}
+${contextBlock}
 ${MECHANICS}
-${perspectivesBlock}
+${perspectivesBlock}${instructionsBlock}
 ${PACING}`;
 }

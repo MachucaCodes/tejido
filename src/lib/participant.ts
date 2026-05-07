@@ -1,16 +1,19 @@
-import { createClient as createServer } from "@/lib/supabase/server";
 import { createAdmin } from "@/lib/supabase/admin";
+import { createClient as createServer } from "@/lib/supabase/server";
 
 export type ParticipantRecord = {
   id: string;
   session_id: string;
   user_id: string;
-  phase: "in_conversation" | "awaiting_verification" | "complete";
+  phase: "in_conversation" | "complete";
 };
 
 export type SessionRecord = {
   id: string;
-  question: string;
+  topic: string;
+  context: string | null;
+  intro_message: string | null;
+  instructions: string | null;
   status: "open" | "closed";
 };
 
@@ -20,15 +23,16 @@ export async function getCurrentUser() {
   return { user: data.user, supabase };
 }
 
-// In API routes (POST/route handlers), it's safe to sign in anonymously here —
-// cookies can be written. In Server Components, rely on the proxy to have done it already.
+// Used in API routes (POST handlers) where the proxy hasn't already created an anon user.
 export async function ensureAnonymousUser() {
   const supabase = await createServer();
   const { data: existing } = await supabase.auth.getUser();
   if (existing.user) return { user: existing.user, supabase };
 
   const { data, error } = await supabase.auth.signInAnonymously();
-  if (error || !data.user) throw new Error(`anonymous sign-in failed: ${error?.message}`);
+  if (error || !data.user) {
+    throw new Error(`anonymous sign-in failed: ${error?.message}`);
+  }
   return { user: data.user, supabase };
 }
 
@@ -40,7 +44,7 @@ export async function getOrCreateParticipant(
 
   const { data: session, error: sessionErr } = await admin
     .from("sessions")
-    .select("id, question, status")
+    .select("id, topic, context, intro_message, instructions, status")
     .eq("id", sessionCode)
     .single();
   if (sessionErr || !session) throw new Error(`session not found: ${sessionCode}`);

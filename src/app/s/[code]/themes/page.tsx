@@ -14,13 +14,12 @@ export default async function ThemesPage({
   const supabase = await createServer();
   const { data: userRes } = await supabase.auth.getUser();
   const user = userRes.user;
-  if (!user) redirect(`/s/${code}`);
-  if (!user.phone) redirect(`/s/${code}/verify`);
+  if (!user || !user.phone) redirect(`/s/${code}`);
 
   const admin = createAdmin();
   const { data: session } = await admin
     .from("sessions")
-    .select("id, question")
+    .select("id, topic")
     .eq("id", code)
     .single();
   if (!session) notFound();
@@ -50,7 +49,7 @@ export default async function ThemesPage({
   return (
     <ThemesClient
       sessionCode={code}
-      question={session.question}
+      topic={session.topic}
       initialThemes={(themes ?? []).map((t) => ({
         id: t.id,
         short_name: t.short_name,

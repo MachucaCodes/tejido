@@ -1,7 +1,6 @@
-import { anthropic } from "@ai-sdk/anthropic";
-import { generateObject } from "ai";
 import { z } from "zod";
 
+import { CLUSTERING_MODEL, getAnthropic } from "@/lib/anthropic";
 import {
   CLUSTERING_SYSTEM,
   renderClusteringPrompt,
@@ -25,6 +24,39 @@ const ResponseSchema = z.object({
   ),
 });
 
+const CLUSTERING_JSON_SCHEMA = {
+  type: "object",
+  additionalProperties: false,
+  required: ["new_themes", "assignments"],
+  properties: {
+    new_themes: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["temp_id", "short_name", "description"],
+        properties: {
+          temp_id: { type: "string" },
+          short_name: { type: "string" },
+          description: { type: "string" },
+        },
+      },
+    },
+    assignments: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["point_id", "theme_ids"],
+        properties: {
+          point_id: { type: "string" },
+          theme_ids: { type: "array", items: { type: "string" } },
+        },
+      },
+    },
+  },
+} as const;
+
 export async function clusterParticipantPoints(participantId: string) {
   const admin = createAdmin();
 
@@ -37,26 +69,10 @@ export async function clusterParticipantPoints(participantId: string) {
 
   const { data: session } = await admin
     .from("sessions")
-    .select("question")
+    .select("topic")
     .eq("id", participant.session_id)
     .single();
   if (!session) throw new Error(`session not found`);
-
-  const { data: existingAssignments } = await admin
-    .from("theme_assignments")
-    .select("point_id, theme_id, themes:theme_id(id, session_id)")
-    .in(
-      "point_id",
-      (
-        await admin
-          .from("extracted_points")
-          .select("id")
-          .eq("participant_id", participantId)
-      ).data?.map((p) => p.id) ?? [],
-    );
-  if (existingAssignments && existingAssignments.length) {
-    return { skipped: true };
-  }
 
   const { data: pointRows } = await admin
     .from("extracted_points")
@@ -64,6 +80,17 @@ export async function clusterParticipantPoints(participantId: string) {
     .eq("participant_id", participantId)
     .order("idx", { ascending: true });
   if (!pointRows || pointRows.length === 0) throw new Error("no points to cluster");
+
+  const { data: existingAssignments } = await admin
+    .from("theme_assignments")
+    .select("point_id")
+    .in(
+      "point_id",
+      pointRows.map((p) => p.id),
+    );
+  if (existingAssignments && existingAssignments.length) {
+    return { skipped: true };
+  }
 
   const newPoints: NewPoint[] = pointRows
     .filter((p) => p.surface_phrase?.trim())
@@ -86,16 +113,31 @@ export async function clusterParticipantPoints(participantId: string) {
     description: t.description,
   }));
 
-  const { object } = await generateObject({
-    model: anthropic("claude-sonnet-4-5-20250929"),
-    schema: ResponseSchema,
+  const anthropic = getAnthropic();
+  const response = await anthropic.messages.create({
+    model: CLUSTERING_MODEL,
+    max_tokens: 16000,
+    thinking: { type: "adaptive" },
     system: CLUSTERING_SYSTEM,
-    prompt: renderClusteringPrompt(session.question, existingThemes, newPoints),
+    output_config: {
+      format: { type: "json_schema", schema: CLUSTERING_JSON_SCHEMA },
+    },
+    messages: [
+      {
+        role: "user",
+        content: renderClusteringPrompt(session.topic, existingThemes, newPoints),
+      },
+    ],
   });
 
+  const text = response.content
+    .map((b) => (b.type === "text" ? b.text : ""))
+    .join("");
+  const parsed = ResponseSchema.parse(JSON.parse(text));
+
   const tempIdToReal: Record<string, string> = {};
-  if (object.new_themes.length) {
-    const insertRows = object.new_themes.map((t) => ({
+  if (parsed.new_themes.length) {
+    const insertRows = parsed.new_themes.map((t) => ({
       session_id: participant.session_id,
       short_name: t.short_name,
       description: t.description,
@@ -105,14 +147,14 @@ export async function clusterParticipantPoints(participantId: string) {
       .insert(insertRows)
       .select("id");
     if (error || !inserted) throw new Error(`themes insert failed: ${error?.message}`);
-    object.new_themes.forEach((t, i) => {
+    parsed.new_themes.forEach((t, i) => {
       tempIdToReal[t.temp_id] = inserted[i].id;
     });
   }
 
   const knownIds = new Set(existingThemes.map((t) => t.id));
   const assignmentRows: { point_id: string; theme_id: string }[] = [];
-  for (const a of object.assignments) {
+  for (const a of parsed.assignments) {
     for (const tid of a.theme_ids) {
       const real = tempIdToReal[tid] ?? (knownIds.has(tid) ? tid : null);
       if (real) assignmentRows.push({ point_id: a.point_id, theme_id: real });
@@ -125,5 +167,9 @@ export async function clusterParticipantPoints(participantId: string) {
     if (error) throw new Error(`theme_assignments insert failed: ${error.message}`);
   }
 
-  return { skipped: false, newThemes: object.new_themes.length, assignments: assignmentRows.length };
+  return {
+    skipped: false,
+    newThemes: parsed.new_themes.length,
+    assignments: assignmentRows.length,
+  };
 }

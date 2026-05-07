@@ -6,8 +6,8 @@ const CLUSTERING_PROMPT = `You are clustering perspectives that emerged from fac
 CRITICAL BIAS: PREFER FEWER, BROADER THEMES.
 A perspectives view with 5-7 substantial themes is more useful to the room than one with 12+ thin ones. Every time you're tempted to mint a new theme, look harder for an existing one that could hold this point — and look harder at whether your new theme name is just a narrower restatement of one already in the list. When in doubt, REUSE. When in doubt about a name, BROADEN it.
 
-THE QUESTION THE GROUP IS DISCUSSING:
-{QUESTION}
+THE TOPIC THE GROUP IS DISCUSSING:
+{TOPIC}
 
 EXISTING THEMES (preserved across participants — don't rename or reshape these; assign new points to them when the underlying want fits):
 {THEMES_BLOCK}
@@ -49,7 +49,7 @@ export type NewPoint = {
 };
 
 export function renderClusteringPrompt(
-  question: string,
+  topic: string,
   existingThemes: ExistingTheme[],
   newPoints: NewPoint[],
 ): string {
@@ -72,7 +72,7 @@ export function renderClusteringPrompt(
     .join("\n");
 
   return CLUSTERING_PROMPT
-    .replace("{QUESTION}", question || "(question not provided)")
+    .replace("{TOPIC}", topic || "(topic not provided)")
     .replace("{THEMES_BLOCK}", themesBlock)
     .replace("{POINTS_BLOCK}", pointsBlock);
 }

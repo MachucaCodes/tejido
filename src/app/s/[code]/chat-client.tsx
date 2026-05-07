@@ -1,10 +1,8 @@
 "use client";
 
-import { DefaultChatTransport } from "ai";
-import { useChat } from "@ai-sdk/react";
 import { ArrowUpIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import {
   Conversation,
@@ -15,51 +13,112 @@ import { Message, MessageContent, MessageResponse } from "@/components/ai-elemen
 import { SpeechInput } from "@/components/ai-elements/speech-input";
 import { Button } from "@/components/ui/button";
 
+import { PhoneGate } from "./phone-gate";
+
 const READY_TOKEN = "[READY_FOR_RESULTS]";
+
+type ChatMessage = {
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+};
+
+type Status = "idle" | "streaming" | "error";
+
+function newId() {
+  return `m-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+}
 
 export default function ChatClient({
   sessionCode,
-  question,
+  topic,
+  introMessage,
+  hasPhone,
 }: {
   sessionCode: string;
-  question: string;
+  topic: string;
+  introMessage: string | null;
+  hasPhone: boolean;
 }) {
+  const intro = introMessage?.trim() ?? "";
   const router = useRouter();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
-  const [transitioning, setTransitioning] = useState(false);
-
-  const { messages, sendMessage, status } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/chat",
-      body: { sessionCode },
-    }),
-  });
-
-  const lastAssistantText =
-    [...messages]
-      .reverse()
-      .find((m) => m.role === "assistant")
-      ?.parts.filter((p): p is { type: "text"; text: string } => p.type === "text")
-      .map((p) => p.text)
-      .join("") ?? "";
+  const [status, setStatus] = useState<Status>("idle");
+  const storageKey = `tejido:s:${sessionCode}:msgs`;
+  const hydrated = useRef(false);
 
   useEffect(() => {
-    if (
-      status === "ready" &&
-      lastAssistantText.includes(READY_TOKEN) &&
-      !transitioning
-    ) {
-      setTransitioning(true);
-      router.push(`/s/${sessionCode}/verify`);
-    }
-  }, [status, lastAssistantText, transitioning, router, sessionCode]);
+    try {
+      const raw = window.localStorage.getItem(storageKey);
+      if (raw) {
+        const parsed = JSON.parse(raw) as ChatMessage[];
+        if (Array.isArray(parsed) && parsed.length > 0) setMessages(parsed);
+      }
+    } catch {}
+    hydrated.current = true;
+  }, [storageKey]);
+
+  useEffect(() => {
+    if (!hydrated.current) return;
+    try {
+      if (messages.length === 0) window.localStorage.removeItem(storageKey);
+      else window.localStorage.setItem(storageKey, JSON.stringify(messages));
+    } catch {}
+  }, [messages, storageKey]);
+
+  const lastAssistantText =
+    [...messages].reverse().find((m) => m.role === "assistant")?.content ?? "";
+  const ready = lastAssistantText.includes(READY_TOKEN);
+  const showPhoneGate = ready && !hasPhone && status !== "streaming";
+
+  const send = useCallback(
+    async (text: string) => {
+      if (status === "streaming") return;
+      const userMsg: ChatMessage = { id: newId(), role: "user", content: text };
+      const assistantId = newId();
+      const next = [...messages, userMsg];
+      setMessages([...next, { id: assistantId, role: "assistant", content: "" }]);
+      setStatus("streaming");
+
+      try {
+        const res = await fetch("/api/chat", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            sessionCode,
+            messages: next.map(({ role, content }) => ({ role, content })),
+          }),
+        });
+        if (!res.ok || !res.body) {
+          setStatus("error");
+          return;
+        }
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let acc = "";
+        while (true) {
+          const { value, done } = await reader.read();
+          if (done) break;
+          acc += decoder.decode(value, { stream: true });
+          setMessages((prev) =>
+            prev.map((m) => (m.id === assistantId ? { ...m, content: acc } : m)),
+          );
+        }
+        setStatus("idle");
+      } catch {
+        setStatus("error");
+      }
+    },
+    [messages, sessionCode, status],
+  );
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
     const text = input.trim();
-    if (!text || status !== "ready") return;
-    sendMessage({ text });
+    if (!text) return;
     setInput("");
+    void send(text);
   };
 
   const cleanText = (text: string) => text.replace(READY_TOKEN, "").trim();
@@ -77,32 +136,24 @@ export default function ChatClient({
     <div className="mx-auto flex h-dvh w-full max-w-2xl flex-col">
       <header className="border-b px-4 py-3">
         <p className="text-xs uppercase tracking-wide text-muted-foreground">
-          The question
+          The topic
         </p>
-        <p className="mt-1 text-base leading-snug">{question}</p>
+        <p className="mt-1 text-base leading-snug">{topic}</p>
       </header>
 
       <Conversation>
         <ConversationContent>
-          {messages.length === 0 && (
+          {intro && (
             <Message from="assistant">
               <MessageContent>
-                <MessageResponse>
-                  Take a moment with the question above. When you&apos;re ready,
-                  share whatever comes up — a gut reaction, a concern, a hope.
-                  There&apos;s no right answer here.
-                </MessageResponse>
+                <MessageResponse>{intro}</MessageResponse>
               </MessageContent>
             </Message>
           )}
           {messages.map((m) => (
             <Message from={m.role} key={m.id}>
               <MessageContent>
-                {m.parts.map((part, i) =>
-                  part.type === "text" ? (
-                    <MessageResponse key={i}>{cleanText(part.text)}</MessageResponse>
-                  ) : null,
-                )}
+                <MessageResponse>{cleanText(m.content)}</MessageResponse>
               </MessageContent>
             </Message>
           ))}
@@ -110,40 +161,54 @@ export default function ChatClient({
         <ConversationScrollButton />
       </Conversation>
 
-      <form
-        onSubmit={submit}
-        className="m-4 flex items-end gap-2 rounded-2xl border bg-background p-2 shadow-sm"
-      >
-        <SpeechInput
-          variant="ghost"
-          size="icon"
-          onTranscriptionChange={(t) => setInput((prev) => (prev ? `${prev} ${t}` : t))}
-          onAudioRecorded={async (blob) => {
-            const text = await transcribeAudio(blob);
-            return text;
-          }}
-        />
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" && !e.shiftKey) {
-              e.preventDefault();
-              submit(e);
-            }
-          }}
-          placeholder="Type or speak your reply…"
-          rows={1}
-          className="min-h-[2.5rem] flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none"
-        />
-        <Button
-          type="submit"
-          size="icon"
-          disabled={!input.trim() || status !== "ready"}
-        >
-          <ArrowUpIcon className="size-4" />
-        </Button>
-      </form>
+      <div className="m-4">
+        {showPhoneGate ? (
+          <PhoneGate
+            sessionCode={sessionCode}
+            onComplete={() => {
+              try {
+                window.localStorage.removeItem(storageKey);
+              } catch {}
+              router.push(`/s/${sessionCode}/themes`);
+              router.refresh();
+            }}
+          />
+        ) : (
+          <form
+            onSubmit={submit}
+            className="flex items-end gap-2 rounded-2xl border bg-background p-2 shadow-sm"
+          >
+            <SpeechInput
+              variant="ghost"
+              size="icon"
+              onTranscriptionChange={(t) =>
+                setInput((prev) => (prev ? `${prev} ${t}` : t))
+              }
+              onAudioRecorded={transcribeAudio}
+            />
+            <textarea
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  submit(e);
+                }
+              }}
+              placeholder="Type or speak your reply…"
+              rows={1}
+              className="min-h-[2.5rem] flex-1 resize-none bg-transparent px-2 py-2 text-sm focus:outline-none"
+            />
+            <Button
+              type="submit"
+              size="icon"
+              disabled={!input.trim() || status === "streaming"}
+            >
+              <ArrowUpIcon className="size-4" />
+            </Button>
+          </form>
+        )}
+      </div>
     </div>
   );
 }

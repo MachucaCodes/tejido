@@ -11,12 +11,12 @@ export async function requireAdmin(): Promise<
   if (!data.user) return { ok: false, reason: "unauth" };
 
   const admin = createAdmin();
-  const { data: profile } = await admin
-    .from("profiles")
+  const { data: row } = await admin
+    .from("users")
     .select("role")
-    .eq("user_id", data.user.id)
+    .eq("id", data.user.id)
     .maybeSingle();
-  if (profile?.role !== "admin") return { ok: false, reason: "not_admin" };
+  if (row?.role !== "admin") return { ok: false, reason: "not_admin" };
 
   return {
     ok: true,
