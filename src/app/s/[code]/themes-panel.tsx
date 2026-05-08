@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -41,6 +42,23 @@ export function ThemesPanel({
     initialSummary?.text ?? null,
   );
   const supabase = useMemo(() => createClient(), []);
+  const router = useRouter();
+
+  // Realtime gives instant feedback (count nudges, theme renames) but
+  // can drop or reorder events during a re-analysis burst, leaving the
+  // panel out of sync. Debounce a router.refresh on any event so the
+  // server-side admin fetch reconciles state once the storm settles —
+  // and so participants who didn't trigger the change still pick it up.
+  const refreshTimerRef = useRef<number | null>(null);
+  const scheduleRefresh = useCallback(() => {
+    if (refreshTimerRef.current !== null) {
+      window.clearTimeout(refreshTimerRef.current);
+    }
+    refreshTimerRef.current = window.setTimeout(() => {
+      refreshTimerRef.current = null;
+      router.refresh();
+    }, 1500);
+  }, [router]);
 
   // The panel often mounts via a parent state flip (hasAnalyzed → true)
   // BEFORE the server-side router.refresh resolves, so initialThemes can
@@ -164,6 +182,7 @@ export function ThemesPanel({
             const row = payload.old as { id: string };
             setThemes((prev) => prev.filter((t) => t.id !== row.id));
           }
+          scheduleRefresh();
         },
       )
       .on(
@@ -178,6 +197,7 @@ export function ThemesPanel({
           );
           setPulseId(row.theme_id);
           setTimeout(() => setPulseId(null), 1200);
+          scheduleRefresh();
         },
       )
       .on(
@@ -196,6 +216,7 @@ export function ThemesPanel({
               t.id === themeId ? { ...t, count: Math.max(0, t.count - 1) } : t,
             ),
           );
+          scheduleRefresh();
         },
       )
       .on(
@@ -209,14 +230,19 @@ export function ThemesPanel({
         (payload) => {
           const row = payload.new as { summary_text: string | null };
           if (row.summary_text) setSummaryText(row.summary_text);
+          scheduleRefresh();
         },
       )
       .subscribe();
 
     return () => {
+      if (refreshTimerRef.current !== null) {
+        window.clearTimeout(refreshTimerRef.current);
+        refreshTimerRef.current = null;
+      }
       void supabase.removeChannel(channel);
     };
-  }, [supabase, sessionCode]);
+  }, [supabase, sessionCode, scheduleRefresh]);
 
   const total = themes.reduce((acc, t) => acc + t.count, 0);
 

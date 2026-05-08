@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 import { analyzeParticipant } from "@/lib/analyze";
@@ -33,5 +34,11 @@ export async function POST(req: Request) {
   if (!participant) return new Response("participant not found", { status: 404 });
 
   const result = await analyzeParticipant(participant.id);
+
+  // Bust the server-side fetch cache for this session's route so the
+  // client's router.refresh() returns fresh themes/points/summary
+  // instead of replaying cached supabase reads.
+  revalidatePath(`/s/${sessionCode}`);
+
   return NextResponse.json({ ok: true, ...result });
 }

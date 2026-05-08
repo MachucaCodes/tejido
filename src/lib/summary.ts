@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
 import { CLUSTERING_MODEL, getAnthropic } from "@/lib/anthropic";
@@ -253,6 +254,10 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
   if (updateError) {
     throw new Error(`session summary update failed: ${updateError.message}`);
   }
+
+  // Bust the page's server-side fetch cache so the next render of the
+  // session route reads the fresh summary instead of a cached snapshot.
+  revalidatePath(`/s/${sessionId}`);
 
   return { regenerated: true, reason: decision.reason, tv: decision.tv };
 }

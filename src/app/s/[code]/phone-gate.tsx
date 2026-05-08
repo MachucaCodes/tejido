@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { CountryCodeSelect } from "@/components/country-code-select";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,8 @@ import { DEFAULT_COUNTRY_ISO, findCountry } from "@/lib/countries";
 import { createClient } from "@/lib/supabase/client";
 
 type Step = "phone" | "otp" | "details" | "finalizing";
+
+const RESEND_COOLDOWN_S = 30;
 
 export function PhoneGate({
   sessionCode,
@@ -24,14 +26,45 @@ export function PhoneGate({
   const [lotNumber, setLotNumber] = useState("");
   const [step, setStep] = useState<Step>("phone");
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const [resendIn, setResendIn] = useState(0);
+  const resendTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const country = findCountry(iso);
   const e164 = `+${country.dial}${localNumber.replace(/\D/g, "")}`;
 
+  const startResendCooldown = () => {
+    setResendIn(RESEND_COOLDOWN_S);
+    if (resendTimer.current) clearInterval(resendTimer.current);
+    resendTimer.current = setInterval(() => {
+      setResendIn((s) => {
+        if (s <= 1 && resendTimer.current) {
+          clearInterval(resendTimer.current);
+          resendTimer.current = null;
+        }
+        return Math.max(0, s - 1);
+      });
+    }, 1000);
+  };
+
+  useEffect(() => {
+    return () => {
+      if (resendTimer.current) clearInterval(resendTimer.current);
+    };
+  }, []);
+
+  const friendlyError = (msg: string) => {
+    if (/expired|invalid/i.test(msg)) {
+      return "That code didn't work — it may have expired or been mistyped. Tap Resend to get a new one.";
+    }
+    return msg;
+  };
+
   const sendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setInfo(null);
     setBusy(true);
     // Sign-in OTP: creates a phone-keyed user if new, or signs into the
     // existing one if this human has been here before. Either way, the
@@ -42,22 +75,49 @@ export function PhoneGate({
       setError(err.message);
       return;
     }
+    setToken("");
+    startResendCooldown();
     setStep("otp");
+  };
+
+  const resendOtp = async () => {
+    if (resendIn > 0 || busy) return;
+    setError(null);
+    setInfo(null);
+    setBusy(true);
+    const { error: err } = await supabase.auth.signInWithOtp({ phone: e164 });
+    setBusy(false);
+    if (err) {
+      setError(err.message);
+      return;
+    }
+    setToken("");
+    setInfo("New code sent.");
+    startResendCooldown();
   };
 
   const verify = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (busy) return;
     setError(null);
+    setInfo(null);
     setBusy(true);
+    const cleanToken = token.replace(/\D/g, "");
+    if (cleanToken.length !== 6) {
+      setBusy(false);
+      setError("Enter the 6-digit code from the text message.");
+      return;
+    }
     const beforeId = (await supabase.auth.getUser()).data.user?.id ?? null;
     const { error: err } = await supabase.auth.verifyOtp({
       phone: e164,
-      token,
+      token: cleanToken,
       type: "sms",
     });
     if (err) {
       setBusy(false);
-      setError(err.message);
+      setToken("");
+      setError(friendlyError(err.message));
       return;
     }
     // Reassign the draft conversation to the (now signed-in) real user. If
@@ -176,9 +236,10 @@ export function PhoneGate({
           <input
             inputMode="numeric"
             autoComplete="one-time-code"
+            pattern="\d{6}"
             placeholder="123456"
             value={token}
-            onChange={(e) => setToken(e.target.value)}
+            onChange={(e) => setToken(e.target.value.replace(/\D/g, "").slice(0, 6))}
             className="h-11 w-full rounded-lg border bg-background px-3 text-base tracking-[0.4em] tabular-nums focus:outline-none focus:ring-2 focus:ring-ring"
             required
             autoFocus
@@ -187,13 +248,30 @@ export function PhoneGate({
           <Button type="submit" disabled={busy} className="w-full">
             {busy ? "Verifying…" : "Verify"}
           </Button>
-          <button
-            type="button"
-            className="w-full text-xs text-muted-foreground underline"
-            onClick={() => setStep("phone")}
-          >
-            Use a different number
-          </button>
+          <div className="flex items-center justify-between text-xs">
+            <button
+              type="button"
+              className="text-muted-foreground underline"
+              onClick={() => {
+                setError(null);
+                setInfo(null);
+                setStep("phone");
+              }}
+            >
+              Use a different number
+            </button>
+            <button
+              type="button"
+              className="text-muted-foreground underline disabled:no-underline disabled:opacity-50"
+              onClick={resendOtp}
+              disabled={busy || resendIn > 0}
+            >
+              {resendIn > 0 ? `Resend in ${resendIn}s` : "Resend code"}
+            </button>
+          </div>
+          {info && (
+            <p className="text-center text-xs text-muted-foreground">{info}</p>
+          )}
         </form>
       )}
 
