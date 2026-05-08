@@ -108,31 +108,68 @@ export async function POST(req: Request) {
           .map((b) => (b.type === "text" ? b.text : ""))
           .join("");
 
-        const { data: insertedTurn } = await admin
-          .from("transcript_turns")
-          .insert({
-            participant_id: participant.id,
-            ord: nextOrd + 1,
-            role: "assistant",
-            content: fullText,
-            via: "text",
-          })
-          .select("id")
-          .single();
+        // Anthropic returns stop_reason: "refusal" with empty content when
+        // its safety system flags the input — most often a garbled voice
+        // transcript with heavy repetition. Persisting that empty turn (and
+        // the user turn that produced it) poisons the next request: the
+        // stale context keeps re-triggering the refusal even when the
+        // participant's follow-up is fine. Roll the user turn back, skip
+        // the assistant insert, and stream a recovery line so the UI
+        // doesn't go silent.
+        const isRefusal =
+          final.stop_reason === "refusal" || fullText.trim().length === 0;
 
-        await logLlmCall({
-          kind: "facilitator_turn",
-          model: FACILITATOR_MODEL,
-          duration_ms: Date.now() - startedAt,
-          session_id: session.id,
-          participant_id: participant.id,
-          turn_id: insertedTurn?.id ?? null,
-          system_prompt: systemText,
-          request_messages: apiMessages,
-          request_params: requestParams,
-          status: "success",
-          raw_response: final,
-        });
+        if (isRefusal) {
+          await admin
+            .from("transcript_turns")
+            .delete()
+            .eq("participant_id", participant.id)
+            .eq("ord", nextOrd);
+
+          const recovery =
+            "Sorry — I lost the thread there. Could you try saying that again?";
+          controller.enqueue(encoder.encode(recovery));
+
+          await logLlmCall({
+            kind: "facilitator_turn",
+            model: FACILITATOR_MODEL,
+            duration_ms: Date.now() - startedAt,
+            session_id: session.id,
+            participant_id: participant.id,
+            turn_id: null,
+            system_prompt: systemText,
+            request_messages: apiMessages,
+            request_params: requestParams,
+            status: "refusal",
+            raw_response: final,
+          });
+        } else {
+          const { data: insertedTurn } = await admin
+            .from("transcript_turns")
+            .insert({
+              participant_id: participant.id,
+              ord: nextOrd + 1,
+              role: "assistant",
+              content: fullText,
+              via: "text",
+            })
+            .select("id")
+            .single();
+
+          await logLlmCall({
+            kind: "facilitator_turn",
+            model: FACILITATOR_MODEL,
+            duration_ms: Date.now() - startedAt,
+            session_id: session.id,
+            participant_id: participant.id,
+            turn_id: insertedTurn?.id ?? null,
+            system_prompt: systemText,
+            request_messages: apiMessages,
+            request_params: requestParams,
+            status: "success",
+            raw_response: final,
+          });
+        }
 
         // Phase stays "in_conversation" until /api/finalize runs after phone verification.
         void participant;

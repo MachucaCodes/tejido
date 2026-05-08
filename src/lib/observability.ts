@@ -13,7 +13,8 @@ export type LlmCallStatus =
   | "success"
   | "error"
   | "parse_error"
-  | "stream_aborted";
+  | "stream_aborted"
+  | "refusal";
 
 type Common = {
   kind: LlmCallKind;
@@ -49,6 +50,10 @@ export type LlmCallLogInput =
       status: "stream_aborted";
       error_message: string;
       raw_response_text?: string | null;
+    })
+  | (Common & {
+      status: "refusal";
+      raw_response: Message;
     });
 
 function usageFrom(msg: Message | null | undefined) {
@@ -75,7 +80,7 @@ export async function logLlmCall(input: LlmCallLogInput): Promise<void> {
   const admin = createAdmin();
 
   const finalMsg =
-    input.status === "success"
+    input.status === "success" || input.status === "refusal"
       ? input.raw_response
       : "raw_response" in input
         ? (input.raw_response ?? null)
