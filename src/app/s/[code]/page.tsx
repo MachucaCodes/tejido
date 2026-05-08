@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
+import { after } from "next/server";
 
 import { getCurrentUser, getOrCreateParticipant } from "@/lib/participant";
+import { regenerateSummaryIfStale } from "@/lib/summary";
 import { createAdmin } from "@/lib/supabase/admin";
 import ChatClient from "./chat-client";
 import type { Theme } from "./themes-panel";
@@ -46,7 +48,6 @@ export default async function SessionPage({
   }
   if (!session || !participant) notFound();
 
-  const isComplete = participant.phase === "complete";
   const admin = createAdmin();
 
   // Always rehydrate transcripts from the server so the conversation
@@ -57,22 +58,32 @@ export default async function SessionPage({
     .eq("participant_id", participant.id)
     .order("ord", { ascending: true });
 
-  const [turnsRes, themesRes, assignmentsRes] = await Promise.all([
-    turnsPromise,
-    isComplete
-      ? admin
-          .from("themes")
-          .select("id, short_name, description, created_at")
-          .eq("session_id", code)
-          .order("created_at", { ascending: true })
-      : Promise.resolve({ data: [] as Array<{ id: string; short_name: string; description: string; created_at: string }> }),
-    isComplete
-      ? admin
-          .from("theme_assignments")
-          .select("theme_id, themes!inner(session_id)")
-          .eq("themes.session_id", code)
-      : Promise.resolve({ data: [] as Array<{ theme_id: string }> }),
-  ]);
+  const analyzedPromise = admin
+    .from("extracted_points")
+    .select("id", { count: "exact", head: true })
+    .eq("participant_id", participant.id);
+
+  const [turnsRes, analyzedRes, themesRes, assignmentsRes, summaryRes] =
+    await Promise.all([
+      turnsPromise,
+      analyzedPromise,
+      admin
+        .from("themes")
+        .select("id, short_name, description, created_at")
+        .eq("session_id", code)
+        .order("created_at", { ascending: true }),
+      admin
+        .from("theme_assignments")
+        .select("theme_id, themes!inner(session_id)")
+        .eq("themes.session_id", code),
+      admin
+        .from("sessions")
+        .select("summary_text, summary_generated_at")
+        .eq("id", code)
+        .single(),
+    ]);
+
+  const initialHasAnalyzed = (analyzedRes.count ?? 0) > 0;
 
   const initialMessages: ChatMessage[] = (turnsRes.data ?? []).map((t) => ({
     id: String(t.id),
@@ -91,15 +102,34 @@ export default async function SessionPage({
     count: counts[t.id] ?? 0,
   }));
 
+  const initialSummary = {
+    text: summaryRes.data?.summary_text ?? null,
+    generatedAt: summaryRes.data?.summary_generated_at ?? null,
+  };
+
+  // Fire-and-forget: after the response is sent, check whether the room's
+  // share distribution has shifted enough (TV-distance on theme shares) to
+  // warrant a fresh summary. Realtime delivers the update to viewers.
+  if (initialHasAnalyzed) {
+    after(async () => {
+      try {
+        await regenerateSummaryIfStale(code);
+      } catch (err) {
+        console.error("[s/[code]] summary regen failed:", err);
+      }
+    });
+  }
+
   return (
     <ChatClient
       sessionCode={session.id}
       topic={session.topic}
       introMessage={session.intro_message}
       hasPhone={Boolean(user.phone)}
-      initialPhase={isComplete ? "complete" : "in_conversation"}
+      initialHasAnalyzed={initialHasAnalyzed}
       initialMessages={initialMessages}
       initialThemes={initialThemes}
+      initialSummary={initialSummary}
     />
   );
 }

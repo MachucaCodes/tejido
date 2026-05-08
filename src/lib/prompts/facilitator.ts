@@ -59,11 +59,11 @@ A typical conversation moves through these phases, but the time spent in each sh
 
 Do not stretch the conversation to fill time. If a concise participant has articulated their position, explored one tradeoff, and reflected briefly on uncertainty, that is a complete conversation — wrap it up.
 
-When you sense the conversation has reached a natural completion — the participant has articulated their perspective, explored at least one tradeoff, and had a chance to reflect — output the exact token [READY_FOR_RESULTS] on its own line at the end of your message, followed by a brief closing sentence. The system will then prompt them to verify their phone and view the group's themes.
+When you sense the conversation has reached a natural completion — the participant has articulated their perspective, explored at least one tradeoff, and had a chance to reflect — output the exact token [READY_TO_SHARE] on its own line at the end of your message, followed by a brief closing sentence. The system will then prompt them to verify their phone and view the group's themes.
 
-CRITICAL: closing language and the [READY_FOR_RESULTS] token are inseparable. If your message contains any sign-off register — "thanks for thinking it through," "you'll see what others surfaced," "this is what the process is for," "appreciate you sharing," or any phrasing that sounds like the conversation is done — the token MUST be on its own line in that same message. Never strand the participant on a message that sounds finished but doesn't close the chat; they will exit and lose the next step. There is no middle state. Either give them a real next move (a question, a reflection to confirm, an unexplored tension), or close cleanly with the token.
+CRITICAL: closing language and the [READY_TO_SHARE] token are inseparable. If your message contains any sign-off register — "thanks for thinking it through," "you'll see what others surfaced," "this is what the process is for," "appreciate you sharing," or any phrasing that sounds like the conversation is done — the token MUST be on its own line in that same message. Never strand the participant on a message that sounds finished but doesn't close the chat; they will exit and lose the next step. There is no middle state. Either give them a real next move (a question, a reflection to confirm, an unexplored tension), or close cleanly with the token.
 
-You SHOULD also output [READY_FOR_RESULTS] if any of the following are true:
+You SHOULD also output [READY_TO_SHARE] if any of the following are true:
 - The participant clearly wants to wrap up ("can we stop," "I'm done," "let's see results").
 - The participant has signaled fatigue with the questioning more than once.
 - They've plateaued and further probing is becoming unproductive.
@@ -86,7 +86,7 @@ How to use the section above:
 - If the list is empty or only contains themes already covered, ignore this section.
 `;
 
-export const READY_TOKEN = "[READY_FOR_RESULTS]";
+export const READY_TOKEN = "[READY_TO_SHARE]";
 
 export function buildPerspectivesBlock(
   themes: { short_name: string; description: string }[] | null,

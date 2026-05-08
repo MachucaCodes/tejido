@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 import { PhoneGate } from "./phone-gate";
 import { ThemesPanel, type Theme } from "./themes-panel";
 
-const READY_TOKEN = "[READY_FOR_RESULTS]";
+const READY_TOKEN = "[READY_TO_SHARE]";
 
 const SENSE_MAKING_NOTES = [
   {
@@ -39,7 +39,11 @@ type ChatMessage = {
 };
 
 type Status = "idle" | "streaming" | "error";
-type Phase = "in_conversation" | "complete";
+
+// Window of participant silence after [READY_TO_SHARE] before we fire
+// analysis. Lets a quick double-message defer the run; reset on any new
+// user input within the window.
+const READY_DEBOUNCE_MS = 8000;
 
 function newId() {
   return `m-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
@@ -49,18 +53,20 @@ export default function ChatClient({
   sessionCode,
   topic,
   introMessage,
-  hasPhone,
-  initialPhase,
+  hasPhone: initialHasPhone,
+  initialHasAnalyzed,
   initialMessages,
   initialThemes,
+  initialSummary,
 }: {
   sessionCode: string;
   topic: string;
   introMessage: string | null;
   hasPhone: boolean;
-  initialPhase: Phase;
+  initialHasAnalyzed: boolean;
   initialMessages: ChatMessage[];
   initialThemes: Theme[];
+  initialSummary: { text: string | null; generatedAt: string | null };
 }) {
   const intro = introMessage?.trim() ?? "";
   const router = useRouter();
@@ -68,20 +74,29 @@ export default function ChatClient({
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [introOpen, setIntroOpen] = useState(false);
+  // hasAnalyzed gates the perspectives panel. Server-seeded from whether
+  // the participant has any extracted_points; client-flipped after the
+  // first successful finalize (the auto-finalize path; the PhoneGate path
+  // calls router.refresh() to re-seed from the server).
+  const [hasAnalyzed, setHasAnalyzed] = useState(initialHasAnalyzed);
+  const [hasPhone, setHasPhone] = useState(initialHasPhone);
+  // True while a /api/finalize call is in flight — drives the loader on
+  // the perspectives panel.
+  const [analyzing, setAnalyzing] = useState(false);
   const introAckKey = `tejido:s:${sessionCode}:intro-acked`;
 
-  // Show the sense-making note on the first visit to a session, only while
-  // there's still a conversation to have. Persisted per-session so that a
-  // returning participant isn't re-prompted.
+  // Show the sense-making note on the first visit to a session, only
+  // before they've shared anything. Persisted per-session so a returning
+  // participant isn't re-prompted.
   useEffect(() => {
-    if (initialPhase !== "in_conversation") return;
+    if (hasAnalyzed) return;
     if (initialMessages.length > 0) return;
     try {
       if (window.localStorage.getItem(introAckKey) !== "1") setIntroOpen(true);
     } catch {
       setIntroOpen(true);
     }
-  }, [introAckKey, initialPhase, initialMessages.length]);
+  }, [introAckKey, hasAnalyzed, initialMessages.length]);
 
   const acknowledgeIntro = () => {
     try {
@@ -90,42 +105,79 @@ export default function ChatClient({
     setIntroOpen(false);
   };
 
-  // Phase is server-driven via router.refresh() after finalize, so we derive
-  // it directly from the prop rather than mirroring it in local state.
-  const phase: Phase = initialPhase;
-
   const lastAssistantText =
     [...messages].reverse().find((m) => m.role === "assistant")?.content ?? "";
   const ready = lastAssistantText.includes(READY_TOKEN);
+  // Phone gate appears only on the FIRST share. After the participant has
+  // analyzed at least once their phone is on file, so subsequent
+  // [READY_TO_SHARE] tokens fire analysis silently in the background.
   const showPhoneGate =
-    phase === "in_conversation" && ready && !hasPhone && status !== "streaming";
-  const isComplete = phase === "complete";
+    ready && !hasPhone && !hasAnalyzed && status !== "streaming";
 
-  // Returning participants already have a phone, so the gate is skipped — but
-  // without this, the conversation strands them on a finished assistant turn.
-  const finalizingRef = useRef(false);
+  // Re-armable, debounced auto-finalize:
+  //  - First [READY_TO_SHARE] for a returning participant (phone already on
+  //    file) → fires after READY_DEBOUNCE_MS of silence.
+  //  - Every subsequent [READY_TO_SHARE] (model decides there's enough new
+  //    material to update the picture) → same debounce, fires again.
+  //  - PhoneGate handles the very first share for new participants directly.
+  const analyzingRef = useRef(false);
+  const debounceRef = useRef<number | null>(null);
+  // Identifies the assistant message that triggered the current pending
+  // timer, so a new ready token (from a later assistant turn) can re-arm
+  // without colliding with the in-flight schedule.
+  const armedForRef = useRef<string | null>(null);
+
+  const runFinalize = useCallback(async () => {
+    if (analyzingRef.current) return;
+    analyzingRef.current = true;
+    setAnalyzing(true);
+    try {
+      const res = await fetch("/api/finalize", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ sessionCode }),
+      });
+      if (res.ok) setHasAnalyzed(true);
+    } catch {
+      // Best-effort. Themes won't update; user can keep talking and the
+      // next [READY_TO_SHARE] will retry.
+    } finally {
+      analyzingRef.current = false;
+      setAnalyzing(false);
+    }
+  }, [sessionCode]);
+
   useEffect(() => {
-    if (finalizingRef.current) return;
-    if (phase !== "in_conversation" || !ready || !hasPhone) return;
-    if (status === "streaming") return;
-    finalizingRef.current = true;
-    (async () => {
-      try {
-        const res = await fetch("/api/finalize", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({ sessionCode }),
-        });
-        if (!res.ok) {
-          finalizingRef.current = false;
-          return;
-        }
-        router.refresh();
-      } catch {
-        finalizingRef.current = false;
+    // Cancel any pending timer if conditions change in a way that means
+    // we shouldn't fire (still streaming, no phone, etc.).
+    const cancel = () => {
+      if (debounceRef.current !== null) {
+        window.clearTimeout(debounceRef.current);
+        debounceRef.current = null;
+        armedForRef.current = null;
       }
-    })();
-  }, [phase, ready, hasPhone, status, sessionCode, router]);
+    };
+
+    if (!ready || !hasPhone || status === "streaming") {
+      cancel();
+      return;
+    }
+
+    const lastAssistant = [...messages].reverse().find((m) => m.role === "assistant");
+    if (!lastAssistant) return;
+    // Already armed for this exact message — leave the existing timer in
+    // place. (The effect re-runs on unrelated state changes too.)
+    if (armedForRef.current === lastAssistant.id) return;
+
+    cancel();
+    armedForRef.current = lastAssistant.id;
+    debounceRef.current = window.setTimeout(() => {
+      debounceRef.current = null;
+      void runFinalize();
+    }, READY_DEBOUNCE_MS);
+
+    return cancel;
+  }, [ready, hasPhone, status, messages, runFinalize]);
 
   const send = useCallback(
     async (text: string) => {
@@ -187,7 +239,7 @@ export default function ChatClient({
     return text;
   };
 
-  const hasAnyMessages = intro.length > 0 || messages.length > 0 || isComplete;
+  const hasAnyMessages = intro.length > 0 || messages.length > 0 || hasAnalyzed;
 
   return (
     <div className="relative flex h-dvh w-full flex-col">
@@ -225,20 +277,31 @@ export default function ChatClient({
                 />
               );
             })}
-            {isComplete && (
-              <ThemesPanel sessionCode={sessionCode} initialThemes={initialThemes} />
+            {hasAnalyzed && (
+              <ThemesPanel
+                sessionCode={sessionCode}
+                initialThemes={initialThemes}
+                initialSummary={initialSummary}
+                analyzing={analyzing}
+              />
             )}
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
 
         <div className="border-t border-border/70 pt-4 pb-[max(env(safe-area-inset-bottom),1.25rem)] sm:pb-[max(env(safe-area-inset-bottom),1.75rem)]">
-          {isComplete ? (
-            <CompletionFooter />
-          ) : showPhoneGate ? (
+          {showPhoneGate ? (
             <PhoneGate
               sessionCode={sessionCode}
-              onComplete={() => router.refresh()}
+              onComplete={() => {
+                setHasPhone(true);
+                // PhoneGate calls /api/finalize itself before invoking
+                // onComplete, so the participant has already analyzed by
+                // the time we get here. router.refresh() re-renders the
+                // page so initial themes/messages reflect the new state.
+                setHasAnalyzed(true);
+                router.refresh();
+              }}
             />
           ) : (
             <ComposerForm
@@ -531,21 +594,6 @@ function EditorialMessage({
           </MessageResponse>
         </MessageContent>
       </Message>
-    </div>
-  );
-}
-
-/* ───────────────────────── Completion footer ───────────────────────── */
-
-function CompletionFooter() {
-  return (
-    <div className="flex flex-col items-center gap-1.5 py-1 text-center">
-      <span className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground/80">
-        <span aria-hidden>¶ </span>Conversation complete
-      </span>
-      <p className="font-display text-[0.95rem] italic leading-snug text-muted-foreground sm:text-[1rem]">
-        Threads above update live as more neighbors finish theirs.
-      </p>
     </div>
   );
 }

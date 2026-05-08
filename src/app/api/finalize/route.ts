@@ -1,12 +1,19 @@
 import { NextResponse } from "next/server";
 
-import { clusterParticipantPoints } from "@/lib/cluster";
-import { extractPointsForParticipant } from "@/lib/extract";
+import { analyzeParticipant } from "@/lib/analyze";
 import { createClient as createServer } from "@/lib/supabase/server";
 import { createAdmin } from "@/lib/supabase/admin";
 
 export const maxDuration = 120;
 
+// Run (or re-run) the fused analysis pass for the calling user's participant
+// in this session. Idempotent across re-fires: every call wipes the
+// participant's prior extracted_points + assignments and reinserts based on
+// the current transcript. Theme rewrites broaden cumulatively across runs.
+//
+// The endpoint name (`finalize`) predates the redesign — there's no longer
+// a terminal phase, just a "share what you've got so far" trigger that the
+// chat client fires every time the facilitator emits [READY_TO_SHARE].
 export async function POST(req: Request) {
   const { sessionCode } = (await req.json()) as { sessionCode?: string };
   if (!sessionCode) return new Response("missing sessionCode", { status: 400 });
@@ -19,20 +26,12 @@ export async function POST(req: Request) {
   const admin = createAdmin();
   const { data: participant } = await admin
     .from("participants")
-    .select("id, phase")
+    .select("id")
     .eq("session_id", sessionCode)
     .eq("user_id", user.id)
     .single();
   if (!participant) return new Response("participant not found", { status: 404 });
 
-  if (participant.phase !== "complete") {
-    await extractPointsForParticipant(participant.id);
-    await clusterParticipantPoints(participant.id);
-    await admin
-      .from("participants")
-      .update({ phase: "complete", completed_at: new Date().toISOString() })
-      .eq("id", participant.id);
-  }
-
-  return NextResponse.json({ ok: true });
+  const result = await analyzeParticipant(participant.id);
+  return NextResponse.json({ ok: true, ...result });
 }

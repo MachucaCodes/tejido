@@ -5,7 +5,9 @@ import { createAdmin } from "@/lib/supabase/admin";
 export type LlmCallKind =
   | "facilitator_turn"
   | "extract_points"
-  | "cluster_points";
+  | "cluster_points"
+  | "analyze_participant"
+  | "summarize_session";
 
 export type LlmCallStatus =
   | "success"

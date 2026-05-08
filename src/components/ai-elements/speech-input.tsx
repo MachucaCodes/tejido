@@ -96,7 +96,7 @@ export const SpeechInput = ({
 }: SpeechInputProps) => {
   const [isListening, setIsListening] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [mode] = useState<SpeechInputMode>(detectSpeechInputMode);
+  const [mode, setMode] = useState<SpeechInputMode>(detectSpeechInputMode);
   const [isRecognitionReady, setIsRecognitionReady] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -154,8 +154,27 @@ export const SpeechInput = ({
       }
     };
 
-    const handleError = () => {
+    const handleError = (event: Event) => {
+      const errorEvent = event as SpeechRecognitionErrorEvent;
+      console.warn("[SpeechInput] recognition error:", errorEvent.error);
       setIsListening(false);
+
+      // Brave and some privacy-hardened Chromium browsers expose
+      // webkitSpeechRecognition but block the Google cloud endpoint it relies
+      // on, producing an immediate `network` error. Fall back to MediaRecorder
+      // + server-side transcription for the rest of the session.
+      const apiUnavailable =
+        errorEvent.error === "network" ||
+        errorEvent.error === "service-not-allowed" ||
+        errorEvent.error === "audio-capture";
+      if (
+        apiUnavailable &&
+        onAudioRecordedRef.current &&
+        typeof window !== "undefined" &&
+        "MediaRecorder" in window
+      ) {
+        setMode("media-recorder");
+      }
     };
 
     speechRecognition.addEventListener("start", handleStart);

@@ -15,12 +15,19 @@ export type Theme = {
 export function ThemesPanel({
   sessionCode,
   initialThemes,
+  initialSummary,
+  analyzing = false,
 }: {
   sessionCode: string;
   initialThemes: Theme[];
+  initialSummary?: { text: string | null; generatedAt: string | null };
+  analyzing?: boolean;
 }) {
   const [themes, setThemes] = useState<Theme[]>(initialThemes);
   const [pulseId, setPulseId] = useState<string | null>(null);
+  const [summaryText, setSummaryText] = useState<string | null>(
+    initialSummary?.text ?? null,
+  );
   const supabase = useMemo(() => createClient(), []);
 
   useEffect(() => {
@@ -73,6 +80,37 @@ export function ThemesPanel({
           setTimeout(() => setPulseId(null), 1200);
         },
       )
+      .on(
+        "postgres_changes",
+        { event: "DELETE", schema: "public", table: "theme_assignments" },
+        (payload) => {
+          // Re-analysis (and any cascade-delete from removing the
+          // underlying point) drops assignments. Realtime sends the
+          // composite PK on DELETE by default, which is enough to
+          // decrement the right theme's count without re-fetching.
+          const row = payload.old as { theme_id?: string };
+          if (!row.theme_id) return;
+          const themeId = row.theme_id;
+          setThemes((prev) =>
+            prev.map((t) =>
+              t.id === themeId ? { ...t, count: Math.max(0, t.count - 1) } : t,
+            ),
+          );
+        },
+      )
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "sessions",
+          filter: `id=eq.${sessionCode}`,
+        },
+        (payload) => {
+          const row = payload.new as { summary_text: string | null };
+          if (row.summary_text) setSummaryText(row.summary_text);
+        },
+      )
       .subscribe();
 
     return () => {
@@ -104,6 +142,19 @@ export function ThemesPanel({
       >
         What&apos;s weaving together
       </p>
+
+      {summaryText && (
+        <p className="font-sans text-[0.98rem] leading-[1.6] text-foreground/85 sm:text-[1.02rem]">
+          {summaryText}
+        </p>
+      )}
+
+      {analyzing && (
+        <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.24em] text-muted-foreground/80">
+          <span className="size-1.5 animate-pulse rounded-full bg-[var(--accent)]/70" aria-hidden />
+          Updating
+        </span>
+      )}
 
       {themes.length === 0 ? (
         <p className="font-display text-[1rem] italic leading-relaxed text-muted-foreground sm:text-[1.05rem]">
