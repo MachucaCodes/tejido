@@ -60,11 +60,32 @@ export async function POST(req: Request) {
     via: "text",
   });
 
-  const apiMessages: MessageParam[] = [
-    ...(priorTurns ?? []).map((t) => ({
+  // Drop user/empty-assistant pairs and stray empty assistant turns left
+  // behind by older refusal handling. An empty assistant in the history
+  // re-triggers Anthropic's safety filter and locks the conversation into
+  // a permanent refusal state, so it has to be filtered before the call.
+  const turns = priorTurns ?? [];
+  const cleanedHistory: { role: "user" | "assistant"; content: string }[] = [];
+  for (let i = 0; i < turns.length; i += 1) {
+    const t = turns[i];
+    const next = turns[i + 1];
+    if (
+      t.role === "user" &&
+      next?.role === "assistant" &&
+      (next.content ?? "").trim() === ""
+    ) {
+      i += 1;
+      continue;
+    }
+    if (t.role === "assistant" && (t.content ?? "").trim() === "") continue;
+    cleanedHistory.push({
       role: t.role as "user" | "assistant",
       content: t.content,
-    })),
+    });
+  }
+
+  const apiMessages: MessageParam[] = [
+    ...cleanedHistory,
     { role: "user" as const, content: userText },
   ];
 
