@@ -16,7 +16,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
 import { PhoneGate } from "./phone-gate";
-import { ThemesPanel, type Theme } from "./themes-panel";
+import { ThemesPanel, type Theme, type Point } from "./themes-panel";
 
 const READY_TOKEN = "[READY_TO_SHARE]";
 
@@ -58,6 +58,7 @@ export default function ChatClient({
   initialMessages,
   initialThemes,
   initialSummary,
+  initialPoints,
 }: {
   sessionCode: string;
   topic: string;
@@ -67,6 +68,7 @@ export default function ChatClient({
   initialMessages: ChatMessage[];
   initialThemes: Theme[];
   initialSummary: { text: string | null; generatedAt: string | null };
+  initialPoints: Point[];
 }) {
   const intro = introMessage?.trim() ?? "";
   const router = useRouter();
@@ -137,7 +139,15 @@ export default function ChatClient({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ sessionCode }),
       });
-      if (res.ok) setHasAnalyzed(true);
+      if (res.ok) {
+        setHasAnalyzed(true);
+        // Re-seed the page from the server so the freshly-written themes
+        // and any newly-generated summary land in initialThemes /
+        // initialSummary. Browser-side RLS blocks these reads for
+        // participants without a phone, so we can't catch up via the
+        // anon client — only the server-side admin fetch sees them.
+        router.refresh();
+      }
     } catch {
       // Best-effort. Themes won't update; user can keep talking and the
       // next [READY_TO_SHARE] will retry.
@@ -145,7 +155,7 @@ export default function ChatClient({
       analyzingRef.current = false;
       setAnalyzing(false);
     }
-  }, [sessionCode]);
+  }, [sessionCode, router]);
 
   useEffect(() => {
     // Cancel any pending timer if conditions change in a way that means
@@ -282,6 +292,7 @@ export default function ChatClient({
                 sessionCode={sessionCode}
                 initialThemes={initialThemes}
                 initialSummary={initialSummary}
+                initialPoints={initialPoints}
                 analyzing={analyzing}
               />
             )}

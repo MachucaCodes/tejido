@@ -100,7 +100,7 @@ const ANALYSIS_JSON_SCHEMA = {
         additionalProperties: false,
         required: ["point_idx", "theme_ids"],
         properties: {
-          point_idx: { type: "integer", minimum: 0 },
+          point_idx: { type: "integer" },
           theme_ids: { type: "array", items: { type: "string" } },
         },
       },

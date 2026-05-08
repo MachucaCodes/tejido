@@ -63,25 +63,35 @@ export default async function SessionPage({
     .select("id", { count: "exact", head: true })
     .eq("participant_id", participant.id);
 
-  const [turnsRes, analyzedRes, themesRes, assignmentsRes, summaryRes] =
-    await Promise.all([
-      turnsPromise,
-      analyzedPromise,
-      admin
-        .from("themes")
-        .select("id, short_name, description, created_at")
-        .eq("session_id", code)
-        .order("created_at", { ascending: true }),
-      admin
-        .from("theme_assignments")
-        .select("theme_id, themes!inner(session_id)")
-        .eq("themes.session_id", code),
-      admin
-        .from("sessions")
-        .select("summary_text, summary_generated_at")
-        .eq("id", code)
-        .single(),
-    ]);
+  const [
+    turnsRes,
+    analyzedRes,
+    themesRes,
+    assignmentsRes,
+    summaryRes,
+    pointsRes,
+  ] = await Promise.all([
+    turnsPromise,
+    analyzedPromise,
+    admin
+      .from("themes")
+      .select("id, short_name, description, created_at")
+      .eq("session_id", code)
+      .order("created_at", { ascending: true }),
+    admin
+      .from("theme_assignments")
+      .select("theme_id, point_id, themes!inner(session_id)")
+      .eq("themes.session_id", code),
+    admin
+      .from("sessions")
+      .select("summary_text, summary_generated_at")
+      .eq("id", code)
+      .single(),
+    admin
+      .from("extracted_points")
+      .select("id, surface_phrase, participants!inner(session_id)")
+      .eq("participants.session_id", code),
+  ]);
 
   const initialHasAnalyzed = (analyzedRes.count ?? 0) > 0;
 
@@ -101,6 +111,22 @@ export default async function SessionPage({
     description: t.description,
     count: counts[t.id] ?? 0,
   }));
+
+  // Map each point to the themes it was assigned to. A point may have 0
+  // (unclustered) or >1 theme. The drilldown shows points under each
+  // theme; the outliers row picks from points whose only themes are in
+  // the bottom half of the count distribution.
+  const themeIdsByPoint: Record<string, string[]> = {};
+  for (const a of assignmentsRes.data ?? []) {
+    (themeIdsByPoint[a.point_id] ??= []).push(a.theme_id);
+  }
+  const initialPoints = (pointsRes.data ?? [])
+    .map((p) => ({
+      id: p.id,
+      surface_phrase: (p.surface_phrase ?? "").trim(),
+      theme_ids: themeIdsByPoint[p.id] ?? [],
+    }))
+    .filter((p) => p.surface_phrase.length > 0);
 
   const initialSummary = {
     text: summaryRes.data?.summary_text ?? null,
@@ -130,6 +156,7 @@ export default async function SessionPage({
       initialMessages={initialMessages}
       initialThemes={initialThemes}
       initialSummary={initialSummary}
+      initialPoints={initialPoints}
     />
   );
 }
