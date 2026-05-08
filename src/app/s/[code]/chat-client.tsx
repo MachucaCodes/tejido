@@ -266,7 +266,7 @@ function SenseMakingModal({
   onAcknowledge: () => void;
 }) {
   return (
-    <Dialog open={open} dismissible={false}>
+    <Dialog open={open} disablePointerDismissal>
       <DialogContent
         showCloseButton={false}
         className={cn(
