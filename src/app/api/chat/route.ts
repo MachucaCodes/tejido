@@ -1,6 +1,7 @@
 import type { MessageParam, TextBlockParam } from "@anthropic-ai/sdk/resources/messages";
 
 import { FACILITATOR_MODEL, getAnthropic } from "@/lib/anthropic";
+import { logLlmCall } from "@/lib/observability";
 import { ensureAnonymousUser, getOrCreateParticipant } from "@/lib/participant";
 import {
   buildPerspectivesBlock,
@@ -11,17 +12,21 @@ import { createAdmin } from "@/lib/supabase/admin";
 
 export const maxDuration = 60;
 
-type ClientMessage = { role: "user" | "assistant"; content: string };
-type Body = { messages: ClientMessage[]; sessionCode: string };
+type Body = { message: string; sessionCode: string };
 
 export async function POST(req: Request) {
-  const { messages, sessionCode }: Body = await req.json();
+  const { message, sessionCode }: Body = await req.json();
   if (!sessionCode) return new Response("missing sessionCode", { status: 400 });
+  const userText = (message ?? "").trim();
+  if (!userText) return new Response("empty message", { status: 400 });
 
   const { user } = await ensureAnonymousUser();
   const { session, participant } = await getOrCreateParticipant(sessionCode, user.id);
   if (session.status !== "open") {
     return new Response("session is closed", { status: 403 });
+  }
+  if (participant.phase !== "in_conversation") {
+    return new Response("conversation already complete", { status: 403 });
   }
 
   const admin = createAdmin();
@@ -38,26 +43,35 @@ export async function POST(req: Request) {
     session.instructions,
   );
 
-  // Persist the most recent user message before streaming.
-  const lastUser = messages[messages.length - 1];
-  if (lastUser?.role === "user" && lastUser.content.trim()) {
-    const { count } = await admin
-      .from("transcript_turns")
-      .select("id", { count: "exact", head: true })
-      .eq("participant_id", participant.id);
-    await admin.from("transcript_turns").insert({
-      participant_id: participant.id,
-      ord: count ?? 0,
-      role: "user",
-      content: lastUser.content,
-      via: "text",
-    });
-  }
+  // Server is the source of truth for transcript history. Pull prior turns,
+  // append the new user message, and persist before streaming.
+  const { data: priorTurns } = await admin
+    .from("transcript_turns")
+    .select("role, content, ord")
+    .eq("participant_id", participant.id)
+    .order("ord", { ascending: true });
 
-  const apiMessages: MessageParam[] = messages.map((m) => ({
-    role: m.role,
-    content: m.content,
-  }));
+  const nextOrd = priorTurns?.length ?? 0;
+  await admin.from("transcript_turns").insert({
+    participant_id: participant.id,
+    ord: nextOrd,
+    role: "user",
+    content: userText,
+    via: "text",
+  });
+
+  const apiMessages: MessageParam[] = [
+    ...(priorTurns ?? []).map((t) => ({
+      role: t.role as "user" | "assistant",
+      content: t.content,
+    })),
+    { role: "user" as const, content: userText },
+  ];
+
+  const requestParams = {
+    model: FACILITATOR_MODEL,
+    max_tokens: 4096,
+  };
 
   const system: TextBlockParam[] = [
     {
@@ -68,9 +82,9 @@ export async function POST(req: Request) {
   ];
 
   const anthropic = getAnthropic();
+  const startedAt = Date.now();
   const result = anthropic.messages.stream({
-    model: FACILITATOR_MODEL,
-    max_tokens: 4096,
+    ...requestParams,
     system,
     messages: apiMessages,
   });
@@ -78,12 +92,14 @@ export async function POST(req: Request) {
   const encoder = new TextEncoder();
   const readable = new ReadableStream<Uint8Array>({
     async start(controller) {
+      let buffered = "";
       try {
         for await (const event of result) {
           if (
             event.type === "content_block_delta" &&
             event.delta.type === "text_delta"
           ) {
+            buffered += event.delta.text;
             controller.enqueue(encoder.encode(event.delta.text));
           }
         }
@@ -92,21 +108,50 @@ export async function POST(req: Request) {
           .map((b) => (b.type === "text" ? b.text : ""))
           .join("");
 
-        const { count } = await admin
+        const { data: insertedTurn } = await admin
           .from("transcript_turns")
-          .select("id", { count: "exact", head: true })
-          .eq("participant_id", participant.id);
-        await admin.from("transcript_turns").insert({
+          .insert({
+            participant_id: participant.id,
+            ord: nextOrd + 1,
+            role: "assistant",
+            content: fullText,
+            via: "text",
+          })
+          .select("id")
+          .single();
+
+        await logLlmCall({
+          kind: "facilitator_turn",
+          model: FACILITATOR_MODEL,
+          duration_ms: Date.now() - startedAt,
+          session_id: session.id,
           participant_id: participant.id,
-          ord: count ?? 0,
-          role: "assistant",
-          content: fullText,
-          via: "text",
+          turn_id: insertedTurn?.id ?? null,
+          system_prompt: systemText,
+          request_messages: apiMessages,
+          request_params: requestParams,
+          status: "success",
+          raw_response: final,
         });
 
         // Phase stays "in_conversation" until /api/finalize runs after phone verification.
         void participant;
+        void READY_TOKEN;
       } catch (err) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        await logLlmCall({
+          kind: "facilitator_turn",
+          model: FACILITATOR_MODEL,
+          duration_ms: Date.now() - startedAt,
+          session_id: session.id,
+          participant_id: participant.id,
+          system_prompt: systemText,
+          request_messages: apiMessages,
+          request_params: requestParams,
+          status: "stream_aborted",
+          error_message: errMsg,
+          raw_response_text: buffered || null,
+        });
         controller.error(err);
         return;
       }

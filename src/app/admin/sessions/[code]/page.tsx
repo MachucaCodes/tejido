@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin-guard";
@@ -48,13 +49,21 @@ export default async function AdminSessionDetail({
 
   return (
     <div className="space-y-8">
-      <header className="space-y-1">
-        <p className="text-xs uppercase tracking-wide text-muted-foreground">
-          {session.id}
-        </p>
-        <p className="text-xs text-muted-foreground">
-          {session.status} · {new Date(session.created_at).toLocaleString()}
-        </p>
+      <header className="flex items-start justify-between gap-3">
+        <div className="space-y-1">
+          <p className="text-xs uppercase tracking-wide text-muted-foreground">
+            {session.id}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            {session.status} · {new Date(session.created_at).toLocaleString()}
+          </p>
+        </div>
+        <Link
+          href={`/admin/sessions/${session.id}/logs`}
+          className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
+        >
+          LLM logs →
+        </Link>
       </header>
 
       <section className="space-y-3">

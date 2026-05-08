@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { EXTRACTION_MODEL, getAnthropic } from "@/lib/anthropic";
+import { logLlmCall } from "@/lib/observability";
 import { renderExtractionPrompt } from "@/lib/prompts/extraction";
 import { createAdmin } from "@/lib/supabase/admin";
 
@@ -53,20 +54,85 @@ export async function extractPointsForParticipant(participantId: string) {
     .map((t) => `${t.role === "user" ? "Participant" : "Facilitator"}: ${t.content}`)
     .join("\n\n");
 
-  const anthropic = getAnthropic();
-  const response = await anthropic.messages.create({
+  const { data: participant } = await admin
+    .from("participants")
+    .select("session_id")
+    .eq("id", participantId)
+    .maybeSingle();
+
+  const requestMessages = [
+    { role: "user" as const, content: renderExtractionPrompt(transcript) },
+  ];
+  const requestParams = {
     model: EXTRACTION_MODEL,
     max_tokens: 8192,
     output_config: {
-      format: { type: "json_schema", schema: POINTS_JSON_SCHEMA },
+      format: { type: "json_schema" as const, schema: POINTS_JSON_SCHEMA },
     },
-    messages: [{ role: "user", content: renderExtractionPrompt(transcript) }],
-  });
+  };
+
+  const anthropic = getAnthropic();
+  const startedAt = Date.now();
+
+  let response;
+  try {
+    response = await anthropic.messages.create({
+      ...requestParams,
+      messages: requestMessages,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    await logLlmCall({
+      kind: "extract_points",
+      model: EXTRACTION_MODEL,
+      duration_ms: Date.now() - startedAt,
+      session_id: participant?.session_id ?? null,
+      participant_id: participantId,
+      request_messages: requestMessages,
+      request_params: requestParams,
+      status: "error",
+      error_message: message,
+    });
+    throw err;
+  }
 
   const text = response.content
     .map((b) => (b.type === "text" ? b.text : ""))
     .join("");
-  const points = PointsArray.parse(JSON.parse(text));
+
+  let points;
+  try {
+    points = PointsArray.parse(JSON.parse(text));
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    await logLlmCall({
+      kind: "extract_points",
+      model: EXTRACTION_MODEL,
+      duration_ms: Date.now() - startedAt,
+      session_id: participant?.session_id ?? null,
+      participant_id: participantId,
+      request_messages: requestMessages,
+      request_params: requestParams,
+      status: "parse_error",
+      error_message: message,
+      raw_response: response,
+      raw_response_text: text,
+    });
+    throw err;
+  }
+
+  await logLlmCall({
+    kind: "extract_points",
+    model: EXTRACTION_MODEL,
+    duration_ms: Date.now() - startedAt,
+    session_id: participant?.session_id ?? null,
+    participant_id: participantId,
+    request_messages: requestMessages,
+    request_params: requestParams,
+    status: "success",
+    raw_response: response,
+    parsed_output: points,
+  });
 
   const rows = points.map((p, idx) => ({
     participant_id: participantId,

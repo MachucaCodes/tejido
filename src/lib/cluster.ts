@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { CLUSTERING_MODEL, getAnthropic } from "@/lib/anthropic";
+import { logLlmCall } from "@/lib/observability";
 import {
   CLUSTERING_SYSTEM,
   renderClusteringPrompt,
@@ -113,27 +114,87 @@ export async function clusterParticipantPoints(participantId: string) {
     description: t.description,
   }));
 
-  const anthropic = getAnthropic();
-  const response = await anthropic.messages.create({
+  const requestMessages = [
+    {
+      role: "user" as const,
+      content: renderClusteringPrompt(session.topic, existingThemes, newPoints),
+    },
+  ];
+  const requestParams = {
     model: CLUSTERING_MODEL,
     max_tokens: 16000,
-    thinking: { type: "adaptive" },
-    system: CLUSTERING_SYSTEM,
+    thinking: { type: "adaptive" as const },
     output_config: {
-      format: { type: "json_schema", schema: CLUSTERING_JSON_SCHEMA },
+      format: { type: "json_schema" as const, schema: CLUSTERING_JSON_SCHEMA },
     },
-    messages: [
-      {
-        role: "user",
-        content: renderClusteringPrompt(session.topic, existingThemes, newPoints),
-      },
-    ],
-  });
+  };
+
+  const anthropic = getAnthropic();
+  const startedAt = Date.now();
+
+  let response;
+  try {
+    response = await anthropic.messages.create({
+      ...requestParams,
+      system: CLUSTERING_SYSTEM,
+      messages: requestMessages,
+    });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    await logLlmCall({
+      kind: "cluster_points",
+      model: CLUSTERING_MODEL,
+      duration_ms: Date.now() - startedAt,
+      session_id: participant.session_id,
+      participant_id: participantId,
+      system_prompt: CLUSTERING_SYSTEM,
+      request_messages: requestMessages,
+      request_params: requestParams,
+      status: "error",
+      error_message: message,
+    });
+    throw err;
+  }
 
   const text = response.content
     .map((b) => (b.type === "text" ? b.text : ""))
     .join("");
-  const parsed = ResponseSchema.parse(JSON.parse(text));
+
+  let parsed;
+  try {
+    parsed = ResponseSchema.parse(JSON.parse(text));
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    await logLlmCall({
+      kind: "cluster_points",
+      model: CLUSTERING_MODEL,
+      duration_ms: Date.now() - startedAt,
+      session_id: participant.session_id,
+      participant_id: participantId,
+      system_prompt: CLUSTERING_SYSTEM,
+      request_messages: requestMessages,
+      request_params: requestParams,
+      status: "parse_error",
+      error_message: message,
+      raw_response: response,
+      raw_response_text: text,
+    });
+    throw err;
+  }
+
+  await logLlmCall({
+    kind: "cluster_points",
+    model: CLUSTERING_MODEL,
+    duration_ms: Date.now() - startedAt,
+    session_id: participant.session_id,
+    participant_id: participantId,
+    system_prompt: CLUSTERING_SYSTEM,
+    request_messages: requestMessages,
+    request_params: requestParams,
+    status: "success",
+    raw_response: response,
+    parsed_output: parsed,
+  });
 
   const tempIdToReal: Record<string, string> = {};
   if (parsed.new_themes.length) {

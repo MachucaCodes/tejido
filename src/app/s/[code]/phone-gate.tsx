@@ -33,8 +33,10 @@ export function PhoneGate({
     e.preventDefault();
     setError(null);
     setBusy(true);
-    // Anonymous-user upgrade: updateUser triggers an OTP to the new phone.
-    const { error: err } = await supabase.auth.updateUser({ phone: e164 });
+    // Sign-in OTP: creates a phone-keyed user if new, or signs into the
+    // existing one if this human has been here before. Either way, the
+    // post-verify session is owned by the canonical phone-keyed user.
+    const { error: err } = await supabase.auth.signInWithOtp({ phone: e164 });
     setBusy(false);
     if (err) {
       setError(err.message);
@@ -47,16 +49,39 @@ export function PhoneGate({
     e.preventDefault();
     setError(null);
     setBusy(true);
+    const beforeId = (await supabase.auth.getUser()).data.user?.id ?? null;
     const { error: err } = await supabase.auth.verifyOtp({
       phone: e164,
       token,
-      type: "phone_change",
+      type: "sms",
     });
-    setBusy(false);
     if (err) {
+      setBusy(false);
       setError(err.message);
       return;
     }
+    // Reassign the draft conversation to the (now signed-in) real user. If
+    // beforeId === current user id, the endpoint no-ops. If the human had
+    // already completed this session, claim-draft returns 409 and we route
+    // straight to their existing themes view.
+    if (beforeId) {
+      const res = await fetch("/api/claim-draft", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ sessionCode, anonUserId: beforeId }),
+      });
+      if (res.status === 409) {
+        setBusy(false);
+        onComplete();
+        return;
+      }
+      if (!res.ok) {
+        setBusy(false);
+        setError(await res.text());
+        return;
+      }
+    }
+    setBusy(false);
     setStep("details");
   };
 
