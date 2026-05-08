@@ -17,6 +17,7 @@ export type Point = {
   id: string;
   surface_phrase: string;
   theme_ids: string[];
+  participant_id: string;
 };
 
 const OUTLIER_SAMPLE_SIZE = 3;
@@ -245,7 +246,13 @@ export function ThemesPanel({
     };
   }, [supabase, sessionCode, scheduleRefresh]);
 
-  const total = themes.reduce((acc, t) => acc + t.count, 0);
+  const voiceCount = useMemo(() => {
+    const ids = new Set<string>();
+    for (const p of points) {
+      if (p.participant_id) ids.add(p.participant_id);
+    }
+    return ids.size;
+  }, [points]);
 
   const pointsByTheme = useMemo(() => {
     const map = new Map<string, Point[]>();
@@ -425,12 +432,31 @@ export function ThemesPanel({
             // an expanded theme that's now hidden leaves stale state.
             if (showAllThemes) setExpandedThemeId(null);
           }}
-          className="-mt-1 self-start font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/80 transition-colors hover:text-foreground/85"
+          className="group/more -mt-1 inline-flex items-center gap-2 self-end rounded-full border border-border/70 bg-background/40 px-3.5 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.22em] text-foreground/75 transition-colors hover:border-[var(--accent)]/50 hover:bg-[var(--accent)]/5 hover:text-foreground"
           aria-expanded={showAllThemes}
         >
-          {showAllThemes
-            ? "Show fewer themes"
-            : `Show ${themes.length - 3} more theme${themes.length - 3 === 1 ? "" : "s"}`}
+          <span>
+            {showAllThemes
+              ? "Show fewer themes"
+              : `Show ${themes.length - 3} more theme${themes.length - 3 === 1 ? "" : "s"}`}
+          </span>
+          <svg
+            aria-hidden
+            viewBox="0 0 12 12"
+            className={cn(
+              "h-3 w-3 transition-transform duration-200",
+              showAllThemes ? "rotate-180" : "rotate-0",
+            )}
+          >
+            <path
+              d="M2.5 4.5L6 8L9.5 4.5"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
         </button>
       )}
 
@@ -460,8 +486,8 @@ export function ThemesPanel({
         <p className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-muted-foreground/70">
           <span aria-hidden>¶ </span>
           {themes.length} {themes.length === 1 ? "theme" : "themes"} ·{" "}
-          <span className="tabular-nums">{total}</span>{" "}
-          {total === 1 ? "voice" : "voices"} so far
+          <span className="tabular-nums">{voiceCount}</span>{" "}
+          {voiceCount === 1 ? "voice" : "voices"} so far
         </p>
       )}
     </section>

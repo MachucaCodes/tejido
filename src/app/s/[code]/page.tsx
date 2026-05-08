@@ -89,7 +89,7 @@ export default async function SessionPage({
       .single(),
     admin
       .from("extracted_points")
-      .select("id, surface_phrase, participants!inner(session_id)")
+      .select("id, surface_phrase, participant_id, participants!inner(session_id)")
       .eq("participants.session_id", code),
   ]);
 
@@ -125,6 +125,7 @@ export default async function SessionPage({
       id: p.id,
       surface_phrase: (p.surface_phrase ?? "").trim(),
       theme_ids: themeIdsByPoint[p.id] ?? [],
+      participant_id: p.participant_id,
     }))
     .filter((p) => p.surface_phrase.length > 0);
 
