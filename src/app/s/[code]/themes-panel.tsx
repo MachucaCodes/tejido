@@ -38,6 +38,7 @@ export function ThemesPanel({
   const [points, setPoints] = useState<Point[]>(initialPoints);
   const [pulseId, setPulseId] = useState<string | null>(null);
   const [expandedThemeId, setExpandedThemeId] = useState<string | null>(null);
+  const [showAllThemes, setShowAllThemes] = useState(false);
   const [summaryText, setSummaryText] = useState<string | null>(
     initialSummary?.text ?? null,
   );
@@ -327,12 +328,12 @@ export function ThemesPanel({
 
       {themes.length === 0 ? (
         <p className="font-display text-[1rem] italic leading-relaxed text-muted-foreground sm:text-[1.05rem]">
-          No threads yet — they appear here as more neighbors finish their
+          No themes yet — they appear here as more neighbors finish their
           conversations.
         </p>
       ) : (
         <ol className="flex flex-col divide-y divide-border/70 border-y border-border/70">
-          {themes.map((t, i) => {
+          {(showAllThemes ? themes : themes.slice(0, 3)).map((t, i) => {
             const isExpanded = expandedThemeId === t.id;
             const themePoints = pointsByTheme.get(t.id) ?? [];
             const phrases = Array.from(
@@ -415,6 +416,24 @@ export function ThemesPanel({
         </ol>
       )}
 
+      {themes.length > 3 && (
+        <button
+          type="button"
+          onClick={() => {
+            setShowAllThemes((prev) => !prev);
+            // Collapse any drilldown when collapsing the list — otherwise
+            // an expanded theme that's now hidden leaves stale state.
+            if (showAllThemes) setExpandedThemeId(null);
+          }}
+          className="-mt-1 self-start font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/80 transition-colors hover:text-foreground/85"
+          aria-expanded={showAllThemes}
+        >
+          {showAllThemes
+            ? "Show fewer themes"
+            : `Show ${themes.length - 3} more theme${themes.length - 3 === 1 ? "" : "s"}`}
+        </button>
+      )}
+
       {outlierPhrases.length > 0 && (
         <section className="flex flex-col gap-3 border-t border-border/70 pt-5">
           <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
@@ -440,7 +459,7 @@ export function ThemesPanel({
       {themes.length > 0 && (
         <p className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-muted-foreground/70">
           <span aria-hidden>¶ </span>
-          {themes.length} {themes.length === 1 ? "thread" : "threads"} ·{" "}
+          {themes.length} {themes.length === 1 ? "theme" : "themes"} ·{" "}
           <span className="tabular-nums">{total}</span>{" "}
           {total === 1 ? "voice" : "voices"} so far
         </p>

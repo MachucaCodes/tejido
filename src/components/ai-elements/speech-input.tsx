@@ -99,6 +99,7 @@ export const SpeechInput = ({
   const [mode, setMode] = useState<SpeechInputMode>(detectSpeechInputMode);
   const [isRecognitionReady, setIsRecognitionReady] = useState(false);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
+  const lastFinalIndexRef = useRef(-1);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -127,6 +128,7 @@ export const SpeechInput = ({
     speechRecognition.lang = lang;
 
     const handleStart = () => {
+      lastFinalIndexRef.current = -1;
       setIsListening(true);
     };
 
@@ -138,14 +140,15 @@ export const SpeechInput = ({
       const speechEvent = event as SpeechRecognitionEvent;
       let finalTranscript = "";
 
-      for (
-        let i = speechEvent.resultIndex;
-        i < speechEvent.results.length;
-        i += 1
-      ) {
+      // Android Chrome's webkitSpeechRecognition does not advance resultIndex
+      // reliably with continuous=true, so it re-fires earlier final results on
+      // every event. Track the highest final index we've already emitted and
+      // skip anything at or below it.
+      for (let i = 0; i < speechEvent.results.length; i += 1) {
         const result = speechEvent.results[i];
-        if (result.isFinal) {
+        if (result.isFinal && i > lastFinalIndexRef.current) {
           finalTranscript += result[0]?.transcript ?? "";
+          lastFinalIndexRef.current = i;
         }
       }
 
