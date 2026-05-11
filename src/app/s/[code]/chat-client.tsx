@@ -11,7 +11,7 @@ import {
   ConversationScrollButton,
 } from "@/components/ai-elements/conversation";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
-import { SpeechInput } from "@/components/ai-elements/speech-input";
+import { SpeechInput, type SpeechInputHandle } from "@/components/ai-elements/speech-input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 
@@ -266,8 +266,15 @@ export default function ChatClient({
     [sessionCode, status],
   );
 
+  const speechInputRef = useRef<SpeechInputHandle>(null);
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Mic may still be armed — the Web Speech API streams final results
+    // into the input while listening, so users routinely hit Send before
+    // tapping Stop. Tell the recognizer to wind down so it doesn't keep
+    // capturing audio after the message has left.
+    speechInputRef.current?.stop();
     const text = input.trim();
     if (!text) return;
     setInput("");
@@ -373,6 +380,7 @@ export default function ChatClient({
               onAudio={transcribeAudio}
               disabled={status === "streaming"}
               status={status}
+              speechInputRef={speechInputRef}
             />
           )}
         </div>
@@ -692,6 +700,7 @@ function ComposerForm({
   onAudio,
   disabled,
   status,
+  speechInputRef,
 }: {
   input: string;
   setInput: (v: string | ((p: string) => string)) => void;
@@ -699,6 +708,7 @@ function ComposerForm({
   onAudio: (blob: Blob) => Promise<string>;
   disabled: boolean;
   status: Status;
+  speechInputRef: React.RefObject<SpeechInputHandle | null>;
 }) {
   const trimmed = input.trim();
   const canSend = trimmed.length > 0 && !disabled;
@@ -723,6 +733,7 @@ function ComposerForm({
         />
 
         <SpeechInput
+          ref={speechInputRef}
           variant="ghost"
           size="icon"
           onTranscriptionChange={(t) =>

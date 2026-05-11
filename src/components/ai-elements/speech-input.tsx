@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { cn } from "@/lib/utils";
 import { MicIcon, SquareIcon } from "lucide-react";
-import type { ComponentProps } from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import type { ComponentProps, Ref } from "react";
+import { useCallback, useEffect, useImperativeHandle, useRef, useState } from "react";
 
 interface SpeechRecognition extends EventTarget {
   continuous: boolean;
@@ -59,7 +59,13 @@ declare global {
 
 type SpeechInputMode = "speech-recognition" | "media-recorder" | "none";
 
-export type SpeechInputProps = ComponentProps<typeof Button> & {
+export type SpeechInputHandle = {
+  /** Stop recording/recognition if currently listening. No-op otherwise. */
+  stop: () => void;
+  isListening: boolean;
+};
+
+export type SpeechInputProps = Omit<ComponentProps<typeof Button>, "ref"> & {
   onTranscriptionChange?: (text: string) => void;
   /**
    * Callback for when audio is recorded using MediaRecorder fallback.
@@ -69,6 +75,7 @@ export type SpeechInputProps = ComponentProps<typeof Button> & {
    */
   onAudioRecorded?: (audioBlob: Blob) => Promise<string>;
   lang?: string;
+  ref?: Ref<SpeechInputHandle>;
 };
 
 const detectSpeechInputMode = (): SpeechInputMode => {
@@ -92,6 +99,7 @@ export const SpeechInput = ({
   onTranscriptionChange,
   onAudioRecorded,
   lang = "en-US",
+  ref,
   ...props
 }: SpeechInputProps) => {
   const [isListening, setIsListening] = useState(false);
@@ -300,6 +308,20 @@ export const SpeechInput = ({
       }
     }
   }, [mode, isListening, startMediaRecorder, stopMediaRecorder]);
+
+  // Parent calls this when the user submits the composer mid-recording. We
+  // stop the active recognizer/recorder so the mic UI doesn't stay armed
+  // after the message has been sent.
+  const stop = useCallback(() => {
+    if (!isListening) return;
+    if (mode === "speech-recognition" && recognitionRef.current) {
+      recognitionRef.current.stop();
+    } else if (mode === "media-recorder") {
+      stopMediaRecorder();
+    }
+  }, [mode, isListening, stopMediaRecorder]);
+
+  useImperativeHandle(ref, () => ({ stop, isListening }), [stop, isListening]);
 
   // Determine if button should be disabled
   const isDisabled =
