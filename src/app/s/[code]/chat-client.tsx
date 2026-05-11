@@ -85,6 +85,30 @@ export default function ChatClient({
   // True while a /api/finalize call is in flight — drives the loader on
   // the perspectives panel.
   const [analyzing, setAnalyzing] = useState(false);
+  // Briefly true after a successful PhoneGate submission while we wait
+  // for router.refresh() to deliver fresh themes/points. The analyze
+  // itself is already done by then, but `initialThemes` arrives via a
+  // prop on the next render — without this flag the panel flashes
+  // "No themes yet" for a beat.
+  const [postSubmitSettling, setPostSubmitSettling] = useState(false);
+  const settlingTimerRef = useRef<number | null>(null);
+  useEffect(
+    () => () => {
+      if (settlingTimerRef.current !== null) {
+        window.clearTimeout(settlingTimerRef.current);
+      }
+    },
+    [],
+  );
+  // Clear the post-submit loader as soon as fresh themes arrive from the
+  // server (router.refresh resolved). Falls back to the timer below in
+  // case the refresh is unusually slow.
+  useEffect(() => {
+    if (postSubmitSettling && initialThemes.length > 0) {
+      setPostSubmitSettling(false);
+    }
+  }, [initialThemes, postSubmitSettling]);
+  const showAnalyzing = analyzing || postSubmitSettling;
   const introAckKey = `tejido:s:${sessionCode}:intro-acked`;
 
   // Show the sense-making note on the first visit to a session, only
@@ -299,13 +323,14 @@ export default function ChatClient({
                 />
               );
             })}
+            {!hasAnalyzed && showAnalyzing && <AnalyzingPlaceholder />}
             {hasAnalyzed && (
               <ThemesPanel
                 sessionCode={sessionCode}
                 initialThemes={initialThemes}
                 initialSummary={initialSummary}
                 initialPoints={initialPoints}
-                analyzing={analyzing}
+                analyzing={showAnalyzing}
               />
             )}
           </ConversationContent>
@@ -326,6 +351,17 @@ export default function ChatClient({
                 // runFinalize's router.refresh on completion swaps in
                 // this participant's contributions.
                 setHasAnalyzed(true);
+                setPostSubmitSettling(true);
+                if (settlingTimerRef.current !== null) {
+                  window.clearTimeout(settlingTimerRef.current);
+                }
+                // Safety net: drop the loader after a few seconds even
+                // if the refresh stalls — better than leaving it
+                // spinning forever.
+                settlingTimerRef.current = window.setTimeout(() => {
+                  setPostSubmitSettling(false);
+                  settlingTimerRef.current = null;
+                }, 8000);
                 router.refresh();
               }}
             />
@@ -556,6 +592,29 @@ function FacilitatorOpener({ text }: { text: string }) {
         {text.startsWith("“") ? text : `“${text}”`}
       </p>
     </div>
+  );
+}
+
+function AnalyzingPlaceholder() {
+  return (
+    <section className="flex w-full max-w-[40rem] flex-col gap-3">
+      <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
+        <span className="relative flex size-1.5" aria-hidden>
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-70" />
+          <span className="relative inline-flex size-1.5 rounded-full bg-[var(--accent)]" />
+        </span>
+        <span>From the room</span>
+      </div>
+      <div className="flex items-center gap-3 rounded-xl border border-dashed border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4 py-3.5">
+        <span
+          className="size-2 animate-pulse rounded-full bg-[var(--accent)]"
+          aria-hidden
+        />
+        <p className="font-display text-[0.98rem] italic leading-relaxed text-foreground/80 sm:text-[1.02rem]">
+          Pulling your perspective into the group view…
+        </p>
+      </div>
+    </section>
   );
 }
 

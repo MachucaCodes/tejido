@@ -334,10 +334,22 @@ export function ThemesPanel({
       )}
 
       {themes.length === 0 ? (
-        <p className="font-display text-[1rem] italic leading-relaxed text-muted-foreground sm:text-[1.05rem]">
-          No themes yet — they appear here as more neighbors finish their
-          conversations.
-        </p>
+        analyzing ? (
+          <div className="flex items-center gap-3 rounded-xl border border-dashed border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4 py-3.5">
+            <span
+              className="size-2 animate-pulse rounded-full bg-[var(--accent)]"
+              aria-hidden
+            />
+            <p className="font-display text-[0.98rem] italic leading-relaxed text-foreground/80 sm:text-[1.02rem]">
+              Pulling your perspective into the group view…
+            </p>
+          </div>
+        ) : (
+          <p className="font-display text-[1rem] italic leading-relaxed text-muted-foreground sm:text-[1.05rem]">
+            No themes yet — they appear here as more neighbors finish their
+            conversations.
+          </p>
+        )
       ) : (
         <ol className="flex flex-col divide-y divide-border/70 border-y border-border/70">
           {(showAllThemes ? themes : themes.slice(0, 3)).map((t, i) => {
@@ -346,7 +358,7 @@ export function ThemesPanel({
             const phrases = Array.from(
               new Set(themePoints.map((p) => p.surface_phrase)),
             );
-            const canExpand = phrases.length > 0;
+            const canExpand = true;
             return (
               <li
                 key={t.id}
@@ -390,7 +402,12 @@ export function ThemesPanel({
                         </span>
                       )}
                     </h3>
-                    <p className="font-sans text-[0.92rem] leading-[1.55] text-muted-foreground">
+                    <p
+                      className={cn(
+                        "font-sans text-[0.92rem] leading-[1.55] text-muted-foreground",
+                        !isExpanded && "line-clamp-3",
+                      )}
+                    >
                       {t.description}
                     </p>
                   </div>
