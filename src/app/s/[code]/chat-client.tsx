@@ -25,10 +25,10 @@ const SENSE_MAKING_NOTES = [
     body: "Communities have always needed tools to understand one another. In the past, we sat around fires and yarned with each other.",
   },
   {
-    body: "Now there are far too many of us to be around the fire together. This AI tool helps your voice be heard and hear your neighbors' perspectives.",
+    body: "Now there are far too many of us to be around the fire together. This AI tool helps us collect opinions from as many neighbors as possible so that everyone's voice is heard.",
   },
   {
-    body: "We recommend you use the microphone to speak naturally to this tool like you would a neighbor. Excerpts from your chat will be shared anonymously so the group can see where we are at together.",
+    body: "We will be recording your session with the AI and you’ll have the option to see what others have said. We recommend you use the microphone to speak naturally to this tool like you would a neighbor. Excerpts from your chat will be shared anonymously with the community.",
   },
 ] as const;
 
@@ -140,12 +140,15 @@ export default function ChatClient({
         body: JSON.stringify({ sessionCode }),
       });
       if (res.ok) {
-        setHasAnalyzed(true);
-        // Re-seed the page from the server so the freshly-written themes
-        // and any newly-generated summary land in initialThemes /
-        // initialSummary. Browser-side RLS blocks these reads for
-        // participants without a phone, so we can't catch up via the
-        // anon client — only the server-side admin fetch sees them.
+        // For first-time participants, the PhoneGate's onComplete owns
+        // the hasAnalyzed flip — flipping it here would hide the gate
+        // before they've handed over their number. Refresh either way
+        // so freshly-written themes/summary land in initialThemes etc.
+        // Browser-side RLS blocks those reads for participants without
+        // a phone, so the server-side admin fetch is our only path.
+        if (hasPhone) {
+          setHasAnalyzed(true);
+        }
         router.refresh();
       }
     } catch {
@@ -155,11 +158,11 @@ export default function ChatClient({
       analyzingRef.current = false;
       setAnalyzing(false);
     }
-  }, [sessionCode, router]);
+  }, [sessionCode, router, hasPhone]);
 
   useEffect(() => {
     // Cancel any pending timer if conditions change in a way that means
-    // we shouldn't fire (still streaming, no phone, etc.).
+    // we shouldn't fire (still streaming, etc.).
     const cancel = () => {
       if (debounceRef.current !== null) {
         window.clearTimeout(debounceRef.current);
@@ -168,7 +171,7 @@ export default function ChatClient({
       }
     };
 
-    if (!ready || !hasPhone || status === "streaming") {
+    if (!ready || status === "streaming") {
       cancel();
       return;
     }
@@ -181,10 +184,19 @@ export default function ChatClient({
 
     cancel();
     armedForRef.current = lastAssistant.id;
-    debounceRef.current = window.setTimeout(() => {
-      debounceRef.current = null;
+    if (!hasPhone) {
+      // First-share path: PhoneGate is about to mount (or just did).
+      // Kick off analysis now so it runs in parallel with the ~20-30s
+      // the participant spends on phone/OTP/details. No debounce — they
+      // can't keep chatting from the gate, so there's no follow-up to
+      // wait for.
       void runFinalize();
-    }, READY_DEBOUNCE_MS);
+    } else {
+      debounceRef.current = window.setTimeout(() => {
+        debounceRef.current = null;
+        void runFinalize();
+      }, READY_DEBOUNCE_MS);
+    }
 
     return cancel;
   }, [ready, hasPhone, status, messages, runFinalize]);
@@ -306,10 +318,13 @@ export default function ChatClient({
               sessionCode={sessionCode}
               onComplete={() => {
                 setHasPhone(true);
-                // PhoneGate calls /api/finalize itself before invoking
-                // onComplete, so the participant has already analyzed by
-                // the time we get here. router.refresh() re-renders the
-                // page so initial themes/messages reflect the new state.
+                // Analysis was kicked off as soon as [READY_TO_SHARE]
+                // landed, so it's either already done or still running
+                // in the background. Flip hasAnalyzed so ThemesPanel
+                // takes over with whatever the room has so far; its
+                // `analyzing` indicator covers the in-flight case, and
+                // runFinalize's router.refresh on completion swaps in
+                // this participant's contributions.
                 setHasAnalyzed(true);
                 router.refresh();
               }}

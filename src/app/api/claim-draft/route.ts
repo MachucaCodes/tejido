@@ -37,11 +37,23 @@ export async function POST(req: Request) {
     .eq("user_id", realUser.id)
     .maybeSingle();
 
+  // Cleanup is meant for the throwaway anon identity that owned the
+  // draft. If the "before" user is a real (phone-keyed) account — e.g.
+  // a tester who nulled their phone to re-trigger the gate — deleting
+  // it would nuke a real auth row as a side effect. Only delete when
+  // the source user is genuinely anonymous.
+  const cleanupAnon = async () => {
+    const { data: anonRes } = await admin.auth.admin.getUserById(anonUserId);
+    if (anonRes?.user?.is_anonymous) {
+      await admin.auth.admin.deleteUser(anonUserId).catch(() => {});
+    }
+  };
+
   // Case 4: real user already completed this session. Discard the draft;
   // the existing complete participant is the canonical record.
   if (existing?.phase === "complete") {
     if (draft) await admin.from("participants").delete().eq("id", draft.id);
-    await admin.auth.admin.deleteUser(anonUserId).catch(() => {});
+    await cleanupAnon();
     return NextResponse.json(
       { ok: false, reason: "already_complete" },
       { status: 409 },
@@ -51,7 +63,7 @@ export async function POST(req: Request) {
   if (!draft) {
     // Real user has no draft from this anon session — nothing to reassign.
     // (Either case 2 with no prior, or anon user already cleaned up.)
-    await admin.auth.admin.deleteUser(anonUserId).catch(() => {});
+    await cleanupAnon();
     return NextResponse.json({ ok: true, reassigned: false });
   }
 
@@ -74,7 +86,7 @@ export async function POST(req: Request) {
     });
   }
 
-  await admin.auth.admin.deleteUser(anonUserId).catch(() => {});
+  await cleanupAnon();
 
   return NextResponse.json({ ok: true, reassigned: true });
 }

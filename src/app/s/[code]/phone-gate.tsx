@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { DEFAULT_COUNTRY_ISO, findCountry } from "@/lib/countries";
 import { createClient } from "@/lib/supabase/client";
 
-type Step = "phone" | "otp" | "details" | "finalizing";
+type Step = "phone" | "otp" | "details";
 
 const RESEND_COOLDOWN_S = 30;
 
@@ -145,60 +145,78 @@ export function PhoneGate({
     setStep("details");
   };
 
-  const finalize = async () => {
-    const res = await fetch("/api/finalize", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ sessionCode }),
-    });
-    if (!res.ok) throw new Error(await res.text());
+  // Mobile networks frequently drop a request mid-flight even when the
+  // server completed it. /api/profile is idempotent, so it's safe to
+  // retry on transient fetch errors before surfacing one.
+  const fetchWithRetry = async (
+    input: RequestInfo,
+    init: RequestInit,
+    attempts = 3,
+  ): Promise<Response> => {
+    let lastErr: unknown;
+    for (let i = 0; i < attempts; i += 1) {
+      try {
+        return await fetch(input, init);
+      } catch (err) {
+        lastErr = err;
+        if (i < attempts - 1) {
+          await new Promise((resolve) => setTimeout(resolve, 500 * (i + 1)));
+        }
+      }
+    }
+    throw lastErr instanceof Error
+      ? lastErr
+      : new Error(String(lastErr));
   };
 
-  const submitDetails = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setBusy(true);
-    setStep("finalizing");
-    // Profile save runs in parallel; finalize is the gating call.
-    void fetch("/api/profile", {
+  const friendlyNetworkError = (err: unknown) => {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (/failed to fetch|network|load failed/i.test(msg)) {
+      return "Couldn't reach the server — check your connection and tap Save again.";
+    }
+    return msg;
+  };
+
+  const saveProfile = async () => {
+    const res = await fetchWithRetry("/api/profile", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ full_name: fullName, lot_number: lotNumber }),
     });
+    if (!res.ok) throw new Error(await res.text());
+  };
+
+  // Analysis is already in flight (kicked off by ChatClient as soon as
+  // the LLM emitted [READY_TO_SHARE]), so submit/skip just settles the
+  // participant's optional details and hands off to the parent — which
+  // shows ThemesPanel with a loader until the in-flight finalize lands.
+  const submitDetails = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setBusy(true);
     try {
-      await finalize();
+      await saveProfile();
       onComplete();
     } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
-      setStep("details");
+      setError(friendlyNetworkError(err));
     } finally {
       setBusy(false);
     }
   };
 
-  const skipDetails = async () => {
+  const skipDetails = () => {
     setError(null);
-    setBusy(true);
-    setStep("finalizing");
-    try {
-      await finalize();
-      onComplete();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : String(err));
-      setStep("details");
-    } finally {
-      setBusy(false);
-    }
+    onComplete();
   };
 
   return (
     <div className="space-y-3 rounded-2xl border border-dashed bg-card p-4 shadow-sm">
       <div className="space-y-0.5">
         <p className="text-sm font-medium">
-          One last step to see the group&apos;s themes
+          See what others are saying
         </p>
         <p className="text-xs text-muted-foreground">
-          We&apos;ll text you a 6-digit code so you can come back to your perspective. Your responses are still shared anonymously with the group.
+          While that runs, drop your number — we&apos;ll text a 6-digit code so you can come back later. Your responses are still shared anonymously with the group.
         </p>
       </div>
 
@@ -313,12 +331,6 @@ export function PhoneGate({
             Skip
           </button>
         </form>
-      )}
-
-      {step === "finalizing" && (
-        <p className="py-2 text-center text-sm text-muted-foreground">
-          Pulling your perspective into the group view…
-        </p>
       )}
 
       {error && <p className="text-center text-xs text-destructive">{error}</p>}
