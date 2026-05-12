@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { CountryCodeSelect } from "@/components/country-code-select";
 import { Button } from "@/components/ui/button";
+import { logEvent } from "@/lib/client-log";
 import { DEFAULT_COUNTRY_ISO, findCountry } from "@/lib/countries";
 import { createClient } from "@/lib/supabase/client";
 
@@ -30,6 +31,13 @@ export function PhoneGate({
   const [busy, setBusy] = useState(false);
   const [resendIn, setResendIn] = useState(0);
   const resendTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  useEffect(() => {
+    logEvent("gate.mount", { sessionCode });
+  }, [sessionCode]);
+  useEffect(() => {
+    logEvent("gate.step", { step });
+  }, [step]);
 
   const country = findCountry(iso);
   const e164 = `+${country.dial}${localNumber.replace(/\D/g, "")}`;
@@ -66,15 +74,22 @@ export function PhoneGate({
     setError(null);
     setInfo(null);
     setBusy(true);
+    const startedAt = Date.now();
+    logEvent("gate.otp.send_begin", { dial: country.dial });
     // Sign-in OTP: creates a phone-keyed user if new, or signs into the
     // existing one if this human has been here before. Either way, the
     // post-verify session is owned by the canonical phone-keyed user.
     const { error: err } = await supabase.auth.signInWithOtp({ phone: e164 });
     setBusy(false);
     if (err) {
+      logEvent("gate.otp.send_error", {
+        message: err.message,
+        duration_ms: Date.now() - startedAt,
+      });
       setError(err.message);
       return;
     }
+    logEvent("gate.otp.send_ok", { duration_ms: Date.now() - startedAt });
     setToken("");
     startResendCooldown();
     setStep("otp");
@@ -105,30 +120,45 @@ export function PhoneGate({
     const cleanToken = token.replace(/\D/g, "");
     if (cleanToken.length !== 6) {
       setBusy(false);
+      logEvent("gate.otp.verify_short_token", { length: cleanToken.length });
       setError("Enter the 6-digit code from the text message.");
       return;
     }
     const beforeId = (await supabase.auth.getUser()).data.user?.id ?? null;
+    const verifyStart = Date.now();
+    logEvent("gate.otp.verify_begin", { hasBeforeId: Boolean(beforeId) });
     const { error: err } = await supabase.auth.verifyOtp({
       phone: e164,
       token: cleanToken,
       type: "sms",
     });
     if (err) {
+      logEvent("gate.otp.verify_error", {
+        message: err.message,
+        duration_ms: Date.now() - verifyStart,
+      });
       setBusy(false);
       setToken("");
       setError(friendlyError(err.message));
       return;
     }
+    logEvent("gate.otp.verify_ok", { duration_ms: Date.now() - verifyStart });
     // Reassign the draft conversation to the (now signed-in) real user. If
     // beforeId === current user id, the endpoint no-ops. If the human had
     // already completed this session, claim-draft returns 409 and we route
     // straight to their existing themes view.
     if (beforeId) {
+      const claimStart = Date.now();
+      logEvent("gate.claim_draft.begin", { anonUserId: beforeId });
       const res = await fetch("/api/claim-draft", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ sessionCode, anonUserId: beforeId }),
+      });
+      logEvent("gate.claim_draft.end", {
+        status: res.status,
+        ok: res.ok,
+        duration_ms: Date.now() - claimStart,
       });
       if (res.status === 409) {
         setBusy(false);
@@ -153,12 +183,23 @@ export function PhoneGate({
     init: RequestInit,
     attempts = 3,
   ): Promise<Response> => {
+    const url = typeof input === "string" ? input : input.url;
     let lastErr: unknown;
     for (let i = 0; i < attempts; i += 1) {
       try {
-        return await fetch(input, init);
+        const res = await fetch(input, init);
+        if (i > 0) {
+          logEvent("gate.fetch.retry_success", { url, attempt: i + 1 });
+        }
+        return res;
       } catch (err) {
         lastErr = err;
+        logEvent("gate.fetch.attempt_failed", {
+          url,
+          attempt: i + 1,
+          willRetry: i < attempts - 1,
+          message: err instanceof Error ? err.message : String(err),
+        });
         if (i < attempts - 1) {
           await new Promise((resolve) => setTimeout(resolve, 500 * (i + 1)));
         }
@@ -194,10 +235,22 @@ export function PhoneGate({
     e.preventDefault();
     setError(null);
     setBusy(true);
+    const startedAt = Date.now();
+    logEvent("gate.submit_details.begin", {
+      hasName: Boolean(fullName.trim()),
+      hasLot: Boolean(lotNumber.trim()),
+    });
     try {
       await saveProfile();
+      logEvent("gate.submit_details.success", {
+        duration_ms: Date.now() - startedAt,
+      });
       onComplete();
     } catch (err) {
+      logEvent("gate.submit_details.error", {
+        duration_ms: Date.now() - startedAt,
+        message: err instanceof Error ? err.message : String(err),
+      });
       setError(friendlyNetworkError(err));
     } finally {
       setBusy(false);
@@ -206,6 +259,7 @@ export function PhoneGate({
 
   const skipDetails = () => {
     setError(null);
+    logEvent("gate.submit_details.skip", {});
     onComplete();
   };
 

@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { logEvent } from "@/lib/client-log";
 import { cn } from "@/lib/utils";
 import { MicIcon, SquareIcon } from "lucide-react";
 import type { ComponentProps, Ref } from "react";
@@ -106,6 +107,15 @@ export const SpeechInput = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [mode, setMode] = useState<SpeechInputMode>(detectSpeechInputMode);
   const [isRecognitionReady, setIsRecognitionReady] = useState(false);
+  // Log the detected mode once per mount so we can see what each
+  // participant's browser actually decided. Visible UI behavior diverges
+  // sharply between speech-recognition and media-recorder paths.
+  useEffect(() => {
+    logEvent("mic.detected_mode", {
+      mode,
+      ua: typeof navigator !== "undefined" ? navigator.userAgent : null,
+    });
+  }, [mode]);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const lastFinalIndexRef = useRef(-1);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -138,15 +148,23 @@ export const SpeechInput = ({
     const handleStart = () => {
       lastFinalIndexRef.current = -1;
       setIsListening(true);
+      logEvent("mic.start", { mode: "speech-recognition", lang });
     };
 
     const handleEnd = () => {
       setIsListening(false);
+      logEvent("mic.end", {
+        mode: "speech-recognition",
+        lastFinalIndex: lastFinalIndexRef.current,
+      });
     };
 
     const handleResult = (event: Event) => {
       const speechEvent = event as SpeechRecognitionEvent;
       let finalTranscript = "";
+      let totalFinals = 0;
+      let newFinals = 0;
+      let skippedFinals = 0;
 
       // Android Chrome's webkitSpeechRecognition does not advance resultIndex
       // reliably with continuous=true, so it re-fires earlier final results on
@@ -154,11 +172,25 @@ export const SpeechInput = ({
       // skip anything at or below it.
       for (let i = 0; i < speechEvent.results.length; i += 1) {
         const result = speechEvent.results[i];
-        if (result.isFinal && i > lastFinalIndexRef.current) {
+        if (!result.isFinal) continue;
+        totalFinals += 1;
+        if (i > lastFinalIndexRef.current) {
           finalTranscript += result[0]?.transcript ?? "";
           lastFinalIndexRef.current = i;
+          newFinals += 1;
+        } else {
+          skippedFinals += 1;
         }
       }
+
+      logEvent("mic.result", {
+        resultIndex: speechEvent.resultIndex,
+        length: speechEvent.results.length,
+        totalFinals,
+        newFinals,
+        skippedFinals,
+        emittedChars: finalTranscript.length,
+      });
 
       if (finalTranscript) {
         onTranscriptionChangeRef.current?.(finalTranscript);
@@ -169,6 +201,10 @@ export const SpeechInput = ({
       const errorEvent = event as SpeechRecognitionErrorEvent;
       console.warn("[SpeechInput] recognition error:", errorEvent.error);
       setIsListening(false);
+      logEvent("mic.error", {
+        mode: "speech-recognition",
+        error: errorEvent.error,
+      });
 
       // Brave and some privacy-hardened Chromium browsers expose
       // webkitSpeechRecognition but block the Google cloud endpoint it relies
@@ -184,6 +220,11 @@ export const SpeechInput = ({
         typeof window !== "undefined" &&
         "MediaRecorder" in window
       ) {
+        logEvent("mic.fallback", {
+          from: "speech-recognition",
+          to: "media-recorder",
+          reason: errorEvent.error,
+        });
         setMode("media-recorder");
       }
     };
@@ -250,14 +291,25 @@ export const SpeechInput = ({
           type: "audio/webm",
         });
 
+        logEvent("mic.recorder.stop", { bytes: audioBlob.size });
+
         if (audioBlob.size > 0 && onAudioRecordedRef.current) {
           setIsProcessing(true);
+          const startedAt = Date.now();
           try {
             const transcript = await onAudioRecordedRef.current(audioBlob);
+            logEvent("mic.recorder.transcribed", {
+              chars: transcript.length,
+              duration_ms: Date.now() - startedAt,
+            });
             if (transcript) {
               onTranscriptionChangeRef.current?.(transcript);
             }
-          } catch {
+          } catch (err) {
+            logEvent("mic.recorder.transcribe_error", {
+              message: err instanceof Error ? err.message : String(err),
+              duration_ms: Date.now() - startedAt,
+            });
             // Error handling delegated to the onAudioRecorded caller
           } finally {
             setIsProcessing(false);
@@ -267,6 +319,7 @@ export const SpeechInput = ({
 
       const handleError = () => {
         setIsListening(false);
+        logEvent("mic.recorder.error", {});
         for (const track of stream.getTracks()) {
           track.stop();
         }
@@ -280,8 +333,12 @@ export const SpeechInput = ({
       mediaRecorderRef.current = mediaRecorder;
       mediaRecorder.start();
       setIsListening(true);
-    } catch {
+      logEvent("mic.start", { mode: "media-recorder" });
+    } catch (err) {
       setIsListening(false);
+      logEvent("mic.getUserMedia_error", {
+        message: err instanceof Error ? err.message : String(err),
+      });
     }
   }, []);
 
@@ -294,6 +351,7 @@ export const SpeechInput = ({
   }, []);
 
   const toggleListening = useCallback(() => {
+    logEvent("mic.toggle", { mode, wasListening: isListening });
     if (mode === "speech-recognition" && recognitionRef.current) {
       if (isListening) {
         recognitionRef.current.stop();
@@ -314,6 +372,7 @@ export const SpeechInput = ({
   // after the message has been sent.
   const stop = useCallback(() => {
     if (!isListening) return;
+    logEvent("mic.stop_via_submit", { mode });
     if (mode === "speech-recognition" && recognitionRef.current) {
       recognitionRef.current.stop();
     } else if (mode === "media-recorder") {

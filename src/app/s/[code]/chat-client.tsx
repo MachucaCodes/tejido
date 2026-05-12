@@ -13,6 +13,7 @@ import {
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
 import { SpeechInput, type SpeechInputHandle } from "@/components/ai-elements/speech-input";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { logEvent, setLogContext } from "@/lib/client-log";
 import { cn } from "@/lib/utils";
 
 import { PhoneGate } from "./phone-gate";
@@ -105,11 +106,53 @@ export default function ChatClient({
   // case the refresh is unusually slow.
   useEffect(() => {
     if (postSubmitSettling && initialThemes.length > 0) {
+      logEvent("chat.settling.clear", {
+        reason: "themes_arrived",
+        themeCount: initialThemes.length,
+      });
       setPostSubmitSettling(false);
     }
   }, [initialThemes, postSubmitSettling]);
   const showAnalyzing = analyzing || postSubmitSettling;
   const introAckKey = `tejido:s:${sessionCode}:intro-acked`;
+
+  // Tag every subsequent client log with this session.
+  useEffect(() => {
+    setLogContext({ sessionCode });
+    logEvent("chat.mount", {
+      hasPhone: initialHasPhone,
+      hasAnalyzed: initialHasAnalyzed,
+      initialMessageCount: initialMessages.length,
+      initialThemeCount: initialThemes.length,
+      initialPointCount: initialPoints.length,
+    });
+  }, [
+    sessionCode,
+    initialHasPhone,
+    initialHasAnalyzed,
+    initialMessages.length,
+    initialThemes.length,
+    initialPoints.length,
+  ]);
+
+  // Visibility of the major UI state flips.
+  useEffect(() => {
+    logEvent("chat.state", {
+      hasPhone,
+      hasAnalyzed,
+      analyzing,
+      postSubmitSettling,
+      showAnalyzing,
+      initialThemeCount: initialThemes.length,
+    });
+  }, [
+    hasPhone,
+    hasAnalyzed,
+    analyzing,
+    postSubmitSettling,
+    showAnalyzing,
+    initialThemes.length,
+  ]);
 
   // Show the sense-making note on the first visit to a session, only
   // before they've shared anything. Persisted per-session so a returning
@@ -154,14 +197,24 @@ export default function ChatClient({
   const armedForRef = useRef<string | null>(null);
 
   const runFinalize = useCallback(async () => {
-    if (analyzingRef.current) return;
+    if (analyzingRef.current) {
+      logEvent("chat.runFinalize.skipped_in_flight", {});
+      return;
+    }
     analyzingRef.current = true;
     setAnalyzing(true);
+    const startedAt = Date.now();
+    logEvent("chat.runFinalize.begin", { hasPhone });
     try {
       const res = await fetch("/api/finalize", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ sessionCode }),
+      });
+      logEvent("chat.runFinalize.response", {
+        status: res.status,
+        ok: res.ok,
+        duration_ms: Date.now() - startedAt,
       });
       if (res.ok) {
         // For first-time participants, the PhoneGate's onComplete owns
@@ -175,7 +228,11 @@ export default function ChatClient({
         }
         router.refresh();
       }
-    } catch {
+    } catch (err) {
+      logEvent("chat.runFinalize.error", {
+        message: err instanceof Error ? err.message : String(err),
+        duration_ms: Date.now() - startedAt,
+      });
       // Best-effort. Themes won't update; user can keep talking and the
       // next [READY_TO_SHARE] will retry.
     } finally {
@@ -214,8 +271,16 @@ export default function ChatClient({
       // the participant spends on phone/OTP/details. No debounce — they
       // can't keep chatting from the gate, so there's no follow-up to
       // wait for.
+      logEvent("chat.runFinalize.armed", {
+        trigger: "ready_token_no_phone",
+        debounce_ms: 0,
+      });
       void runFinalize();
     } else {
+      logEvent("chat.runFinalize.armed", {
+        trigger: "ready_token_with_phone",
+        debounce_ms: READY_DEBOUNCE_MS,
+      });
       debounceRef.current = window.setTimeout(() => {
         debounceRef.current = null;
         void runFinalize();
@@ -349,6 +414,10 @@ export default function ChatClient({
             <PhoneGate
               sessionCode={sessionCode}
               onComplete={() => {
+                logEvent("chat.gate_complete", {
+                  analyzeInFlight: analyzingRef.current,
+                  initialThemeCount: initialThemes.length,
+                });
                 setHasPhone(true);
                 // Analysis was kicked off as soon as [READY_TO_SHARE]
                 // landed, so it's either already done or still running
@@ -366,6 +435,7 @@ export default function ChatClient({
                 // if the refresh stalls — better than leaving it
                 // spinning forever.
                 settlingTimerRef.current = window.setTimeout(() => {
+                  logEvent("chat.settling.clear", { reason: "timeout" });
                   setPostSubmitSettling(false);
                   settlingTimerRef.current = null;
                 }, 8000);
