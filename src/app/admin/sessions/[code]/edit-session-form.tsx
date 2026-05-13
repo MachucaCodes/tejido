@@ -11,18 +11,21 @@ export default function EditSessionForm({
   code,
   initialTopic,
   initialIntroMessage,
+  initialContext,
   initialInstructions,
   initialStatus,
 }: {
   code: string;
   initialTopic: string;
   initialIntroMessage: string;
+  initialContext: string;
   initialInstructions: string;
   initialStatus: Status;
 }) {
   const router = useRouter();
   const [topic, setTopic] = useState(initialTopic);
   const [introMessage, setIntroMessage] = useState(initialIntroMessage);
+  const [context, setContext] = useState(initialContext);
   const [instructions, setInstructions] = useState(initialInstructions);
   const [status, setStatus] = useState<Status>(initialStatus);
   const [busy, setBusy] = useState(false);
@@ -32,6 +35,7 @@ export default function EditSessionForm({
   const dirty =
     topic !== initialTopic ||
     introMessage !== initialIntroMessage ||
+    context !== initialContext ||
     instructions !== initialInstructions ||
     status !== initialStatus;
 
@@ -45,6 +49,7 @@ export default function EditSessionForm({
       body: JSON.stringify({
         topic,
         intro_message: introMessage,
+        context,
         instructions,
         status,
       }),
@@ -85,6 +90,24 @@ export default function EditSessionForm({
           placeholder="Shown as the first assistant message. Leave blank for none."
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs font-medium" htmlFor="context">
+          Context
+        </label>
+        <textarea
+          id="context"
+          value={context}
+          onChange={(e) => setContext(e.target.value)}
+          rows={4}
+          placeholder="Background facts the facilitator can share only if asked. Optional."
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        />
+        <p className="text-xs text-muted-foreground">
+          Surfaced to the facilitator AI as reference material; not shown to the
+          participant unless they ask.
+        </p>
       </div>
 
       <div className="space-y-1">

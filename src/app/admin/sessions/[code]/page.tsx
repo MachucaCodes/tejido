@@ -17,7 +17,7 @@ export default async function AdminSessionDetail({
 
   const { data: session } = await admin
     .from("sessions")
-    .select("id, topic, intro_message, instructions, status, created_at")
+    .select("id, topic, intro_message, context, instructions, status, created_at")
     .eq("id", code)
     .single();
   if (!session) notFound();
@@ -72,6 +72,7 @@ export default async function AdminSessionDetail({
           code={session.id}
           initialTopic={session.topic ?? ""}
           initialIntroMessage={session.intro_message ?? ""}
+          initialContext={session.context ?? ""}
           initialInstructions={session.instructions ?? ""}
           initialStatus={session.status as "open" | "closed"}
         />

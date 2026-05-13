@@ -4,9 +4,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="min-h-dvh">
       <nav className="border-b bg-card px-4 py-3">
-        <div className="mx-auto flex max-w-4xl items-center justify-between">
+        <div className="mx-auto flex max-w-4xl items-center justify-between gap-4">
           <Link href="/admin" className="text-sm font-medium">
             Tejido admin
+          </Link>
+          <Link
+            href="/admin/sessions"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
+            Sessions
           </Link>
         </div>
       </nav>

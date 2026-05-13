@@ -6,6 +6,7 @@ import { createAdmin } from "@/lib/supabase/admin";
 type Body = {
   topic?: string;
   intro_message?: string | null;
+  context?: string | null;
   instructions?: string | null;
   status?: "open" | "closed";
 };
@@ -33,6 +34,10 @@ export async function PATCH(
   if ("intro_message" in body) {
     const v = (body.intro_message ?? "").toString().trim();
     update.intro_message = v || null;
+  }
+  if ("context" in body) {
+    const v = (body.context ?? "").toString().trim();
+    update.context = v || null;
   }
   if ("instructions" in body) {
     const v = (body.instructions ?? "").toString().trim();

@@ -10,6 +10,8 @@ export default function CreateSessionForm() {
   const [code, setCode] = useState("");
   const [topic, setTopic] = useState("");
   const [introMessage, setIntroMessage] = useState("");
+  const [context, setContext] = useState("");
+  const [instructions, setInstructions] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,7 +22,13 @@ export default function CreateSessionForm() {
     const res = await fetch("/api/admin/sessions", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ code, topic, intro_message: introMessage }),
+      body: JSON.stringify({
+        code,
+        topic,
+        intro_message: introMessage,
+        context,
+        instructions,
+      }),
     });
     setBusy(false);
     if (!res.ok) {
@@ -30,6 +38,8 @@ export default function CreateSessionForm() {
     setCode("");
     setTopic("");
     setIntroMessage("");
+    setContext("");
+    setInstructions("");
     router.refresh();
   };
 
@@ -73,6 +83,36 @@ export default function CreateSessionForm() {
           onChange={(e) => setIntroMessage(e.target.value)}
           rows={3}
           placeholder="Shown as the first message in the chat. Leave blank for the default."
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        />
+      </div>
+      <div className="space-y-1">
+        <label className="text-xs font-medium" htmlFor="context">
+          Context
+        </label>
+        <textarea
+          id="context"
+          value={context}
+          onChange={(e) => setContext(e.target.value)}
+          rows={4}
+          placeholder="Background facts the facilitator can share only if asked. Optional."
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        />
+        <p className="text-xs text-muted-foreground">
+          Surfaced to the facilitator AI as reference material; not shown to the
+          participant unless they ask.
+        </p>
+      </div>
+      <div className="space-y-1">
+        <label className="text-xs font-medium" htmlFor="instructions">
+          Instructions
+        </label>
+        <textarea
+          id="instructions"
+          value={instructions}
+          onChange={(e) => setInstructions(e.target.value)}
+          rows={4}
+          placeholder="Per-session guidance for the facilitator AI. Takes precedence over the general mechanics."
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>
