@@ -76,119 +76,114 @@ export default async function SessionsDirectoryPage() {
   const notStarted = cards.filter((c) => c.bucket === "not_started");
 
   return (
-    <main className="mx-auto w-full max-w-3xl px-5 pt-10 pb-16 sm:px-8 sm:pt-14">
-      <header className="flex flex-col gap-3 border-b border-border/70 pb-6">
+    <main className="mx-auto w-full max-w-2xl px-5 pt-12 pb-20 sm:px-8 sm:pt-16">
+      <header className="flex flex-col gap-3 pb-8">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
           Sessions
         </span>
-        <p
-          className="font-display text-[1.7rem] italic leading-[1.18] tracking-[-0.005em] text-foreground/90 sm:text-[2rem]"
+        <h1
+          className="font-display text-[2rem] italic leading-[1.1] tracking-[-0.01em] text-foreground sm:text-[2.4rem]"
           style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
         >
           Your directory
-        </p>
-        <p className="font-sans text-[0.98rem] leading-[1.55] text-muted-foreground">
+        </h1>
+        <p className="font-sans text-[0.95rem] leading-[1.55] text-muted-foreground">
           {hasPhone
-            ? "Conversations you've completed, ones you've started, and ones still waiting for your voice."
-            : "Conversations open to the community. Join one to see your history here."}
+            ? "Conversations you've completed, started, and ones still waiting for your voice."
+            : "Open conversations across the community. Join one to start tracking your history here."}
         </p>
       </header>
 
       {!hasPhone && (
-        <p className="mt-6 rounded-lg border border-dashed border-border/70 bg-card/40 px-4 py-3 font-sans text-[0.9rem] leading-[1.55] text-muted-foreground">
+        <p className="mb-8 rounded-lg border border-dashed border-border/70 bg-card/40 px-4 py-3 font-sans text-[0.875rem] leading-[1.55] text-muted-foreground">
           Verify your phone in any session to see what you&apos;ve finished and
           what you haven&apos;t started yet.
         </p>
       )}
 
-      <Section
-        label="Finished"
-        caption="Already shared your voice"
-        cards={finished}
-        emptyText="Nothing finished yet."
-        hide={!hasPhone}
-      />
-      <Section
-        label="In progress"
-        caption="Picked up but not yet shared"
-        cards={inProgress}
-        emptyText="Nothing in progress."
-        hide={!hasPhone}
-      />
-      <Section
-        label="Not started"
-        caption="Open and waiting"
-        cards={notStarted}
-        emptyText="No open sessions right now."
-      />
+      <div className="flex flex-col gap-10">
+        {hasPhone && (
+          <Section label="Finished" cards={finished} emptyText="Nothing finished yet." />
+        )}
+        {hasPhone && (
+          <Section
+            label="In progress"
+            cards={inProgress}
+            emptyText="Nothing in progress."
+          />
+        )}
+        <Section
+          label="Not started"
+          cards={notStarted}
+          emptyText="No open sessions right now."
+        />
+      </div>
     </main>
   );
 }
 
 function Section({
   label,
-  caption,
   cards,
   emptyText,
-  hide,
 }: {
   label: string;
-  caption: string;
   cards: SessionCard[];
   emptyText: string;
-  hide?: boolean;
 }) {
-  if (hide) return null;
   return (
-    <section className="mt-10 flex flex-col gap-4">
+    <section className="flex flex-col gap-3">
       <div className="flex items-baseline justify-between gap-3">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
           {label}
         </span>
-        <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground/70">
-          {cards.length} {cards.length === 1 ? "session" : "sessions"}
+        <span className="font-mono text-[10px] tabular-nums text-muted-foreground/60">
+          {cards.length}
         </span>
       </div>
-      <p className="font-sans text-[0.9rem] leading-[1.5] text-muted-foreground/80">
-        {caption}
-      </p>
       {cards.length === 0 ? (
-        <p className="font-display text-[1rem] italic leading-relaxed text-muted-foreground">
+        <p className="font-sans text-[0.9rem] leading-[1.55] text-muted-foreground/70">
           {emptyText}
         </p>
       ) : (
-        <ul className="flex flex-col divide-y divide-border/70 border-t border-border/70">
+        <ul className="flex flex-col gap-2">
           {cards.map(({ session, bucket }) => (
             <li key={session.id}>
               <Link
                 href={`/s/${session.id}`}
-                className="group grid grid-cols-[1fr_auto] items-baseline gap-4 py-5 transition-colors hover:bg-accent/30"
+                className="group flex items-center justify-between gap-4 rounded-xl border border-border/70 bg-card px-4 py-4 transition-colors hover:border-foreground/40 hover:bg-accent/30"
               >
-                <div className="flex flex-col gap-1.5">
-                  <p
-                    className="font-display text-[1.25rem] leading-[1.3] text-foreground sm:text-[1.35rem]"
-                    style={{
-                      fontVariationSettings: '"opsz" 24, "SOFT" 60',
-                    }}
-                  >
+                <div className="flex min-w-0 flex-col gap-1">
+                  <p className="truncate font-sans text-[1rem] font-medium leading-[1.4] text-foreground">
                     {session.topic}
                   </p>
-                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground/70">
-                    {session.id}
+                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
+                    /{session.id}
                   </span>
                 </div>
-                <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground transition-colors group-hover:text-foreground">
-                  {bucket === "finished"
-                    ? "View →"
-                    : bucket === "in_progress"
-                      ? "Continue →"
-                      : "Begin →"}
-                </span>
+                <StatusChip bucket={bucket} />
               </Link>
             </li>
           ))}
         </ul>
       )}
     </section>
+  );
+}
+
+function StatusChip({ bucket }: { bucket: Bucket }) {
+  const label =
+    bucket === "finished"
+      ? "View"
+      : bucket === "in_progress"
+        ? "Continue"
+        : "Begin";
+  return (
+    <span className="flex shrink-0 items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors group-hover:text-foreground">
+      {label}
+      <span aria-hidden className="transition-transform group-hover:translate-x-0.5">
+        →
+      </span>
+    </span>
   );
 }
