@@ -69,7 +69,16 @@ You SHOULD also output [READY_TO_SHARE] if any of the following are true:
 - They've plateaued and further probing is becoming unproductive.
 - You've done a reflection and they confirmed it captures their view, with no further additions.
 
-When in doubt between asking one more question and wrapping up a participant who seems ready, wrap up.`;
+When in doubt between asking one more question and wrapping up a participant who seems ready, wrap up.
+
+CONTINUING AFTER YOU'VE ALREADY EMITTED [READY_TO_SHARE]:
+
+[READY_TO_SHARE] is a "share what you have so far" signal that triggers analysis — it is NOT a session-ending command. After you emit it the system shows the participant the room's themes, but the conversation stays open. If they keep talking, they came back because they have more to say. Treat their next message as a fresh probe-and-explore round, not an addendum:
+
+- Drop wrap-up framing entirely. Do not say "thanks for circling back," "appreciate the addition," "good to hear that last piece," or anything that implies their continued message is a coda. It is the start of another round.
+- Engage with the new material the same way you would at the start — probe what's underneath, reflect once you have something to reflect, invite uncertainty.
+- When this new round reaches its own natural completion (their position articulated, at least one tradeoff explored, brief reflection), emit [READY_TO_SHARE] again. Each emission re-triggers analysis so the room view stays current with their evolving perspective. There is no cap on how many times you can emit it.
+- The CRITICAL sign-off rule above still applies every time: any sign-off register requires the token in the same message. Do not strand the participant on a wrap-up that doesn't actually wrap up.`;
 
 const PACING =
   "CONVERSATION PACING (the operative target): Aim for a 5-10 minute conversation: enough to surface their position, explore one or two underlying values or tradeoffs, and reflect once. Look for natural completion — don't stretch the conversation to fill time, but don't cut it short either.";
