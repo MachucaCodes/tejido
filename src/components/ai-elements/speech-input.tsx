@@ -117,7 +117,10 @@ export const SpeechInput = ({
     });
   }, [mode]);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
-  const lastFinalIndexRef = useRef(-1);
+  // Cumulative final transcript we've already emitted for the current
+  // recognition session. Used to dedupe Android Chrome's cumulative-final
+  // behavior (see handleResult).
+  const emittedFinalRef = useRef("");
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -146,7 +149,7 @@ export const SpeechInput = ({
     speechRecognition.lang = lang;
 
     const handleStart = () => {
-      lastFinalIndexRef.current = -1;
+      emittedFinalRef.current = "";
       setIsListening(true);
       logEvent("mic.start", { mode: "speech-recognition", lang });
     };
@@ -155,45 +158,72 @@ export const SpeechInput = ({
       setIsListening(false);
       logEvent("mic.end", {
         mode: "speech-recognition",
-        lastFinalIndex: lastFinalIndexRef.current,
+        emittedChars: emittedFinalRef.current.length,
       });
     };
 
     const handleResult = (event: Event) => {
       const speechEvent = event as SpeechRecognitionEvent;
-      let finalTranscript = "";
       let totalFinals = 0;
-      let newFinals = 0;
-      let skippedFinals = 0;
-
-      // Android Chrome's webkitSpeechRecognition does not advance resultIndex
-      // reliably with continuous=true, so it re-fires earlier final results on
-      // every event. Track the highest final index we've already emitted and
-      // skip anything at or below it.
+      const finalParts: string[] = [];
       for (let i = 0; i < speechEvent.results.length; i += 1) {
         const result = speechEvent.results[i];
         if (!result.isFinal) continue;
         totalFinals += 1;
-        if (i > lastFinalIndexRef.current) {
-          finalTranscript += result[0]?.transcript ?? "";
-          lastFinalIndexRef.current = i;
-          newFinals += 1;
-        } else {
-          skippedFinals += 1;
+        finalParts.push(result[0]?.transcript ?? "");
+      }
+
+      // Two platform shapes to reconcile:
+      //   - Desktop Chrome: each finalized utterance appears once at its own
+      //     index with that utterance's text. Concatenating all finals is the
+      //     full transcript so far.
+      //   - Android Chrome: each new event adds a *new* final entry whose
+      //     transcript is the running cumulative phrase (e.g. "I'm" → "I'm
+      //     sad" → "I'm sad we're"). Concatenating those would duplicate
+      //     prefixes; emitting only the newest entry would lose context if
+      //     two independent utterances landed in the same session.
+      // Strategy: build a single growing buffer per session. For each final
+      // part, if it extends the buffer (its transcript starts with what we've
+      // already absorbed), replace the tail; otherwise treat it as a fresh
+      // utterance and append. Then emit only the diff vs. what we've already
+      // sent to the parent.
+      let buffer = "";
+      for (const part of finalParts) {
+        if (!part) continue;
+        if (part.startsWith(buffer)) {
+          // Cumulative growth (Android) or first part — replace.
+          buffer = part;
+        } else if (!buffer.startsWith(part)) {
+          // Distinct utterance — append. (Older restatements that match
+          // a prefix of the buffer fall through both branches and are
+          // intentionally dropped.)
+          buffer = buffer ? `${buffer} ${part}` : part;
         }
       }
+
+      let delta = "";
+      if (buffer.startsWith(emittedFinalRef.current)) {
+        delta = buffer.slice(emittedFinalRef.current.length);
+      } else if (buffer) {
+        // Buffer diverged from what we emitted (rare: late-arriving correction
+        // that doesn't share a prefix). Treat as a separate utterance so we
+        // don't drop content.
+        delta = emittedFinalRef.current ? ` ${buffer}` : buffer;
+      }
+      const trimmedDelta = delta.replace(/^\s+/, "");
 
       logEvent("mic.result", {
         resultIndex: speechEvent.resultIndex,
         length: speechEvent.results.length,
         totalFinals,
-        newFinals,
-        skippedFinals,
-        emittedChars: finalTranscript.length,
+        bufferChars: buffer.length,
+        emittedSoFar: emittedFinalRef.current.length,
+        deltaChars: trimmedDelta.length,
       });
 
-      if (finalTranscript) {
-        onTranscriptionChangeRef.current?.(finalTranscript);
+      if (trimmedDelta) {
+        emittedFinalRef.current = buffer;
+        onTranscriptionChangeRef.current?.(trimmedDelta);
       }
     };
 
