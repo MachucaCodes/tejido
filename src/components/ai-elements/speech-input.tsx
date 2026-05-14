@@ -79,6 +79,30 @@ export type SpeechInputProps = Omit<ComponentProps<typeof Button>, "ref"> & {
   ref?: Ref<SpeechInputHandle>;
 };
 
+const sampleHead = (s: string, n: number): string =>
+  s.length <= n ? s : `${s.slice(0, n)}…`;
+
+const sampleTail = (s: string, n: number): string =>
+  s.length <= n ? s : `…${s.slice(-n)}`;
+
+// Crude repetition score: scan all 4-word sliding windows and report the
+// fraction that are duplicates. Healthy speech sits near 0; the Android
+// cumulative-final bug produces scores well above 0.5 because phrases like
+// "I'm sad we're losing" repeat verbatim across the input.
+const repetitionScore = (text: string): number => {
+  const words = text.toLowerCase().match(/\S+/g) ?? [];
+  if (words.length < 8) return 0;
+  const seen = new Map<string, number>();
+  let dupes = 0;
+  for (let i = 0; i <= words.length - 4; i += 1) {
+    const window = words.slice(i, i + 4).join(" ");
+    const count = (seen.get(window) ?? 0) + 1;
+    seen.set(window, count);
+    if (count > 1) dupes += 1;
+  }
+  return Math.round((dupes / (words.length - 3)) * 100) / 100;
+};
+
 const detectSpeechInputMode = (): SpeechInputMode => {
   if (typeof window === "undefined") {
     return "none";
@@ -121,6 +145,7 @@ export const SpeechInput = ({
   // recognition session. Used to dedupe Android Chrome's cumulative-final
   // behavior (see handleResult).
   const emittedFinalRef = useRef("");
+  const resultEventCountRef = useRef(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -150,20 +175,27 @@ export const SpeechInput = ({
 
     const handleStart = () => {
       emittedFinalRef.current = "";
+      resultEventCountRef.current = 0;
       setIsListening(true);
       logEvent("mic.start", { mode: "speech-recognition", lang });
     };
 
     const handleEnd = () => {
       setIsListening(false);
-      logEvent("mic.end", {
+      const final = emittedFinalRef.current;
+      logEvent("mic.session_summary", {
         mode: "speech-recognition",
-        emittedChars: emittedFinalRef.current.length,
+        events: resultEventCountRef.current,
+        finalChars: final.length,
+        head: sampleHead(final, 60),
+        tail: sampleTail(final, 60),
+        repetitionScore: repetitionScore(final),
       });
     };
 
     const handleResult = (event: Event) => {
       const speechEvent = event as SpeechRecognitionEvent;
+      resultEventCountRef.current += 1;
       let totalFinals = 0;
       const finalParts: string[] = [];
       for (let i = 0; i < speechEvent.results.length; i += 1) {
@@ -188,20 +220,33 @@ export const SpeechInput = ({
       // utterance and append. Then emit only the diff vs. what we've already
       // sent to the parent.
       let buffer = "";
+      const partLens: number[] = [];
+      let extended = 0;
+      let dropped = 0;
+      let appended = 0;
       for (const part of finalParts) {
-        if (!part) continue;
+        partLens.push(part.length);
+        if (!part) {
+          dropped += 1;
+          continue;
+        }
         if (part.startsWith(buffer)) {
           // Cumulative growth (Android) or first part — replace.
           buffer = part;
+          extended += 1;
         } else if (!buffer.startsWith(part)) {
           // Distinct utterance — append. (Older restatements that match
           // a prefix of the buffer fall through both branches and are
           // intentionally dropped.)
           buffer = buffer ? `${buffer} ${part}` : part;
+          appended += 1;
+        } else {
+          dropped += 1;
         }
       }
 
       let delta = "";
+      let divergent = false;
       if (buffer.startsWith(emittedFinalRef.current)) {
         delta = buffer.slice(emittedFinalRef.current.length);
       } else if (buffer) {
@@ -209,6 +254,7 @@ export const SpeechInput = ({
         // that doesn't share a prefix). Treat as a separate utterance so we
         // don't drop content.
         delta = emittedFinalRef.current ? ` ${buffer}` : buffer;
+        divergent = true;
       }
       const trimmedDelta = delta.replace(/^\s+/, "");
 
@@ -219,6 +265,11 @@ export const SpeechInput = ({
         bufferChars: buffer.length,
         emittedSoFar: emittedFinalRef.current.length,
         deltaChars: trimmedDelta.length,
+        partLens,
+        branches: { extended, appended, dropped },
+        divergent,
+        bufferTail: sampleTail(buffer, 30),
+        delta: sampleHead(trimmedDelta, 60),
       });
 
       if (trimmedDelta) {
