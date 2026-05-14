@@ -332,15 +332,26 @@ export default function ChatClient({
   );
 
   const speechInputRef = useRef<SpeechInputHandle>(null);
+  // Mirror of the controlled input, updated every render. Lets submit
+  // read the latest value AFTER awaiting a flush — React's setInput from
+  // a trailing speech final may not have committed by the time submit
+  // resumes from `await`, so reading the closure's `input` would lose
+  // those words.
+  const inputRef = useRef(input);
+  inputRef.current = input;
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Mic may still be armed — the Web Speech API streams final results
     // into the input while listening, so users routinely hit Send before
-    // tapping Stop. Tell the recognizer to wind down so it doesn't keep
-    // capturing audio after the message has left.
-    speechInputRef.current?.stop();
-    const text = input.trim();
+    // tapping Stop. Wait for the recognizer to flush any in-flight final
+    // so trailing words land in `input` before we read it. Caps at 500ms
+    // inside stopAndFlush; an additional rAF lets React commit.
+    if (speechInputRef.current?.isListening) {
+      await speechInputRef.current.stopAndFlush();
+      await new Promise<void>((r) => requestAnimationFrame(() => r()));
+    }
+    const text = inputRef.current.trim();
     if (!text) return;
     setInput("");
     void send(text);

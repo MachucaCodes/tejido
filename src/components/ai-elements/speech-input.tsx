@@ -63,6 +63,15 @@ type SpeechInputMode = "speech-recognition" | "media-recorder" | "none";
 export type SpeechInputHandle = {
   /** Stop recording/recognition if currently listening. No-op otherwise. */
   stop: () => void;
+  /**
+   * Stop the recognizer and resolve once any in-flight final transcript
+   * has been delivered (i.e. the next `onend` has fired). Use this from
+   * a submit handler so trailing words don't get truncated when the user
+   * hits Send mid-utterance. In media-recorder mode the audio is held
+   * until the server transcribes it, so this returns immediately and the
+   * transcript will land asynchronously through onTranscriptionChange.
+   */
+  stopAndFlush: () => Promise<void>;
   isListening: boolean;
 };
 
@@ -164,6 +173,11 @@ export const SpeechInput = ({
   // without this we'd auto-restart forever at 250ms intervals. Reset on
   // any cycle that captures audio, or on a user-initiated start.
   const consecutiveEmptyCyclesRef = useRef(0);
+  // Resolver for an in-flight stopAndFlush() promise. Set when the
+  // submit handler asks the recognizer to wind down; called from
+  // handleEnd (or the safety timer) so submit can read the input field
+  // after any trailing final has landed.
+  const flushResolverRef = useRef<(() => void) | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -199,6 +213,13 @@ export const SpeechInput = ({
     };
 
     const handleEnd = () => {
+      // Notify any submit() awaiting a flush — the engine has finished
+      // dispatching results for this cycle, so the input field reflects
+      // every final the recognizer was going to deliver.
+      const flushResolver = flushResolverRef.current;
+      flushResolverRef.current = null;
+      flushResolver?.();
+
       const userInitiated = userStoppedRef.current;
       const final = emittedFinalRef.current;
       const cycleHadAudio = resultEventCountRef.current > 0;
@@ -417,6 +438,10 @@ export const SpeechInput = ({
         window.clearTimeout(restartTimerRef.current);
         restartTimerRef.current = null;
       }
+      // Resolve any in-flight flush so an awaiter doesn't hang past unmount.
+      const pending = flushResolverRef.current;
+      flushResolverRef.current = null;
+      pending?.();
       speechRecognition.removeEventListener("start", handleStart);
       speechRecognition.removeEventListener("end", handleEnd);
       speechRecognition.removeEventListener("result", handleResult);
@@ -573,7 +598,56 @@ export const SpeechInput = ({
     }
   }, [mode, isListening, stopMediaRecorder]);
 
-  useImperativeHandle(ref, () => ({ stop, isListening }), [stop, isListening]);
+  const stopAndFlush = useCallback((): Promise<void> => {
+    if (!isListening) return Promise.resolve();
+    logEvent("mic.stop_via_submit", { mode, awaitingFlush: true });
+
+    if (mode !== "speech-recognition" || !recognitionRef.current) {
+      // Media-recorder path holds audio until the server transcribes it;
+      // we don't make submit wait that long. The transcript will arrive
+      // through onTranscriptionChange after the request resolves.
+      if (mode === "media-recorder") stopMediaRecorder();
+      return Promise.resolve();
+    }
+
+    userStoppedRef.current = true;
+    if (restartTimerRef.current !== null) {
+      window.clearTimeout(restartTimerRef.current);
+      restartTimerRef.current = null;
+    }
+
+    return new Promise<void>((resolve) => {
+      let safetyTimer: number | null = null;
+      const finalize = () => {
+        if (safetyTimer !== null) {
+          window.clearTimeout(safetyTimer);
+          safetyTimer = null;
+        }
+        if (flushResolverRef.current === finalize) {
+          flushResolverRef.current = null;
+        }
+        resolve();
+      };
+      // Replace any prior pending resolver so we don't leak it.
+      const prior = flushResolverRef.current;
+      flushResolverRef.current = finalize;
+      prior?.();
+      // Safety net: don't block submit forever if onend somehow doesn't fire.
+      safetyTimer = window.setTimeout(finalize, 500);
+      try {
+        recognitionRef.current?.stop();
+      } catch {
+        // If stop() throws, resolve immediately so submit isn't stuck.
+        finalize();
+      }
+    });
+  }, [mode, isListening, stopMediaRecorder]);
+
+  useImperativeHandle(
+    ref,
+    () => ({ stop, stopAndFlush, isListening }),
+    [stop, stopAndFlush, isListening],
+  );
 
   // Determine if button should be disabled
   const isDisabled =
