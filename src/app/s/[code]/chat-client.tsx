@@ -381,30 +381,46 @@ export default function ChatClient({
                 as messages accumulate. */}
             <Hero topic={topic} />
             {intro && <FacilitatorOpener text={intro} />}
-            {messages.map((m) => {
-              const cleaned = cleanText(m.content);
-              const isStreaming =
-                status === "streaming" && m.id === messages[messages.length - 1]?.id;
-              if (m.role === "assistant" && !cleaned && !isStreaming) return null;
-              return (
-                <EditorialMessage
-                  key={m.id}
-                  role={m.role}
-                  content={cleaned}
-                  isStreaming={isStreaming}
-                />
+            {(() => {
+              // Anchor themes/placeholder to the chronological moment they
+              // first appeared — right after the assistant turn that emitted
+              // [READY_TO_SHARE]. Continued conversation flows past them.
+              const readyIdx = messages.findIndex(
+                (m) => m.role === "assistant" && m.content.includes(READY_TOKEN),
               );
-            })}
-            {!hasAnalyzed && showAnalyzing && <AnalyzingPlaceholder />}
-            {hasAnalyzed && (
-              <ThemesPanel
-                sessionCode={sessionCode}
-                initialThemes={initialThemes}
-                initialSummary={initialSummary}
-                initialPoints={initialPoints}
-                analyzing={showAnalyzing}
-              />
-            )}
+              const splitAt = readyIdx >= 0 ? readyIdx + 1 : messages.length;
+              const lastId = messages[messages.length - 1]?.id;
+              const renderMsg = (m: ChatMessage) => {
+                const cleaned = cleanText(m.content);
+                const isStreaming = status === "streaming" && m.id === lastId;
+                if (m.role === "assistant" && !cleaned && !isStreaming) return null;
+                return (
+                  <EditorialMessage
+                    key={m.id}
+                    role={m.role}
+                    content={cleaned}
+                    isStreaming={isStreaming}
+                  />
+                );
+              };
+              return (
+                <>
+                  {messages.slice(0, splitAt).map(renderMsg)}
+                  {!hasAnalyzed && showAnalyzing && <AnalyzingPlaceholder />}
+                  {hasAnalyzed && (
+                    <ThemesPanel
+                      sessionCode={sessionCode}
+                      initialThemes={initialThemes}
+                      initialSummary={initialSummary}
+                      initialPoints={initialPoints}
+                      analyzing={showAnalyzing}
+                    />
+                  )}
+                  {hasAnalyzed && <OpenThreadNote />}
+                  {messages.slice(splitAt).map(renderMsg)}
+                </>
+              );
+            })()}
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
@@ -670,6 +686,22 @@ function FacilitatorOpener({ text }: { text: string }) {
         {text.startsWith("“") ? text : `“${text}”`}
       </p>
     </div>
+  );
+}
+
+function OpenThreadNote() {
+  return (
+    <section className="flex w-full max-w-[40rem] flex-col gap-3">
+      <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+          <circle cx="7" cy="7" r="6" stroke="var(--accent)" strokeWidth="1.1" />
+        </svg>
+        <span>Open thread</span>
+      </div>
+      <p className="font-display text-[1rem] italic leading-[1.55] text-foreground/80 sm:text-[1.05rem]">
+        This conversation stays open. Anything else you add will update the results above as your perspective evolves.
+      </p>
+    </section>
   );
 }
 
