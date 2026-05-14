@@ -79,6 +79,12 @@ export type SpeechInputProps = Omit<ComponentProps<typeof Button>, "ref"> & {
   ref?: Ref<SpeechInputHandle>;
 };
 
+// Number of consecutive zero-audio auto-restart cycles before the
+// circuit breaker trips and we stop restarting. Each cycle is roughly
+// 5s of silence-timeout + 250ms restart delay, so ~30s total before we
+// give up and let the participant re-arm the mic themselves.
+const MAX_EMPTY_RESTART_CYCLES = 6;
+
 const sampleHead = (s: string, n: number): string =>
   s.length <= n ? s : `${s.slice(0, n)}…`;
 
@@ -152,6 +158,12 @@ export const SpeechInput = ({
   // auto-restart on natural Android silence-timeouts in that window).
   const userStoppedRef = useRef(true);
   const restartTimerRef = useRef<number | null>(null);
+  // Counts consecutive auto-restart cycles that captured zero result
+  // events (i.e. the engine started, heard nothing, and ended). A muted
+  // mic / dead audio path produces an immediate no-speech → end loop;
+  // without this we'd auto-restart forever at 250ms intervals. Reset on
+  // any cycle that captures audio, or on a user-initiated start.
+  const consecutiveEmptyCyclesRef = useRef(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -189,6 +201,13 @@ export const SpeechInput = ({
     const handleEnd = () => {
       const userInitiated = userStoppedRef.current;
       const final = emittedFinalRef.current;
+      const cycleHadAudio = resultEventCountRef.current > 0;
+      if (cycleHadAudio || userInitiated) {
+        consecutiveEmptyCyclesRef.current = 0;
+      } else {
+        consecutiveEmptyCyclesRef.current += 1;
+      }
+
       logEvent("mic.session_summary", {
         mode: "speech-recognition",
         userInitiated,
@@ -197,7 +216,24 @@ export const SpeechInput = ({
         head: sampleHead(final, 60),
         tail: sampleTail(final, 60),
         repetitionScore: repetitionScore(final),
+        consecutiveEmptyCycles: consecutiveEmptyCyclesRef.current,
       });
+
+      // Circuit breaker: if the engine has fired N consecutive cycles
+      // with no audio captured at all (muted mic, dead audio path,
+      // browser quirk), stop auto-restarting and let the user decide
+      // whether to retry. ~MAX_EMPTY × 5s of silence before tripping.
+      if (
+        !userInitiated &&
+        consecutiveEmptyCyclesRef.current >= MAX_EMPTY_RESTART_CYCLES
+      ) {
+        logEvent("mic.empty_cycle_breaker", {
+          cycles: consecutiveEmptyCyclesRef.current,
+        });
+        userStoppedRef.current = true;
+        setIsListening(false);
+        return;
+      }
 
       // Android Chrome auto-ends the recognizer after ~5s of silence even
       // with continuous=true. If the user hasn't tapped stop, restart so
@@ -505,6 +541,9 @@ export const SpeechInput = ({
         recognitionRef.current.stop();
       } else {
         userStoppedRef.current = false;
+        // User explicitly armed the mic — fresh slate for the breaker
+        // even if the prior session(s) tripped it.
+        consecutiveEmptyCyclesRef.current = 0;
         recognitionRef.current.start();
       }
     } else if (mode === "media-recorder") {
