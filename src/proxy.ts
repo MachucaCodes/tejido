@@ -21,10 +21,12 @@ export async function proxy(request: NextRequest) {
 
   const { data } = await supabase.auth.getUser();
 
-  // On a participant URL, ensure an anonymous Supabase user exists so the page
-  // server component can read auth.uid(). The user can later upgrade to phone-verified
-  // via auth.updateUser({phone}) without losing their participant_id.
-  if (!data.user && request.nextUrl.pathname.startsWith("/s/")) {
+  // On the home directory or a participant URL, ensure an anonymous Supabase
+  // user exists so the page server component can read auth.uid(). The user can
+  // later upgrade to phone-verified via auth.updateUser({phone}) without
+  // losing their participant_id.
+  const path = request.nextUrl.pathname;
+  if (!data.user && (path === "/" || path.startsWith("/s/"))) {
     const { error } = await supabase.auth.signInAnonymously();
     if (error) {
       console.error(
