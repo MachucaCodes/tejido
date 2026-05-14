@@ -402,7 +402,11 @@ export default function ChatClient({
               const splitAt = readyIdx >= 0 ? readyIdx + 1 : messages.length;
               const lastId = messages[messages.length - 1]?.id;
               const renderMsg = (m: ChatMessage) => {
-                const cleaned = cleanText(m.content);
+                // Only strip [READY_TO_SHARE] from assistant content. If a
+                // user happens to paste the literal token, we want to keep
+                // it visible — silently mutating their words is worse than
+                // a rare odd-looking message.
+                const cleaned = m.role === "assistant" ? cleanText(m.content) : m.content;
                 const isStreaming = status === "streaming" && m.id === lastId;
                 if (m.role === "assistant" && !cleaned && !isStreaming) return null;
                 return (

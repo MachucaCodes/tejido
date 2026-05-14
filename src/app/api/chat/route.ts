@@ -192,7 +192,10 @@ export async function POST(req: Request) {
           });
         }
 
-        // Phase stays "in_conversation" until /api/finalize runs after phone verification.
+        // Phase stays "in_conversation" for the lifetime of the session — the
+        // redesign removed the terminal-complete phase. /api/finalize is a
+        // re-runnable share trigger that the chat client fires on every
+        // [READY_TO_SHARE], not a one-shot completion step.
         void participant;
         void READY_TOKEN;
       } catch (err) {
