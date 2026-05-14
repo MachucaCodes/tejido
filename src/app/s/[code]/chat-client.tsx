@@ -393,10 +393,15 @@ export default function ChatClient({
             <Hero topic={topic} />
             {intro && <FacilitatorOpener text={intro} />}
             {(() => {
-              // Anchor themes/placeholder to the chronological moment they
-              // first appeared — right after the assistant turn that emitted
-              // [READY_TO_SHARE]. Continued conversation flows past them.
-              const readyIdx = messages.findIndex(
+              // Anchor the panel + open-thread note to the LATEST
+              // [READY_TO_SHARE] emission — every "share what you have so
+              // far" signal republishes the room view at that moment in
+              // the conversation. As the participant continues and the
+              // model re-emits the token, the panel slides down to the
+              // newest position so the user (typically scrolled to the
+              // bottom) actually sees the snapshot appear in their
+              // viewport, just like the first time.
+              const readyIdx = messages.findLastIndex(
                 (m) => m.role === "assistant" && m.content.includes(READY_TOKEN),
               );
               const splitAt = readyIdx >= 0 ? readyIdx + 1 : messages.length;
@@ -408,17 +413,11 @@ export default function ChatClient({
                 // a rare odd-looking message.
                 const cleaned = m.role === "assistant" ? cleanText(m.content) : m.content;
                 const isStreaming = status === "streaming" && m.id === lastId;
-                if (m.role === "assistant" && !cleaned && !isStreaming) {
-                  // The model violated the prompt and emitted only the
-                  // token (or only whitespace around it). The token has
-                  // already triggered finalize — surface a small placeholder
-                  // so the participant knows their message landed and the
-                  // room view is updating, instead of seeing nothing.
-                  if (m.content.trim().length > 0) {
-                    return <UpdatingRoomViewMessage key={m.id} />;
-                  }
-                  return null;
-                }
+                // A token-only assistant message renders as nothing here —
+                // the panel sliding in directly below is the visible
+                // response, so a duplicate placeholder would just be
+                // noise.
+                if (m.role === "assistant" && !cleaned && !isStreaming) return null;
                 return (
                   <EditorialMessage
                     key={m.id}
@@ -709,23 +708,6 @@ function FacilitatorOpener({ text }: { text: string }) {
         style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
       >
         {text.startsWith("“") ? text : `“${text}”`}
-      </p>
-    </div>
-  );
-}
-
-function UpdatingRoomViewMessage() {
-  return (
-    <div className="flex w-full max-w-[40rem] flex-col gap-2">
-      <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-muted-foreground/80">
-        Tejido
-      </span>
-      <p className="font-display text-[1rem] italic leading-[1.55] text-foreground/70 sm:text-[1.05rem]">
-        <span
-          className="mr-2 inline-block size-1.5 translate-y-[-2px] animate-pulse rounded-full bg-[var(--accent)]/70 align-middle"
-          aria-hidden
-        />
-        Updating the results above with what you just added…
       </p>
     </div>
   );
