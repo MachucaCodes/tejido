@@ -408,7 +408,17 @@ export default function ChatClient({
                 // a rare odd-looking message.
                 const cleaned = m.role === "assistant" ? cleanText(m.content) : m.content;
                 const isStreaming = status === "streaming" && m.id === lastId;
-                if (m.role === "assistant" && !cleaned && !isStreaming) return null;
+                if (m.role === "assistant" && !cleaned && !isStreaming) {
+                  // The model violated the prompt and emitted only the
+                  // token (or only whitespace around it). The token has
+                  // already triggered finalize — surface a small placeholder
+                  // so the participant knows their message landed and the
+                  // room view is updating, instead of seeing nothing.
+                  if (m.content.trim().length > 0) {
+                    return <UpdatingRoomViewMessage key={m.id} />;
+                  }
+                  return null;
+                }
                 return (
                   <EditorialMessage
                     key={m.id}
@@ -699,6 +709,23 @@ function FacilitatorOpener({ text }: { text: string }) {
         style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
       >
         {text.startsWith("“") ? text : `“${text}”`}
+      </p>
+    </div>
+  );
+}
+
+function UpdatingRoomViewMessage() {
+  return (
+    <div className="flex w-full max-w-[40rem] flex-col gap-2">
+      <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-muted-foreground/80">
+        Tejido
+      </span>
+      <p className="font-display text-[1rem] italic leading-[1.55] text-foreground/70 sm:text-[1.05rem]">
+        <span
+          className="mr-2 inline-block size-1.5 translate-y-[-2px] animate-pulse rounded-full bg-[var(--accent)]/70 align-middle"
+          aria-hidden
+        />
+        Updating the results above with what you just added…
       </p>
     </div>
   );
