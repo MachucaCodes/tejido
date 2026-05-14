@@ -782,6 +782,26 @@ function ComposerForm({
 }) {
   const trimmed = input.trim();
   const canSend = trimmed.length > 0 && !disabled;
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Auto-grow the textarea to fit content (capped) and keep the latest
+  // characters in view when the user is following along. Speech
+  // transcription appends to `input` from outside the field, so the
+  // cursor doesn't naturally scroll the view — without this, mobile
+  // users see only the first line of a multi-line reply they're
+  // dictating. Only pin to bottom if the user was already at the bottom,
+  // so editing earlier lines in a long draft doesn't yank them back.
+  useEffect(() => {
+    const el = textareaRef.current;
+    if (!el) return;
+    const wasAtBottom =
+      el.scrollHeight - el.scrollTop - el.clientHeight < 8;
+    el.style.height = "auto";
+    el.style.height = `${el.scrollHeight}px`;
+    if (wasAtBottom) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [input]);
 
   return (
     <form onSubmit={onSubmit} className="group relative">
@@ -813,6 +833,7 @@ function ComposerForm({
         />
 
         <textarea
+          ref={textareaRef}
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={(e) => {
@@ -825,7 +846,7 @@ function ComposerForm({
           rows={1}
           aria-label="Your reply"
           className={cn(
-            "min-h-[2.5rem] flex-1 resize-none bg-transparent px-2 py-2",
+            "min-h-[2.5rem] max-h-[12rem] flex-1 resize-none overflow-y-auto bg-transparent px-2 py-2",
             "font-sans text-[16px] leading-[1.55] text-foreground",
             "placeholder:font-display placeholder:italic placeholder:text-muted-foreground/70",
             "focus:outline-none",

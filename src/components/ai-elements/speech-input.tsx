@@ -146,6 +146,12 @@ export const SpeechInput = ({
   // behavior (see handleResult).
   const emittedFinalRef = useRef("");
   const resultEventCountRef = useRef(0);
+  // True when the recognizer is in a "user-stopped" state — either it's
+  // never been started, or the user explicitly tapped the mic / submitted
+  // the composer. False while the user has the mic armed (we want
+  // auto-restart on natural Android silence-timeouts in that window).
+  const userStoppedRef = useRef(true);
+  const restartTimerRef = useRef<number | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -181,16 +187,47 @@ export const SpeechInput = ({
     };
 
     const handleEnd = () => {
-      setIsListening(false);
+      const userInitiated = userStoppedRef.current;
       const final = emittedFinalRef.current;
       logEvent("mic.session_summary", {
         mode: "speech-recognition",
+        userInitiated,
         events: resultEventCountRef.current,
         finalChars: final.length,
         head: sampleHead(final, 60),
         tail: sampleTail(final, 60),
         repetitionScore: repetitionScore(final),
       });
+
+      // Android Chrome auto-ends the recognizer after ~5s of silence even
+      // with continuous=true. If the user hasn't tapped stop, restart so
+      // they don't have to re-tap between phrases. Tiny delay to avoid a
+      // tight loop if the engine immediately ends again with no audio.
+      if (!userInitiated) {
+        restartTimerRef.current = window.setTimeout(() => {
+          restartTimerRef.current = null;
+          // Re-check inside the callback: clearTimeout from stop/error
+          // races with the scheduled fire. Spec says event ordering is
+          // undefined, so a late error/stop can land between the timer
+          // being scheduled and it firing.
+          if (userStoppedRef.current) {
+            setIsListening(false);
+            return;
+          }
+          try {
+            speechRecognition.start();
+            logEvent("mic.auto_restart", {});
+          } catch (err) {
+            // InvalidStateError if it's already starting; ignore.
+            logEvent("mic.auto_restart_error", {
+              message: err instanceof Error ? err.message : String(err),
+            });
+            setIsListening(false);
+          }
+        }, 250);
+      } else {
+        setIsListening(false);
+      }
     };
 
     const handleResult = (event: Event) => {
@@ -281,11 +318,31 @@ export const SpeechInput = ({
     const handleError = (event: Event) => {
       const errorEvent = event as SpeechRecognitionErrorEvent;
       console.warn("[SpeechInput] recognition error:", errorEvent.error);
-      setIsListening(false);
       logEvent("mic.error", {
         mode: "speech-recognition",
         error: errorEvent.error,
       });
+
+      // Fatal errors: pin userStopped so the upcoming `end` event doesn't
+      // spin us into an auto-restart loop. `not-allowed` means the user
+      // denied permission; the others trigger the MediaRecorder fallback
+      // below and don't want a stale recognition restart racing it.
+      // `aborted` per spec is UA-initiated cancellation (e.g. browser
+      // dismissed the speech UI) — also a stop signal.
+      const fatal =
+        errorEvent.error === "not-allowed" ||
+        errorEvent.error === "service-not-allowed" ||
+        errorEvent.error === "audio-capture" ||
+        errorEvent.error === "network" ||
+        errorEvent.error === "aborted";
+      if (fatal) {
+        userStoppedRef.current = true;
+        if (restartTimerRef.current !== null) {
+          window.clearTimeout(restartTimerRef.current);
+          restartTimerRef.current = null;
+        }
+        setIsListening(false);
+      }
 
       // Brave and some privacy-hardened Chromium browsers expose
       // webkitSpeechRecognition but block the Google cloud endpoint it relies
@@ -319,6 +376,11 @@ export const SpeechInput = ({
     setIsRecognitionReady(true);
 
     return () => {
+      userStoppedRef.current = true;
+      if (restartTimerRef.current !== null) {
+        window.clearTimeout(restartTimerRef.current);
+        restartTimerRef.current = null;
+      }
       speechRecognition.removeEventListener("start", handleStart);
       speechRecognition.removeEventListener("end", handleEnd);
       speechRecognition.removeEventListener("result", handleResult);
@@ -435,8 +497,14 @@ export const SpeechInput = ({
     logEvent("mic.toggle", { mode, wasListening: isListening });
     if (mode === "speech-recognition" && recognitionRef.current) {
       if (isListening) {
+        userStoppedRef.current = true;
+        if (restartTimerRef.current !== null) {
+          window.clearTimeout(restartTimerRef.current);
+          restartTimerRef.current = null;
+        }
         recognitionRef.current.stop();
       } else {
+        userStoppedRef.current = false;
         recognitionRef.current.start();
       }
     } else if (mode === "media-recorder") {
@@ -455,6 +523,11 @@ export const SpeechInput = ({
     if (!isListening) return;
     logEvent("mic.stop_via_submit", { mode });
     if (mode === "speech-recognition" && recognitionRef.current) {
+      userStoppedRef.current = true;
+      if (restartTimerRef.current !== null) {
+        window.clearTimeout(restartTimerRef.current);
+        restartTimerRef.current = null;
+      }
       recognitionRef.current.stop();
     } else if (mode === "media-recorder") {
       stopMediaRecorder();
