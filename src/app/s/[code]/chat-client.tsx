@@ -783,24 +783,31 @@ function ComposerForm({
   const trimmed = input.trim();
   const canSend = trimmed.length > 0 && !disabled;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  // Last known max scrollTop (scrollHeight - clientHeight) captured at
+  // the end of the previous render. Lets us tell whether the user was
+  // pinned to the bottom *before* this update grew scrollHeight — if we
+  // compared post-growth scrollHeight, any non-trivial speech append
+  // would falsely look like "user scrolled up."
+  const lastMaxScrollRef = useRef(0);
 
   // Auto-grow the textarea to fit content (capped) and keep the latest
   // characters in view when the user is following along. Speech
   // transcription appends to `input` from outside the field, so the
   // cursor doesn't naturally scroll the view — without this, mobile
   // users see only the first line of a multi-line reply they're
-  // dictating. Only pin to bottom if the user was already at the bottom,
-  // so editing earlier lines in a long draft doesn't yank them back.
+  // dictating. Only pin to bottom if the user was already at the bottom
+  // of the *previous* content, so editing earlier lines in a long draft
+  // doesn't yank them back.
   useEffect(() => {
     const el = textareaRef.current;
     if (!el) return;
-    const wasAtBottom =
-      el.scrollHeight - el.scrollTop - el.clientHeight < 8;
+    const wasAtBottom = el.scrollTop >= lastMaxScrollRef.current - 1;
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
     if (wasAtBottom) {
       el.scrollTop = el.scrollHeight;
     }
+    lastMaxScrollRef.current = el.scrollHeight - el.clientHeight;
   }, [input]);
 
   return (
