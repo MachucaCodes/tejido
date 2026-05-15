@@ -96,8 +96,8 @@ export default async function LandingPage() {
 
       <div className="flex flex-col gap-5 border-t border-border/60 pt-8 pb-2 font-sans text-[0.95rem] leading-[1.7] text-muted-foreground">
         <p>
-          For much of human history, we would gather around the fire and have
-          long discussions to help make sense of things and integrate
+          For much of human history, we would gather around the fire and
+          have long discussions to help make sense of things and integrate
           perspectives. This is a way to asynchronously gather around the
           fire — to collect nuanced opinions, ideas, and concerns around a
           given topic, and give a shape to the collective intelligence of the
@@ -164,6 +164,13 @@ export default async function LandingPage() {
           emptyText="No open sessions right now."
         />
       </div>
+
+      <footer className="mt-20 flex items-center justify-center gap-2 border-t border-border/40 pt-8 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground/70">
+        <span>Made by neighbors for neighbors</span>
+        <span aria-hidden className="text-accent">
+          ♥
+        </span>
+      </footer>
     </main>
   );
 }
