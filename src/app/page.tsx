@@ -24,7 +24,7 @@ type SessionCard = {
 
 export const dynamic = "force-dynamic";
 
-export default async function SessionsDirectoryPage() {
+export default async function LandingPage() {
   const { user } = await getCurrentUser();
   const admin = createAdmin();
 
@@ -77,22 +77,68 @@ export default async function SessionsDirectoryPage() {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-5 pt-12 pb-20 sm:px-8 sm:pt-16">
-      <header className="flex flex-col gap-3 pb-8">
+      <section className="flex flex-col gap-5 pb-10">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-          Sessions
+          Community Sense-Making
         </span>
         <h1
-          className="font-display text-[2rem] italic leading-[1.1] tracking-[-0.01em] text-foreground sm:text-[2.4rem]"
+          className="font-display text-[2.4rem] italic leading-[1.05] tracking-[-0.015em] text-foreground sm:text-[2.9rem]"
           style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
         >
-          Your directory
+          Gather around the fire.
         </h1>
+        <p className="font-sans text-[1.05rem] leading-[1.6] text-foreground/85">
+          A way to collect perspectives from the community and reflect them back
+          in a coherent way — to help make sense of complex issues and questions
+          together.
+        </p>
+      </section>
+
+      <div className="flex flex-col gap-5 border-t border-border/60 pt-8 pb-2 font-sans text-[0.95rem] leading-[1.7] text-muted-foreground">
+        <p>
+          For much of human history, we would gather around the fire and have
+          long discussions to help make sense of things and integrate
+          perspectives. This is a way to asynchronously gather around the
+          fire — to collect nuanced opinions, ideas, and concerns around a
+          given topic, and give a shape to the collective intelligence of the
+          community.
+        </p>
+        <p>
+          You can have a conversation with an AI that has been steeped in our
+          specific context at ESM — everything from our culture documents, to
+          bylaws, to call transcripts from many of the calls we&apos;ve had
+          over the years. Through a fluid conversation it will gather your
+          unique insights, and weave a nuanced overview so that everyone can
+          better understand the prevailing opinions as well as voices from the
+          edges.
+        </p>
+        <p className="text-[0.875rem] italic text-muted-foreground/85">
+          A work in progress that we&apos;re still building — feedback is
+          encouraged and patience is appreciated.
+        </p>
+      </div>
+
+      <div
+        aria-hidden
+        className="my-12 h-px w-full bg-gradient-to-r from-transparent via-border to-transparent"
+      />
+
+      <section className="flex flex-col gap-3 pb-8">
+        <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
+          The Directory
+        </span>
+        <h2
+          className="font-display text-[1.5rem] italic leading-[1.15] tracking-[-0.01em] text-foreground sm:text-[1.75rem]"
+          style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
+        >
+          Open conversations
+        </h2>
         <p className="font-sans text-[0.95rem] leading-[1.55] text-muted-foreground">
           {hasPhone
             ? "Conversations you've completed, started, and ones still waiting for your voice."
-            : "Open conversations across the community. Join one to start tracking your history here."}
+            : "Join one to start tracking your history here."}
         </p>
-      </header>
+      </section>
 
       {!hasPhone && (
         <p className="mb-8 rounded-lg border border-dashed border-border/70 bg-card/40 px-4 py-3 font-sans text-[0.875rem] leading-[1.55] text-muted-foreground">
