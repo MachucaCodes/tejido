@@ -2,6 +2,7 @@
 
 import { ArrowUpIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -621,14 +622,16 @@ function Masthead({
     <header className="sticky top-0 z-20 border-b border-border/70 bg-[oklch(96.5%_0.022_82/0.82)] backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5 sm:px-8">
         <div className="flex items-center gap-3.5">
-          <Image
-            src="/esm-logo.png"
-            alt="La Ecovilla"
-            width={323}
-            height={119}
-            className="h-6 w-auto opacity-90 sm:h-7"
-            priority
-          />
+          <Link href="/" aria-label="Go to home page" className="flex items-center">
+            <Image
+              src="/esm-logo.png"
+              alt="La Ecovilla"
+              width={323}
+              height={119}
+              className="h-6 w-auto opacity-90 sm:h-7"
+              priority
+            />
+          </Link>
           <span className="h-5 w-px translate-y-[2px] bg-border sm:translate-y-[3px]" aria-hidden />
           <span
             className="translate-y-[4px] font-display text-[1.1rem] italic leading-none text-foreground sm:translate-y-[5px] sm:text-[1.2rem]"
