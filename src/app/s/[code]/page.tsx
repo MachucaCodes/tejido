@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { after } from "next/server";
 
+import { requireAdmin } from "@/lib/admin-guard";
 import { getCurrentUser, getOrCreateParticipant } from "@/lib/participant";
 import { regenerateSummaryIfStale } from "@/lib/summary";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -47,6 +48,9 @@ export default async function SessionPage({
     );
   }
   if (!session || !participant) notFound();
+
+  const adminGuard = await requireAdmin();
+  const isAdmin = adminGuard.ok;
 
   const admin = createAdmin();
 
@@ -158,6 +162,7 @@ export default async function SessionPage({
       initialThemes={initialThemes}
       initialSummary={initialSummary}
       initialPoints={initialPoints}
+      isAdmin={isAdmin}
     />
   );
 }

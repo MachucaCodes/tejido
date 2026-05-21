@@ -3,8 +3,8 @@ import { z } from "zod";
 import { CLUSTERING_MODEL, getAnthropic } from "@/lib/anthropic";
 import { logLlmCall } from "@/lib/observability";
 import {
-  ANALYSIS_SYSTEM,
   renderAnalysisPrompt,
+  resolveAnalysisSystem,
   type ExistingTheme,
 } from "@/lib/prompts/analysis";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -136,10 +136,12 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
 
   const { data: session } = await admin
     .from("sessions")
-    .select("topic")
+    .select("topic, prompt_analysis_system, prompt_analysis_prompt")
     .eq("id", participant.session_id)
     .single();
   if (!session) throw new Error(`session not found: ${participant.session_id}`);
+
+  const analysisSystem = resolveAnalysisSystem(session.prompt_analysis_system);
 
   const { data: turns } = await admin
     .from("transcript_turns")
@@ -166,7 +168,12 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
   const requestMessages = [
     {
       role: "user" as const,
-      content: renderAnalysisPrompt(session.topic, existingThemes, transcript),
+      content: renderAnalysisPrompt(
+        session.topic,
+        existingThemes,
+        transcript,
+        session.prompt_analysis_prompt,
+      ),
     },
   ];
   const requestParams = {
@@ -185,7 +192,7 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
   try {
     response = await anthropic.messages.create({
       ...requestParams,
-      system: ANALYSIS_SYSTEM,
+      system: analysisSystem,
       messages: requestMessages,
     });
   } catch (err) {
@@ -196,7 +203,7 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
       duration_ms: Date.now() - startedAt,
       session_id: participant.session_id,
       participant_id: participantId,
-      system_prompt: ANALYSIS_SYSTEM,
+      system_prompt: analysisSystem,
       request_messages: requestMessages,
       request_params: requestParams,
       status: "error",
@@ -220,7 +227,7 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
       duration_ms: Date.now() - startedAt,
       session_id: participant.session_id,
       participant_id: participantId,
-      system_prompt: ANALYSIS_SYSTEM,
+      system_prompt: analysisSystem,
       request_messages: requestMessages,
       request_params: requestParams,
       status: "parse_error",
@@ -237,7 +244,7 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
     duration_ms: Date.now() - startedAt,
     session_id: participant.session_id,
     participant_id: participantId,
-    system_prompt: ANALYSIS_SYSTEM,
+    system_prompt: analysisSystem,
     request_messages: requestMessages,
     request_params: requestParams,
     status: "success",

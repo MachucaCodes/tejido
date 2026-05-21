@@ -15,6 +15,10 @@ export type SessionRecord = {
   intro_message: string | null;
   instructions: string | null;
   status: "open" | "closed";
+  prompt_task_framing: string | null;
+  prompt_mechanics: string | null;
+  prompt_pacing: string | null;
+  prompt_perspectives_instructions: string | null;
 };
 
 export async function getCurrentUser() {
@@ -44,7 +48,9 @@ export async function getOrCreateParticipant(
 
   const { data: session, error: sessionErr } = await admin
     .from("sessions")
-    .select("id, topic, context, intro_message, instructions, status")
+    .select(
+      "id, topic, context, intro_message, instructions, status, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions",
+    )
     .eq("id", sessionCode)
     .single();
   if (sessionErr || !session) throw new Error(`session not found: ${sessionCode}`);

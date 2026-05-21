@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server";
 
 import { requireAdmin } from "@/lib/admin-guard";
+import { ANALYSIS_PROMPT_PLACEHOLDERS } from "@/lib/prompts/analysis";
+import { PERSPECTIVES_PLACEHOLDER } from "@/lib/prompts/facilitator";
+import { SUMMARY_PROMPT_PLACEHOLDERS } from "@/lib/prompts/summary";
 import { createAdmin } from "@/lib/supabase/admin";
 
 type Body = {
@@ -9,7 +12,35 @@ type Body = {
   context?: string | null;
   instructions?: string | null;
   status?: "open" | "closed";
+  prompt_task_framing?: string | null;
+  prompt_mechanics?: string | null;
+  prompt_pacing?: string | null;
+  prompt_perspectives_instructions?: string | null;
+  prompt_analysis_system?: string | null;
+  prompt_analysis_prompt?: string | null;
+  prompt_summary_system?: string | null;
+  prompt_summary_prompt?: string | null;
 };
+
+// Plain-text overrides → trim, empty becomes null (falls back to default).
+function normalizePlainOverride(v: unknown): string | null {
+  const s = (v ?? "").toString().trim();
+  return s || null;
+}
+
+// Template overrides → same trim, but if non-empty must contain every required
+// placeholder, otherwise the silent .replace() no-op would strip topic/transcript
+// data from the prompt without warning.
+function normalizeTemplateOverride(
+  v: unknown,
+  requiredPlaceholders: readonly string[],
+): { ok: true; value: string | null } | { ok: false; missing: string[] } {
+  const s = (v ?? "").toString().trim();
+  if (!s) return { ok: true, value: null };
+  const missing = requiredPlaceholders.filter((p) => !s.includes(p));
+  if (missing.length) return { ok: false, missing };
+  return { ok: true, value: s };
+}
 
 export async function PATCH(
   req: Request,
@@ -32,20 +63,63 @@ export async function PATCH(
     update.topic = t;
   }
   if ("intro_message" in body) {
-    const v = (body.intro_message ?? "").toString().trim();
-    update.intro_message = v || null;
+    update.intro_message = normalizePlainOverride(body.intro_message);
   }
   if ("context" in body) {
-    const v = (body.context ?? "").toString().trim();
-    update.context = v || null;
+    update.context = normalizePlainOverride(body.context);
   }
   if ("instructions" in body) {
-    const v = (body.instructions ?? "").toString().trim();
-    update.instructions = v || null;
+    update.instructions = normalizePlainOverride(body.instructions);
   }
   if (body.status === "open" || body.status === "closed") {
     update.status = body.status;
   }
+
+  // Plain-text prompt overrides — no required placeholders.
+  if ("prompt_task_framing" in body) {
+    update.prompt_task_framing = normalizePlainOverride(body.prompt_task_framing);
+  }
+  if ("prompt_mechanics" in body) {
+    update.prompt_mechanics = normalizePlainOverride(body.prompt_mechanics);
+  }
+  if ("prompt_pacing" in body) {
+    update.prompt_pacing = normalizePlainOverride(body.prompt_pacing);
+  }
+  if ("prompt_analysis_system" in body) {
+    update.prompt_analysis_system = normalizePlainOverride(body.prompt_analysis_system);
+  }
+  if ("prompt_summary_system" in body) {
+    update.prompt_summary_system = normalizePlainOverride(body.prompt_summary_system);
+  }
+
+  // Template overrides — must preserve their placeholders or the silent
+  // .replace() will leave the placeholder text in the prompt and strip the
+  // data instead. Validate before persisting.
+  const templateFields: Array<[
+    keyof Body,
+    string,
+    readonly string[],
+  ]> = [
+    [
+      "prompt_perspectives_instructions",
+      "Perspectives instructions",
+      [PERSPECTIVES_PLACEHOLDER],
+    ],
+    ["prompt_analysis_prompt", "Analysis prompt", ANALYSIS_PROMPT_PLACEHOLDERS],
+    ["prompt_summary_prompt", "Summary prompt", SUMMARY_PROMPT_PLACEHOLDERS],
+  ];
+  for (const [field, label, placeholders] of templateFields) {
+    if (!(field in body)) continue;
+    const result = normalizeTemplateOverride(body[field], placeholders);
+    if (!result.ok) {
+      return new Response(
+        `${label} is missing required placeholder(s): ${result.missing.join(", ")}`,
+        { status: 400 },
+      );
+    }
+    update[field] = result.value;
+  }
+
   if (Object.keys(update).length === 0) {
     return new Response("no fields to update", { status: 400 });
   }

@@ -1,7 +1,7 @@
-export const ANALYSIS_SYSTEM =
+export const DEFAULT_ANALYSIS_SYSTEM =
   "You distill a participant's transcript into structured points and weave them into the session's running themes. You preserve theme identity, broaden descriptions when new evidence warrants it, and only mint new themes when truly necessary.";
 
-const ANALYSIS_PROMPT = `You are processing a single participant's transcript at the moment they've reached a natural pause. Two jobs in one pass:
+export const DEFAULT_ANALYSIS_PROMPT = `You are processing a single participant's transcript at the moment they've reached a natural pause. Two jobs in one pass:
 
   1. EXTRACT 3-5 structured points from the transcript (what they actually want, fear, or need underneath their explicit positions).
   2. WEAVE them into the session's running themes — by assigning to existing themes when possible, broadening an existing theme's description if the new point genuinely stretches it, and minting new themes only as a last resort.
@@ -90,12 +90,23 @@ Return a single JSON object with these top-level keys:
 
 Reference points by their 0-based position in the \`points\` array (point_idx). Reference existing themes by their UUID from the EXISTING THEMES list above. Reference newly-minted themes by their temp_id (T1, T2, ...). Every extracted point must appear exactly once in \`assignments\` (use \`theme_ids: []\` if you choose to leave it unassigned).`;
 
+export const ANALYSIS_PROMPT_PLACEHOLDERS = ["{TOPIC}", "{THEMES_BLOCK}", "{TRANSCRIPT}"] as const;
+
+// Re-exports for the existing call sites; resolveAnalysisSystem / renderAnalysisPrompt
+// pick up overrides when provided.
+export const ANALYSIS_SYSTEM = DEFAULT_ANALYSIS_SYSTEM;
+
 export type ExistingTheme = { id: string; short_name: string; description: string };
+
+export function resolveAnalysisSystem(override: string | null | undefined): string {
+  return override?.trim() || DEFAULT_ANALYSIS_SYSTEM;
+}
 
 export function renderAnalysisPrompt(
   topic: string,
   existingThemes: ExistingTheme[],
   transcript: string,
+  templateOverride: string | null = null,
 ): string {
   const themesBlock = existingThemes.length
     ? existingThemes
@@ -103,7 +114,8 @@ export function renderAnalysisPrompt(
         .join("\n")
     : "(none yet — every extracted point will mint a new theme)";
 
-  return ANALYSIS_PROMPT
+  const template = templateOverride?.trim() || DEFAULT_ANALYSIS_PROMPT;
+  return template
     .replace("{TOPIC}", topic || "(topic not provided)")
     .replace("{THEMES_BLOCK}", themesBlock)
     .replace("{TRANSCRIPT}", transcript);

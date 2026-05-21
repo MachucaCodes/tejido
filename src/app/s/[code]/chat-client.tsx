@@ -60,6 +60,7 @@ export default function ChatClient({
   initialThemes,
   initialSummary,
   initialPoints,
+  isAdmin,
 }: {
   sessionCode: string;
   topic: string;
@@ -70,6 +71,7 @@ export default function ChatClient({
   initialThemes: Theme[];
   initialSummary: { text: string | null; generatedAt: string | null };
   initialPoints: Point[];
+  isAdmin: boolean;
 }) {
   const intro = introMessage?.trim() ?? "";
   const router = useRouter();
@@ -379,7 +381,7 @@ export default function ChatClient({
         aria-hidden
       />
 
-      <Masthead />
+      <Masthead sessionCode={sessionCode} isAdmin={isAdmin} />
 
       <SenseMakingModal open={introOpen} onAcknowledge={acknowledgeIntro} />
 
@@ -608,10 +610,16 @@ function SenseMakingModal({
 
 /* ───────────────────────── Masthead ───────────────────────── */
 
-function Masthead() {
+function Masthead({
+  sessionCode,
+  isAdmin,
+}: {
+  sessionCode: string;
+  isAdmin: boolean;
+}) {
   return (
     <header className="sticky top-0 z-20 border-b border-border/70 bg-[oklch(96.5%_0.022_82/0.82)] backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-3xl items-center px-5 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5 sm:px-8">
         <div className="flex items-center gap-3.5">
           <Image
             src="/esm-logo.png"
@@ -629,8 +637,64 @@ function Masthead() {
             tejido
           </span>
         </div>
+        {isAdmin && <AdminResetButton sessionCode={sessionCode} />}
       </div>
     </header>
+  );
+}
+
+function AdminResetButton({ sessionCode }: { sessionCode: string }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const onClick = async () => {
+    if (busy) return;
+    const ok = window.confirm(
+      "Reset your responses for this session?\n\nThis clears your conversation, extracted points, and LLM logs. Themes and summaries stay.",
+    );
+    if (!ok) return;
+    setBusy(true);
+    setError(null);
+    try {
+      const res = await fetch(
+        `/api/admin/sessions/${encodeURIComponent(sessionCode)}/reset-mine`,
+        { method: "POST" },
+      );
+      if (!res.ok) {
+        setError((await res.text()) || `failed (${res.status})`);
+        setBusy(false);
+        return;
+      }
+      // Hard reload so the chat client fully re-seeds from the freshly
+      // emptied tables — router.refresh() alone wouldn't reset the
+      // client component's local message/analyzed state.
+      window.location.reload();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-end gap-0.5">
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={busy}
+        className={cn(
+          "rounded-full border border-border/80 bg-background/60 px-2.5 py-1",
+          "font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground",
+          "transition-colors hover:border-[var(--accent)]/60 hover:text-foreground",
+          "disabled:opacity-50 disabled:cursor-default",
+        )}
+        title="Admin only: clear your responses for this session"
+      >
+        {busy ? "Resetting…" : "Reset mine"}
+      </button>
+      {error && (
+        <span className="font-mono text-[9px] text-destructive">{error}</span>
+      )}
+    </div>
   );
 }
 

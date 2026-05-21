@@ -1,7 +1,7 @@
-const TASK_FRAMING =
+export const DEFAULT_TASK_FRAMING =
   "You are a thoughtful facilitator helping someone think through a question that matters to their community. You are NOT an expert, NOT an advocate, and NOT trying to inform or persuade. Your only job is to help this person articulate what they actually think and feel — including the parts they haven't fully worked out yet.";
 
-const MECHANICS = `YOUR APPROACH:
+export const DEFAULT_MECHANICS = `YOUR APPROACH:
 
 Start open. Don't telegraph any position. Your first message should invite their gut reaction in their own words. Phrase the opener naturally for the actual subject of this conversation — it is NOT a fixed template. Let the topic shape the wording. Don't load the question; just open the floor and stay short.
 
@@ -80,10 +80,10 @@ CONTINUING AFTER YOU'VE ALREADY EMITTED [READY_TO_SHARE]:
 - When this new round reaches its own natural completion (their position articulated, at least one tradeoff explored, brief reflection), emit [READY_TO_SHARE] again. Each emission re-triggers analysis so the room view stays current with their evolving perspective. There is no cap on how many times you can emit it.
 - The CRITICAL sign-off rule above still applies every time: any sign-off register requires the token in the same message. Do not strand the participant on a wrap-up that doesn't actually wrap up.`;
 
-const PACING =
+export const DEFAULT_PACING =
   "CONVERSATION PACING (the operative target): Aim for a 5-10 minute conversation: enough to surface their position, explore one or two underlying values or tradeoffs, and reflect once. Look for natural completion — don't stretch the conversation to fill time, but don't cut it short either.";
 
-const PERSPECTIVES_INSTRUCTIONS = `PERSPECTIVES THAT HAVE COME UP ELSEWHERE IN THIS SESSION:
+export const DEFAULT_PERSPECTIVES_INSTRUCTIONS = `PERSPECTIVES THAT HAVE COME UP ELSEWHERE IN THIS SESSION:
 {PERSPECTIVES_LIST}
 
 How to use the section above:
@@ -95,37 +95,52 @@ How to use the section above:
 - If the list is empty or only contains themes already covered, ignore this section.
 `;
 
+export const PERSPECTIVES_PLACEHOLDER = "{PERSPECTIVES_LIST}";
+
 export const READY_TOKEN = "[READY_TO_SHARE]";
 
 export function buildPerspectivesBlock(
   themes: { short_name: string; description: string }[] | null,
+  templateOverride: string | null = null,
 ): string {
   if (!themes?.length) return "";
   const lines = themes
     .filter((t) => t.short_name && t.description)
     .map((t) => `- "${t.short_name}" — ${t.description}`);
   if (!lines.length) return "";
-  return "\n" + PERSPECTIVES_INSTRUCTIONS.replace("{PERSPECTIVES_LIST}", lines.join("\n"));
+  const template = templateOverride?.trim() || DEFAULT_PERSPECTIVES_INSTRUCTIONS;
+  return "\n" + template.replace(PERSPECTIVES_PLACEHOLDER, lines.join("\n"));
 }
+
+export type FacilitatorPromptOverrides = {
+  taskFraming?: string | null;
+  mechanics?: string | null;
+  pacing?: string | null;
+};
 
 export function renderFacilitatorSystem(
   topic: string,
   context: string | null = null,
   perspectivesBlock = "",
   instructions: string | null = null,
+  overrides: FacilitatorPromptOverrides = {},
 ): string {
+  const taskFraming = overrides.taskFraming?.trim() || DEFAULT_TASK_FRAMING;
+  const mechanics = overrides.mechanics?.trim() || DEFAULT_MECHANICS;
+  const pacing = overrides.pacing?.trim() || DEFAULT_PACING;
+
   const contextBlock = context?.trim()
     ? `\nCONTEXT (share only if asked):\n${context.trim()}\n`
     : "";
   const instructionsBlock = instructions?.trim()
     ? `\nSESSION-SPECIFIC GUIDANCE (treat these as additional instructions from the facilitator who set up this session — they take precedence over the general mechanics above when they conflict):\n${instructions.trim()}\n`
     : "";
-  return `${TASK_FRAMING}
+  return `${taskFraming}
 
 THE TOPIC BEING EXPLORED:
 ${topic}
 ${contextBlock}
-${MECHANICS}
+${mechanics}
 ${perspectivesBlock}${instructionsBlock}
-${PACING}`;
+${pacing}`;
 }

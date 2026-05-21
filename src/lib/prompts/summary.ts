@@ -1,7 +1,7 @@
-export const SUMMARY_SYSTEM =
+export const DEFAULT_SUMMARY_SYSTEM =
   "You write short editorial syntheses of what's surfacing in facilitated group conversations. You name where the room is gathering and where it's pulling apart, in plain human language.";
 
-const SUMMARY_PROMPT = `You are reading the perspectives that have surfaced so far in a facilitated group conversation about a shared question. Your job: write ONE short paragraph (3-5 sentences, ~80-110 words) that names the SHAPE of the room as it stands now.
+export const DEFAULT_SUMMARY_PROMPT = `You are reading the perspectives that have surfaced so far in a facilitated group conversation about a shared question. Your job: write ONE short paragraph (3-5 sentences, ~80-110 words) that names the SHAPE of the room as it stands now.
 
 THE TOPIC THE GROUP IS DISCUSSING:
 {TOPIC}
@@ -24,6 +24,11 @@ Return ONLY a JSON object exactly in this shape — no other text:
   "summary": "<one paragraph>"
 }`;
 
+export const SUMMARY_PROMPT_PLACEHOLDERS = ["{TOPIC}", "{THEMES_BLOCK}", "{SAMPLES_BLOCK}"] as const;
+
+// Compat re-export so existing call sites continue to import { SUMMARY_SYSTEM }.
+export const SUMMARY_SYSTEM = DEFAULT_SUMMARY_SYSTEM;
+
 export type ThemeForSummary = {
   id: string;
   short_name: string;
@@ -33,9 +38,14 @@ export type ThemeForSummary = {
   samples: string[];
 };
 
+export function resolveSummarySystem(override: string | null | undefined): string {
+  return override?.trim() || DEFAULT_SUMMARY_SYSTEM;
+}
+
 export function renderSummaryPrompt(
   topic: string,
   themes: ThemeForSummary[],
+  templateOverride: string | null = null,
 ): string {
   const sorted = [...themes].sort((a, b) => b.count - a.count);
 
@@ -60,7 +70,8 @@ export function renderSummaryPrompt(
     })
     .join("\n");
 
-  return SUMMARY_PROMPT
+  const template = templateOverride?.trim() || DEFAULT_SUMMARY_PROMPT;
+  return template
     .replace("{TOPIC}", topic || "(topic not provided)")
     .replace("{THEMES_BLOCK}", themesBlock)
     .replace("{SAMPLES_BLOCK}", samplesBlock || "(none)");

@@ -4,8 +4,8 @@ import { z } from "zod";
 import { CLUSTERING_MODEL, getAnthropic } from "@/lib/anthropic";
 import { logLlmCall } from "@/lib/observability";
 import {
-  SUMMARY_SYSTEM,
   renderSummaryPrompt,
+  resolveSummarySystem,
   type ThemeForSummary,
 } from "@/lib/prompts/summary";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -105,10 +105,12 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
 
   const { data: session } = await admin
     .from("sessions")
-    .select("topic")
+    .select("topic, prompt_summary_system, prompt_summary_prompt")
     .eq("id", sessionId)
     .single();
   if (!session) return { regenerated: false, reason: "session_missing" };
+
+  const summarySystem = resolveSummarySystem(session.prompt_summary_system);
 
   const { data: themeRows } = await admin
     .from("themes")
@@ -167,7 +169,11 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
   const requestMessages = [
     {
       role: "user" as const,
-      content: renderSummaryPrompt(session.topic ?? "", themeInputs),
+      content: renderSummaryPrompt(
+        session.topic ?? "",
+        themeInputs,
+        session.prompt_summary_prompt,
+      ),
     },
   ];
   const requestParams = {
@@ -186,7 +192,7 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
   try {
     response = await anthropic.messages.create({
       ...requestParams,
-      system: SUMMARY_SYSTEM,
+      system: summarySystem,
       messages: requestMessages,
     });
   } catch (err) {
@@ -196,7 +202,7 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
       model: CLUSTERING_MODEL,
       duration_ms: Date.now() - startedAt,
       session_id: sessionId,
-      system_prompt: SUMMARY_SYSTEM,
+      system_prompt: summarySystem,
       request_messages: requestMessages,
       request_params: requestParams,
       status: "error",
@@ -219,7 +225,7 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
       model: CLUSTERING_MODEL,
       duration_ms: Date.now() - startedAt,
       session_id: sessionId,
-      system_prompt: SUMMARY_SYSTEM,
+      system_prompt: summarySystem,
       request_messages: requestMessages,
       request_params: requestParams,
       status: "parse_error",
@@ -235,7 +241,7 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
     model: CLUSTERING_MODEL,
     duration_ms: Date.now() - startedAt,
     session_id: sessionId,
-    system_prompt: SUMMARY_SYSTEM,
+    system_prompt: summarySystem,
     request_messages: requestMessages,
     request_params: requestParams,
     status: "success",

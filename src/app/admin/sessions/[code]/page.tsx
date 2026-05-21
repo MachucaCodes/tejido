@@ -17,7 +17,9 @@ export default async function AdminSessionDetail({
 
   const { data: session } = await admin
     .from("sessions")
-    .select("id, topic, intro_message, context, instructions, status, created_at")
+    .select(
+      "id, topic, intro_message, context, instructions, status, created_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
+    )
     .eq("id", code)
     .single();
   if (!session) notFound();
@@ -75,6 +77,16 @@ export default async function AdminSessionDetail({
           initialContext={session.context ?? ""}
           initialInstructions={session.instructions ?? ""}
           initialStatus={session.status as "open" | "closed"}
+          initialPromptOverrides={{
+            taskFraming: session.prompt_task_framing ?? "",
+            mechanics: session.prompt_mechanics ?? "",
+            pacing: session.prompt_pacing ?? "",
+            perspectivesInstructions: session.prompt_perspectives_instructions ?? "",
+            analysisSystem: session.prompt_analysis_system ?? "",
+            analysisPrompt: session.prompt_analysis_prompt ?? "",
+            summarySystem: session.prompt_summary_system ?? "",
+            summaryPrompt: session.prompt_summary_prompt ?? "",
+          }}
         />
       </section>
 

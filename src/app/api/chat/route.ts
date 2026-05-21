@@ -39,8 +39,13 @@ export async function POST(req: Request) {
   const systemText = renderFacilitatorSystem(
     session.topic,
     session.context,
-    buildPerspectivesBlock(themes ?? []),
+    buildPerspectivesBlock(themes ?? [], session.prompt_perspectives_instructions),
     session.instructions,
+    {
+      taskFraming: session.prompt_task_framing,
+      mechanics: session.prompt_mechanics,
+      pacing: session.prompt_pacing,
+    },
   );
 
   // Server is the source of truth for transcript history. Pull prior turns,
