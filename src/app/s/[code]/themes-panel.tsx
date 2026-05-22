@@ -270,6 +270,7 @@ export function ThemesPanel({
   // or below the median count. Random sample, stable per-render via the
   // points/themes deps. Only renders when there are points to draw from
   // AND the room has enough variety for "below median" to mean anything.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const outlierPhrases = useMemo(() => {
     if (themes.length < 3 || points.length === 0) return [];
     const sortedCounts = [...themes.map((t) => t.count)].sort((a, b) => a - b);
@@ -313,25 +314,30 @@ export function ThemesPanel({
         </span>
       </header>
 
-      <p
-        className="font-display text-[1.55rem] italic leading-[1.18] tracking-[-0.005em] text-foreground/90 sm:text-[1.7rem]"
-        style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
-      >
-        What&apos;s weaving together
-      </p>
-
-      {summaryText && (
-        <p className="font-sans text-[0.98rem] leading-[1.6] text-foreground/85 sm:text-[1.02rem]">
-          {summaryText}
+      {/* Synthesis — the woven picture. Tinted with the deep-green --primary
+          so it reads as a distinct zone from the rust-accented voices below. */}
+      <div className="rounded-2xl border border-[var(--primary)]/15 bg-[var(--primary)]/[0.05] px-5 py-5 sm:px-6">
+        <div className="mb-3 flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-[var(--primary)]/85">
+          <span>The shared picture</span>
+          {analyzing && (
+            <span className="ml-auto flex items-center gap-1.5 text-muted-foreground/80">
+              <span className="size-1.5 animate-pulse rounded-full bg-[var(--accent)]/70" aria-hidden />
+              Updating
+            </span>
+          )}
+        </div>
+        <p
+          className="font-display text-[1.55rem] italic leading-[1.18] tracking-[-0.005em] text-foreground/90 sm:text-[1.7rem]"
+          style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
+        >
+          What your neighbors are feeling…
         </p>
-      )}
-
-      {analyzing && (
-        <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.24em] text-muted-foreground/80">
-          <span className="size-1.5 animate-pulse rounded-full bg-[var(--accent)]/70" aria-hidden />
-          Updating
-        </span>
-      )}
+        {summaryText && (
+          <p className="mt-3 font-sans text-[0.98rem] leading-[1.6] text-foreground/85 sm:text-[1.02rem]">
+            {summaryText}
+          </p>
+        )}
+      </div>
 
       {themes.length === 0 ? (
         analyzing ? (
@@ -351,93 +357,105 @@ export function ThemesPanel({
           </p>
         )
       ) : (
-        <ol className="flex flex-col divide-y divide-border/70 border-y border-border/70">
-          {(showAllThemes ? themes : themes.slice(0, 3)).map((t, i) => {
-            const isExpanded = expandedThemeId === t.id;
-            const themePoints = pointsByTheme.get(t.id) ?? [];
-            const phrases = Array.from(
-              new Set(themePoints.map((p) => p.surface_phrase)),
-            );
-            const canExpand = true;
-            return (
-              <li
-                key={t.id}
-                className={cn(
-                  "group/theme transition-colors",
-                  pulseId === t.id && "bg-[var(--accent)]/5",
-                )}
-              >
-                <button
-                  type="button"
-                  disabled={!canExpand}
-                  onClick={() =>
-                    setExpandedThemeId((prev) => (prev === t.id ? null : t.id))
-                  }
-                  aria-expanded={isExpanded}
+        <div className="flex flex-col gap-3">
+          {/* Bridges the synthesis above to the threads below: these are the
+              individual voices the shared picture is woven from. Rust --accent
+              keeps this zone visually distinct from the green synthesis card. */}
+          <div className="flex items-baseline gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-[var(--accent)]">
+            <span>The threads behind it</span>
+            <span className="ml-auto text-muted-foreground/70">
+              <span className="tabular-nums">{voiceCount}</span>{" "}
+              {voiceCount === 1 ? "voice" : "voices"}
+            </span>
+          </div>
+          <ol className="flex flex-col divide-y divide-border/70 border-y border-border/70">
+            {(showAllThemes ? themes : themes.slice(0, 3)).map((t, i) => {
+              const isExpanded = expandedThemeId === t.id;
+              const themePoints = pointsByTheme.get(t.id) ?? [];
+              const phrases = Array.from(
+                new Set(themePoints.map((p) => p.surface_phrase)),
+              );
+              const canExpand = true;
+              return (
+                <li
+                  key={t.id}
                   className={cn(
-                    "grid w-full grid-cols-[2.25rem_1fr_auto] items-baseline gap-4 py-4 text-left",
-                    canExpand
-                      ? "cursor-pointer hover:bg-foreground/[0.015]"
-                      : "cursor-default",
+                    "group/theme transition-colors",
+                    pulseId === t.id && "bg-[var(--accent)]/5",
                   )}
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 tabular-nums">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div className="flex flex-col gap-1.5">
-                    <h3
-                      className="font-display text-[1.1rem] leading-snug text-foreground sm:text-[1.15rem]"
-                      style={{ fontVariationSettings: '"opsz" 24, "SOFT" 60' }}
-                    >
-                      {t.short_name}
-                      {canExpand && (
-                        <span
-                          className={cn(
-                            "ml-2 inline-block font-mono text-[10px] tracking-[0.2em] text-muted-foreground/60 transition-transform",
-                            isExpanded && "rotate-90",
-                          )}
-                          aria-hidden
-                        >
-                          ›
-                        </span>
-                      )}
-                    </h3>
-                    <p
-                      className={cn(
-                        "font-sans text-[0.92rem] leading-[1.55] text-muted-foreground",
-                        !isExpanded && "line-clamp-3",
-                      )}
-                    >
-                      {t.description}
-                    </p>
-                  </div>
-                  <span className="flex flex-col items-end gap-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/80">
-                    <span className="font-display text-[1.05rem] not-italic tabular-nums text-foreground/85">
-                      {t.count}
+                  <button
+                    type="button"
+                    disabled={!canExpand}
+                    onClick={() =>
+                      setExpandedThemeId((prev) => (prev === t.id ? null : t.id))
+                    }
+                    aria-expanded={isExpanded}
+                    className={cn(
+                      "grid w-full grid-cols-[2.25rem_1fr_auto] items-baseline gap-4 py-4 text-left",
+                      canExpand
+                        ? "cursor-pointer hover:bg-foreground/[0.015]"
+                        : "cursor-default",
+                    )}
+                  >
+                    <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span>{t.count === 1 ? "voice" : "voices"}</span>
-                  </span>
-                </button>
-                {isExpanded && phrases.length > 0 && (
-                  <ul className="grid grid-cols-[2.25rem_1fr] gap-x-4 pb-5">
-                    <span aria-hidden />
-                    <div className="flex flex-col gap-2 border-l border-border/70 pl-4">
-                      {phrases.map((phrase) => (
-                        <li
-                          key={phrase}
-                          className="font-display text-[0.98rem] italic leading-[1.5] text-foreground/80"
-                          style={{ fontVariationSettings: '"opsz" 24, "SOFT" 80' }}
-                        >
-                          &ldquo;{phrase}&rdquo;
-                        </li>
-                      ))}
+                    <div className="flex flex-col gap-1.5">
+                      <h3
+                        className="font-display text-[1.1rem] leading-snug text-foreground sm:text-[1.15rem]"
+                        style={{ fontVariationSettings: '"opsz" 24, "SOFT" 60' }}
+                      >
+                        {t.short_name}
+                        {canExpand && (
+                          <span
+                            className={cn(
+                              "ml-2 inline-block font-mono text-[10px] tracking-[0.2em] text-muted-foreground/60 transition-transform",
+                              isExpanded && "rotate-90",
+                            )}
+                            aria-hidden
+                          >
+                            ›
+                          </span>
+                        )}
+                      </h3>
+                      <p
+                        className={cn(
+                          "font-sans text-[0.92rem] leading-[1.55] text-muted-foreground",
+                          !isExpanded && "line-clamp-3",
+                        )}
+                      >
+                        {t.description}
+                      </p>
                     </div>
-                  </ul>
-                )}
-              </li>
-            );
-          })}
-        </ol>
+                    <span className="flex flex-col items-end gap-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/80">
+                      <span className="font-display text-[1.05rem] not-italic tabular-nums text-foreground/85">
+                        {t.count}
+                      </span>
+                      <span>{t.count === 1 ? "voice" : "voices"}</span>
+                    </span>
+                  </button>
+                  {isExpanded && phrases.length > 0 && (
+                    <ul className="grid grid-cols-[2.25rem_1fr] gap-x-4 pb-5">
+                      <span aria-hidden />
+                      <div className="flex flex-col gap-2 border-l border-border/70 pl-4">
+                        {phrases.map((phrase) => (
+                          <li
+                            key={phrase}
+                            className="font-display text-[0.98rem] italic leading-[1.5] text-foreground/80"
+                            style={{ fontVariationSettings: '"opsz" 24, "SOFT" 80' }}
+                          >
+                            &ldquo;{phrase}&rdquo;
+                          </li>
+                        ))}
+                      </div>
+                    </ul>
+                  )}
+                </li>
+              );
+            })}
+          </ol>
+        </div>
       )}
 
       {themes.length > 3 && (
@@ -477,6 +495,7 @@ export function ThemesPanel({
         </button>
       )}
 
+      {/* Outliers / "Unique perspectives" section hidden per request.
       {outlierPhrases.length > 0 && (
         <section className="flex flex-col gap-3 border-t border-border/70 pt-5">
           <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
@@ -498,6 +517,7 @@ export function ThemesPanel({
           </ul>
         </section>
       )}
+      */}
 
       {themes.length > 0 && (
         <p className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-muted-foreground/70">

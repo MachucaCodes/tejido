@@ -21,7 +21,6 @@ const SUMMARY_JSON_SCHEMA = {
 
 const TV_THRESHOLD = 0.2;
 const MIN_TOTAL_POINTS_TO_GENERATE = 3;
-const SAMPLES_PER_THEME = 3;
 
 export type Shares = Record<string, number>;
 
@@ -125,26 +124,28 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
     .from("theme_assignments")
     .select("theme_id, point_id, created_at")
     .in("theme_id", themeIds)
-    .order("created_at", { ascending: false });
+    .order("created_at", { ascending: true });
 
+  // Collect EVERY point per theme — the summarizer should see all the
+  // voices, not just the most recent few, so the synthesis reflects the
+  // whole room rather than whoever spoke last.
   const countsByTheme: Record<string, number> = {};
-  const samplePointIdsByTheme: Record<string, string[]> = {};
+  const pointIdsByTheme: Record<string, string[]> = {};
   for (const a of assignments ?? []) {
     countsByTheme[a.theme_id] = (countsByTheme[a.theme_id] ?? 0) + 1;
-    const arr = (samplePointIdsByTheme[a.theme_id] ??= []);
-    if (arr.length < SAMPLES_PER_THEME) arr.push(a.point_id);
+    (pointIdsByTheme[a.theme_id] ??= []).push(a.point_id);
   }
   const total = Object.values(countsByTheme).reduce((s, n) => s + n, 0);
 
-  const allSampleIds = Array.from(
-    new Set(Object.values(samplePointIdsByTheme).flat()),
+  const allPointIds = Array.from(
+    new Set(Object.values(pointIdsByTheme).flat()),
   );
   const phraseById = new Map<string, string>();
-  if (allSampleIds.length) {
+  if (allPointIds.length) {
     const { data: pointRows } = await admin
       .from("extracted_points")
       .select("id, surface_phrase")
-      .in("id", allSampleIds);
+      .in("id", allPointIds);
     for (const p of pointRows ?? []) {
       const phrase = (p.surface_phrase ?? "").trim();
       if (phrase) phraseById.set(p.id, phrase);
@@ -153,9 +154,14 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
 
   const themeInputs: ThemeForSummary[] = themeRows.map((t) => {
     const count = countsByTheme[t.id] ?? 0;
-    const samples = (samplePointIdsByTheme[t.id] ?? [])
-      .map((id) => phraseById.get(id) ?? "")
-      .filter(Boolean);
+    // Every distinct phrase under this theme, in chronological order.
+    const samples = Array.from(
+      new Set(
+        (pointIdsByTheme[t.id] ?? [])
+          .map((id) => phraseById.get(id) ?? "")
+          .filter(Boolean),
+      ),
+    );
     return {
       id: t.id,
       short_name: t.short_name,

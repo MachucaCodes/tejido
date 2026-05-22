@@ -9,7 +9,7 @@ THE TOPIC THE GROUP IS DISCUSSING:
 THEMES, RANKED BY HOW MANY PEOPLE LANDED ON EACH:
 {THEMES_BLOCK}
 
-SAMPLE PHRASES PEOPLE ACTUALLY USED (anonymous):
+PHRASES PEOPLE ACTUALLY USED, GROUPED BY THEME (anonymous — every voice, not a sample):
 {SAMPLES_BLOCK}
 
 What to write:
@@ -63,7 +63,6 @@ export function renderSummaryPrompt(
     .filter((t) => t.samples.length > 0)
     .map((t) => {
       const phrases = t.samples
-        .slice(0, 3)
         .map((s) => `  • "${s}"`)
         .join("\n");
       return `Under "${t.short_name}":\n${phrases}`;

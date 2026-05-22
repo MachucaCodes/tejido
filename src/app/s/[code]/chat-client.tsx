@@ -76,6 +76,10 @@ export default function ChatClient({
 }) {
   const intro = introMessage?.trim() ?? "";
   const router = useRouter();
+  // Admin-only: lets an admin peek at the room view (the panel participants
+  // see after [READY_TO_SHARE]) on demand, even if they haven't shared
+  // anything themselves.
+  const [resultsOpen, setResultsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
   const [input, setInput] = useState("");
   const [status, setStatus] = useState<Status>("idle");
@@ -382,9 +386,24 @@ export default function ChatClient({
         aria-hidden
       />
 
-      <Masthead sessionCode={sessionCode} isAdmin={isAdmin} />
+      <Masthead
+        sessionCode={sessionCode}
+        isAdmin={isAdmin}
+        onShowResults={() => setResultsOpen(true)}
+      />
 
       <SenseMakingModal open={introOpen} onAcknowledge={acknowledgeIntro} />
+
+      {isAdmin && (
+        <AdminResultsModal
+          open={resultsOpen}
+          onOpenChange={setResultsOpen}
+          sessionCode={sessionCode}
+          initialThemes={initialThemes}
+          initialSummary={initialSummary}
+          initialPoints={initialPoints}
+        />
+      )}
 
       {/* Conversation column + composer, both bound by the same column. */}
       <div className="mx-auto flex w-full max-w-3xl min-h-0 flex-1 flex-col px-5 sm:px-8">
@@ -614,9 +633,11 @@ function SenseMakingModal({
 function Masthead({
   sessionCode,
   isAdmin,
+  onShowResults,
 }: {
   sessionCode: string;
   isAdmin: boolean;
+  onShowResults: () => void;
 }) {
   return (
     <header className="sticky top-0 z-20 border-b border-border/70 bg-[oklch(96.5%_0.022_82/0.82)] backdrop-blur-md">
@@ -640,9 +661,77 @@ function Masthead({
             tejido
           </span>
         </div>
-        {isAdmin && <AdminResetButton sessionCode={sessionCode} />}
+        {isAdmin && (
+          <div className="flex items-center gap-2">
+            <AdminResultsButton onClick={onShowResults} />
+            <AdminResetButton sessionCode={sessionCode} />
+          </div>
+        )}
       </div>
     </header>
+  );
+}
+
+function AdminResultsButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "rounded-full border border-border/80 bg-background/60 px-2.5 py-1",
+        "font-mono text-[9px] uppercase tracking-[0.22em] text-muted-foreground",
+        "transition-colors hover:border-[var(--accent)]/60 hover:text-foreground",
+      )}
+      title="Admin only: view what participants see (the room results)"
+    >
+      Results
+    </button>
+  );
+}
+
+/* ───────────────────────── Admin results modal ───────────────────────── */
+
+function AdminResultsModal({
+  open,
+  onOpenChange,
+  sessionCode,
+  initialThemes,
+  initialSummary,
+  initialPoints,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  sessionCode: string;
+  initialThemes: Theme[];
+  initialSummary: { text: string | null; generatedAt: string | null };
+  initialPoints: Point[];
+}) {
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent
+        className={cn(
+          "!max-w-2xl !gap-0 !rounded-2xl !bg-card !p-0",
+          "max-h-[85dvh] overflow-y-auto ring-1 ring-[var(--accent)]/15",
+        )}
+      >
+        <div className="border-b border-border/70 px-6 py-4">
+          <p className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-[var(--accent)]">
+            Admin preview
+          </p>
+          <p className="mt-1 font-display text-[1.05rem] italic leading-none text-foreground">
+            What participants see
+          </p>
+        </div>
+        <div className="px-6 py-6">
+          <ThemesPanel
+            sessionCode={sessionCode}
+            initialThemes={initialThemes}
+            initialSummary={initialSummary}
+            initialPoints={initialPoints}
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
