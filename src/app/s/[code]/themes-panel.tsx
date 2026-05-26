@@ -21,6 +21,10 @@ export type Point = {
 };
 
 const OUTLIER_SAMPLE_SIZE = 3;
+// Drop one- or two-word fragments like "curiosity" that the analysis pass
+// occasionally emits as a surface_phrase. Out of context they read as noise
+// and reinforce the "outliers are random" perception we're fixing.
+const OUTLIER_MIN_PHRASE_CHARS = 25;
 
 export function ThemesPanel({
   sessionCode,
@@ -266,26 +270,21 @@ export function ThemesPanel({
     return map;
   }, [points]);
 
-  // Outliers: surface_phrases of points whose ALL assigned themes sit at
-  // or below the median count. Random sample, stable per-render via the
-  // points/themes deps. Only renders when there are points to draw from
-  // AND the room has enough variety for "below median" to mean anything.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // Outliers: surface_phrases of points that are genuinely rare in the
+  // room — either unclustered, or belonging only to tiny clusters (every
+  // assigned theme has count ≤ 2). The previous "at or below median" rule
+  // captured ~half the room by construction and read as random; this one
+  // surfaces just the voices that didn't gather a crowd. Random sample
+  // within that narrow pool. Only renders once the room has enough
+  // material that "rare" actually means something.
   const outlierPhrases = useMemo(() => {
     if (themes.length < 3 || points.length === 0) return [];
-    const sortedCounts = [...themes.map((t) => t.count)].sort((a, b) => a - b);
-    const mid = Math.floor(sortedCounts.length / 2);
-    const median =
-      sortedCounts.length % 2 === 0
-        ? (sortedCounts[mid - 1] + sortedCounts[mid]) / 2
-        : sortedCounts[mid];
-    const lowThemeIds = new Set(
-      themes.filter((t) => t.count <= median).map((t) => t.id),
-    );
-    const candidates = points.filter(
-      (p) =>
-        p.theme_ids.length > 0 && p.theme_ids.every((id) => lowThemeIds.has(id)),
-    );
+    const themeCount = new Map(themes.map((t) => [t.id, t.count]));
+    const candidates = points.filter((p) => {
+      if (p.surface_phrase.trim().length < OUTLIER_MIN_PHRASE_CHARS) return false;
+      if (p.theme_ids.length === 0) return true;
+      return p.theme_ids.every((id) => (themeCount.get(id) ?? 0) <= 2);
+    });
     const phrases = Array.from(
       new Set(candidates.map((p) => p.surface_phrase)),
     );
@@ -495,7 +494,6 @@ export function ThemesPanel({
         </button>
       )}
 
-      {/* Outliers / "Unique perspectives" section hidden per request.
       {outlierPhrases.length > 0 && (
         <section className="flex flex-col gap-3 border-t border-border/70 pt-5">
           <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
@@ -517,7 +515,6 @@ export function ThemesPanel({
           </ul>
         </section>
       )}
-      */}
 
       {themes.length > 0 && (
         <p className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-muted-foreground/70">

@@ -100,6 +100,17 @@ const sampleHead = (s: string, n: number): string =>
 const sampleTail = (s: string, n: number): string =>
   s.length <= n ? s : `…${s.slice(-n)}`;
 
+// Case-insensitive prefix check. Android Chrome occasionally re-emits the
+// same cumulative final with revised capitalization ("deepen Trust" →
+// "deepen trust"), which a plain `startsWith` reads as a brand-new
+// utterance — appending it verbatim and producing visible duplication in
+// the transcribed text.
+const startsWithCI = (s: string, prefix: string): boolean => {
+  if (prefix.length === 0) return true;
+  if (s.length < prefix.length) return false;
+  return s.slice(0, prefix.length).toLowerCase() === prefix.toLowerCase();
+};
+
 // Crude repetition score: scan all 4-word sliding windows and report the
 // fraction that are duplicates. Healthy speech sits near 0; the Android
 // cumulative-final bug produces scores well above 0.5 because phrases like
@@ -324,11 +335,11 @@ export const SpeechInput = ({
           dropped += 1;
           continue;
         }
-        if (part.startsWith(buffer)) {
+        if (startsWithCI(part, buffer)) {
           // Cumulative growth (Android) or first part — replace.
           buffer = part;
           extended += 1;
-        } else if (!buffer.startsWith(part)) {
+        } else if (!startsWithCI(buffer, part)) {
           // Distinct utterance — append. (Older restatements that match
           // a prefix of the buffer fall through both branches and are
           // intentionally dropped.)
@@ -341,7 +352,7 @@ export const SpeechInput = ({
 
       let delta = "";
       let divergent = false;
-      if (buffer.startsWith(emittedFinalRef.current)) {
+      if (startsWithCI(buffer, emittedFinalRef.current)) {
         delta = buffer.slice(emittedFinalRef.current.length);
       } else if (buffer) {
         // Buffer diverged from what we emitted (rare: late-arriving correction
@@ -384,14 +395,21 @@ export const SpeechInput = ({
       // spin us into an auto-restart loop. `not-allowed` means the user
       // denied permission; the others trigger the MediaRecorder fallback
       // below and don't want a stale recognition restart racing it.
-      // `aborted` per spec is UA-initiated cancellation (e.g. browser
-      // dismissed the speech UI) — also a stop signal.
+      //
+      // `aborted` is intentionally NOT here. Per spec it means UA-initiated
+      // cancellation, but in practice Android Chrome (and iOS Safari) fire
+      // it spuriously mid-utterance — sometimes after a clean cycle just
+      // captured dozens of result events. Killing the mic on every spurious
+      // abort forces the user to physically re-tap to keep dictating, which
+      // they read as "the mic stopped working." Leave userStoppedRef alone
+      // and let handleEnd's normal auto-restart logic recover; if every
+      // cycle aborts immediately the empty-cycle circuit breaker still
+      // trips after MAX_EMPTY_RESTART_CYCLES and hands control back.
       const fatal =
         errorEvent.error === "not-allowed" ||
         errorEvent.error === "service-not-allowed" ||
         errorEvent.error === "audio-capture" ||
-        errorEvent.error === "network" ||
-        errorEvent.error === "aborted";
+        errorEvent.error === "network";
       if (fatal) {
         userStoppedRef.current = true;
         if (restartTimerRef.current !== null) {
