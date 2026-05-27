@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -21,6 +22,11 @@ export type Point = {
 };
 
 const OUTLIER_SAMPLE_SIZE = 3;
+// Cap how many phrases we render under an expanded theme. With ~500
+// participants a popular theme can collect hundreds of points; showing
+// them all turns the panel into a wall of text. Everything past the cap
+// is reachable via the "see all" link to the points drilldown.
+const THEME_PHRASE_PREVIEW = 8;
 // Drop one- or two-word fragments like "curiosity" that the analysis pass
 // occasionally emits as a surface_phrase. Out of context they read as noise
 // and reinforce the "outliers are random" perception we're fixing.
@@ -385,9 +391,11 @@ export function ThemesPanel({
             {(showAllThemes ? themes : themes.slice(0, 3)).map((t, i) => {
               const isExpanded = expandedThemeId === t.id;
               const themePoints = pointsByTheme.get(t.id) ?? [];
-              const phrases = Array.from(
+              const allPhrases = Array.from(
                 new Set(themePoints.map((p) => p.surface_phrase)),
               );
+              const phrases = allPhrases.slice(0, THEME_PHRASE_PREVIEW);
+              const hiddenPhraseCount = allPhrases.length - phrases.length;
               const canExpand = true;
               return (
                 <li
@@ -432,12 +440,7 @@ export function ThemesPanel({
                           </span>
                         )}
                       </h3>
-                      <p
-                        className={cn(
-                          "font-sans text-[0.92rem] leading-[1.55] text-muted-foreground",
-                          !isExpanded && "line-clamp-3",
-                        )}
-                      >
+                      <p className="font-sans text-[0.92rem] leading-[1.55] text-muted-foreground line-clamp-3">
                         {t.description}
                       </p>
                     </div>
@@ -461,6 +464,17 @@ export function ThemesPanel({
                             &ldquo;{phrase}&rdquo;
                           </li>
                         ))}
+                        {hiddenPhraseCount > 0 && (
+                          <Link
+                            href={`/s/${sessionCode}/points?theme=${t.id}`}
+                            className="mt-1 inline-flex items-center gap-1.5 self-start font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted-foreground/85 hover:text-foreground"
+                          >
+                            <span>
+                              See all {allPhrases.length} under this theme
+                            </span>
+                            <span aria-hidden>→</span>
+                          </Link>
+                        )}
                       </div>
                     </ul>
                   )}

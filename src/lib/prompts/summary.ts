@@ -13,9 +13,12 @@ PHRASES PEOPLE ACTUALLY USED, GROUPED BY THEME (anonymous — every voice, not a
 {SAMPLES_BLOCK}
 
 What to write:
-- Lead with the center of gravity — where is the room pulling? Don't just name the biggest theme; explain what underlying want is gathering people.
-- Then name the main tension — where do views actually pull in different directions? If there's no real tension, name the biggest unresolved question or the most surprising minority thread instead.
-- Anchor in the participants' own language where possible. Avoid abstract LLM-speak ("stakeholders express concerns about…", "values around community").
+- Lead with concrete content, not framing. Say what the largest group is actually pointing at: the specific amenities, the specific layout, the specific kind of access. NOT a category that "captures" what they want.
+  BAD (abstract, generic, could fit any room): "The room is gathering around expansion that actually lives the community's values." / "People want a thoughtful approach to growth." / "There's strong alignment around community-aligned development."
+  GOOD (concrete, this room specifically): "Most people want the new land to bring permanent stores, a town center close enough to walk to, and quieter zones for residents set back from the road."
+- Then name the main tension — where do views actually pull in different directions? Use specifics. If there's no real tension, name the biggest unresolved question or the most surprising minority thread instead.
+- Anchor in the participants' own language where possible.
+- Avoid these LLM tells: "X that Y" framings ("expansion that lives its values," "growth that honors community"), the word "actually" used to add weight ("actually deliver," "actually lives"), nominalizations ("stakeholders express concerns about…," "values around community"), and any sentence that would read the same in a summary of any other room.
 - Don't list every theme. Don't recite counts or percentages. Don't preview what comes next.
 - One paragraph. No headings, no bullets, no preamble, no quotation marks around the whole thing.
 

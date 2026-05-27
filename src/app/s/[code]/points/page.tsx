@@ -13,10 +13,13 @@ import {
 
 export default async function SessionPointsPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ code: string }>;
+  searchParams: Promise<{ theme?: string }>;
 }) {
   const { code } = await params;
+  const { theme: initialThemeId } = await searchParams;
   const admin = createAdmin();
   const guard = await requireAdmin();
   const isAdmin = guard.ok;
@@ -80,6 +83,7 @@ export default async function SessionPointsPage({
       assignments={assignments}
       turns={turns}
       isAdmin={isAdmin}
+      initialThemeId={initialThemeId ?? null}
     />
   );
 }

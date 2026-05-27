@@ -37,6 +37,7 @@ export function PointsView({
   assignments,
   turns,
   isAdmin,
+  initialThemeId = null,
 }: {
   code: string;
   topic: string | null;
@@ -46,9 +47,18 @@ export function PointsView({
   assignments: AssignmentRow[];
   turns: TurnRow[];
   isAdmin: boolean;
+  initialThemeId?: string | null;
 }) {
-  const [selectedThemeId, setSelectedThemeId] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<ViewMode>("voice");
+  const initialThemeValid =
+    initialThemeId && themes.some((t) => t.id === initialThemeId)
+      ? initialThemeId
+      : null;
+  const [selectedThemeId, setSelectedThemeId] = useState<string | null>(
+    initialThemeValid,
+  );
+  const [viewMode, setViewMode] = useState<ViewMode>(
+    initialThemeValid ? "theme" : "voice",
+  );
   const [showAllChips, setShowAllChips] = useState(false);
 
   const themeNameById = useMemo(() => {
