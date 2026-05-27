@@ -2,7 +2,7 @@
 
 import { ArrowUpIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
 import {
   Conversation,
@@ -855,6 +855,7 @@ function ThreadDivider() {
 /* ───────────────────────── Messages ───────────────────────── */
 
 function FacilitatorOpener({ text }: { text: string }) {
+  const quoted = text.startsWith("“") ? text : `“${text}”`;
   return (
     <div className="flex w-full max-w-[40rem] flex-col gap-3">
       <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
@@ -868,10 +869,43 @@ function FacilitatorOpener({ text }: { text: string }) {
         className="font-display text-[1.45rem] italic leading-[1.4] text-foreground/90 sm:text-[1.6rem] sm:leading-[1.36]"
         style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
       >
-        {text.startsWith("“") ? text : `“${text}”`}
+        {renderWithLinks(quoted)}
       </p>
     </div>
   );
+}
+
+function renderWithLinks(text: string) {
+  // Match http(s) URLs and bare www.* URLs; stop before whitespace and trim trailing punctuation.
+  const urlRegex = /(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  while ((match = urlRegex.exec(text)) !== null) {
+    const raw = match[0];
+    // Trim trailing punctuation that's unlikely to be part of the URL.
+    const trimmed = raw.replace(/[.,;:!?)\]}'"”’]+$/, "");
+    const trailing = raw.slice(trimmed.length);
+    const start = match.index;
+    if (start > lastIndex) nodes.push(text.slice(lastIndex, start));
+    const href = trimmed.startsWith("http") ? trimmed : `https://${trimmed}`;
+    nodes.push(
+      <a
+        key={`lnk-${key++}`}
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="underline decoration-[var(--accent)]/60 underline-offset-[3px] transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)]"
+      >
+        {trimmed}
+      </a>,
+    );
+    if (trailing) nodes.push(trailing);
+    lastIndex = start + raw.length;
+  }
+  if (lastIndex < text.length) nodes.push(text.slice(lastIndex));
+  return nodes.length > 0 ? nodes : text;
 }
 
 function FinalizeErrorBanner({ onRetry }: { onRetry: () => void }) {
