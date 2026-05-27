@@ -113,6 +113,10 @@ export type AnalyzeResult = {
   newThemeCount: number;
   themeUpdateCount: number;
   assignmentCount: number;
+  // True when the call was a no-op because nothing in the transcript has
+  // advanced past the prior analysis anchor. Callers can use this for
+  // observability/logging; the room state is unchanged on skip.
+  skipped: boolean;
 };
 
 /**
@@ -129,7 +133,7 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
 
   const { data: participant, error: pErr } = await admin
     .from("participants")
-    .select("id, session_id")
+    .select("id, session_id, last_analyzed_turn_ord")
     .eq("id", participantId)
     .single();
   if (pErr || !participant) throw new Error(`participant not found: ${participantId}`);
@@ -145,12 +149,31 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
 
   const { data: turns } = await admin
     .from("transcript_turns")
-    .select("role, content")
+    .select("role, content, ord")
     .eq("participant_id", participantId)
     .order("ord", { ascending: true });
   if (!turns || turns.length < 2) {
     throw new Error("not enough transcript turns to analyze");
   }
+
+  // Dedup against the prior analysis anchor. Reloads after [READY_TO_SHARE]
+  // re-arm the client effect and fire finalize again even though nothing
+  // in the transcript has moved; this guard skips the Opus call in that
+  // case. Without it every reload costs ~$0.10–0.20 and can drift the
+  // theme set because the delete/reinsert below mints fresh themes from a
+  // newly-sampled LLM output.
+  const latestOrd = turns[turns.length - 1].ord;
+  const anchorOrd = participant.last_analyzed_turn_ord ?? -1;
+  if (latestOrd <= anchorOrd) {
+    return {
+      pointCount: 0,
+      newThemeCount: 0,
+      themeUpdateCount: 0,
+      assignmentCount: 0,
+      skipped: true,
+    };
+  }
+
   const transcript = turns
     .map((t) => `${t.role === "user" ? "Participant" : "Facilitator"}: ${t.content}`)
     .join("\n\n");
@@ -337,10 +360,25 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
     if (error) throw new Error(`theme_assignments insert failed: ${error.message}`);
   }
 
+  // Advance the anchor so the next finalize call against an unchanged
+  // transcript short-circuits. Best-effort: an error here doesn't unwind
+  // the analysis we just wrote, so log and move on.
+  const { error: anchorErr } = await admin
+    .from("participants")
+    .update({ last_analyzed_turn_ord: latestOrd })
+    .eq("id", participantId);
+  if (anchorErr) {
+    console.error(
+      `[analyze] anchor update failed for ${participantId}:`,
+      anchorErr.message,
+    );
+  }
+
   return {
     pointCount: pointRows.length,
     newThemeCount: parsed.new_themes.length,
     themeUpdateCount: validUpdates.length,
     assignmentCount: assignmentRows.length,
+    skipped: false,
   };
 }

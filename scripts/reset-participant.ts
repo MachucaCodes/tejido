@@ -157,6 +157,15 @@ async function main() {
       const { error } = await admin.from("llm_call_logs").delete().eq("participant_id", args.participantId);
       return { error };
     }],
+    ["analysis_anchor", async () => {
+      // Fresh transcript_turns restart at ord=0; leaving a stale high
+      // anchor would permanently skip the next finalize.
+      const { error } = await admin
+        .from("participants")
+        .update({ last_analyzed_turn_ord: null })
+        .eq("id", args.participantId);
+      return { error };
+    }],
   ];
   if (args.clearEvents) {
     steps.push([

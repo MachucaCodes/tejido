@@ -35,10 +35,13 @@ export async function POST(req: Request) {
 
   const result = await analyzeParticipant(participant.id);
 
-  // Bust the server-side fetch cache for this session's route so the
-  // client's router.refresh() returns fresh themes/points/summary
-  // instead of replaying cached supabase reads.
-  revalidatePath(`/s/${sessionCode}`);
+  // Only bust the cache when something actually changed. A skipped call
+  // (reload re-fire) means the room state is exactly what the client
+  // already has — invalidating the path would force an unnecessary
+  // re-fetch.
+  if (!result.skipped) {
+    revalidatePath(`/s/${sessionCode}`);
+  }
 
   return NextResponse.json({ ok: true, ...result });
 }

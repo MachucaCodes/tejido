@@ -34,11 +34,14 @@ export async function POST(
   if (!participant) return new Response("no participant to reset", { status: 404 });
 
   // Delete extracted_points first so theme_assignments cascade happens
-  // before anything else touches participant rows.
+  // before anything else touches participant rows. Also clear the analysis
+  // anchor — fresh transcript_turns will start at ord=0, and leaving a
+  // stale high anchor would permanently skip the next finalize.
   const steps: Array<[string, () => PromiseLike<{ error: { message: string } | null }>]> = [
     ["extracted_points", () => admin.from("extracted_points").delete().eq("participant_id", participant.id)],
     ["transcript_turns", () => admin.from("transcript_turns").delete().eq("participant_id", participant.id)],
     ["llm_call_logs", () => admin.from("llm_call_logs").delete().eq("participant_id", participant.id)],
+    ["analysis_anchor", () => admin.from("participants").update({ last_analyzed_turn_ord: null }).eq("id", participant.id)],
   ];
   for (const [label, run] of steps) {
     const { error } = await run();

@@ -93,6 +93,13 @@ export default function ChatClient({
   // True while a /api/finalize call is in flight — drives the loader on
   // the perspectives panel.
   const [analyzing, setAnalyzing] = useState(false);
+  // Set when the last /api/finalize attempt failed. Drives a retry banner
+  // above the composer so the participant has a clear path back to a
+  // successful share — without it they sit in the room view with stale
+  // themes and no signal their contribution didn't land. Cleared when a
+  // retry kicks off or a new conversation turn starts (which will re-arm
+  // finalize anyway).
+  const [finalizeFailed, setFinalizeFailed] = useState(false);
   // Briefly true after a successful PhoneGate submission while we wait
   // for router.refresh() to deliver fresh themes/points. The analyze
   // itself is already done by then, but `initialThemes` arrives via a
@@ -210,6 +217,26 @@ export default function ChatClient({
     }
     analyzingRef.current = true;
     setAnalyzing(true);
+    // Clear any prior failure marker — a retry tap (or a fresh
+    // [READY_TO_SHARE]-driven arm) is committing to another attempt.
+    setFinalizeFailed(false);
+    // Returning participants (phone already on file) get swapped into the
+    // room view IMMEDIATELY using the existing themes/summary/points the
+    // server already fetched in initialThemes/etc. Their own analyze runs
+    // in the background — the panel's "Updating" indicator covers the
+    // 20-45s wait, and router.refresh() below swaps in their contribution
+    // when the LLM call resolves. Without this flip the participant
+    // stares at "Pulling your perspective into the group view…" for the
+    // full analyze duration even though the room they're about to see
+    // already exists on the server.
+    //
+    // PhoneGate flow is intentionally unchanged — for !hasPhone users
+    // PhoneGate.onComplete still owns the flip, because flipping here
+    // would hide the gate before they've handed over their number, and
+    // browser-side RLS blocks theme/point reads until the phone lands.
+    if (hasPhone) {
+      setHasAnalyzed(true);
+    }
     const startedAt = Date.now();
     logEvent("chat.runFinalize.begin", { hasPhone });
     try {
@@ -218,30 +245,35 @@ export default function ChatClient({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ sessionCode }),
       });
+      const body = res.ok
+        ? ((await res.json().catch(() => null)) as
+            | { ok: true; skipped?: boolean }
+            | null)
+        : null;
       logEvent("chat.runFinalize.response", {
         status: res.status,
         ok: res.ok,
+        skipped: body?.skipped ?? false,
         duration_ms: Date.now() - startedAt,
       });
-      if (res.ok) {
-        // For first-time participants, the PhoneGate's onComplete owns
-        // the hasAnalyzed flip — flipping it here would hide the gate
-        // before they've handed over their number. Refresh either way
-        // so freshly-written themes/summary land in initialThemes etc.
-        // Browser-side RLS blocks those reads for participants without
-        // a phone, so the server-side admin fetch is our only path.
-        if (hasPhone) {
-          setHasAnalyzed(true);
-        }
+      if (res.ok && !body?.skipped) {
+        // hasAnalyzed already flipped above for hasPhone users; just
+        // refresh so the panel picks up the freshly-written themes,
+        // summary, and points (including this participant's new ones).
         router.refresh();
+      } else if (!res.ok) {
+        setFinalizeFailed(true);
       }
     } catch (err) {
       logEvent("chat.runFinalize.error", {
         message: err instanceof Error ? err.message : String(err),
         duration_ms: Date.now() - startedAt,
       });
-      // Best-effort. Themes won't update; user can keep talking and the
-      // next [READY_TO_SHARE] will retry.
+      // Network blip / abort. The room view (if hasPhone flipped
+      // hasAnalyzed early) is still correct as a snapshot, but the
+      // participant's contribution didn't land — surface a retry path
+      // via the banner rather than silently moving on.
+      setFinalizeFailed(true);
     } finally {
       analyzingRef.current = false;
       setAnalyzing(false);
@@ -471,36 +503,46 @@ export default function ChatClient({
           <ConversationScrollButton />
         </Conversation>
 
+        {finalizeFailed && !analyzing && (
+          <FinalizeErrorBanner onRetry={() => void runFinalize()} />
+        )}
+
         <div className="border-t border-border/70 pt-4 pb-[max(env(safe-area-inset-bottom),1.25rem)] sm:pb-[max(env(safe-area-inset-bottom),1.75rem)]">
           {showPhoneGate ? (
             <PhoneGate
               sessionCode={sessionCode}
               onComplete={() => {
+                const analyzeInFlight = analyzingRef.current;
                 logEvent("chat.gate_complete", {
-                  analyzeInFlight: analyzingRef.current,
+                  analyzeInFlight,
                   initialThemeCount: initialThemes.length,
                 });
                 setHasPhone(true);
-                // Analysis was kicked off as soon as [READY_TO_SHARE]
-                // landed, so it's either already done or still running
-                // in the background. Flip hasAnalyzed so ThemesPanel
-                // takes over with whatever the room has so far; its
-                // `analyzing` indicator covers the in-flight case, and
-                // runFinalize's router.refresh on completion swaps in
-                // this participant's contributions.
+                // Flip hasAnalyzed so ThemesPanel takes over with
+                // whatever the room has so far. Analyze was kicked off
+                // as soon as [READY_TO_SHARE] landed — by now it's
+                // either already done (initialThemes is fresh from the
+                // post-finalize router.refresh) or still in flight.
                 setHasAnalyzed(true);
-                setPostSubmitSettling(true);
-                if (settlingTimerRef.current !== null) {
-                  window.clearTimeout(settlingTimerRef.current);
+                // Only show the "Updating" bridge if analyze is still
+                // running. When it's already done, the room is whatever
+                // initialThemes says it is — slapping an Updating
+                // indicator on top reads as "still loading…" with no
+                // payoff and was the UX they flagged.
+                if (analyzeInFlight) {
+                  setPostSubmitSettling(true);
+                  if (settlingTimerRef.current !== null) {
+                    window.clearTimeout(settlingTimerRef.current);
+                  }
+                  // Safety net: drop the loader after a few seconds
+                  // even if the refresh stalls — better than spinning
+                  // forever.
+                  settlingTimerRef.current = window.setTimeout(() => {
+                    logEvent("chat.settling.clear", { reason: "timeout" });
+                    setPostSubmitSettling(false);
+                    settlingTimerRef.current = null;
+                  }, 8000);
                 }
-                // Safety net: drop the loader after a few seconds even
-                // if the refresh stalls — better than leaving it
-                // spinning forever.
-                settlingTimerRef.current = window.setTimeout(() => {
-                  logEvent("chat.settling.clear", { reason: "timeout" });
-                  setPostSubmitSettling(false);
-                  settlingTimerRef.current = null;
-                }, 8000);
                 router.refresh();
               }}
             />
@@ -865,6 +907,33 @@ function FacilitatorOpener({ text }: { text: string }) {
       >
         {text.startsWith("“") ? text : `“${text}”`}
       </p>
+    </div>
+  );
+}
+
+function FinalizeErrorBanner({ onRetry }: { onRetry: () => void }) {
+  return (
+    <div
+      role="alert"
+      className={cn(
+        "mb-3 flex items-center gap-3 rounded-xl border border-destructive/30 bg-destructive/[0.06] px-4 py-2.5",
+      )}
+    >
+      <span className="size-1.5 shrink-0 rounded-full bg-destructive" aria-hidden />
+      <p className="flex-1 font-sans text-[0.88rem] leading-[1.4] text-foreground/85">
+        Couldn&apos;t add your perspective to the room.
+      </p>
+      <button
+        type="button"
+        onClick={onRetry}
+        className={cn(
+          "shrink-0 rounded-full border border-destructive/50 bg-background/60 px-3 py-1",
+          "font-mono text-[9.5px] uppercase tracking-[0.22em] text-destructive",
+          "transition-colors hover:bg-destructive/10",
+        )}
+      >
+        Retry
+      </button>
     </div>
   );
 }

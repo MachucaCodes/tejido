@@ -26,6 +26,19 @@ const OUTLIER_SAMPLE_SIZE = 3;
 // and reinforce the "outliers are random" perception we're fixing.
 const OUTLIER_MIN_PHRASE_CHARS = 25;
 
+// FNV-1a 32-bit. Used to give the outliers a stable, content-seeded
+// pseudo-random order. Math.random in the previous shuffle was a React
+// purity / SSR-hydration footgun — server and client picked different
+// values, so the rendered DOM didn't match. This produces the same
+// "feels shuffled" ordering on both sides.
+const fnv1a = (input: string): number => {
+  let h = 2166136261;
+  for (let i = 0; i < input.length; i += 1) {
+    h = Math.imul(h ^ input.charCodeAt(i), 16777619);
+  }
+  return h >>> 0;
+};
+
 export function ThemesPanel({
   sessionCode,
   initialThemes,
@@ -274,9 +287,12 @@ export function ThemesPanel({
   // room — either unclustered, or belonging only to tiny clusters (every
   // assigned theme has count ≤ 2). The previous "at or below median" rule
   // captured ~half the room by construction and read as random; this one
-  // surfaces just the voices that didn't gather a crowd. Random sample
-  // within that narrow pool. Only renders once the room has enough
-  // material that "rare" actually means something.
+  // surfaces just the voices that didn't gather a crowd. Ordering is a
+  // content-seeded pseudo-shuffle: stable for a given (sessionCode,
+  // phrase) pair so SSR and hydration agree, but the order varies across
+  // sessions and shifts naturally as new outliers appear or the room
+  // grows. Only renders once the room has enough material that "rare"
+  // actually means something.
   const outlierPhrases = useMemo(() => {
     if (themes.length < 3 || points.length === 0) return [];
     const themeCount = new Map(themes.map((t) => [t.id, t.count]));
@@ -288,14 +304,12 @@ export function ThemesPanel({
     const phrases = Array.from(
       new Set(candidates.map((p) => p.surface_phrase)),
     );
-    // Fisher-Yates with a deterministic enough seed for one render.
-    const shuffled = [...phrases];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled.slice(0, OUTLIER_SAMPLE_SIZE);
-  }, [points, themes]);
+    return phrases
+      .map((phrase) => ({ phrase, key: fnv1a(`${sessionCode}:${phrase}`) }))
+      .sort((a, b) => a.key - b.key)
+      .slice(0, OUTLIER_SAMPLE_SIZE)
+      .map((e) => e.phrase);
+  }, [points, themes, sessionCode]);
 
   return (
     <section className="flex w-full max-w-[40rem] flex-col gap-5">
