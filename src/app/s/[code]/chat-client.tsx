@@ -1,8 +1,6 @@
 "use client";
 
 import { ArrowUpIcon } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -220,20 +218,12 @@ export default function ChatClient({
     // Clear any prior failure marker — a retry tap (or a fresh
     // [READY_TO_SHARE]-driven arm) is committing to another attempt.
     setFinalizeFailed(false);
-    // Returning participants (phone already on file) get swapped into the
-    // room view IMMEDIATELY using the existing themes/summary/points the
-    // server already fetched in initialThemes/etc. Their own analyze runs
-    // in the background — the panel's "Updating" indicator covers the
-    // 20-45s wait, and router.refresh() below swaps in their contribution
-    // when the LLM call resolves. Without this flip the participant
-    // stares at "Pulling your perspective into the group view…" for the
-    // full analyze duration even though the room they're about to see
-    // already exists on the server.
-    //
-    // PhoneGate flow is intentionally unchanged — for !hasPhone users
-    // PhoneGate.onComplete still owns the flip, because flipping here
-    // would hide the gate before they've handed over their number, and
-    // browser-side RLS blocks theme/point reads until the phone lands.
+    // hasAnalyzed for returning users now flips at the moment the token
+    // appears (see the arming effect below) so the room renders the
+    // instant the sign-off message finishes streaming, not 8s later when
+    // the debounce timer fires. Belt-and-suspenders for the retry path
+    // where this callback is invoked directly without going through the
+    // arming effect.
     if (hasPhone) {
       setHasAnalyzed(true);
     }
@@ -316,6 +306,12 @@ export default function ChatClient({
       });
       void runFinalize();
     } else {
+      // Returning user: render the room view the instant the sign-off
+      // message finishes streaming. Decoupled from the debounce so the
+      // visible "From the room" section doesn't wait 8s behind the LLM
+      // coalesce window. The debounce still gates the actual analyze
+      // call below.
+      if (!hasAnalyzed) setHasAnalyzed(true);
       logEvent("chat.runFinalize.armed", {
         trigger: "ready_token_with_phone",
         debounce_ms: READY_DEBOUNCE_MS,
@@ -327,7 +323,7 @@ export default function ChatClient({
     }
 
     return cancel;
-  }, [ready, hasPhone, status, messages, runFinalize]);
+  }, [ready, hasPhone, hasAnalyzed, status, messages, runFinalize]);
 
   const send = useCallback(
     async (text: string) => {
@@ -410,19 +406,13 @@ export default function ChatClient({
   const hasAnyMessages = intro.length > 0 || messages.length > 0 || hasAnalyzed;
 
   return (
-    <div className="relative flex h-dvh w-full flex-col">
-      {/* Decorative top hairline — fine line punctuated with terracotta dot */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-border/80" />
-      <div
-        className="pointer-events-none absolute left-[max(2rem,calc(50%-22rem))] top-0 z-30 h-[3px] w-[3px] -translate-y-px rounded-full bg-[var(--accent)]"
-        aria-hidden
-      />
-
-      <Masthead
-        sessionCode={sessionCode}
-        isAdmin={isAdmin}
-        onShowResults={() => setResultsOpen(true)}
-      />
+    <div className="relative flex h-[calc(100dvh-4rem)] w-full flex-col">
+      {isAdmin && (
+        <AdminToolbar
+          sessionCode={sessionCode}
+          onShowResults={() => setResultsOpen(true)}
+        />
+      )}
 
       <SenseMakingModal open={introOpen} onAcknowledge={acknowledgeIntro} />
 
@@ -670,47 +660,20 @@ function SenseMakingModal({
   );
 }
 
-/* ───────────────────────── Masthead ───────────────────────── */
+/* ───────────────────────── Admin toolbar ───────────────────────── */
 
-function Masthead({
+function AdminToolbar({
   sessionCode,
-  isAdmin,
   onShowResults,
 }: {
   sessionCode: string;
-  isAdmin: boolean;
   onShowResults: () => void;
 }) {
   return (
-    <header className="sticky top-0 z-20 border-b border-border/70 bg-[oklch(96.5%_0.022_82/0.82)] backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5 sm:px-8">
-        <div className="flex items-center gap-3.5">
-          <Link href="/" aria-label="Go to home page" className="flex items-center">
-            <Image
-              src="/esm-logo.png"
-              alt="La Ecovilla"
-              width={323}
-              height={119}
-              className="h-6 w-auto opacity-90 sm:h-7"
-              priority
-            />
-          </Link>
-          <span className="h-5 w-px translate-y-[2px] bg-border sm:translate-y-[3px]" aria-hidden />
-          <span
-            className="translate-y-[4px] font-display text-[1.1rem] italic leading-none text-foreground sm:translate-y-[5px] sm:text-[1.2rem]"
-            style={{ fontVariationSettings: '"opsz" 14, "SOFT" 80, "WONK" 1' }}
-          >
-            tejido
-          </span>
-        </div>
-        {isAdmin && (
-          <div className="flex items-center gap-2">
-            <AdminResultsButton onClick={onShowResults} />
-            <AdminResetButton sessionCode={sessionCode} />
-          </div>
-        )}
-      </div>
-    </header>
+    <div className="mx-auto flex w-full max-w-3xl items-center justify-end gap-2 px-5 pt-3 sm:px-8">
+      <AdminResultsButton onClick={onShowResults} />
+      <AdminResetButton sessionCode={sessionCode} />
+    </div>
   );
 }
 
