@@ -40,6 +40,16 @@ PII REDACTION RULES — apply to all fields. Output goes to the rest of the grou
 
 Each point should be distinct (no two points sharing the same underlying want), use the participant's language where possible, and be grounded in the transcript. Don't include small talk, retracted statements, or wants you inferred from a position without supporting evidence.
 
+DISTINGUISH CONTEXT-GIVING FROM POINT-MAKING.
+
+Some exchanges in the transcript are scaffolding: the participant pauses to ask a procedural question about the tool, the setup, how things work, who sees what, what happens next — and the facilitator explains. Those exchanges produce no extractable point. Skip both sides.
+
+The signal is informational, not topical: the participant is asking to understand something, and your reply is explaining it. The exchange would read the same regardless of what topic the session is about.
+
+Statements that LOOK like procedural questions but actually express a value still extract — e.g. "this whole thing feels invasive," "I don't trust how my data is used." The line is: asking to understand vs. sharing a view.
+
+When in doubt, skip.
+
 ──────────────── PART 2: WEAVING ────────────────
 
 CRITICAL BIAS: PREFER FEWER, BROADER THEMES.
