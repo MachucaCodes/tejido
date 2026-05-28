@@ -67,10 +67,25 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, reassigned: false });
   }
 
-  // Case 3: prior in-conversation row from a previous attempt by the real user.
-  // Discard it — the draft they brought to phone-gate is the one they cared
-  // enough to finish. Cascades transcripts/points/logs.
-  if (existing?.phase === "in_conversation") {
+  // Case 3: a row already exists under the real user. The post-redesign
+  // schema has no terminal phase, so phase: "in_conversation" includes
+  // fully-analyzed, user-visible conversations. Only safe to discard the
+  // existing row when it has no turns; otherwise it is canonical and the
+  // shorter draft (e.g. picked up on a second browser) is the one to drop.
+  if (existing) {
+    const { count: existingTurns } = await admin
+      .from("transcript_turns")
+      .select("id", { count: "exact", head: true })
+      .eq("participant_id", existing.id);
+    if ((existingTurns ?? 0) > 0) {
+      await admin.from("participants").delete().eq("id", draft.id);
+      await cleanupAnon();
+      return NextResponse.json({
+        ok: true,
+        reassigned: false,
+        reason: "kept_existing",
+      });
+    }
     await admin.from("participants").delete().eq("id", existing.id);
   }
 

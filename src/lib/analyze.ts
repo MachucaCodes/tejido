@@ -18,7 +18,7 @@ const PointSchema = z.object({
 });
 
 const ResponseSchema = z.object({
-  points: z.array(PointSchema).min(1).max(8),
+  points: z.array(PointSchema).max(8),
   theme_updates: z
     .array(
       z.object({
@@ -275,33 +275,39 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
     parsed_output: parsed,
   });
 
-  // Wipe the participant's existing points (theme_assignments cascade-delete
-  // via the point_id FK). Then reinsert from the new analysis pass.
-  const { error: delErr } = await admin
-    .from("extracted_points")
-    .delete()
-    .eq("participant_id", participantId);
-  if (delErr) throw new Error(`extracted_points delete failed: ${delErr.message}`);
-
-  const pointRows = parsed.points.map((p, idx) => ({
-    participant_id: participantId,
-    idx,
-    surface_phrase: p.surface_phrase,
-    want: p.want,
-    context: p.context,
-    rationale: p.rationale,
-    doubts: p.doubts,
-  }));
-  const { data: insertedPoints, error: insErr } = await admin
-    .from("extracted_points")
-    .insert(pointRows)
-    .select("id, idx");
-  if (insErr || !insertedPoints) {
-    throw new Error(`extracted_points insert failed: ${insErr?.message}`);
-  }
+  // When the model returns zero points (e.g. the participant asked to skip
+  // straight to the summary and there's nothing extractable in the new
+  // turns), don't wipe prior analysis — leave existing points alone and
+  // just advance the anchor below.
   const idxToPointId = new Map<number, string>();
-  for (const row of insertedPoints) {
-    idxToPointId.set(row.idx as number, row.id as string);
+  if (parsed.points.length > 0) {
+    // Wipe the participant's existing points (theme_assignments cascade-delete
+    // via the point_id FK). Then reinsert from the new analysis pass.
+    const { error: delErr } = await admin
+      .from("extracted_points")
+      .delete()
+      .eq("participant_id", participantId);
+    if (delErr) throw new Error(`extracted_points delete failed: ${delErr.message}`);
+
+    const pointRows = parsed.points.map((p, idx) => ({
+      participant_id: participantId,
+      idx,
+      surface_phrase: p.surface_phrase,
+      want: p.want,
+      context: p.context,
+      rationale: p.rationale,
+      doubts: p.doubts,
+    }));
+    const { data: insertedPoints, error: insErr } = await admin
+      .from("extracted_points")
+      .insert(pointRows)
+      .select("id, idx");
+    if (insErr || !insertedPoints) {
+      throw new Error(`extracted_points insert failed: ${insErr?.message}`);
+    }
+    for (const row of insertedPoints) {
+      idxToPointId.set(row.idx as number, row.id as string);
+    }
   }
 
   // Apply theme broadenings. Validate ids against the snapshot we read
@@ -375,7 +381,7 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
   }
 
   return {
-    pointCount: pointRows.length,
+    pointCount: parsed.points.length,
     newThemeCount: parsed.new_themes.length,
     themeUpdateCount: validUpdates.length,
     assignmentCount: assignmentRows.length,
