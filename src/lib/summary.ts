@@ -60,11 +60,39 @@ async function decideRegen(sessionId: string): Promise<RegenDecision> {
 
   const { data: assignments } = await admin
     .from("theme_assignments")
-    .select("theme_id")
+    .select("theme_id, point_id")
     .in("theme_id", themeIds);
+  // Dedupe by participant per theme. A single participant whose
+  // transcript yielded multiple points on the same theme should count
+  // as one voice on that theme — otherwise share-distributions and the
+  // TV-distance gate get distorted by participants who simply produced
+  // more points than others.
+  const pointIds = Array.from(
+    new Set((assignments ?? []).map((a) => a.point_id)),
+  );
+  const participantByPoint = new Map<string, string>();
+  if (pointIds.length) {
+    const { data: pointRows } = await admin
+      .from("extracted_points")
+      .select("id, participant_id")
+      .in("id", pointIds);
+    for (const p of pointRows ?? []) {
+      if (p.participant_id) participantByPoint.set(p.id, p.participant_id);
+    }
+  }
+  const participantsByTheme = new Map<string, Set<string>>();
+  for (const a of assignments ?? []) {
+    const pid = participantByPoint.get(a.point_id);
+    if (!pid) continue;
+    let set = participantsByTheme.get(a.theme_id);
+    if (!set) {
+      set = new Set();
+      participantsByTheme.set(a.theme_id, set);
+    }
+    set.add(pid);
+  }
   const counts: Record<string, number> = {};
-  for (const a of assignments ?? [])
-    counts[a.theme_id] = (counts[a.theme_id] ?? 0) + 1;
+  for (const [tid, set] of participantsByTheme) counts[tid] = set.size;
   const total = Object.values(counts).reduce((s, n) => s + n, 0);
   if (total < MIN_TOTAL_POINTS_TO_GENERATE) {
     return { regenerate: false, reason: "too_few_points" };
@@ -129,28 +157,42 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
   // Collect EVERY point per theme — the summarizer should see all the
   // voices, not just the most recent few, so the synthesis reflects the
   // whole room rather than whoever spoke last.
-  const countsByTheme: Record<string, number> = {};
   const pointIdsByTheme: Record<string, string[]> = {};
   for (const a of assignments ?? []) {
-    countsByTheme[a.theme_id] = (countsByTheme[a.theme_id] ?? 0) + 1;
     (pointIdsByTheme[a.theme_id] ??= []).push(a.point_id);
   }
-  const total = Object.values(countsByTheme).reduce((s, n) => s + n, 0);
 
   const allPointIds = Array.from(
     new Set(Object.values(pointIdsByTheme).flat()),
   );
   const phraseById = new Map<string, string>();
+  const participantById = new Map<string, string>();
   if (allPointIds.length) {
     const { data: pointRows } = await admin
       .from("extracted_points")
-      .select("id, surface_phrase")
+      .select("id, surface_phrase, participant_id")
       .in("id", allPointIds);
     for (const p of pointRows ?? []) {
       const phrase = (p.surface_phrase ?? "").trim();
       if (phrase) phraseById.set(p.id, phrase);
+      if (p.participant_id) participantById.set(p.id, p.participant_id);
     }
   }
+
+  // Voice counts per theme = unique participants. Counting assignment
+  // rows over-counts participants whose transcript produced multiple
+  // points under one theme, which distorts the share/percentage the
+  // summary prompt presents as "how many people landed on each."
+  const countsByTheme: Record<string, number> = {};
+  for (const [tid, ids] of Object.entries(pointIdsByTheme)) {
+    const participants = new Set<string>();
+    for (const id of ids) {
+      const pid = participantById.get(id);
+      if (pid) participants.add(pid);
+    }
+    countsByTheme[tid] = participants.size;
+  }
+  const total = Object.values(countsByTheme).reduce((s, n) => s + n, 0);
 
   const themeInputs: ThemeForSummary[] = themeRows.map((t) => {
     const count = countsByTheme[t.id] ?? 0;

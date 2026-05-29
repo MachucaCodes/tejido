@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { AccountMenu } from "@/components/account-menu";
 import { createAdmin } from "@/lib/supabase/admin";
 import { createClient as createServer } from "@/lib/supabase/server";
 
@@ -8,6 +9,11 @@ export async function SiteHeader() {
   const supabase = await createServer();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
+
+  // A phone-keyed (non-anonymous) account is the durable identity. Guests are
+  // anonymous sessions that can sign in via the AccountMenu to recover their
+  // conversation on a new device/browser.
+  const isAuthed = Boolean(user) && !user!.is_anonymous;
 
   let fullName: string | null = null;
   if (user) {
@@ -42,11 +48,7 @@ export async function SiteHeader() {
             tejido
           </span>
         </div>
-        {fullName && (
-          <span className="truncate font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[11px]">
-            {fullName}
-          </span>
-        )}
+        <AccountMenu fullName={fullName} isAuthed={isAuthed} />
       </div>
     </header>
   );

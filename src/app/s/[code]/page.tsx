@@ -105,21 +105,19 @@ export default async function SessionPage({
     content: t.content,
   }));
 
-  const counts: Record<string, number> = {};
-  for (const a of assignmentsRes.data ?? []) {
-    counts[a.theme_id] = (counts[a.theme_id] ?? 0) + 1;
-  }
   const initialThemes: Theme[] = (themesRes.data ?? []).map((t) => ({
     id: t.id,
     short_name: t.short_name,
     description: t.description,
-    count: counts[t.id] ?? 0,
   }));
 
   // Map each point to the themes it was assigned to. A point may have 0
   // (unclustered) or >1 theme. The drilldown shows points under each
   // theme; the outliers row picks from points whose only themes are in
-  // the bottom half of the count distribution.
+  // the bottom half of the count distribution. Per-theme voice counts
+  // are derived in the panel by deduping participant_id across each
+  // theme's points — counting assignment rows over-counts participants
+  // whose transcript produced multiple points under the same theme.
   const themeIdsByPoint: Record<string, string[]> = {};
   for (const a of assignmentsRes.data ?? []) {
     (themeIdsByPoint[a.point_id] ??= []).push(a.theme_id);

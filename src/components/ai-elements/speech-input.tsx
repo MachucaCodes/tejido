@@ -325,12 +325,10 @@ export const SpeechInput = ({
       // utterance and append. Then emit only the diff vs. what we've already
       // sent to the parent.
       let buffer = "";
-      const partLens: number[] = [];
       let extended = 0;
       let dropped = 0;
       let appended = 0;
       for (const part of finalParts) {
-        partLens.push(part.length);
         if (!part) {
           dropped += 1;
           continue;
@@ -363,19 +361,25 @@ export const SpeechInput = ({
       }
       const trimmedDelta = delta.replace(/^\s+/, "");
 
-      logEvent("mic.result", {
-        resultIndex: speechEvent.resultIndex,
-        length: speechEvent.results.length,
-        totalFinals,
-        bufferChars: buffer.length,
-        emittedSoFar: emittedFinalRef.current.length,
-        deltaChars: trimmedDelta.length,
-        partLens,
-        branches: { extended, appended, dropped },
-        divergent,
-        bufferTail: sampleTail(buffer, 30),
-        delta: sampleHead(trimmedDelta, 60),
-      });
+      // Per-result logging is anomaly-only. The boring steady-state case
+      // (a single cumulative `extended` part with no diff surprises) fires
+      // many times per second while dictating and previously accounted for
+      // ~90% of client_events — plus it logged raw transcript text (PII).
+      // mic.session_summary already captures the per-cycle rollup; here we
+      // only record the merge edge cases worth investigating, and only
+      // scalar diagnostics (no transcript content, no growing arrays).
+      if (divergent || dropped > 0 || appended > 0) {
+        logEvent("mic.result", {
+          resultIndex: speechEvent.resultIndex,
+          length: speechEvent.results.length,
+          totalFinals,
+          bufferChars: buffer.length,
+          emittedSoFar: emittedFinalRef.current.length,
+          deltaChars: trimmedDelta.length,
+          branches: { extended, appended, dropped },
+          divergent,
+        });
+      }
 
       if (trimmedDelta) {
         emittedFinalRef.current = buffer;

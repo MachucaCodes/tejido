@@ -11,7 +11,6 @@ export type Theme = {
   id: string;
   short_name: string;
   description: string;
-  count: number;
 };
 
 export type Point = {
@@ -141,35 +140,18 @@ export function ThemesPanel({
     if (themes.length > 0) return;
     let cancelled = false;
     void (async () => {
-      const [themeRes, asnRes] = await Promise.all([
-        supabase
-          .from("themes")
-          .select("id, short_name, description")
-          .eq("session_id", sessionCode),
-        supabase
-          .from("theme_assignments")
-          .select("theme_id, themes!inner(session_id)")
-          .eq("themes.session_id", sessionCode),
-      ]);
-      if (cancelled || !themeRes.data) return;
-      const counts: Record<string, number> = {};
-      for (const a of (asnRes.data ?? []) as Array<{ theme_id: string }>) {
-        counts[a.theme_id] = (counts[a.theme_id] ?? 0) + 1;
-      }
-      const fetched: Theme[] = themeRes.data.map((t) => ({
-        id: t.id,
-        short_name: t.short_name,
-        description: t.description,
-        count: counts[t.id] ?? 0,
-      }));
-      if (fetched.length > 0) setThemes(fetched);
+      const { data } = await supabase
+        .from("themes")
+        .select("id, short_name, description")
+        .eq("session_id", sessionCode);
+      if (cancelled || !data || data.length === 0) return;
+      setThemes(data);
     })();
     return () => {
       cancelled = true;
     };
     // Only re-run when the visible-themes count flips between zero and
-    // non-zero. We don't want a re-fetch on every count-tick from
-    // Realtime.
+    // non-zero. We don't want a re-fetch on every realtime tick.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [themes.length === 0, sessionCode, supabase]);
 
@@ -188,9 +170,7 @@ export function ThemesPanel({
           if (payload.eventType === "INSERT") {
             const row = payload.new as Theme;
             setThemes((prev) =>
-              prev.some((t) => t.id === row.id)
-                ? prev
-                : [...prev, { ...row, count: 0 }],
+              prev.some((t) => t.id === row.id) ? prev : [...prev, row],
             );
             setPulseId(row.id);
             setTimeout(() => setPulseId(null), 1200);
@@ -214,12 +194,13 @@ export function ThemesPanel({
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "theme_assignments" },
         (payload) => {
+          // Pulse the theme for immediate feedback, but don't try to
+          // increment a local count — voice counts are derived from
+          // points (deduped by participant_id) and the assignment row
+          // alone doesn't tell us whether this point's participant was
+          // already counted. The debounced router.refresh below pulls
+          // fresh points and reconciles the displayed count.
           const row = payload.new as { theme_id: string };
-          setThemes((prev) =>
-            prev.map((t) =>
-              t.id === row.theme_id ? { ...t, count: t.count + 1 } : t,
-            ),
-          );
           setPulseId(row.theme_id);
           setTimeout(() => setPulseId(null), 1200);
           scheduleRefresh();
@@ -228,19 +209,10 @@ export function ThemesPanel({
       .on(
         "postgres_changes",
         { event: "DELETE", schema: "public", table: "theme_assignments" },
-        (payload) => {
-          // Re-analysis (and any cascade-delete from removing the
-          // underlying point) drops assignments. Realtime sends the
-          // composite PK on DELETE by default, which is enough to
-          // decrement the right theme's count without re-fetching.
-          const row = payload.old as { theme_id?: string };
-          if (!row.theme_id) return;
-          const themeId = row.theme_id;
-          setThemes((prev) =>
-            prev.map((t) =>
-              t.id === themeId ? { ...t, count: Math.max(0, t.count - 1) } : t,
-            ),
-          );
+        () => {
+          // Re-analysis (and cascade-delete from removing a point) drops
+          // assignments. Counts are derived from points, so we just
+          // schedule a refresh and let the new prop snapshot reconcile.
           scheduleRefresh();
         },
       )
@@ -289,6 +261,22 @@ export function ThemesPanel({
     return map;
   }, [points]);
 
+  // Voices per theme = unique participants whose points landed on it.
+  // Counting assignment rows over-counts: one participant whose
+  // transcript yields multiple points under the same theme would
+  // otherwise show up as multiple voices.
+  const themeVoiceCounts = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const [tid, pts] of pointsByTheme) {
+      const ids = new Set<string>();
+      for (const p of pts) {
+        if (p.participant_id) ids.add(p.participant_id);
+      }
+      map.set(tid, ids.size);
+    }
+    return map;
+  }, [pointsByTheme]);
+
   // Outliers: surface_phrases of points that are genuinely rare in the
   // room — either unclustered, or belonging only to tiny clusters (every
   // assigned theme has count ≤ 2). The previous "at or below median" rule
@@ -301,11 +289,10 @@ export function ThemesPanel({
   // actually means something.
   const outlierPhrases = useMemo(() => {
     if (themes.length < 3 || points.length === 0) return [];
-    const themeCount = new Map(themes.map((t) => [t.id, t.count]));
     const candidates = points.filter((p) => {
       if (p.surface_phrase.trim().length < OUTLIER_MIN_PHRASE_CHARS) return false;
       if (p.theme_ids.length === 0) return true;
-      return p.theme_ids.every((id) => (themeCount.get(id) ?? 0) <= 2);
+      return p.theme_ids.every((id) => (themeVoiceCounts.get(id) ?? 0) <= 2);
     });
     const phrases = Array.from(
       new Set(candidates.map((p) => p.surface_phrase)),
@@ -315,7 +302,7 @@ export function ThemesPanel({
       .sort((a, b) => a.key - b.key)
       .slice(0, OUTLIER_SAMPLE_SIZE)
       .map((e) => e.phrase);
-  }, [points, themes, sessionCode]);
+  }, [points, themes, themeVoiceCounts, sessionCode]);
 
   return (
     <section className="flex w-full max-w-[40rem] flex-col gap-5">
@@ -396,6 +383,7 @@ export function ThemesPanel({
               );
               const phrases = allPhrases.slice(0, THEME_PHRASE_PREVIEW);
               const hiddenPhraseCount = allPhrases.length - phrases.length;
+              const themeVoices = themeVoiceCounts.get(t.id) ?? 0;
               const canExpand = true;
               return (
                 <li
@@ -446,9 +434,9 @@ export function ThemesPanel({
                     </div>
                     <span className="flex flex-col items-end gap-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/80">
                       <span className="font-display text-[1.05rem] not-italic tabular-nums text-foreground/85">
-                        {t.count}
+                        {themeVoices}
                       </span>
-                      <span>{t.count === 1 ? "voice" : "voices"}</span>
+                      <span>{themeVoices === 1 ? "voice" : "voices"}</span>
                     </span>
                   </button>
                   {isExpanded && phrases.length > 0 && (
