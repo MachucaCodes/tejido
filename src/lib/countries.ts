@@ -1,3 +1,13 @@
+// The `/max` metadata bundle (not the default "min") carries the strict
+// per-type national-number patterns. The default bundle is lenient enough to
+// accept a 10-digit US number as a "valid" Costa Rica number (the 8-prefix
+// ranges overlap), which is exactly the silent-failure case this guards
+// against — Twilio rejects it async with error 21211 and the OTP never lands.
+import {
+  parsePhoneNumberFromString,
+  type CountryCode,
+} from "libphonenumber-js/max";
+
 export type Country = { iso: string; name: string; dial: string };
 
 export const COUNTRIES: Country[] = [
@@ -251,4 +261,40 @@ export function flagFromIso(iso: string): string {
 
 export function findCountry(iso: string): Country {
   return COUNTRIES.find((c) => c.iso === iso) ?? COUNTRIES[0];
+}
+
+export type ParsedPhone =
+  | { ok: true; e164: string }
+  | { ok: false; reason: string };
+
+/**
+ * Turn what the user typed into a validated E.164 number.
+ *
+ * Two failure modes this guards against — both previously produced a silent
+ * dead-end (Supabase accepts the OTP request and the UI advances to the code
+ * screen, but Twilio rejects the number async with error 21211, so the text
+ * never arrives):
+ *
+ *  - A full international number is typed (leading `+`) while the country
+ *    picker sits on a different country. We respect the typed `+` and ignore
+ *    the picker rather than prepending a second dial code.
+ *  - A national number is typed under the wrong country (e.g. a 10-digit US
+ *    number while the picker is still on the Costa Rica default → `+506` glued
+ *    to a US number). libphonenumber rejects it as invalid for that country,
+ *    so we surface an inline error instead of a code screen that never fills.
+ */
+export function parseLocalPhone(iso: string, input: string): ParsedPhone {
+  const raw = input.trim();
+  if (!raw) return { ok: false, reason: "Enter your phone number." };
+  const parsed = raw.startsWith("+")
+    ? parsePhoneNumberFromString(raw)
+    : parsePhoneNumberFromString(raw, iso as CountryCode);
+  if (!parsed || !parsed.isValid()) {
+    return {
+      ok: false,
+      reason:
+        "That number doesn't look right for the selected country — double-check the country flag and your number.",
+    };
+  }
+  return { ok: true, e164: parsed.number };
 }

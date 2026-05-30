@@ -5,7 +5,11 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { CountryCodeSelect } from "@/components/country-code-select";
 import { Button } from "@/components/ui/button";
 import { logEvent } from "@/lib/client-log";
-import { DEFAULT_COUNTRY_ISO, findCountry } from "@/lib/countries";
+import {
+  DEFAULT_COUNTRY_ISO,
+  findCountry,
+  parseLocalPhone,
+} from "@/lib/countries";
 import { createClient } from "@/lib/supabase/client";
 
 type Step = "phone" | "otp" | "details";
@@ -39,6 +43,10 @@ export function PhoneAuthFlow({
   const supabase = createClient();
   const [iso, setIso] = useState(DEFAULT_COUNTRY_ISO);
   const [localNumber, setLocalNumber] = useState("");
+  // The validated E.164 we actually sent the OTP to. Set on a successful send
+  // and reused verbatim for resend, verify, and display so every step targets
+  // the exact number Twilio accepted — never a re-derived guess.
+  const [sentTo, setSentTo] = useState("");
   const [token, setToken] = useState("");
   const [fullName, setFullName] = useState("");
   const [lotNumber, setLotNumber] = useState("");
@@ -54,7 +62,6 @@ export function PhoneAuthFlow({
   }, [step]);
 
   const country = findCountry(iso);
-  const e164 = `+${country.dial}${localNumber.replace(/\D/g, "")}`;
 
   const startResendCooldown = () => {
     setResendIn(RESEND_COOLDOWN_S);
@@ -87,13 +94,25 @@ export function PhoneAuthFlow({
     e.preventDefault();
     setError(null);
     setInfo(null);
+    // Validate before we ever call Supabase. An invalid number (e.g. a US
+    // number left under the Costa Rica default) is rejected by Twilio async,
+    // which used to advance the UI to a code screen that never fills. Catch it
+    // here and tell the user instead.
+    const parsed = parseLocalPhone(iso, localNumber);
+    if (!parsed.ok) {
+      logEvent("gate.otp.send_invalid", { dial: country.dial });
+      setError(parsed.reason);
+      return;
+    }
     setBusy(true);
     const startedAt = Date.now();
     logEvent("gate.otp.send_begin", { dial: country.dial });
     // Sign-in OTP: creates a phone-keyed user if new, or signs into the
     // existing one if this human has been here before. Either way, the
     // post-verify session is owned by the canonical phone-keyed user.
-    const { error: err } = await supabase.auth.signInWithOtp({ phone: e164 });
+    const { error: err } = await supabase.auth.signInWithOtp({
+      phone: parsed.e164,
+    });
     setBusy(false);
     if (err) {
       logEvent("gate.otp.send_error", {
@@ -104,6 +123,7 @@ export function PhoneAuthFlow({
       return;
     }
     logEvent("gate.otp.send_ok", { duration_ms: Date.now() - startedAt });
+    setSentTo(parsed.e164);
     setToken("");
     startResendCooldown();
     setStep("otp");
@@ -114,7 +134,7 @@ export function PhoneAuthFlow({
     setError(null);
     setInfo(null);
     setBusy(true);
-    const { error: err } = await supabase.auth.signInWithOtp({ phone: e164 });
+    const { error: err } = await supabase.auth.signInWithOtp({ phone: sentTo });
     setBusy(false);
     if (err) {
       setError(err.message);
@@ -142,7 +162,7 @@ export function PhoneAuthFlow({
     const verifyStart = Date.now();
     logEvent("gate.otp.verify_begin", { hasBeforeId: Boolean(beforeId) });
     const { error: err } = await supabase.auth.verifyOtp({
-      phone: e164,
+      phone: sentTo,
       token: cleanToken,
       type: "sms",
     });
@@ -185,11 +205,35 @@ export function PhoneAuthFlow({
         return;
       }
     }
-    setBusy(false);
-    if (collectDetails) {
-      setStep("details");
-    } else {
+    if (!collectDetails) {
+      setBusy(false);
       onComplete();
+      return;
+    }
+
+    // Returning users who already have a name or lot on file shouldn't be
+    // asked again — only show the details step for accounts missing both. If
+    // the lookup fails, fall through to the step rather than risk dropping a
+    // genuinely new user's details.
+    let hasProfile = false;
+    try {
+      const res = await fetch("/api/profile");
+      if (res.ok) {
+        const p = (await res.json()) as {
+          full_name?: string | null;
+          lot_number?: string | null;
+        };
+        hasProfile = Boolean(p.full_name || p.lot_number);
+      }
+    } catch {
+      hasProfile = false;
+    }
+    setBusy(false);
+    if (hasProfile) {
+      logEvent("gate.details.skipped_existing_profile", {});
+      onComplete();
+    } else {
+      setStep("details");
     }
   };
 
@@ -308,7 +352,7 @@ export function PhoneAuthFlow({
       {step === "otp" && (
         <form onSubmit={verify} className="space-y-3">
           <p className="text-xs text-muted-foreground">
-            Code sent to <span className="tabular-nums">{e164}</span>.
+            Code sent to <span className="tabular-nums">{sentTo}</span>.
           </p>
           <input
             inputMode="numeric"

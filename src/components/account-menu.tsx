@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -30,11 +31,20 @@ export function AccountMenu({
   const sessionCode = sessionMatch ? decodeURIComponent(sessionMatch[1]) : undefined;
 
   if (isAuthed) {
-    if (!fullName) return null;
+    // Signed-in (phone-keyed) users get a clickable chip to their profile,
+    // where they can revisit their sessions and log out. Nameless accounts
+    // (skipped the details step) still get a link — labeled "Account".
     return (
-      <span className="truncate font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[11px]">
-        {fullName}
-      </span>
+      <Link
+        href="/me"
+        className={cn(
+          "max-w-[12rem] truncate rounded-full px-2.5 py-1",
+          "font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground sm:text-[11px]",
+          "transition-colors hover:bg-foreground/5 hover:text-foreground",
+        )}
+      >
+        {fullName ?? "Account"}
+      </Link>
     );
   }
 
