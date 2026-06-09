@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/client";
 
-export default function AdminLoginClient() {
+export default function AdminLoginClient({ next = "/admin" }: { next?: string }) {
   const router = useRouter();
   const supabase = createClient();
   const [step, setStep] = useState<"phone" | "otp">("phone");
@@ -47,7 +47,7 @@ export default function AdminLoginClient() {
       setError(err.message);
       return;
     }
-    router.push("/admin");
+    router.push(next);
     router.refresh();
   };
 
