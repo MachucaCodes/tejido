@@ -1,4 +1,5 @@
 import { createMcpHandler, withMcpAuth } from "mcp-handler";
+import { headers } from "next/headers";
 import { z } from "zod";
 
 import { verifyMcpToken } from "@/lib/mcp-auth";
@@ -8,6 +9,15 @@ const CODE_RE = /^[a-z0-9][a-z0-9_-]{0,62}$/;
 
 function text(s: string) {
   return { content: [{ type: "text" as const, text: s }] };
+}
+
+// Public origin of this deployment, from the proxy-forwarded host headers, so
+// tool output can carry clickable absolute URLs.
+async function publicOrigin() {
+  const h = await headers();
+  const host = h.get("x-forwarded-host") ?? h.get("host") ?? "localhost:3000";
+  const proto = h.get("x-forwarded-proto") ?? (host.startsWith("localhost") ? "http" : "https");
+  return `${proto}://${host}`;
 }
 
 const handler = createMcpHandler(
@@ -58,8 +68,9 @@ const handler = createMcpHandler(
               : `Error: ${error.message}`,
           );
         }
+        const origin = await publicOrigin();
         return text(
-          `Session "${code}" created. Participants can join at /s/${code}. Admin view: /admin/sessions/${code}.`,
+          `Session "${code}" created.\nJoin link: ${origin}/s/${code}\nAdmin view: ${origin}/admin/sessions/${code}`,
         );
       },
     );
