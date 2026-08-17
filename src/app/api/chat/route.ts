@@ -22,6 +22,9 @@ export async function POST(req: Request) {
 
   const { user } = await ensureAnonymousUser();
   const { session, participant } = await getOrCreateParticipant(sessionCode, user.id);
+  if (session.archived_at) {
+    return new Response("session is archived", { status: 403 });
+  }
   if (session.status !== "open") {
     return new Response("session is closed", { status: 403 });
   }

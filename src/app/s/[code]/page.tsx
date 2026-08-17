@@ -161,6 +161,7 @@ export default async function SessionPage({
       initialSummary={initialSummary}
       initialPoints={initialPoints}
       isAdmin={isAdmin}
+      archived={Boolean(session.archived_at)}
     />
   );
 }

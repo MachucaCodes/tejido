@@ -14,6 +14,7 @@ type Body = {
   context?: string | null;
   instructions?: string | null;
   status?: "open" | "closed";
+  archived?: boolean;
   prompt_task_framing?: string | null;
   prompt_mechanics?: string | null;
   prompt_pacing?: string | null;
@@ -75,6 +76,9 @@ export async function PATCH(
   }
   if (body.status === "open" || body.status === "closed") {
     update.status = body.status;
+  }
+  if (typeof body.archived === "boolean") {
+    update.archived_at = body.archived ? new Date().toISOString() : null;
   }
 
   // Plain-text prompt overrides — no required placeholders.

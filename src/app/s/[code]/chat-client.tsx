@@ -60,6 +60,7 @@ export default function ChatClient({
   initialSummary,
   initialPoints,
   isAdmin,
+  archived,
 }: {
   sessionCode: string;
   topic: string;
@@ -71,6 +72,7 @@ export default function ChatClient({
   initialSummary: { text: string | null; generatedAt: string | null };
   initialPoints: Point[];
   isAdmin: boolean;
+  archived: boolean;
 }) {
   const intro = introMessage?.trim() ?? "";
   const router = useRouter();
@@ -498,7 +500,15 @@ export default function ChatClient({
         )}
 
         <div className="border-t border-border/70 pt-4 pb-[max(env(safe-area-inset-bottom),1.25rem)] sm:pb-[max(env(safe-area-inset-bottom),1.75rem)]">
-          {showPhoneGate ? (
+          {archived ? (
+            // Archived is read-only, not gone: the transcript above and the
+            // room's themes stay readable, only the ways to add more are
+            // withdrawn. The chat route rejects writes independently.
+            <p className="px-1 text-center text-xs text-muted-foreground">
+              This session is archived. You can still read the conversation, but
+              it&apos;s no longer taking new responses.
+            </p>
+          ) : showPhoneGate ? (
             <PhoneGate
               sessionCode={sessionCode}
               onComplete={() => {

@@ -172,23 +172,29 @@ const handler = createMcpHandler(
       {
         title: "List sessions",
         description:
-          "List Tejido sessions, newest first. Returns an overview only — use get_session for a session's full configuration.",
+          "List Tejido sessions, newest first. Archived sessions are excluded unless you ask for them. Returns an overview only — use get_session for a session's full configuration.",
         inputSchema: {
           status: z
             .enum(["open", "closed"])
             .optional()
             .describe("Filter by status; omit for all"),
+          archived: z
+            .enum(["exclude", "include", "only"])
+            .optional()
+            .describe("Archived sessions: exclude (default), include, or only"),
           limit: z.number().int().min(1).max(100).optional().describe("Max rows, default 25"),
         },
       },
-      async ({ status, limit }) => {
+      async ({ status, archived, limit }) => {
         const admin = createAdmin();
         let q = admin
           .from("sessions")
-          .select("id, topic, status, created_at")
+          .select("id, topic, status, created_at, archived_at")
           .order("created_at", { ascending: false })
           .limit(limit ?? 25);
         if (status) q = q.eq("status", status);
+        if (archived === "only") q = q.not("archived_at", "is", null);
+        else if (archived !== "include") q = q.is("archived_at", null);
         const { data, error } = await q;
         if (error) return text(`Error: ${error.message}`);
         return text(JSON.stringify(data, null, 2));
@@ -237,6 +243,8 @@ const handler = createMcpHandler(
               id: data.id,
               topic: data.topic,
               status: data.status,
+              archived: Boolean(data.archived_at),
+              archived_at: data.archived_at,
               created_at: data.created_at,
               intro_message: data.intro_message,
               context: data.context,
@@ -273,6 +281,12 @@ const handler = createMcpHandler(
             ),
           topic: z.string().optional().describe("New topic (cannot be empty)"),
           status: z.enum(["open", "closed"]).optional().describe("Open or close the session"),
+          archived: z
+            .boolean()
+            .optional()
+            .describe(
+              "Archive (true) or un-archive (false). Archiving hides the session from the front-end and makes it read-only. It never deletes anything — responses, transcripts and themes are kept, and it is fully reversible.",
+            ),
           intro_message: z.string().optional(),
           context: z.string().optional(),
           instructions: z.string().optional(),
@@ -284,6 +298,7 @@ const handler = createMcpHandler(
         new_code,
         topic,
         status,
+        archived,
         intro_message,
         context,
         instructions,
@@ -296,6 +311,9 @@ const handler = createMcpHandler(
           update.topic = t;
         }
         if (status) update.status = status;
+        if (typeof archived === "boolean") {
+          update.archived_at = archived ? new Date().toISOString() : null;
+        }
         if (typeof intro_message === "string") update.intro_message = intro_message.trim() || null;
         if (typeof context === "string") update.context = context.trim() || null;
         if (typeof instructions === "string") update.instructions = instructions.trim() || null;

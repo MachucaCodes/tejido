@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import ArchiveToggle from "./archive-toggle";
 import EditSessionForm from "./edit-session-form";
 
 export default async function AdminSessionDetail({
@@ -18,7 +19,7 @@ export default async function AdminSessionDetail({
   const { data: session } = await admin
     .from("sessions")
     .select(
-      "id, topic, intro_message, context, instructions, status, created_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
+      "id, topic, intro_message, context, instructions, status, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
     )
     .eq("id", code)
     .single();
@@ -57,7 +58,8 @@ export default async function AdminSessionDetail({
             {session.id}
           </p>
           <p className="text-xs text-muted-foreground">
-            {session.status} · {new Date(session.created_at).toLocaleString()}
+            {session.archived_at ? "archived" : session.status} ·{" "}
+            {new Date(session.created_at).toLocaleString()}
           </p>
         </div>
         <Link
@@ -89,6 +91,12 @@ export default async function AdminSessionDetail({
           }}
         />
       </section>
+
+      <ArchiveToggle
+        code={session.id}
+        archivedAt={session.archived_at}
+        participantCount={participants?.length ?? 0}
+      />
 
       <section className="space-y-2">
         <h2 className="text-sm font-medium text-muted-foreground">Participants</h2>

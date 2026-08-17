@@ -32,6 +32,7 @@ export default async function LandingPage() {
     .from("sessions")
     .select("id, topic, status, created_at")
     .eq("status", "open")
+    .is("archived_at", null)
     .order("created_at", { ascending: false });
 
   const allSessions = (sessions ?? []) as SessionRow[];
