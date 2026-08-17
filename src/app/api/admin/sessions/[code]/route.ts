@@ -4,9 +4,11 @@ import { requireAdmin } from "@/lib/admin-guard";
 import { ANALYSIS_PROMPT_PLACEHOLDERS } from "@/lib/prompts/analysis";
 import { PERSPECTIVES_PLACEHOLDER } from "@/lib/prompts/facilitator";
 import { SUMMARY_PROMPT_PLACEHOLDERS } from "@/lib/prompts/summary";
+import { renameSession } from "@/lib/rename-session";
 import { createAdmin } from "@/lib/supabase/admin";
 
 type Body = {
+  code?: string;
   topic?: string;
   intro_message?: string | null;
   context?: string | null;
@@ -120,13 +122,25 @@ export async function PATCH(
     update[field] = result.value;
   }
 
-  if (Object.keys(update).length === 0) {
+  const newCode = typeof body.code === "string" ? body.code.trim() : code;
+  const renaming = newCode !== code;
+
+  if (Object.keys(update).length === 0 && !renaming) {
     return new Response("no fields to update", { status: 400 });
   }
 
-  const admin = createAdmin();
-  const { error } = await admin.from("sessions").update(update).eq("id", code);
-  if (error) return new Response(error.message, { status: 400 });
+  if (Object.keys(update).length > 0) {
+    const admin = createAdmin();
+    const { error } = await admin.from("sessions").update(update).eq("id", code);
+    if (error) return new Response(error.message, { status: 400 });
+  }
 
-  return NextResponse.json({ ok: true });
+  // Rename last, so a rejected code (bad format, already taken) doesn't throw
+  // away the other edits — they're already persisted under the old code.
+  if (renaming) {
+    const result = await renameSession(code, newCode);
+    if (!result.ok) return new Response(result.error, { status: 400 });
+  }
+
+  return NextResponse.json({ ok: true, code: newCode });
 }

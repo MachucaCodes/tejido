@@ -145,6 +145,7 @@ export default function EditSessionForm({
   initialPromptOverrides: PromptOverrides;
 }) {
   const router = useRouter();
+  const [newCode, setNewCode] = useState(code);
   const [topic, setTopic] = useState(initialTopic);
   const [introMessage, setIntroMessage] = useState(initialIntroMessage);
   const [context, setContext] = useState(initialContext);
@@ -159,7 +160,9 @@ export default function EditSessionForm({
   const promptsDirty = PROMPT_FIELDS.some(
     (f) => promptOverrides[f.key] !== initialPromptOverrides[f.key],
   );
+  const codeChanged = newCode !== code;
   const dirty =
+    codeChanged ||
     topic !== initialTopic ||
     introMessage !== initialIntroMessage ||
     context !== initialContext ||
@@ -186,8 +189,14 @@ export default function EditSessionForm({
       }
     }
 
+    if (codeChanged && !newCode.trim()) {
+      setError("Session code cannot be empty.");
+      return;
+    }
+
     setBusy(true);
     const body: Record<string, unknown> = {
+      code: newCode,
       topic,
       intro_message: introMessage,
       context,
@@ -209,11 +218,42 @@ export default function EditSessionForm({
       return;
     }
     setSavedAt(Date.now());
+
+    // The code is the route segment, so a rename has to move the page with it.
+    if (codeChanged) {
+      router.replace(`/admin/sessions/${newCode}`);
+      return;
+    }
     router.refresh();
   };
 
   return (
     <form onSubmit={submit} className="space-y-3 rounded-lg border bg-card p-4">
+      <div className="space-y-1">
+        <label className="text-xs font-medium" htmlFor="code">
+          Session code
+        </label>
+        <input
+          id="code"
+          value={newCode}
+          onChange={(e) =>
+            setNewCode(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))
+          }
+          required
+          className="w-full rounded-md border bg-background px-3 py-2 font-mono text-sm"
+        />
+        <p className="text-xs text-muted-foreground">
+          Used in the join URL (/s/{newCode || "…"}).
+        </p>
+        {codeChanged && (
+          <p className="text-xs text-amber-700">
+            Renaming from <code className="font-mono">{code}</code>. Participants
+            and their answers move with it, but any link or QR code pointing at{" "}
+            <code className="font-mono">/s/{code}</code> will stop working.
+          </p>
+        )}
+      </div>
+
       <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="topic">
           Topic

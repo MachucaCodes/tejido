@@ -6,9 +6,8 @@ import { verifyMcpToken } from "@/lib/mcp-auth";
 import { ANALYSIS_PROMPT_PLACEHOLDERS } from "@/lib/prompts/analysis";
 import { PERSPECTIVES_PLACEHOLDER } from "@/lib/prompts/facilitator";
 import { SUMMARY_PROMPT_PLACEHOLDERS } from "@/lib/prompts/summary";
+import { CODE_RE, renameSession } from "@/lib/rename-session";
 import { createAdmin } from "@/lib/supabase/admin";
-
-const CODE_RE = /^[a-z0-9][a-z0-9_-]{0,62}$/;
 
 function text(s: string) {
   return { content: [{ type: "text" as const, text: s }] };
@@ -262,9 +261,16 @@ const handler = createMcpHandler(
       {
         title: "Update session",
         description:
-          "Update a session's topic, status, facilitator setup, or prompt overrides. Only the fields you pass change. Pass an empty string to clear an optional field or restore a prompt default.",
+          "Update a session's code, topic, status, facilitator setup, or prompt overrides. Only the fields you pass change. Pass an empty string to clear an optional field or restore a prompt default.",
         inputSchema: {
           code: z.string().describe("Session code"),
+          new_code: z
+            .string()
+            .regex(CODE_RE, "lowercase letters, digits, - and _; max 63 chars")
+            .optional()
+            .describe(
+              "Rename the session to this code. Participants and their answers move with it, but existing /s/<old-code> links stop working.",
+            ),
           topic: z.string().optional().describe("New topic (cannot be empty)"),
           status: z.enum(["open", "closed"]).optional().describe("Open or close the session"),
           intro_message: z.string().optional(),
@@ -273,7 +279,16 @@ const handler = createMcpHandler(
           ...PROMPT_INPUT_SCHEMA,
         },
       },
-      async ({ code, topic, status, intro_message, context, instructions, ...prompts }) => {
+      async ({
+        code,
+        new_code,
+        topic,
+        status,
+        intro_message,
+        context,
+        instructions,
+        ...prompts
+      }) => {
         const update: Record<string, unknown> = {};
         if (typeof topic === "string") {
           const t = topic.trim();
@@ -286,17 +301,43 @@ const handler = createMcpHandler(
         if (typeof instructions === "string") update.instructions = instructions.trim() || null;
         const promptError = applyPromptOverrides(prompts, update);
         if (promptError) return text(promptError);
-        if (Object.keys(update).length === 0) return text("Error: no fields to update");
 
-        const admin = createAdmin();
-        const { data, error } = await admin
-          .from("sessions")
-          .update(update)
-          .eq("id", code)
-          .select("id");
-        if (error) return text(`Error: ${error.message}`);
-        if (!data?.length) return text(`Error: no session with code "${code}"`);
-        return text(`Session "${code}" updated: ${Object.keys(update).join(", ")}.`);
+        const renameTo =
+          typeof new_code === "string" && new_code !== code ? new_code : null;
+        if (Object.keys(update).length === 0 && !renameTo) {
+          return text("Error: no fields to update");
+        }
+
+        const changed = Object.keys(update);
+        if (changed.length) {
+          const admin = createAdmin();
+          const { data, error } = await admin
+            .from("sessions")
+            .update(update)
+            .eq("id", code)
+            .select("id");
+          if (error) return text(`Error: ${error.message}`);
+          if (!data?.length) return text(`Error: no session with code "${code}"`);
+        }
+
+        // Rename last — a rejected code doesn't discard the other edits, which
+        // are already saved under the old code.
+        if (renameTo) {
+          const result = await renameSession(code, renameTo);
+          if (!result.ok) return text(`Error: ${result.error}`);
+          changed.push("code");
+        }
+
+        if (!renameTo) {
+          return text(`Session "${code}" updated: ${changed.join(", ")}.`);
+        }
+        const origin = await publicOrigin();
+        return text(
+          `Session "${renameTo}" updated: ${changed.join(", ")}.\n` +
+            `Renamed from "${code}" — old /s/${code} links no longer work.\n` +
+            `Join link: ${origin}/s/${renameTo}\n` +
+            `Admin view: ${origin}/admin/sessions/${renameTo}`,
+        );
       },
     );
   },

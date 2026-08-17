@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { requireAdmin } from "@/lib/admin-guard";
+import { CODE_RE } from "@/lib/rename-session";
 import { createAdmin } from "@/lib/supabase/admin";
-
-const CODE_RE = /^[a-z0-9][a-z0-9_-]{0,62}$/;
 
 export async function POST(req: Request) {
   const guard = await requireAdmin();
