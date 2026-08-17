@@ -2,6 +2,7 @@
 
 import { ArrowUpIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 
 import {
@@ -20,16 +21,12 @@ import { ThemesPanel, type Theme, type Point } from "./themes-panel";
 
 const READY_TOKEN = "[READY_TO_SHARE]";
 
-const SENSE_MAKING_NOTES = [
-  {
-    body: "Communities have always needed tools to understand one another. In the past, we sat around fires and yarned with each other.",
-  },
-  {
-    body: "Now there are far too many of us to be around the fire together. This AI tool helps us collect opinions from as many neighbors as possible so that everyone's voice is heard.",
-  },
-  {
-    body: "We will be recording your session with the AI and you’ll have the option to see what others have said. We recommend you use the microphone to speak naturally to this tool like you would a neighbor. Excerpts from your chat will be shared anonymously with the community.",
-  },
+// Message keys for the three sense-making notes, in order. The copy itself
+// lives in messages/*.json.
+const SENSE_MAKING_NOTE_KEYS = [
+  "senseMakingNote1",
+  "senseMakingNote2",
+  "senseMakingNote3",
 ] as const;
 
 type ChatMessage = {
@@ -74,6 +71,7 @@ export default function ChatClient({
   isAdmin: boolean;
   archived: boolean;
 }) {
+  const t = useTranslations("session");
   const intro = introMessage?.trim() ?? "";
   const router = useRouter();
   // Admin-only: lets an admin peek at the room view (the panel participants
@@ -505,8 +503,7 @@ export default function ChatClient({
             // room's themes stay readable, only the ways to add more are
             // withdrawn. The chat route rejects writes independently.
             <p className="px-1 text-center text-xs text-muted-foreground">
-              This session is archived. You can still read the conversation, but
-              it&apos;s no longer taking new responses.
+              {t("archived")}
             </p>
           ) : showPhoneGate ? (
             <PhoneGate
@@ -572,6 +569,7 @@ function SenseMakingModal({
   open: boolean;
   onAcknowledge: () => void;
 }) {
+  const t = useTranslations("session");
   return (
     <Dialog open={open} disablePointerDismissal>
       <DialogContent
@@ -628,15 +626,15 @@ function SenseMakingModal({
               className="font-display text-[1.65rem] leading-none italic text-foreground sm:text-[1.85rem]"
               style={{ fontVariationSettings: '"opsz" 144, "SOFT" 90, "WONK" 0' }}
             >
-              Sense making
+              {t("senseMakingTitle")}
             </h2>
           </div>
 
           <div className="space-y-4">
-            {SENSE_MAKING_NOTES.map((note) => (
-              <div key={note.body}>
+            {SENSE_MAKING_NOTE_KEYS.map((key) => (
+              <div key={key}>
                 <p className="font-sans text-[15px] leading-[1.65] text-foreground/85">
-                  {note.body}
+                  {t(key)}
                 </p>
               </div>
             ))}
@@ -656,7 +654,7 @@ function SenseMakingModal({
               "active:translate-y-0",
             )}
           >
-            I understand
+            {t("senseMakingAck")}
             <span
               className="ml-0.5 transition-transform group-hover/btn:translate-x-0.5"
               aria-hidden
@@ -808,11 +806,13 @@ function AdminResetButton({ sessionCode }: { sessionCode: string }) {
 /* ───────────────────────── Hero ───────────────────────── */
 
 function Hero({ topic }: { topic: string }) {
+  const t = useTranslations("session");
   return (
     <section className="mx-auto w-full max-w-3xl px-5 pt-10 pb-5 sm:px-8 sm:pt-14 sm:pb-7">
       <div className="tejido-stagger">
         <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--accent)]">
-          <span aria-hidden>¶ </span>The topic
+          <span aria-hidden>¶ </span>
+          {t("heroEyebrow")}
         </p>
         <h1
           className="mt-4 font-display text-[clamp(2.05rem,5.4vw,3.6rem)] leading-[1.04] tracking-[-0.012em] text-balance text-foreground sm:mt-5"
@@ -824,9 +824,9 @@ function Hero({ topic }: { topic: string }) {
           <ThreadDivider />
           <p className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-muted-foreground/90">
             <em className="font-display not-italic text-muted-foreground" style={{ fontVariationSettings: '"opsz" 14' }}>
-              A conversation
+              {t("heroConversation")}
             </em>{" "}
-            among neighbors
+            {t("heroAmongNeighbors")}
           </p>
         </div>
       </div>
@@ -865,6 +865,7 @@ function ThreadDivider() {
 /* ───────────────────────── Messages ───────────────────────── */
 
 function FacilitatorOpener({ text }: { text: string }) {
+  const t = useTranslations("session");
   const quoted = text.startsWith("“") ? text : `“${text}”`;
   return (
     <div className="flex w-full max-w-[40rem] flex-col gap-3">
@@ -873,7 +874,7 @@ function FacilitatorOpener({ text }: { text: string }) {
           <circle cx="7" cy="7" r="6" stroke="var(--accent)" strokeWidth="1.1" />
           <circle cx="7" cy="7" r="2.4" fill="var(--accent)" />
         </svg>
-        <span>From the facilitator</span>
+        <span>{t("fromTheFacilitator")}</span>
       </div>
       <p
         className="font-display text-[1.45rem] italic leading-[1.4] text-foreground/90 sm:text-[1.6rem] sm:leading-[1.36]"
@@ -919,6 +920,7 @@ function renderWithLinks(text: string) {
 }
 
 function FinalizeErrorBanner({ onRetry }: { onRetry: () => void }) {
+  const t = useTranslations("session");
   return (
     <div
       role="alert"
@@ -928,7 +930,7 @@ function FinalizeErrorBanner({ onRetry }: { onRetry: () => void }) {
     >
       <span className="size-1.5 shrink-0 rounded-full bg-destructive" aria-hidden />
       <p className="flex-1 font-sans text-[0.88rem] leading-[1.4] text-foreground/85">
-        Couldn&apos;t add your perspective to the room.
+        {t("finalizeFailed")}
       </p>
       <button
         type="button"
@@ -939,29 +941,31 @@ function FinalizeErrorBanner({ onRetry }: { onRetry: () => void }) {
           "transition-colors hover:bg-destructive/10",
         )}
       >
-        Retry
+        {t("retry")}
       </button>
     </div>
   );
 }
 
 function OpenThreadNote() {
+  const t = useTranslations("session");
   return (
     <section className="flex w-full max-w-[40rem] flex-col gap-3">
       <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
           <circle cx="7" cy="7" r="6" stroke="var(--accent)" strokeWidth="1.1" />
         </svg>
-        <span>Open thread</span>
+        <span>{t("openThread")}</span>
       </div>
       <p className="font-display text-[1rem] italic leading-[1.55] text-foreground/80 sm:text-[1.05rem]">
-        This conversation stays open. Anything else you add will update the results above as your perspective evolves.
+        {t("openThreadBody")}
       </p>
     </section>
   );
 }
 
 function AnalyzingPlaceholder() {
+  const t = useTranslations("session");
   return (
     <section className="flex w-full max-w-[40rem] flex-col gap-3">
       <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">

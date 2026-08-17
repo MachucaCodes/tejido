@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 import { getCurrentUser } from "@/lib/participant";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -25,6 +26,7 @@ type SessionCard = {
 export const dynamic = "force-dynamic";
 
 export default async function LandingPage() {
+  const t = await getTranslations("landing");
   const { user } = await getCurrentUser();
   const admin = createAdmin();
 
@@ -76,46 +78,36 @@ export default async function LandingPage() {
   const inProgress = cards.filter((c) => c.bucket === "in_progress");
   const notStarted = cards.filter((c) => c.bucket === "not_started");
 
+  // Resolved here rather than inside StatusChip so the helper components stay
+  // plain presentational functions.
+  const actionLabels: Record<Bucket, string> = {
+    finished: t("actionView"),
+    in_progress: t("actionContinue"),
+    not_started: t("actionBegin"),
+  };
+
   return (
     <main className="mx-auto w-full max-w-2xl px-5 pt-12 pb-20 sm:px-8 sm:pt-16">
       <section className="flex flex-col gap-5 pb-10">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-          Community Sense-Making
+          {t("eyebrow")}
         </span>
         <h1
           className="font-display text-[2.4rem] italic leading-[1.05] tracking-[-0.015em] text-foreground sm:text-[2.9rem]"
           style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
         >
-          Gather around the fire.
+          {t("title")}
         </h1>
         <p className="font-sans text-[1.05rem] leading-[1.6] text-foreground/85">
-          A way to collect perspectives from the community and reflect them back
-          in a coherent way — to help make sense of complex issues and questions
-          together.
+          {t("lede")}
         </p>
       </section>
 
       <div className="flex flex-col gap-5 border-t border-border/60 pt-8 pb-2 font-sans text-[0.95rem] leading-[1.7] text-muted-foreground">
-        <p>
-          For much of human history, we would gather around the fire and
-          have long discussions to help make sense of things and integrate
-          perspectives. This is a way to asynchronously gather around the
-          fire — to collect nuanced opinions, ideas, and concerns around a
-          given topic, and give a shape to the collective intelligence of the
-          community.
-        </p>
-        <p>
-          You can have a conversation with an AI that has been steeped in our
-          specific context at ESM — everything from our culture documents, to
-          bylaws, to call transcripts from many of the calls we&apos;ve had
-          over the years. Through a fluid conversation it will gather your
-          unique insights, and weave a nuanced overview so that everyone can
-          better understand the prevailing opinions as well as voices from the
-          edges.
-        </p>
+        <p>{t("aroundTheFire")}</p>
+        <p>{t("steepedInContext")}</p>
         <p className="text-[0.875rem] italic text-muted-foreground/85">
-          A work in progress that we&apos;re still building — feedback is
-          encouraged and patience is appreciated.
+          {t("workInProgress")}
         </p>
       </div>
 
@@ -126,48 +118,52 @@ export default async function LandingPage() {
 
       <section className="flex flex-col gap-3 pb-8">
         <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground">
-          The Directory
+          {t("directoryEyebrow")}
         </span>
         <h2
           className="font-display text-[1.5rem] italic leading-[1.15] tracking-[-0.01em] text-foreground sm:text-[1.75rem]"
           style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
         >
-          Open conversations
+          {t("openConversations")}
         </h2>
         <p className="font-sans text-[0.95rem] leading-[1.55] text-muted-foreground">
-          {hasPhone
-            ? "Conversations you've completed, started, and ones still waiting for your voice."
-            : "Join one to start tracking your history here."}
+          {hasPhone ? t("directoryWithPhone") : t("directoryWithoutPhone")}
         </p>
       </section>
 
       {!hasPhone && (
         <p className="mb-8 rounded-lg border border-dashed border-border/70 bg-card/40 px-4 py-3 font-sans text-[0.875rem] leading-[1.55] text-muted-foreground">
-          Verify your phone in any session to see what you&apos;ve finished and
-          what you haven&apos;t started yet.
+          {t("verifyPrompt")}
         </p>
       )}
 
       <div className="flex flex-col gap-10">
         {hasPhone && (
-          <Section label="Finished" cards={finished} emptyText="Nothing finished yet." />
+          <Section
+            label={t("finished")}
+            cards={finished}
+            emptyText={t("finishedEmpty")}
+            actionLabels={actionLabels}
+          />
         )}
         {hasPhone && (
           <Section
-            label="In progress"
+            label={t("inProgress")}
             cards={inProgress}
-            emptyText="Nothing in progress."
+            emptyText={t("inProgressEmpty")}
+            actionLabels={actionLabels}
           />
         )}
         <Section
-          label="Not started"
+          label={t("notStarted")}
           cards={notStarted}
-          emptyText="No open sessions right now."
+          emptyText={t("notStartedEmpty")}
+          actionLabels={actionLabels}
         />
       </div>
 
       <footer className="mt-20 flex items-center justify-center gap-2 border-t border-border/40 pt-8 font-mono text-[10px] uppercase tracking-[0.24em] text-muted-foreground/70">
-        <span>Made by neighbors for neighbors</span>
+        <span>{t("footer")}</span>
         <span aria-hidden className="text-accent">
           ♥
         </span>
@@ -180,10 +176,12 @@ function Section({
   label,
   cards,
   emptyText,
+  actionLabels,
 }: {
   label: string;
   cards: SessionCard[];
   emptyText: string;
+  actionLabels: Record<Bucket, string>;
 }) {
   return (
     <section className="flex flex-col gap-3">
@@ -215,7 +213,7 @@ function Section({
                     /{session.id}
                   </span>
                 </div>
-                <StatusChip bucket={bucket} />
+                <StatusChip label={actionLabels[bucket]} />
               </Link>
             </li>
           ))}
@@ -225,13 +223,7 @@ function Section({
   );
 }
 
-function StatusChip({ bucket }: { bucket: Bucket }) {
-  const label =
-    bucket === "finished"
-      ? "View"
-      : bucket === "in_progress"
-        ? "Continue"
-        : "Begin";
+function StatusChip({ label }: { label: string }) {
   return (
     <span className="flex shrink-0 items-center gap-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground transition-colors group-hover:text-foreground">
       {label}

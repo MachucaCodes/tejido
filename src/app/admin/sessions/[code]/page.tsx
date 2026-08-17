@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import ArchiveToggle from "./archive-toggle";
+import CopyJoinLink from "./copy-join-link";
 import EditSessionForm from "./edit-session-form";
 
 export default async function AdminSessionDetail({
@@ -62,12 +63,15 @@ export default async function AdminSessionDetail({
             {new Date(session.created_at).toLocaleString()}
           </p>
         </div>
-        <Link
-          href={`/admin/sessions/${session.id}/logs`}
-          className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
-        >
-          LLM logs →
-        </Link>
+        <div className="flex shrink-0 items-center gap-2">
+          <CopyJoinLink code={session.id} />
+          <Link
+            href={`/admin/sessions/${session.id}/logs`}
+            className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
+          >
+            LLM logs →
+          </Link>
+        </div>
       </header>
 
       <section className="space-y-3">

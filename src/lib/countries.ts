@@ -263,9 +263,16 @@ export function findCountry(iso: string): Country {
   return COUNTRIES.find((c) => c.iso === iso) ?? COUNTRIES[0];
 }
 
+/**
+ * Failure reasons are keys, not sentences — the caller renders them through
+ * its own translations. Keeping copy out of here means this stays a pure
+ * validation helper usable from anywhere.
+ */
+export type PhoneParseError = "empty" | "invalid";
+
 export type ParsedPhone =
   | { ok: true; e164: string }
-  | { ok: false; reason: string };
+  | { ok: false; reason: PhoneParseError };
 
 /**
  * Turn what the user typed into a validated E.164 number.
@@ -285,16 +292,12 @@ export type ParsedPhone =
  */
 export function parseLocalPhone(iso: string, input: string): ParsedPhone {
   const raw = input.trim();
-  if (!raw) return { ok: false, reason: "Enter your phone number." };
+  if (!raw) return { ok: false, reason: "empty" };
   const parsed = raw.startsWith("+")
     ? parsePhoneNumberFromString(raw)
     : parsePhoneNumberFromString(raw, iso as CountryCode);
   if (!parsed || !parsed.isValid()) {
-    return {
-      ok: false,
-      reason:
-        "That number doesn't look right for the selected country — double-check the country flag and your number.",
-    };
+    return { ok: false, reason: "invalid" };
   }
   return { ok: true, e164: parsed.number };
 }

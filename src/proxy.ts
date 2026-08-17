@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
+import { LOCALE_COOKIE, isLocale } from "@/i18n/locales";
+import { createAdmin } from "@/lib/supabase/admin";
 import { supabaseAnonKey, supabaseUrl } from "@/lib/supabase/env";
 
 export async function proxy(request: NextRequest) {
@@ -41,6 +43,32 @@ export async function proxy(request: NextRequest) {
         "[proxy] anonymous sign-in failed — enable Anonymous Sign-Ins in Supabase dashboard (Authentication → Providers):",
         error.message,
       );
+    }
+  }
+
+  // Carry a signed-in participant's saved language onto this device. Only on a
+  // visitor with no locale cookie at all — an existing cookie is either an
+  // explicit choice or an earlier seed, and neither should be overwritten from
+  // under them. Costs one keyed lookup on a first visit, never after.
+  if (!request.cookies.get(LOCALE_COOKIE)) {
+    // Reuse the getUser() above — a freshly minted anonymous user is skipped
+    // by the is_anonymous check regardless, so a second round-trip buys nothing.
+    const user = data.user;
+    if (user && !user.is_anonymous) {
+      const admin = createAdmin();
+      const { data: row } = await admin
+        .from("users")
+        .select("preferred_language")
+        .eq("id", user.id)
+        .maybeSingle();
+      const preferred = row?.preferred_language;
+      if (isLocale(preferred)) {
+        response.cookies.set(LOCALE_COOKIE, preferred, {
+          path: "/",
+          maxAge: 60 * 60 * 24 * 365,
+          sameSite: "lax",
+        });
+      }
     }
   }
 

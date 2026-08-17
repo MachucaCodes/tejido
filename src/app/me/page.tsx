@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { getCurrentUser } from "@/lib/participant";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -16,8 +17,8 @@ type ParticipantRow = {
   sessions: SessionEmbed | SessionEmbed[] | null;
 };
 
-function fmtDate(iso: string) {
-  return new Date(iso).toLocaleDateString(undefined, {
+function fmtDate(iso: string, locale: string) {
+  return new Date(iso).toLocaleDateString(locale, {
     month: "short",
     day: "numeric",
     year: "numeric",
@@ -25,6 +26,8 @@ function fmtDate(iso: string) {
 }
 
 export default async function ProfilePage() {
+  const t = await getTranslations("profile");
+  const locale = await getLocale();
   const { user } = await getCurrentUser();
   if (!user) redirect("/");
 
@@ -68,17 +71,18 @@ export default async function ProfilePage() {
       <header className="flex items-start justify-between gap-4">
         <div className="space-y-2">
           <p className="font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--accent)]">
-            <span aria-hidden>¶ </span>Your profile
+            <span aria-hidden>¶ </span>
+            {t("eyebrow")}
           </p>
           <h1
             className="font-display text-[clamp(1.9rem,5vw,2.8rem)] leading-[1.05] tracking-[-0.012em] text-foreground"
             style={{ fontVariationSettings: '"opsz" 144, "SOFT" 80, "WONK" 0' }}
           >
-            {fullName ?? "Your account"}
+            {fullName ?? t("fallbackName")}
           </h1>
           <p className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-            {lotNumber ? `Lot ${lotNumber}` : "No lot on file"}
-            {user.phone ? ` · +${user.phone}` : isGuest ? " · Guest" : ""}
+            {lotNumber ? t("lot", { number: lotNumber }) : t("noLot")}
+            {user.phone ? ` · +${user.phone}` : isGuest ? ` · ${t("guest")}` : ""}
           </p>
         </div>
         <LogoutButton />
@@ -87,14 +91,14 @@ export default async function ProfilePage() {
       <section className="mt-10 sm:mt-12">
         <div className="flex items-center gap-4">
           <h2 className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
-            Your conversations
+            {t("yourConversations")}
           </h2>
           <span className="h-px flex-1 bg-border/70" aria-hidden />
         </div>
 
         {participants.length === 0 ? (
           <p className="mt-6 font-display text-[1.05rem] italic leading-relaxed text-muted-foreground">
-            You haven&apos;t joined any conversations yet.
+            {t("empty")}
           </p>
         ) : (
           <ul className="mt-6 flex flex-col gap-3">
@@ -114,8 +118,8 @@ export default async function ProfilePage() {
                         {session.topic}
                       </p>
                       <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">
-                        {fmtDate(p.created_at)} ·{" "}
-                        {msgs > 0 ? `${msgs} message${msgs === 1 ? "" : "s"}` : "Not started"}
+                        {fmtDate(p.created_at, locale)} ·{" "}
+                        {msgs > 0 ? t("messageCount", { count: msgs }) : t("notStarted")}
                       </p>
                     </div>
                     <div className="flex shrink-0 items-center gap-3">
@@ -126,7 +130,7 @@ export default async function ProfilePage() {
                             : "rounded-full bg-foreground/[0.06] px-2.5 py-1 font-mono text-[8.5px] uppercase tracking-[0.2em] text-muted-foreground"
                         }
                       >
-                        {done ? "Completed" : "In progress"}
+                        {done ? t("completed") : t("inProgress")}
                       </span>
                       <span
                         className="text-muted-foreground transition-transform group-hover:translate-x-0.5"

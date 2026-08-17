@@ -1,11 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { AccountMenu } from "@/components/account-menu";
+import { LanguageToggle } from "@/components/language-toggle";
+import { type Locale } from "@/i18n/locales";
 import { createAdmin } from "@/lib/supabase/admin";
 import { createClient as createServer } from "@/lib/supabase/server";
 
 export async function SiteHeader() {
+  const t = await getTranslations("header");
+  const locale = (await getLocale()) as Locale;
   const supabase = await createServer();
   const { data } = await supabase.auth.getUser();
   const user = data.user;
@@ -30,7 +35,7 @@ export async function SiteHeader() {
     <header className="sticky top-0 z-20 border-b border-border/70 bg-[oklch(96.5%_0.022_82/0.82)] backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-3xl items-center justify-between px-5 sm:px-8">
         <div className="flex items-center gap-3.5">
-          <Link href="/" aria-label="Go to home page" className="flex items-center">
+          <Link href="/" aria-label={t("homeLink")} className="flex items-center">
             <Image
               src="/esm-logo.png"
               alt="La Ecovilla"
@@ -48,7 +53,10 @@ export async function SiteHeader() {
             tejido
           </span>
         </div>
-        <AccountMenu fullName={fullName} isAuthed={isAuthed} />
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <LanguageToggle locale={locale} />
+          <AccountMenu fullName={fullName} isAuthed={isAuthed} />
+        </div>
       </div>
     </header>
   );

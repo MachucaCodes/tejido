@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { logEvent } from "@/lib/client-log";
@@ -8,6 +9,7 @@ import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 export function LogoutButton() {
+  const t = useTranslations("profile");
   const router = useRouter();
   const [busy, setBusy] = useState(false);
 
@@ -35,7 +37,7 @@ export function LogoutButton() {
         "disabled:opacity-50",
       )}
     >
-      {busy ? "Logging out…" : "Log out"}
+      {busy ? t("loggingOut") : t("logOut")}
     </button>
   );
 }

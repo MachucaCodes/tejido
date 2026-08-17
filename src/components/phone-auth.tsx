@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 
 import { CountryCodeSelect } from "@/components/country-code-select";
@@ -40,6 +41,7 @@ export function PhoneAuthFlow({
   intro?: ReactNode;
   onComplete: () => void;
 }) {
+  const t = useTranslations("auth");
   const supabase = createClient();
   const [iso, setIso] = useState(DEFAULT_COUNTRY_ISO);
   const [localNumber, setLocalNumber] = useState("");
@@ -84,8 +86,11 @@ export function PhoneAuthFlow({
   }, []);
 
   const friendlyError = (msg: string) => {
+    // GoTrue's own messages are English-only, so we can only match on them.
+    // When we recognise the shape we replace it with our own translated copy;
+    // anything unrecognised falls through verbatim rather than being hidden.
     if (/expired|invalid/i.test(msg)) {
-      return "That code didn't work — it may have expired or been mistyped. Tap Resend to get a new one.";
+      return t("errorCodeRejected");
     }
     return msg;
   };
@@ -100,8 +105,10 @@ export function PhoneAuthFlow({
     // here and tell the user instead.
     const parsed = parseLocalPhone(iso, localNumber);
     if (!parsed.ok) {
-      logEvent("gate.otp.send_invalid", { dial: country.dial });
-      setError(parsed.reason);
+      logEvent("gate.otp.send_invalid", { dial: country.dial, reason: parsed.reason });
+      setError(
+        parsed.reason === "empty" ? t("errorPhoneEmpty") : t("errorPhoneInvalid"),
+      );
       return;
     }
     setBusy(true);
@@ -141,7 +148,7 @@ export function PhoneAuthFlow({
       return;
     }
     setToken("");
-    setInfo("New code sent.");
+    setInfo(t("newCodeSent"));
     startResendCooldown();
   };
 
@@ -155,7 +162,7 @@ export function PhoneAuthFlow({
     if (cleanToken.length !== 6) {
       setBusy(false);
       logEvent("gate.otp.verify_short_token", { length: cleanToken.length });
-      setError("Enter the 6-digit code from the text message.");
+      setError(t("errorSixDigits"));
       return;
     }
     const beforeId = (await supabase.auth.getUser()).data.user?.id ?? null;
@@ -273,7 +280,7 @@ export function PhoneAuthFlow({
   const friendlyNetworkError = (err: unknown) => {
     const msg = err instanceof Error ? err.message : String(err);
     if (/failed to fetch|network|load failed/i.test(msg)) {
-      return "Couldn't reach the server — check your connection and tap Save again.";
+      return t("errorNetworkSave");
     }
     return msg;
   };
@@ -331,7 +338,7 @@ export function PhoneAuthFlow({
               type="tel"
               inputMode="numeric"
               autoComplete="tel-national"
-              placeholder="Phone number"
+              placeholder={t("phonePlaceholder")}
               value={localNumber}
               onChange={(e) => setLocalNumber(e.target.value)}
               className="h-11 w-full min-w-0 flex-1 rounded-r-lg border bg-background px-3 text-base tabular-nums focus:outline-none focus:ring-2 focus:ring-ring"
@@ -344,7 +351,7 @@ export function PhoneAuthFlow({
             disabled={busy || !localNumber.trim()}
             className="w-full"
           >
-            {busy ? "Sending…" : "Send code"}
+            {busy ? t("sending") : t("sendCode")}
           </Button>
         </form>
       )}
@@ -352,7 +359,10 @@ export function PhoneAuthFlow({
       {step === "otp" && (
         <form onSubmit={verify} className="space-y-3">
           <p className="text-xs text-muted-foreground">
-            Code sent to <span className="tabular-nums">{sentTo}</span>.
+            {t.rich("codeSentTo", {
+              number: sentTo,
+              num: (chunks) => <span className="tabular-nums">{chunks}</span>,
+            })}
           </p>
           <input
             inputMode="numeric"
@@ -367,7 +377,7 @@ export function PhoneAuthFlow({
             maxLength={6}
           />
           <Button type="submit" disabled={busy} className="w-full">
-            {busy ? "Verifying…" : "Verify"}
+            {busy ? t("verifying") : t("verify")}
           </Button>
           <div className="flex items-center justify-between text-xs">
             <button
@@ -379,7 +389,7 @@ export function PhoneAuthFlow({
                 setStep("phone");
               }}
             >
-              Use a different number
+              {t("useDifferentNumber")}
             </button>
             <button
               type="button"
@@ -387,7 +397,9 @@ export function PhoneAuthFlow({
               onClick={resendOtp}
               disabled={busy || resendIn > 0}
             >
-              {resendIn > 0 ? `Resend in ${resendIn}s` : "Resend code"}
+              {resendIn > 0
+                ? t("resendIn", { seconds: resendIn })
+                : t("resendCode")}
             </button>
           </div>
           {info && (
@@ -398,13 +410,11 @@ export function PhoneAuthFlow({
 
       {step === "details" && (
         <form onSubmit={submitDetails} className="space-y-3">
-          <p className="text-xs text-muted-foreground">
-            Optional — your name and lot help organizers follow up. Your responses are still shared anonymously with the group.
-          </p>
+          <p className="text-xs text-muted-foreground">{t("detailsIntro")}</p>
           <input
             type="text"
             autoComplete="name"
-            placeholder="Your name"
+            placeholder={t("namePlaceholder")}
             value={fullName}
             onChange={(e) => setFullName(e.target.value)}
             className="h-11 w-full rounded-lg border bg-background px-3 text-base focus:outline-none focus:ring-2 focus:ring-ring"
@@ -413,7 +423,7 @@ export function PhoneAuthFlow({
           <input
             type="text"
             inputMode="text"
-            placeholder="Lot number"
+            placeholder={t("lotPlaceholder")}
             value={lotNumber}
             onChange={(e) => setLotNumber(e.target.value)}
             className="h-11 w-full rounded-lg border bg-background px-3 text-base tabular-nums focus:outline-none focus:ring-2 focus:ring-ring"
@@ -423,7 +433,7 @@ export function PhoneAuthFlow({
             disabled={busy || (!fullName.trim() && !lotNumber.trim())}
             className="w-full"
           >
-            {busy ? "Saving…" : "Save and continue"}
+            {busy ? t("saving") : t("saveAndContinue")}
           </Button>
           <button
             type="button"
@@ -431,7 +441,7 @@ export function PhoneAuthFlow({
             onClick={skipDetails}
             disabled={busy}
           >
-            Skip
+            {t("skip")}
           </button>
         </form>
       )}

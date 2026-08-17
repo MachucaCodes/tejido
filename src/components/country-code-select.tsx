@@ -1,6 +1,7 @@
 "use client";
 
 import { CheckIcon, ChevronsUpDownIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
 import {
@@ -30,6 +31,7 @@ export function CountryCodeSelect({
   onChange: (iso: string) => void;
   className?: string;
 }) {
+  const t = useTranslations("auth");
   const [open, setOpen] = useState(false);
   const selected = findCountry(value);
   const listRef = useRef<HTMLDivElement>(null);
@@ -61,7 +63,7 @@ export function CountryCodeSelect({
           "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
           className,
         )}
-        aria-label={`Country code: ${selected.name}, +${selected.dial}`}
+        aria-label={t("countryAria", { name: selected.name, dial: selected.dial })}
       >
         <span className="text-base leading-none" aria-hidden>
           {flagFromIso(selected.iso)}
@@ -82,10 +84,10 @@ export function CountryCodeSelect({
             return haystack.includes(needle) ? 1 : 0;
           }}
         >
-          <CommandInput placeholder="Search country or code…" />
+          <CommandInput placeholder={t("countrySearch")} />
           <CommandList ref={listRef} className="max-h-[320px]">
             <CommandEmpty className="py-6 text-center text-sm text-muted-foreground">
-              No country found.
+              {t("countryNotFound")}
             </CommandEmpty>
             <CommandGroup>
               <CountryRow

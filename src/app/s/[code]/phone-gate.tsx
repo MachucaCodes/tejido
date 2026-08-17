@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 
 import { PhoneAuthFlow } from "@/components/phone-auth";
@@ -19,6 +20,8 @@ export function PhoneGate({
   sessionCode: string;
   onComplete: () => void;
 }) {
+  const t = useTranslations("gate");
+
   useEffect(() => {
     logEvent("gate.mount", { sessionCode });
   }, [sessionCode]);
@@ -30,12 +33,8 @@ export function PhoneGate({
         onComplete={onComplete}
         intro={
           <div className="space-y-0.5">
-            <p className="text-sm font-medium">See what others are saying</p>
-            <p className="text-xs text-muted-foreground">
-              While that runs, drop your number — we&apos;ll text a 6-digit code
-              so you can come back later. Your responses are still shared
-              anonymously with the group.
-            </p>
+            <p className="text-sm font-medium">{t("title")}</p>
+            <p className="text-xs text-muted-foreground">{t("body")}</p>
           </div>
         }
       />

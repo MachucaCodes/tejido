@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 import { PhoneAuthFlow } from "@/components/phone-auth";
@@ -22,6 +23,7 @@ export function AccountMenu({
   fullName: string | null;
   isAuthed: boolean;
 }) {
+  const t = useTranslations("header");
   const router = useRouter();
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -43,7 +45,7 @@ export function AccountMenu({
           "transition-colors hover:bg-foreground/5 hover:text-foreground",
         )}
       >
-        {fullName ?? "Account"}
+        {fullName ?? t("account")}
       </Link>
     );
   }
@@ -62,7 +64,7 @@ export function AccountMenu({
           "transition-colors hover:border-[var(--accent)]/60 hover:text-foreground",
         )}
       >
-        Sign in
+        {t("signIn")}
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
@@ -74,10 +76,10 @@ export function AccountMenu({
         >
           <div className="border-b border-border/70 px-6 py-4">
             <p className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-[var(--accent)]">
-              Welcome back
+              {t("welcomeBack")}
             </p>
             <p className="mt-1 font-display text-[1.05rem] italic leading-none text-foreground">
-              Pick up where you left off
+              {t("pickUpWhereYouLeftOff")}
             </p>
           </div>
           <div className="px-6 py-5">
@@ -85,9 +87,7 @@ export function AccountMenu({
               sessionCode={sessionCode}
               intro={
                 <p className="text-xs text-muted-foreground">
-                  Enter the phone number you used before — we&apos;ll text a
-                  6-digit code to bring back your conversation and what the
-                  room has shared.
+                  {t("signInIntro")}
                 </p>
               }
               onComplete={() => {
