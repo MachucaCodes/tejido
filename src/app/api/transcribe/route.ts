@@ -1,3 +1,7 @@
+import { getLocale } from "next-intl/server";
+
+import { isLocale } from "@/i18n/locales";
+
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
@@ -14,6 +18,12 @@ export async function POST(req: Request) {
   upstream.append("file", file, "audio.webm");
   upstream.append("model", "whisper-large-v3-turbo");
   upstream.append("response_format", "json");
+
+  // Whisper auto-detects, but an explicit hint measurably improves accuracy —
+  // and voice is a first-class input here. The UI locale is the best signal we
+  // have for which language the person is about to speak.
+  const locale = await getLocale();
+  if (isLocale(locale)) upstream.append("language", locale);
 
   const res = await fetch("https://api.groq.com/openai/v1/audio/transcriptions", {
     method: "POST",

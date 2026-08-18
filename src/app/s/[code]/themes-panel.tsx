@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
@@ -57,6 +58,7 @@ export function ThemesPanel({
   initialPoints?: Point[];
   analyzing?: boolean;
 }) {
+  const t = useTranslations("room");
   const [themes, setThemes] = useState<Theme[]>(initialThemes);
   const [points, setPoints] = useState<Point[]>(initialPoints);
   const [pulseId, setPulseId] = useState<string | null>(null);
@@ -309,14 +311,14 @@ export function ThemesPanel({
       <header className="flex items-baseline justify-between gap-4">
         <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
           <ThreadGlyph />
-          <span>From the room</span>
+          <span>{t("fromTheRoom")}</span>
         </div>
         <span className="flex items-center gap-1.5 font-mono text-[9px] uppercase tracking-[0.24em] text-muted-foreground/80">
           <span className="relative flex size-1.5" aria-hidden>
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-70" />
             <span className="relative inline-flex size-1.5 rounded-full bg-[var(--accent)]" />
           </span>
-          Live
+          {t("live")}
         </span>
       </header>
 
@@ -324,11 +326,11 @@ export function ThemesPanel({
           so it reads as a distinct zone from the rust-accented voices below. */}
       <div className="rounded-2xl border border-[var(--primary)]/15 bg-[var(--primary)]/[0.05] px-5 py-5 sm:px-6">
         <div className="mb-3 flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-[var(--primary)]/85">
-          <span>The shared picture</span>
+          <span>{t("sharedPicture")}</span>
           {analyzing && (
             <span className="ml-auto flex items-center gap-1.5 text-muted-foreground/80">
               <span className="size-1.5 animate-pulse rounded-full bg-[var(--accent)]/70" aria-hidden />
-              Updating
+              {t("updating")}
             </span>
           )}
         </div>
@@ -336,7 +338,7 @@ export function ThemesPanel({
           className="font-display text-[1.55rem] italic leading-[1.18] tracking-[-0.005em] text-foreground/90 sm:text-[1.7rem]"
           style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
         >
-          What your neighbors are feeling…
+          {t("neighborsFeeling")}
         </p>
         {summaryText && (
           <p className="mt-3 font-sans text-[0.98rem] leading-[1.6] text-foreground/85 sm:text-[1.02rem]">
@@ -353,13 +355,12 @@ export function ThemesPanel({
               aria-hidden
             />
             <p className="font-display text-[0.98rem] italic leading-relaxed text-foreground/80 sm:text-[1.02rem]">
-              Pulling your perspective into the group view…
+              {t("pullingIn")}
             </p>
           </div>
         ) : (
           <p className="font-display text-[1rem] italic leading-relaxed text-muted-foreground sm:text-[1.05rem]">
-            No themes yet — they appear here as more neighbors finish their
-            conversations.
+            {t("noThemes")}
           </p>
         )
       ) : (
@@ -368,36 +369,38 @@ export function ThemesPanel({
               individual voices the shared picture is woven from. Rust --accent
               keeps this zone visually distinct from the green synthesis card. */}
           <div className="flex items-baseline gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-[var(--accent)]">
-            <span>The threads behind it</span>
+            <span>{t("threadsBehind")}</span>
             <span className="ml-auto text-muted-foreground/70">
               <span className="tabular-nums">{voiceCount}</span>{" "}
-              {voiceCount === 1 ? "voice" : "voices"}
+              {t("voiceCount", { count: voiceCount })}
             </span>
           </div>
           <ol className="flex flex-col divide-y divide-border/70 border-y border-border/70">
-            {(showAllThemes ? themes : themes.slice(0, 3)).map((t, i) => {
-              const isExpanded = expandedThemeId === t.id;
-              const themePoints = pointsByTheme.get(t.id) ?? [];
+            {(showAllThemes ? themes : themes.slice(0, 3)).map((theme, i) => {
+              const isExpanded = expandedThemeId === theme.id;
+              const themePoints = pointsByTheme.get(theme.id) ?? [];
               const allPhrases = Array.from(
                 new Set(themePoints.map((p) => p.surface_phrase)),
               );
               const phrases = allPhrases.slice(0, THEME_PHRASE_PREVIEW);
               const hiddenPhraseCount = allPhrases.length - phrases.length;
-              const themeVoices = themeVoiceCounts.get(t.id) ?? 0;
+              const themeVoices = themeVoiceCounts.get(theme.id) ?? 0;
               const canExpand = true;
               return (
                 <li
-                  key={t.id}
+                  key={theme.id}
                   className={cn(
                     "group/theme transition-colors",
-                    pulseId === t.id && "bg-[var(--accent)]/5",
+                    pulseId === theme.id && "bg-[var(--accent)]/5",
                   )}
                 >
                   <button
                     type="button"
                     disabled={!canExpand}
                     onClick={() =>
-                      setExpandedThemeId((prev) => (prev === t.id ? null : t.id))
+                      setExpandedThemeId((prev) =>
+                        prev === theme.id ? null : theme.id,
+                      )
                     }
                     aria-expanded={isExpanded}
                     className={cn(
@@ -415,7 +418,7 @@ export function ThemesPanel({
                         className="font-display text-[1.1rem] leading-snug text-foreground sm:text-[1.15rem]"
                         style={{ fontVariationSettings: '"opsz" 24, "SOFT" 60' }}
                       >
-                        {t.short_name}
+                        {theme.short_name}
                         {canExpand && (
                           <span
                             className={cn(
@@ -429,14 +432,14 @@ export function ThemesPanel({
                         )}
                       </h3>
                       <p className="font-sans text-[0.92rem] leading-[1.55] text-muted-foreground line-clamp-3">
-                        {t.description}
+                        {theme.description}
                       </p>
                     </div>
                     <span className="flex flex-col items-end gap-0.5 font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground/80">
                       <span className="font-display text-[1.05rem] not-italic tabular-nums text-foreground/85">
                         {themeVoices}
                       </span>
-                      <span>{themeVoices === 1 ? "voice" : "voices"}</span>
+                      <span>{t("voiceCount", { count: themeVoices })}</span>
                     </span>
                   </button>
                   {isExpanded && phrases.length > 0 && (
@@ -454,11 +457,11 @@ export function ThemesPanel({
                         ))}
                         {hiddenPhraseCount > 0 && (
                           <Link
-                            href={`/s/${sessionCode}/points?theme=${t.id}`}
+                            href={`/s/${sessionCode}/points?theme=${theme.id}`}
                             className="mt-1 inline-flex items-center gap-1.5 self-start font-mono text-[10.5px] uppercase tracking-[0.22em] text-muted-foreground/85 hover:text-foreground"
                           >
                             <span>
-                              See all {allPhrases.length} under this theme
+                              {t("seeAllUnderTheme", { count: allPhrases.length })}
                             </span>
                             <span aria-hidden>→</span>
                           </Link>
@@ -487,8 +490,8 @@ export function ThemesPanel({
         >
           <span>
             {showAllThemes
-              ? "Show fewer themes"
-              : `Show ${themes.length - 3} more theme${themes.length - 3 === 1 ? "" : "s"}`}
+              ? t("showFewerThemes")
+              : t("showMoreThemes", { count: themes.length - 3 })}
           </span>
           <svg
             aria-hidden
@@ -513,10 +516,10 @@ export function ThemesPanel({
       {outlierPhrases.length > 0 && (
         <section className="flex flex-col gap-3 border-t border-border/70 pt-5">
           <div className="flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">
-            <span>Unique perspectives</span>
+            <span>{t("uniquePerspectives")}</span>
           </div>
           <p className="font-sans text-[0.82rem] leading-[1.5] text-muted-foreground/80">
-            Threads that didn&apos;t gather a crowd, but might be worth a moment.
+            {t("uniquePerspectivesBody")}
           </p>
           <ul className="flex flex-col gap-2.5 border-l border-[var(--accent)]/40 pl-4">
             {outlierPhrases.map((phrase) => (
@@ -535,9 +538,8 @@ export function ThemesPanel({
       {themes.length > 0 && (
         <p className="font-mono text-[9.5px] uppercase tracking-[0.22em] text-muted-foreground/70">
           <span aria-hidden>¶ </span>
-          {themes.length} {themes.length === 1 ? "theme" : "themes"} ·{" "}
-          <span className="tabular-nums">{voiceCount}</span>{" "}
-          {voiceCount === 1 ? "voice" : "voices"} so far
+          {t("themeCount", { count: themes.length })} ·{" "}
+          {t("voiceTally", { count: voiceCount })}
         </p>
       )}
     </section>

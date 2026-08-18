@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { useMemo, useState } from "react";
 
 export type PointRow = {
@@ -49,8 +50,9 @@ export function PointsView({
   isAdmin: boolean;
   initialThemeId?: string | null;
 }) {
+  const t = useTranslations("points");
   const initialThemeValid =
-    initialThemeId && themes.some((t) => t.id === initialThemeId)
+    initialThemeId && themes.some((theme) => theme.id === initialThemeId)
       ? initialThemeId
       : null;
   const [selectedThemeId, setSelectedThemeId] = useState<string | null>(
@@ -63,7 +65,7 @@ export function PointsView({
 
   const themeNameById = useMemo(() => {
     const m = new Map<string, string>();
-    for (const t of themes) m.set(t.id, t.short_name);
+    for (const theme of themes) m.set(theme.id, theme.short_name);
     return m;
   }, [themes]);
 
@@ -129,10 +131,10 @@ export function PointsView({
 
   const turnsByParticipant = useMemo(() => {
     const m = new Map<string, TurnRow[]>();
-    for (const t of turns) {
-      const arr = m.get(t.participant_id);
-      if (arr) arr.push(t);
-      else m.set(t.participant_id, [t]);
+    for (const turn of turns) {
+      const arr = m.get(turn.participant_id);
+      if (arr) arr.push(turn);
+      else m.set(turn.participant_id, [turn]);
     }
     return m;
   }, [turns]);
@@ -141,7 +143,7 @@ export function PointsView({
     (id) => (pointsByVoice.get(id) ?? []).length > 0,
   );
   const visibleThemes = themes.filter(
-    (t) => (pointsByTheme.get(t.id) ?? []).length > 0,
+    (theme) => (pointsByTheme.get(theme.id) ?? []).length > 0,
   );
   const untaggedPoints = pointsByTheme.get("__untagged__") ?? [];
 
@@ -163,9 +165,9 @@ export function PointsView({
         const head = themes.slice(0, CHIP_LIMIT);
         if (
           selectedThemeId &&
-          !head.some((t) => t.id === selectedThemeId)
+          !head.some((theme) => theme.id === selectedThemeId)
         ) {
-          const sel = themes.find((t) => t.id === selectedThemeId);
+          const sel = themes.find((theme) => theme.id === selectedThemeId);
           if (sel) return [...head, sel];
         }
         return head;
@@ -184,25 +186,19 @@ export function PointsView({
             ← {code}
           </Link>
           <span className="font-mono text-[11px] text-muted-foreground">
-            {filterActive ? (
-              <>
-                {filteredPointCount} of {totalPointCount} points
-              </>
-            ) : (
-              <>
-                {totalVoiceCount}{" "}
-                {totalVoiceCount === 1 ? "voice" : "voices"} ·{" "}
-                {totalPointCount}{" "}
-                {totalPointCount === 1 ? "point" : "points"}
-              </>
-            )}
+            {filterActive
+              ? t("filteredCount", {
+                  filtered: filteredPointCount,
+                  total: totalPointCount,
+                })
+              : `${t("voiceCount", { count: totalVoiceCount })} · ${t("pointCount", { count: totalPointCount })}`}
           </span>
         </div>
         <p
           className="font-display text-[1.7rem] italic leading-[1.18] tracking-[-0.005em] text-foreground/90 sm:text-[2rem]"
           style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0' }}
         >
-          Every point, every voice
+          {t("title")}
         </p>
         {topic && (
           <p className="font-sans text-[1rem] leading-[1.55] text-muted-foreground">
@@ -216,8 +212,8 @@ export function PointsView({
           <div className="flex items-center justify-between gap-3">
             <span className="font-sans text-[12px] font-medium text-muted-foreground">
               {filterActive && selectedThemeName
-                ? `Filtered: ${selectedThemeName}`
-                : "Filter by theme"}
+                ? t("filteredBy", { name: selectedThemeName })
+                : t("filterByTheme")}
             </span>
             <div className="flex items-center gap-3">
               {filterActive && (
@@ -226,7 +222,7 @@ export function PointsView({
                   onClick={() => setSelectedThemeId(null)}
                   className="font-sans text-[12px] text-muted-foreground hover:text-foreground"
                 >
-                  Clear
+                  {t("clear")}
                 </button>
               )}
               <div className="flex rounded-md border border-border/70 bg-card p-0.5 font-sans text-[12px]">
@@ -240,7 +236,7 @@ export function PointsView({
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  By voice
+                  {t("byVoice")}
                 </button>
                 <button
                   type="button"
@@ -252,27 +248,27 @@ export function PointsView({
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  By theme
+                  {t("byTheme")}
                 </button>
               </div>
             </div>
           </div>
           <div className="flex flex-wrap gap-1.5">
-            {chipThemes.map((t) => {
-              const active = selectedThemeId === t.id;
-              const count = pointCountByTheme.get(t.id) ?? 0;
+            {chipThemes.map((theme) => {
+              const active = selectedThemeId === theme.id;
+              const count = pointCountByTheme.get(theme.id) ?? 0;
               return (
                 <button
-                  key={t.id}
+                  key={theme.id}
                   type="button"
-                  onClick={() => toggleTheme(t.id)}
+                  onClick={() => toggleTheme(theme.id)}
                   className={`rounded-full border px-2 py-0.5 font-mono text-[11px] transition-colors ${
                     active
                       ? "border-foreground bg-foreground text-background"
                       : "border-border/70 bg-card text-muted-foreground hover:text-foreground"
                   }`}
                 >
-                  {t.short_name}
+                  {theme.short_name}
                   <span
                     className={`ml-1.5 ${active ? "opacity-70" : "opacity-50"}`}
                   >
@@ -287,7 +283,9 @@ export function PointsView({
                 onClick={() => setShowAllChips((v) => !v)}
                 className="rounded-full border border-dashed border-border/70 px-2 py-0.5 font-mono text-[11px] text-muted-foreground hover:text-foreground"
               >
-                {chipsCollapsed ? `+ ${hiddenChipCount} more` : "Show fewer"}
+                {chipsCollapsed
+                  ? t("moreChips", { count: hiddenChipCount })
+                  : t("showFewer")}
               </button>
             )}
           </div>
@@ -296,9 +294,7 @@ export function PointsView({
 
       {filteredPointCount === 0 ? (
         <p className="mt-10 font-display text-[1.05rem] italic leading-relaxed text-muted-foreground">
-          {filterActive
-            ? "No points match the selected theme."
-            : "No points have been extracted for this session yet."}
+          {filterActive ? t("noneForTheme") : t("noneYet")}
         </p>
       ) : viewMode === "voice" ? (
         <div className="flex flex-col divide-y divide-border/70">
@@ -314,16 +310,16 @@ export function PointsView({
               >
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="font-mono text-[12px] text-foreground/80">
-                    Voice {String(voiceIdx + 1).padStart(2, "0")}
+                    {t("voiceLabel", {
+                      number: String(voiceIdx + 1).padStart(2, "0"),
+                    })}
                   </span>
                   <span className="font-mono text-[11px] text-muted-foreground">
-                    {participantPoints.length}{" "}
-                    {participantPoints.length === 1 ? "point" : "points"}
+                    {t("pointCount", { count: participantPoints.length })}
                     {isAdmin && participantTurns.length > 0 && (
                       <>
                         {" · "}
-                        {participantTurns.length}{" "}
-                        {participantTurns.length === 1 ? "turn" : "turns"}
+                        {t("turnCount", { count: participantTurns.length })}
                       </>
                     )}
                   </span>
@@ -346,7 +342,7 @@ export function PointsView({
                 {isAdmin && participantTurns.length > 0 && (
                   <details className="group/transcript rounded-lg border border-border/70 bg-card/40">
                     <summary className="flex cursor-pointer items-center justify-between gap-3 px-4 py-3 font-sans text-[13px] font-medium text-muted-foreground hover:text-foreground">
-                      <span>Transcript</span>
+                      <span>{t("transcript")}</span>
                       <span
                         className="transition-transform group-open/transcript:rotate-90"
                         aria-hidden
@@ -355,16 +351,16 @@ export function PointsView({
                       </span>
                     </summary>
                     <ol className="flex flex-col gap-3 border-t border-border/70 px-4 py-4">
-                      {participantTurns.map((t) => (
+                      {participantTurns.map((turn) => (
                         <li
-                          key={t.id}
+                          key={turn.id}
                           className="grid grid-cols-[4rem_1fr] gap-3"
                         >
                           <span className="pt-0.5 font-mono text-[11px] text-muted-foreground">
-                            {t.role}
+                            {turn.role}
                           </span>
                           <p className="whitespace-pre-wrap font-sans text-[0.95rem] leading-[1.55] text-foreground">
-                            {t.content}
+                            {turn.content}
                           </p>
                         </li>
                       ))}
@@ -377,17 +373,16 @@ export function PointsView({
         </div>
       ) : (
         <div className="flex flex-col divide-y divide-border/70">
-          {visibleThemes.map((t) => {
-            const themePoints = pointsByTheme.get(t.id) ?? [];
+          {visibleThemes.map((theme) => {
+            const themePoints = pointsByTheme.get(theme.id) ?? [];
             return (
-              <section key={t.id} className="flex flex-col gap-5 py-8">
+              <section key={theme.id} className="flex flex-col gap-5 py-8">
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="font-sans text-[1.05rem] font-medium text-foreground">
-                    {t.short_name}
+                    {theme.short_name}
                   </span>
                   <span className="font-mono text-[11px] text-muted-foreground">
-                    {themePoints.length}{" "}
-                    {themePoints.length === 1 ? "point" : "points"}
+                    {t("pointCount", { count: themePoints.length })}
                   </span>
                 </div>
                 <ol className="flex flex-col gap-6">
@@ -396,10 +391,10 @@ export function PointsView({
                       voiceIndexById.get(p.participant_id) ?? 0;
                     const otherThemeIds = (
                       themeIdsByPoint.get(p.id) ?? []
-                    ).filter((id) => id !== t.id);
+                    ).filter((id) => id !== theme.id);
                     return (
                       <PointItem
-                        key={`${t.id}-${p.id}`}
+                        key={`${theme.id}-${p.id}`}
                         point={p}
                         gutter={
                           <span className="pt-1 font-mono text-[11px] text-muted-foreground tabular-nums">
@@ -419,11 +414,10 @@ export function PointsView({
             <section className="flex flex-col gap-5 py-8">
               <div className="flex items-baseline justify-between gap-3">
                 <span className="font-sans text-[1.05rem] font-medium text-muted-foreground">
-                  Untagged
+                  {t("untagged")}
                 </span>
                 <span className="font-mono text-[11px] text-muted-foreground">
-                  {untaggedPoints.length}{" "}
-                  {untaggedPoints.length === 1 ? "point" : "points"}
+                  {t("pointCount", { count: untaggedPoints.length })}
                 </span>
               </div>
               <ol className="flex flex-col gap-6">
@@ -464,6 +458,7 @@ function PointItem({
   chipThemeIds: string[];
   themeNameById: Map<string, string>;
 }) {
+  const t = useTranslations("points");
   const doubts = (point.doubts ?? []).filter((d) => d?.trim?.());
   return (
     <li className="grid grid-cols-[2.5rem_1fr] gap-4">
@@ -488,13 +483,13 @@ function PointItem({
             })}
           </div>
         )}
-        <PointField label="Want" value={point.want} />
-        <PointField label="Context" value={point.context} />
-        <PointField label="Rationale" value={point.rationale} />
+        <PointField label={t("want")} value={point.want} />
+        <PointField label={t("context")} value={point.context} />
+        <PointField label={t("rationale")} value={point.rationale} />
         {doubts.length > 0 && (
           <div className="flex flex-col gap-1">
             <span className="font-sans text-[12px] font-medium text-muted-foreground">
-              Doubts
+              {t("doubts")}
             </span>
             <ul className="flex flex-col gap-1 pl-3">
               {doubts.map((d, i) => (

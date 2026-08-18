@@ -973,7 +973,7 @@ function AnalyzingPlaceholder() {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--accent)] opacity-70" />
           <span className="relative inline-flex size-1.5 rounded-full bg-[var(--accent)]" />
         </span>
-        <span>From the room</span>
+        <span>{t("fromTheRoom")}</span>
       </div>
       <div className="flex items-center gap-3 rounded-xl border border-dashed border-[var(--accent)]/30 bg-[var(--accent)]/5 px-4 py-3.5">
         <span
@@ -981,7 +981,7 @@ function AnalyzingPlaceholder() {
           aria-hidden
         />
         <p className="font-display text-[0.98rem] italic leading-relaxed text-foreground/80 sm:text-[1.02rem]">
-          Pulling your perspective into the group view…
+          {t("pullingIn")}
         </p>
       </div>
     </section>
@@ -997,11 +997,12 @@ function EditorialMessage({
   content: string;
   isStreaming?: boolean;
 }) {
+  const t = useTranslations("session");
   if (role === "user") {
     return (
       <div className="ml-auto flex w-full max-w-[36rem] flex-col items-end gap-1.5">
         <span className="font-mono text-[9px] uppercase tracking-[0.26em] text-muted-foreground/80">
-          You wrote
+          {t("youWrote")}
         </span>
         <Message
           from="user"
@@ -1072,6 +1073,7 @@ function ComposerForm({
   status: Status;
   speechInputRef: React.RefObject<SpeechInputHandle | null>;
 }) {
+  const t = useTranslations("session");
   const trimmed = input.trim();
   const canSend = trimmed.length > 0 && !disabled;
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -1141,9 +1143,9 @@ function ComposerForm({
               onSubmit(e);
             }
           }}
-          placeholder="Type or speak your reply…"
+          placeholder={t("composerPlaceholder")}
           rows={1}
-          aria-label="Your reply"
+          aria-label={t("composerAria")}
           className={cn(
             "min-h-[2.5rem] max-h-[12rem] flex-1 resize-none overflow-y-auto bg-transparent px-2 py-2",
             "font-sans text-[16px] leading-[1.55] text-foreground",
@@ -1155,7 +1157,7 @@ function ComposerForm({
         <button
           type="submit"
           disabled={!canSend}
-          aria-label="Send"
+          aria-label={t("send")}
           className={cn(
             "relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full",
             "bg-[var(--accent)] text-[var(--accent-foreground)] shadow-[0_1px_0_oklch(100%_0_0_/0.4)_inset]",
@@ -1170,7 +1172,7 @@ function ComposerForm({
 
       {status === "error" && (
         <p className="mt-2 font-mono text-[9.5px] uppercase tracking-[0.22em] text-destructive">
-          Couldn&apos;t send — try again
+          {t("sendFailed")}
         </p>
       )}
     </form>
