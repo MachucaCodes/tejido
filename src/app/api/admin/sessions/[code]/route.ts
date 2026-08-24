@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
+import { after } from "next/server";
 
 import { requireAdmin } from "@/lib/admin-guard";
+import {
+  backfillSessionTranslation,
+  staleSpanishFields,
+} from "@/lib/translate-session";
 import { ANALYSIS_PROMPT_PLACEHOLDERS } from "@/lib/prompts/analysis";
 import { PERSPECTIVES_PLACEHOLDER } from "@/lib/prompts/facilitator";
 import { SUMMARY_PROMPT_PLACEHOLDERS } from "@/lib/prompts/summary";
@@ -11,6 +16,10 @@ type Body = {
   code?: string;
   topic?: string;
   intro_message?: string | null;
+  // Pass either of these to hand-write the Spanish. Doing so pins it — the
+  // auto-translation won't overwrite a value an admin set deliberately.
+  topic_es?: string | null;
+  intro_message_es?: string | null;
   context?: string | null;
   instructions?: string | null;
   status?: "open" | "closed";
@@ -67,6 +76,12 @@ export async function PATCH(
   }
   if ("intro_message" in body) {
     update.intro_message = normalizePlainOverride(body.intro_message);
+  }
+  if ("topic_es" in body) {
+    update.topic_es = normalizePlainOverride(body.topic_es);
+  }
+  if ("intro_message_es" in body) {
+    update.intro_message_es = normalizePlainOverride(body.intro_message_es);
   }
   if ("context" in body) {
     update.context = normalizePlainOverride(body.context);
@@ -133,8 +148,35 @@ export async function PATCH(
     return new Response("no fields to update", { status: 400 });
   }
 
+  // Work out which Spanish columns this edit invalidates, and clear them in the
+  // same write. Between the write and the backfill the room falls back to
+  // English — never to a translation of copy that has since been replaced.
+  let stale = { topic: false, intro_message: false };
   if (Object.keys(update).length > 0) {
     const admin = createAdmin();
+
+    const { data: previous } = await admin
+      .from("sessions")
+      .select("topic, intro_message")
+      .eq("id", code)
+      .maybeSingle();
+
+    if (previous) {
+      stale = staleSpanishFields(
+        previous,
+        {
+          topic: update.topic as string | undefined,
+          intro_message: update.intro_message as string | null | undefined,
+        },
+        {
+          topic_es: "topic_es" in body,
+          intro_message_es: "intro_message_es" in body,
+        },
+      );
+      if (stale.topic) update.topic_es = null;
+      if (stale.intro_message) update.intro_message_es = null;
+    }
+
     const { error } = await admin.from("sessions").update(update).eq("id", code);
     if (error) return new Response(error.message, { status: 400 });
   }
@@ -144,6 +186,21 @@ export async function PATCH(
   if (renaming) {
     const result = await renameSession(code, newCode);
     if (!result.ok) return new Response(result.error, { status: 400 });
+  }
+
+  // Keyed to newCode, not code — a rename in this same request has already
+  // moved the row, so the old code no longer resolves.
+  if (stale.topic || stale.intro_message) {
+    after(() =>
+      backfillSessionTranslation(
+        newCode,
+        {
+          topic: update.topic as string | undefined,
+          intro_message: update.intro_message as string | null | undefined,
+        },
+        stale,
+      ),
+    );
   }
 
   return NextResponse.json({ ok: true, code: newCode });

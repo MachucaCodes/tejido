@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { getCurrentUser } from "@/lib/participant";
 import { createAdmin } from "@/lib/supabase/admin";
+import { localized } from "@/lib/translate-session";
 
 type SessionRow = {
   id: string;
   topic: string;
+  topic_es: string | null;
   status: "open" | "closed";
   created_at: string;
 };
@@ -21,18 +23,21 @@ type Bucket = "finished" | "in_progress" | "not_started";
 type SessionCard = {
   session: SessionRow;
   bucket: Bucket;
+  /** Topic resolved for the active locale — Spanish when we have it, else English. */
+  title: string;
 };
 
 export const dynamic = "force-dynamic";
 
 export default async function LandingPage() {
   const t = await getTranslations("landing");
+  const locale = await getLocale();
   const { user } = await getCurrentUser();
   const admin = createAdmin();
 
   const { data: sessions } = await admin
     .from("sessions")
-    .select("id, topic, status, created_at")
+    .select("id, topic, topic_es, status, created_at")
     .eq("status", "open")
     .is("archived_at", null)
     .order("created_at", { ascending: false });
@@ -69,9 +74,10 @@ export default async function LandingPage() {
   }
 
   const cards: SessionCard[] = allSessions.map((s) => {
-    if (finishedIds.has(s.id)) return { session: s, bucket: "finished" };
-    if (inProgressIds.has(s.id)) return { session: s, bucket: "in_progress" };
-    return { session: s, bucket: "not_started" };
+    const title = localized(s.topic, s.topic_es, locale) ?? s.topic;
+    if (finishedIds.has(s.id)) return { session: s, bucket: "finished", title };
+    if (inProgressIds.has(s.id)) return { session: s, bucket: "in_progress", title };
+    return { session: s, bucket: "not_started", title };
   });
 
   const finished = cards.filter((c) => c.bucket === "finished");
@@ -199,7 +205,7 @@ function Section({
         </p>
       ) : (
         <ul className="flex flex-col gap-2">
-          {cards.map(({ session, bucket }) => (
+          {cards.map(({ session, bucket, title }) => (
             <li key={session.id}>
               <Link
                 href={`/s/${session.id}`}
@@ -207,7 +213,7 @@ function Section({
               >
                 <div className="flex min-w-0 flex-col gap-1">
                   <p className="truncate font-sans text-[1rem] font-medium leading-[1.4] text-foreground">
-                    {session.topic}
+                    {title}
                   </p>
                   <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted-foreground/70">
                     /{session.id}

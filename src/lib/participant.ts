@@ -11,8 +11,10 @@ export type ParticipantRecord = {
 export type SessionRecord = {
   id: string;
   topic: string;
+  topic_es: string | null;
   context: string | null;
   intro_message: string | null;
+  intro_message_es: string | null;
   instructions: string | null;
   status: "open" | "closed";
   archived_at: string | null;
@@ -50,7 +52,7 @@ export async function getOrCreateParticipant(
   const { data: session, error: sessionErr } = await admin
     .from("sessions")
     .select(
-      "id, topic, context, intro_message, instructions, status, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions",
+      "id, topic, topic_es, context, intro_message, intro_message_es, instructions, status, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions",
     )
     .eq("id", sessionCode)
     .single();

@@ -130,7 +130,9 @@ const PROMPT_FIELDS: PromptFieldSpec[] = [
 export default function EditSessionForm({
   code,
   initialTopic,
+  initialTopicEs,
   initialIntroMessage,
+  initialIntroMessageEs,
   initialContext,
   initialInstructions,
   initialStatus,
@@ -138,7 +140,9 @@ export default function EditSessionForm({
 }: {
   code: string;
   initialTopic: string;
+  initialTopicEs: string;
   initialIntroMessage: string;
+  initialIntroMessageEs: string;
   initialContext: string;
   initialInstructions: string;
   initialStatus: Status;
@@ -148,6 +152,10 @@ export default function EditSessionForm({
   const [newCode, setNewCode] = useState(code);
   const [topic, setTopic] = useState(initialTopic);
   const [introMessage, setIntroMessage] = useState(initialIntroMessage);
+  // Spanish is normally written by the auto-translation. These are only sent
+  // when edited by hand — sending them pins the value against overwriting.
+  const [topicEs, setTopicEs] = useState(initialTopicEs);
+  const [introMessageEs, setIntroMessageEs] = useState(initialIntroMessageEs);
   const [context, setContext] = useState(initialContext);
   const [instructions, setInstructions] = useState(initialInstructions);
   const [status, setStatus] = useState<Status>(initialStatus);
@@ -165,6 +173,8 @@ export default function EditSessionForm({
     codeChanged ||
     topic !== initialTopic ||
     introMessage !== initialIntroMessage ||
+    topicEs !== initialTopicEs ||
+    introMessageEs !== initialIntroMessageEs ||
     context !== initialContext ||
     instructions !== initialInstructions ||
     status !== initialStatus ||
@@ -205,6 +215,14 @@ export default function EditSessionForm({
     };
     for (const f of PROMPT_FIELDS) {
       body[f.bodyField] = promptOverrides[f.key];
+    }
+
+    // Only send the Spanish when it was actually hand-edited. Sending it on
+    // every save would pin it permanently and the auto-translation would never
+    // run again after the first edit to a session.
+    if (topicEs !== initialTopicEs) body.topic_es = topicEs;
+    if (introMessageEs !== initialIntroMessageEs) {
+      body.intro_message_es = introMessageEs;
     }
 
     const res = await fetch(`/api/admin/sessions/${code}`, {
@@ -268,6 +286,19 @@ export default function EditSessionForm({
       </div>
 
       <div className="space-y-1">
+        <label className="text-xs font-medium" htmlFor="topic-es">
+          Topic · Español
+        </label>
+        <input
+          id="topic-es"
+          value={topicEs}
+          onChange={(e) => setTopicEs(e.target.value)}
+          placeholder="Auto-translated after you save. Edit to override."
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        />
+      </div>
+
+      <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="intro">
           Intro message
         </label>
@@ -277,6 +308,20 @@ export default function EditSessionForm({
           onChange={(e) => setIntroMessage(e.target.value)}
           rows={3}
           placeholder="Shown as the first assistant message. Leave blank for none."
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        />
+      </div>
+
+      <div className="space-y-1">
+        <label className="text-xs font-medium" htmlFor="intro-es">
+          Intro message · Español
+        </label>
+        <textarea
+          id="intro-es"
+          value={introMessageEs}
+          onChange={(e) => setIntroMessageEs(e.target.value)}
+          rows={3}
+          placeholder="Auto-translated after you save. Edit to override."
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>

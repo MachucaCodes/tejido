@@ -259,6 +259,24 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
     throw err;
   }
 
+  // See analyze.ts — a refusal returns 200 with no text block, which would
+  // otherwise read as a JSON parse error.
+  if (response.stop_reason === "refusal") {
+    const message = `model refused: ${response.stop_details?.category ?? "unknown"}`;
+    await logLlmCall({
+      kind: "summarize_session",
+      model: CLUSTERING_MODEL,
+      duration_ms: Date.now() - startedAt,
+      session_id: sessionId,
+      system_prompt: summarySystem,
+      request_messages: requestMessages,
+      request_params: requestParams,
+      status: "refusal",
+      raw_response: response,
+    });
+    throw new Error(message);
+  }
+
   const text = response.content
     .map((b) => (b.type === "text" ? b.text : ""))
     .join("");

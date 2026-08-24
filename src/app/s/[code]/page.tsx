@@ -1,11 +1,12 @@
 import { notFound } from "next/navigation";
 import { after } from "next/server";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { getCurrentUser, getOrCreateParticipant } from "@/lib/participant";
 import { regenerateSummaryIfStale } from "@/lib/summary";
 import { createAdmin } from "@/lib/supabase/admin";
+import { localized } from "@/lib/translate-session";
 import ChatClient from "./chat-client";
 import type { Theme } from "./themes-panel";
 
@@ -17,6 +18,7 @@ export default async function SessionPage({
   params: Promise<{ code: string }>;
 }) {
   const t = await getTranslations("session");
+  const locale = await getLocale();
   const { code } = await params;
   const { user } = await getCurrentUser();
   if (!user) {
@@ -150,8 +152,8 @@ export default async function SessionPage({
   return (
     <ChatClient
       sessionCode={session.id}
-      topic={session.topic}
-      introMessage={session.intro_message}
+      topic={localized(session.topic, session.topic_es, locale) ?? session.topic}
+      introMessage={localized(session.intro_message, session.intro_message_es, locale)}
       hasPhone={Boolean(user.phone)}
       initialHasAnalyzed={initialHasAnalyzed}
       initialMessages={initialMessages}

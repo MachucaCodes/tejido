@@ -1,5 +1,6 @@
 import { createMcpHandler, withMcpAuth } from "mcp-handler";
 import { headers } from "next/headers";
+import { after } from "next/server";
 import { z } from "zod";
 
 import { verifyMcpToken } from "@/lib/mcp-auth";
@@ -8,6 +9,10 @@ import { PERSPECTIVES_PLACEHOLDER } from "@/lib/prompts/facilitator";
 import { SUMMARY_PROMPT_PLACEHOLDERS } from "@/lib/prompts/summary";
 import { CODE_RE, renameSession } from "@/lib/rename-session";
 import { createAdmin } from "@/lib/supabase/admin";
+import {
+  backfillSessionTranslation,
+  staleSpanishFields,
+} from "@/lib/translate-session";
 
 function text(s: string) {
   return { content: [{ type: "text" as const, text: s }] };
@@ -140,10 +145,12 @@ const handler = createMcpHandler(
         const userId = extra.authInfo?.extra?.userId as string | undefined;
         if (!userId) return text("Error: unauthenticated");
 
+        const trimmedTopic = topic.trim();
+        const trimmedIntro = intro_message?.trim() || null;
         const row: Record<string, unknown> = {
           id: code,
-          topic: topic.trim(),
-          intro_message: intro_message?.trim() || null,
+          topic: trimmedTopic,
+          intro_message: trimmedIntro,
           context: context?.trim() || null,
           instructions: instructions?.trim() || null,
           created_by: userId,
@@ -160,6 +167,14 @@ const handler = createMcpHandler(
               : `Error: ${error.message}`,
           );
         }
+        after(() =>
+          backfillSessionTranslation(
+            code,
+            { topic: trimmedTopic, intro_message: trimmedIntro },
+            { topic: true, intro_message: Boolean(trimmedIntro) },
+          ),
+        );
+
         const origin = await publicOrigin();
         return text(
           `Session "${code}" created.\nJoin link: ${origin}/s/${code}\nAdmin view: ${origin}/admin/sessions/${code}`,
@@ -327,8 +342,27 @@ const handler = createMcpHandler(
         }
 
         const changed = Object.keys(update);
+        let stale = { topic: false, intro_message: false };
         if (changed.length) {
           const admin = createAdmin();
+
+          // Clear any Spanish this edit invalidates in the same write, so the
+          // room falls back to English rather than showing a translation of
+          // copy that no longer exists.
+          const { data: previous } = await admin
+            .from("sessions")
+            .select("topic, intro_message")
+            .eq("id", code)
+            .maybeSingle();
+          if (previous) {
+            stale = staleSpanishFields(previous, {
+              topic: update.topic as string | undefined,
+              intro_message: update.intro_message as string | null | undefined,
+            });
+            if (stale.topic) update.topic_es = null;
+            if (stale.intro_message) update.intro_message_es = null;
+          }
+
           const { data, error } = await admin
             .from("sessions")
             .update(update)
@@ -344,6 +378,21 @@ const handler = createMcpHandler(
           const result = await renameSession(code, renameTo);
           if (!result.ok) return text(`Error: ${result.error}`);
           changed.push("code");
+        }
+
+        // Keyed to the post-rename code — the row has already moved.
+        if (stale.topic || stale.intro_message) {
+          const finalCode = renameTo ?? code;
+          after(() =>
+            backfillSessionTranslation(
+              finalCode,
+              {
+                topic: update.topic as string | undefined,
+                intro_message: update.intro_message as string | null | undefined,
+              },
+              stale,
+            ),
+          );
         }
 
         if (!renameTo) {

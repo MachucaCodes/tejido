@@ -20,7 +20,7 @@ export default async function AdminSessionDetail({
   const { data: session } = await admin
     .from("sessions")
     .select(
-      "id, topic, intro_message, context, instructions, status, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
+      "id, topic, topic_es, intro_message, intro_message_es, context, instructions, status, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
     )
     .eq("id", code)
     .single();
@@ -79,7 +79,9 @@ export default async function AdminSessionDetail({
         <EditSessionForm
           code={session.id}
           initialTopic={session.topic ?? ""}
+          initialTopicEs={session.topic_es ?? ""}
           initialIntroMessage={session.intro_message ?? ""}
+          initialIntroMessageEs={session.intro_message_es ?? ""}
           initialContext={session.context ?? ""}
           initialInstructions={session.instructions ?? ""}
           initialStatus={session.status as "open" | "closed"}

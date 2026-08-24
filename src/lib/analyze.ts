@@ -235,6 +235,27 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
     throw err;
   }
 
+  // Opus 5's safety classifiers can decline a request outright — HTTP 200 with
+  // stop_reason "refusal" and no text block. Without this the empty content
+  // would surface as a confusing JSON "unexpected end of input" parse error.
+  // Garbled voice transcripts are the realistic trigger here.
+  if (response.stop_reason === "refusal") {
+    const message = `model refused: ${response.stop_details?.category ?? "unknown"}`;
+    await logLlmCall({
+      kind: "analyze_participant",
+      model: CLUSTERING_MODEL,
+      duration_ms: Date.now() - startedAt,
+      session_id: participant.session_id,
+      participant_id: participantId,
+      system_prompt: analysisSystem,
+      request_messages: requestMessages,
+      request_params: requestParams,
+      status: "refusal",
+      raw_response: response,
+    });
+    throw new Error(message);
+  }
+
   const text = response.content
     .map((b) => (b.type === "text" ? b.text : ""))
     .join("");

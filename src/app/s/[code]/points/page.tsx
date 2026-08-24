@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
+import { getLocale } from "next-intl/server";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import { localized } from "@/lib/translate-session";
 
 import {
   PointsView,
@@ -26,10 +28,12 @@ export default async function SessionPointsPage({
 
   const { data: session } = await admin
     .from("sessions")
-    .select("id, topic")
+    .select("id, topic, topic_es")
     .eq("id", code)
     .single();
   if (!session) notFound();
+
+  const locale = await getLocale();
 
   const [pointsRes, themesRes, assignmentsRes, turnsRes] = await Promise.all([
     admin
@@ -76,7 +80,7 @@ export default async function SessionPointsPage({
   return (
     <PointsView
       code={code}
-      topic={session.topic ?? null}
+      topic={localized(session.topic, session.topic_es, locale)}
       points={points}
       voices={voices}
       themes={themes}

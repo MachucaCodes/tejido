@@ -4,10 +4,16 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { getCurrentUser } from "@/lib/participant";
 import { createAdmin } from "@/lib/supabase/admin";
+import { localized } from "@/lib/translate-session";
 
 import { LogoutButton } from "./logout-button";
 
-type SessionEmbed = { id: string; topic: string; status: string };
+type SessionEmbed = {
+  id: string;
+  topic: string;
+  topic_es: string | null;
+  status: string;
+};
 type ParticipantRow = {
   id: string;
   session_id: string;
@@ -41,7 +47,9 @@ export default async function ProfilePage() {
 
   const { data: rows } = await admin
     .from("participants")
-    .select("id, session_id, phase, created_at, completed_at, sessions(id, topic, status)")
+    .select(
+      "id, session_id, phase, created_at, completed_at, sessions(id, topic, topic_es, status)",
+    )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
 
@@ -115,7 +123,8 @@ export default async function ProfilePage() {
                   >
                     <div className="min-w-0 space-y-1.5">
                       <p className="truncate font-display text-[1.15rem] italic leading-tight text-foreground">
-                        {session.topic}
+                        {localized(session.topic, session.topic_es, locale) ??
+                          session.topic}
                       </p>
                       <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-muted-foreground">
                         {fmtDate(p.created_at, locale)} ·{" "}
