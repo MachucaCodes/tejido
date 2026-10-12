@@ -8,12 +8,20 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <Link href="/admin" className="text-sm font-medium text-muted-foreground hover:text-foreground">
             Admin
           </Link>
-          <Link
-            href="/admin/sessions"
-            className="text-sm text-muted-foreground hover:text-foreground"
-          >
-            Sessions
-          </Link>
+          <div className="flex items-center gap-4">
+            <Link
+              href="/admin/sessions"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Sessions
+            </Link>
+            <Link
+              href="/admin/lists"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              Lists
+            </Link>
+          </div>
         </div>
       </nav>
       <main className="mx-auto max-w-4xl px-4 py-8">{children}</main>
