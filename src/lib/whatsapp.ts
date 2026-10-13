@@ -173,9 +173,11 @@ const obj = (v: unknown): Json | null => (v && typeof v === "object" ? (v as Jso
 const str = (v: unknown): string | null => (typeof v === "string" && v.trim() ? v : null);
 
 /**
- * Pull what we need out of a Telnyx `message.received` webhook. The exact
- * WhatsApp payload shape isn't documented, so this checks the SMS-style
- * fields and the Meta-style nested ones; the raw payload is stored too.
+ * Pull what we need out of a Telnyx `message.received` webhook. For WhatsApp,
+ * Telnyx puts Meta's message object in `payload.body`:
+ *   { type: "text", text: { body } } | { type: "button", button: { text, payload } }
+ *   | { type: "interactive", interactive: { button_reply } } | { type: "audio", audio }
+ * SMS-style top-level fields are kept as a fallback; the raw payload is stored too.
  */
 export function parseInbound(body: unknown): InboundMessage | null {
   const data = obj(obj(body)?.data);
@@ -191,7 +193,7 @@ export function parseInbound(body: unknown): InboundMessage | null {
   const toList = Array.isArray(p.to) ? p.to : [p.to];
   const to = toList.map((t) => str(obj(t)?.phone_number) ?? str(t)).find(Boolean) ?? null;
 
-  const wa = obj(p.whatsapp_message) ?? obj(p.whatsapp) ?? p;
+  const wa = obj(p.body) ?? obj(p.whatsapp_message) ?? obj(p.whatsapp) ?? p;
   const button = obj(wa.button);
   const interactive = obj(wa.interactive);
   const buttonReply = obj(interactive?.button_reply);
@@ -204,10 +206,13 @@ export function parseInbound(body: unknown): InboundMessage | null {
     str(button?.text) ??
     str(buttonReply?.title) ??
     str(p.body);
+  // Meta's audio carries an id; keep it so the media can be fetched by id.
+  const audioId = str(obj(wa.audio)?.id) ?? str(obj(wa.voice)?.id);
 
   const media = Array.isArray(p.media) ? obj(p.media[0]) : null;
   const audio = obj(wa.audio) ?? obj(wa.voice);
-  const mediaUrl = str(media?.url) ?? str(audio?.url) ?? str(audio?.link) ?? null;
+  const mediaUrl =
+    str(media?.url) ?? str(audio?.url) ?? str(audio?.link) ?? (audioId ? `whatsapp-media:${audioId}` : null);
   const mediaType = str(media?.content_type) ?? str(audio?.mime_type) ?? null;
 
   const e164 = (n: string) => (n.startsWith("+") ? n : `+${n}`);
@@ -215,6 +220,19 @@ export function parseInbound(body: unknown): InboundMessage | null {
 }
 
 export async function downloadMedia(url: string): Promise<Blob> {
+  if (url.startsWith("whatsapp-media:")) {
+    // Media referenced only by Meta id: ask Telnyx for it.
+    const id = url.slice("whatsapp-media:".length);
+    const res = await fetch(`${TELNYX}/whatsapp/media/${encodeURIComponent(id)}`, {
+      headers: { Authorization: `Bearer ${apiKey()}` },
+    });
+    if (!res.ok) throw new Error(`media ${id}: ${res.status} ${(await res.text()).slice(0, 200)}`);
+    const type = res.headers.get("content-type") ?? "";
+    if (!type.includes("json")) return res.blob();
+    const json = (await res.json()) as { data?: { url?: string } };
+    if (!json.data?.url) throw new Error(`media ${id}: no url in response`);
+    return downloadMedia(json.data.url);
+  }
   // Telnyx-hosted media wants the API key. Never send it to any other host.
   const host = new URL(url).hostname;
   const isTelnyx = host === "telnyx.com" || host.endsWith(".telnyx.com");

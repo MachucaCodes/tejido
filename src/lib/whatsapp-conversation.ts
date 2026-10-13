@@ -22,6 +22,7 @@ const COPY = {
       `Thanks for sharing! See what everyone is saying so far: ${link}\n\nYou'll sign in with this phone number. You can keep chatting here too.`,
     lostThread: "Sorry — I lost the thread there. Could you try saying that again?",
     voiceFailed: "Sorry, I couldn't hear that voice note. Could you try again, or type it?",
+    unreadable: "Sorry, I can only read text and voice notes. Could you type that?",
     error: "Sorry, something went wrong on our side. Please try again in a minute.",
   },
   es: {
@@ -32,6 +33,7 @@ const COPY = {
       `¡Gracias por compartir! Mira lo que todos están diciendo hasta ahora: ${link}\n\nVas a iniciar sesión con este número de teléfono. También puedes seguir conversando aquí.`,
     lostThread: "Perdón, perdí el hilo. ¿Puedes decirlo otra vez?",
     voiceFailed: "Perdón, no pude escuchar esa nota de voz. ¿Puedes intentarlo otra vez o escribirlo?",
+    unreadable: "Perdón, solo puedo leer texto y notas de voz. ¿Puedes escribirlo?",
     error: "Perdón, algo falló de nuestro lado. Inténtalo otra vez en un minuto.",
   },
 } as const;
@@ -223,7 +225,8 @@ export async function handleInbound(messageId: string, phone: string, origin: st
     const tappedNo = batch.some((m) => /:no$/.test((m.raw as { _parsed?: { buttonPayload?: string } } | null)?._parsed?.buttonPayload ?? ""));
 
     if (!userText && !tappedNo) {
-      await sendWhatsAppText(phone, copy.voiceFailed, invite.id);
+      const hadMedia = batch.some((m) => m.media_url);
+      await sendWhatsAppText(phone, hadMedia ? copy.voiceFailed : copy.unreadable, invite.id);
       return;
     }
 
