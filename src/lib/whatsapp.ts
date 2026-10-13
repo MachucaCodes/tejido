@@ -130,8 +130,8 @@ async function telnyxPublicKey(): Promise<string> {
   const res = await fetch(`${TELNYX}/public_key`, {
     headers: { Authorization: `Bearer ${apiKey()}` },
   });
-  const json = (await res.json()) as { data?: { public_key?: string } };
-  const key = json.data?.public_key;
+  const json = (await res.json()) as { data?: { public?: string } };
+  const key = json.data?.public;
   if (!key) throw new Error("could not load Telnyx public key");
   cachedPublicKey = key;
   return key;
