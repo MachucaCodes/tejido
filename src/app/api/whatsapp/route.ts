@@ -1,7 +1,7 @@
 import { after } from "next/server";
 
 import { createAdmin } from "@/lib/supabase/admin";
-import { parseInbound, verifyTelnyxSignature } from "@/lib/whatsapp";
+import { parseInbound, verifyTelnyxSignature, WHATSAPP_FROM } from "@/lib/whatsapp";
 import { handleInbound } from "@/lib/whatsapp-conversation";
 
 // Answering happens in after(): a facilitator turn plus analysis can take a
@@ -31,6 +31,9 @@ export async function POST(req: Request) {
   // Status callbacks (sent, delivered, read) and anything else: acknowledge.
   const msg = parseInbound(body);
   if (!msg) return Response.json({ ok: true, ignored: true });
+  // Only messages sent to Tejido's number. Belt and braces: the number's own
+  // messaging profile already routes here, but the business account is shared.
+  if (msg.to && msg.to !== WHATSAPP_FROM) return Response.json({ ok: true, ignored: true });
 
   const { error } = await createAdmin()
     .from("whatsapp_messages")

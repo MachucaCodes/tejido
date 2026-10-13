@@ -3,9 +3,11 @@ import { createPublicKey, verify } from "node:crypto";
 import type { Locale } from "@/i18n/locales";
 import { createAdmin } from "@/lib/supabase/admin";
 
-// Tejido sends from the shared "Roley AI" WhatsApp number until it has its own
-// Meta business. Templates live on that business account (WABA 918062554344710).
-export const WHATSAPP_FROM = "+16282210583";
+// Tejido's own number on the "Roley AI" WhatsApp business (WABA 918062554344710)
+// until it has its own Meta business. Clock sends from a different number on the
+// same business, so replies to Clock never reach Tejido. Templates live on the
+// business account and work from either number.
+export const WHATSAPP_FROM = "+17602571837";
 export const INVITE_TEMPLATE = "tejido_conversation_invite";
 
 const TELNYX = "https://api.telnyx.com/v2";
@@ -158,6 +160,8 @@ export async function verifyTelnyxSignature(
 export type InboundMessage = {
   id: string;
   phone: string;
+  /** Our number it was sent to. */
+  to: string | null;
   text: string | null;
   buttonPayload: string | null;
   mediaUrl: string | null;
@@ -184,6 +188,9 @@ export function parseInbound(body: unknown): InboundMessage | null {
   const id = str(p.id) ?? str(data.id);
   if (!phone || !id) return null;
 
+  const toList = Array.isArray(p.to) ? p.to : [p.to];
+  const to = toList.map((t) => str(obj(t)?.phone_number) ?? str(t)).find(Boolean) ?? null;
+
   const wa = obj(p.whatsapp_message) ?? obj(p.whatsapp) ?? p;
   const button = obj(wa.button);
   const interactive = obj(wa.interactive);
@@ -203,7 +210,8 @@ export function parseInbound(body: unknown): InboundMessage | null {
   const mediaUrl = str(media?.url) ?? str(audio?.url) ?? str(audio?.link) ?? null;
   const mediaType = str(media?.content_type) ?? str(audio?.mime_type) ?? null;
 
-  return { id, phone: phone.startsWith("+") ? phone : `+${phone}`, text, buttonPayload, mediaUrl, mediaType };
+  const e164 = (n: string) => (n.startsWith("+") ? n : `+${n}`);
+  return { id, phone: e164(phone), to: to ? e164(to) : null, text, buttonPayload, mediaUrl, mediaType };
 }
 
 export async function downloadMedia(url: string): Promise<Blob> {
