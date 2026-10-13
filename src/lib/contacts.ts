@@ -39,13 +39,9 @@ export function parseContactLines(text: string): {
 
 /**
  * Find-or-create a contact per phone and return their ids. A name or language
- * on the line overwrites the stored one; a blank leaves it alone. `optedIn` stamps
- * consent on contacts that don't have it yet — it never clears it.
+ * on the line overwrites the stored one; a blank leaves it alone.
  */
-export async function upsertContacts(
-  lines: ContactLine[],
-  { optedIn }: { optedIn: boolean },
-): Promise<string[]> {
+export async function upsertContacts(lines: ContactLine[]): Promise<string[]> {
   if (lines.length === 0) return [];
   const admin = createAdmin();
   const phones = lines.map((l) => l.phone);
@@ -57,10 +53,9 @@ export async function upsertContacts(
   if (selErr) throw new Error(selErr.message);
   const known = new Map((existing ?? []).map((c) => [c.phone as string, c]));
 
-  const now = new Date().toISOString();
   const toInsert = lines
     .filter((l) => !known.has(l.phone))
-    .map((l) => ({ phone: l.phone, name: l.name, language: l.language, opted_in_at: optedIn ? now : null }));
+    .map((l) => ({ phone: l.phone, name: l.name, language: l.language }));
   if (toInsert.length) {
     const { data: inserted, error } = await admin
       .from("contacts")
@@ -79,13 +74,6 @@ export async function upsertContacts(
     if (Object.keys(patch).length) {
       await admin.from("contacts").update(patch).eq("id", c.id);
     }
-  }
-  if (optedIn) {
-    await admin
-      .from("contacts")
-      .update({ opted_in_at: now })
-      .in("phone", phones)
-      .is("opted_in_at", null);
   }
 
   return phones.map((p) => known.get(p)!.id as string);

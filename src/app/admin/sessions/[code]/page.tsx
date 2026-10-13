@@ -46,17 +46,16 @@ export default async function AdminSessionDetail({
 
   const { data: listRows } = await admin
     .from("lists")
-    .select("id, name, list_members(contacts(opted_in_at))")
+    .select("id, name, list_members(contact_id)")
     .order("name", { ascending: true })
     .overrideTypes<
-      { id: string; name: string; list_members: { contacts: { opted_in_at: string | null } | null }[] }[],
+      { id: string; name: string; list_members: { contact_id: string }[] }[],
       { merge: false }
     >();
   const inviteLists: InviteList[] = (listRows ?? []).map((l) => ({
     id: l.id,
     name: l.name,
     members: l.list_members.length,
-    optedIn: l.list_members.filter((m) => m.contacts?.opted_in_at).length,
   }));
 
   const { data: inviteRows } = await admin

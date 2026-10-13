@@ -7,13 +7,11 @@ export type SendInvitesResult = {
   sent: number;
   failed: number;
   alreadyInvited: number;
-  noConsent: number;
 };
 
 /**
  * Invite everyone on the given lists to a session over WhatsApp. A contact on
- * several lists gets one invite. Contacts without recorded consent are
- * skipped. Re-running only retries invites that failed or never went out.
+ * several lists gets one invite. Re-running only retries invites that failed or never went out.
  */
 export async function sendInvites(sessionId: string, listIds: string[]): Promise<SendInvitesResult> {
   const admin = createAdmin();
@@ -28,27 +26,18 @@ export async function sendInvites(sessionId: string, listIds: string[]): Promise
 
   const { data: members } = await admin
     .from("list_members")
-    .select("contacts(id, phone, language, opted_in_at)")
+    .select("contacts(id, phone, language)")
     .in("list_id", listIds)
     .overrideTypes<
-      { contacts: { id: string; phone: string; language: string | null; opted_in_at: string | null } | null }[],
+      { contacts: { id: string; phone: string; language: string | null } | null }[],
       { merge: false }
     >();
 
   const contacts = new Map<string, { id: string; phone: string; language: string | null }>();
-  let noConsent = 0;
-  const seenNoConsent = new Set<string>();
   for (const m of members ?? []) {
-    const c = m.contacts;
-    if (!c) continue;
-    if (!c.opted_in_at) {
-      if (!seenNoConsent.has(c.id)) noConsent += 1;
-      seenNoConsent.add(c.id);
-      continue;
-    }
-    contacts.set(c.id, c);
+    if (m.contacts) contacts.set(m.contacts.id, m.contacts);
   }
-  if (contacts.size === 0) return { sent: 0, failed: 0, alreadyInvited: 0, noConsent };
+  if (contacts.size === 0) return { sent: 0, failed: 0, alreadyInvited: 0 };
 
   await admin.from("session_invites").upsert(
     [...contacts.keys()].map((contact_id) => ({ session_id: sessionId, contact_id })),
@@ -89,5 +78,5 @@ export async function sendInvites(sessionId: string, listIds: string[]): Promise
     );
   }
 
-  return { sent, failed, alreadyInvited, noConsent };
+  return { sent, failed, alreadyInvited };
 }

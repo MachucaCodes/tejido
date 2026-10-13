@@ -13,7 +13,6 @@ type MemberRow = {
     phone: string;
     name: string | null;
     language: string | null;
-    opted_in_at: string | null;
   } | null;
 };
 
@@ -36,12 +35,11 @@ export default async function AdminListDetail({
 
   const { data: rows } = await admin
     .from("list_members")
-    .select("contacts(id, phone, name, language, opted_in_at)")
+    .select("contacts(id, phone, name, language)")
     .eq("list_id", id)
     .order("created_at", { ascending: true })
     .returns<MemberRow[]>();
   const members = (rows ?? []).flatMap((r) => (r.contacts ? [r.contacts] : []));
-  const optedIn = members.filter((m) => m.opted_in_at).length;
 
   return (
     <div className="space-y-8">
@@ -51,11 +49,11 @@ export default async function AdminListDetail({
         </Link>
         <h1 className="text-lg font-semibold">{list.name}</h1>
         <p className="text-sm text-muted-foreground">
-          {members.length} {members.length === 1 ? "number" : "numbers"} · {optedIn} opted in
+          {members.length} {members.length === 1 ? "number" : "numbers"}
         </p>
       </header>
 
-      <AddMembersForm listId={list.id} />
+      <AddMembersForm listId={list.id} memberPhones={members.map((m) => m.phone)} />
 
       <section className="space-y-2">
         <h2 className="text-sm font-medium">Members</h2>
@@ -66,20 +64,15 @@ export default async function AdminListDetail({
             {members.map((m) => (
               <li key={m.id} className="flex items-center justify-between gap-3 px-3 py-2 text-sm">
                 <div className="min-w-0">
-                  <p className="font-mono">{m.phone}</p>
-                  {m.name && <p className="truncate text-xs text-muted-foreground">{m.name}</p>}
+                  {m.name && <p className="truncate font-medium">{m.name}</p>}
+                  <p className={m.name ? "font-mono text-xs text-muted-foreground" : "font-mono"}>
+                    {m.phone}
+                  </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
                   {m.language && (
                     <span className="text-xs uppercase text-muted-foreground">{m.language}</span>
                   )}
-                  <span
-                    className={`rounded px-2 py-0.5 text-xs ${
-                      m.opted_in_at ? "bg-secondary" : "text-muted-foreground"
-                    }`}
-                  >
-                    {m.opted_in_at ? "opted in" : "no consent"}
-                  </span>
                   <RemoveMemberButton listId={list.id} contactId={m.id} />
                 </div>
               </li>

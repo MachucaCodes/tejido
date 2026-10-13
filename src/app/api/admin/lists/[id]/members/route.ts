@@ -22,13 +22,13 @@ export async function POST(
   if (denied) return denied;
   const { id } = await params;
 
-  const { text, optedIn } = (await req.json()) as { text?: string; optedIn?: boolean };
+  const { text } = (await req.json()) as { text?: string };
   const { valid, invalid } = parseContactLines(text ?? "");
   if (valid.length === 0) {
     return NextResponse.json({ ok: false, added: 0, invalid }, { status: 400 });
   }
 
-  const contactIds = await upsertContacts(valid, { optedIn: Boolean(optedIn) });
+  const contactIds = await upsertContacts(valid);
   const { error } = await createAdmin()
     .from("list_members")
     .upsert(

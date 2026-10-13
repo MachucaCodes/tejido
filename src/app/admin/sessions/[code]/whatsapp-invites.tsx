@@ -6,7 +6,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 
-export type InviteList = { id: string; name: string; members: number; optedIn: number };
+export type InviteList = { id: string; name: string; members: number };
 export type InviteRow = {
   id: string;
   phone: string;
@@ -61,14 +61,12 @@ export default function WhatsAppInvites({
       sent: number;
       failed: number;
       alreadyInvited: number;
-      noConsent: number;
     };
     setResult(
       [
         `Sent ${r.sent}`,
         r.failed && `${r.failed} failed`,
         r.alreadyInvited && `${r.alreadyInvited} already invited`,
-        r.noConsent && `${r.noConsent} skipped (no consent)`,
       ]
         .filter(Boolean)
         .join(" · "),
@@ -91,7 +89,7 @@ export default function WhatsAppInvites({
         <h2 className="text-sm font-medium">Send on WhatsApp</h2>
         <p className="text-xs text-muted-foreground">
           Sends the invite template to everyone on the lists you pick. A number on
-          several lists gets one invite. Numbers without consent are skipped.
+          several lists gets one invite.
         </p>
       </div>
 
@@ -112,7 +110,7 @@ export default function WhatsAppInvites({
                 />
                 <span>{l.name}</span>
                 <span className="text-xs text-muted-foreground">
-                  {l.optedIn} of {l.members} opted in
+                  {l.members} {l.members === 1 ? "number" : "numbers"}
                 </span>
               </label>
             </li>
