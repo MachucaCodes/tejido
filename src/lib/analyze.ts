@@ -204,6 +204,8 @@ export async function analyzeParticipant(participantId: string): Promise<Analyze
     max_tokens: 16000,
     thinking: { type: "adaptive" as const },
     output_config: {
+      // Opus 5.5 defaults to medium; pinned to the high this ran at on Opus 5.
+      effort: "high" as const,
       format: { type: "json_schema" as const, schema: ANALYSIS_JSON_SCHEMA },
     },
   };

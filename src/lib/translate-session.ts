@@ -71,11 +71,10 @@ export async function translateSessionFields(
     model: TRANSLATION_MODEL,
     max_tokens: 8000,
     system: SYSTEM,
-    // No `effort` here on purpose: Haiku 4.5 rejects output_config.effort with
-    // a 400. It also has no adaptive thinking, which suits a mechanical task —
-    // if TRANSLATION_MODEL ever moves to an Opus/Sonnet tier, add
-    // `effort: "low"` back rather than letting it default to `high`.
+    // Haiku 5.5 thinks by default; a mechanical task only needs a little.
+    thinking: { type: "adaptive" },
     output_config: {
+      effort: "low",
       format: { type: "json_schema", schema: RESULT_SCHEMA },
     },
     messages: [

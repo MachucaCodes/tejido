@@ -12,12 +12,13 @@ export function getAnthropic(): Anthropic {
   return client;
 }
 
-export const FACILITATOR_MODEL = "claude-opus-5";
+// Haiku for the live conversation: measured on real transcripts (2026-10-12),
+// first word ~0.7s vs ~1.3s on Opus 5, full reply ~1.7s vs ~2.1s.
+export const FACILITATOR_MODEL = "claude-haiku-5-5";
 // Unused — nothing imports this. Kept in step with the others so it isn't a
 // stale trap if something starts using it; delete it if extraction stays folded
 // into the clustering pass.
-export const EXTRACTION_MODEL = "claude-opus-5";
-export const CLUSTERING_MODEL = "claude-opus-5";
-// Mechanical, well-specified, high-volume-if-it-ever-grows. Note that Haiku 4.5
-// rejects `output_config.effort` — see translate-session.ts.
-export const TRANSLATION_MODEL = "claude-haiku-4-5";
+export const EXTRACTION_MODEL = "claude-opus-5-5";
+export const CLUSTERING_MODEL = "claude-opus-5-5";
+// Mechanical, well-specified, high-volume-if-it-ever-grows.
+export const TRANSLATION_MODEL = "claude-haiku-5-5";

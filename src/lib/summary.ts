@@ -229,6 +229,8 @@ export async function regenerateSummaryIfStale(sessionId: string): Promise<{
     max_tokens: 2000,
     thinking: { type: "adaptive" as const },
     output_config: {
+      // Opus 5.5 defaults to medium; pinned to the high this ran at on Opus 5.
+      effort: "high" as const,
       format: { type: "json_schema" as const, schema: SUMMARY_JSON_SCHEMA },
     },
   };

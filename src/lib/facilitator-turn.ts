@@ -91,15 +91,11 @@ export async function startFacilitatorTurn({
     { role: "user" as const, content: userText },
   ];
 
-  // On Opus 4.7 omitting `thinking` meant no thinking; on Opus 5 the default
-  // flipped to adaptive, so this has to be explicit or the behaviour changes
-  // silently under us.
-  //
-  // We keep thinking ON at low effort rather than disabling it. Disabling is
-  // the riskier option here: on Opus 5 a thinking-disabled turn can leak
-  // `<thinking>` tags into the visible text, and this text is streamed straight
-  // to the participant and stored verbatim as the transcript. Low effort keeps
-  // the pause before the first token short.
+  // Thinking stays ON at low effort, set explicitly. Haiku 5.5 defaults to
+  // medium, and a thinking-disabled turn can leak `<thinking>` tags into the
+  // visible text, which is streamed straight to the participant and stored
+  // verbatim as the transcript. Low effort keeps the pause before the first
+  // token short.
   //
   // max_tokens is a hard cap on thinking PLUS response text, so it goes up with
   // thinking switched on — at 4096 a long turn could truncate mid-sentence.
