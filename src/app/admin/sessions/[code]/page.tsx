@@ -6,6 +6,7 @@ import { createAdmin } from "@/lib/supabase/admin";
 import ArchiveToggle from "./archive-toggle";
 import CopyJoinLink from "./copy-join-link";
 import EditSessionForm from "./edit-session-form";
+import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-invites";
 
 export default async function AdminSessionDetail({
   params,
@@ -43,6 +44,44 @@ export default async function AdminSessionDetail({
     .select("theme_id, point_id, themes!inner(session_id)")
     .eq("themes.session_id", code);
 
+  const { data: listRows } = await admin
+    .from("lists")
+    .select("id, name, list_members(contacts(opted_in_at))")
+    .order("name", { ascending: true })
+    .overrideTypes<
+      { id: string; name: string; list_members: { contacts: { opted_in_at: string | null } | null }[] }[],
+      { merge: false }
+    >();
+  const inviteLists: InviteList[] = (listRows ?? []).map((l) => ({
+    id: l.id,
+    name: l.name,
+    members: l.list_members.length,
+    optedIn: l.list_members.filter((m) => m.contacts?.opted_in_at).length,
+  }));
+
+  const { data: inviteRows } = await admin
+    .from("session_invites")
+    .select("id, status, error_message, sent_at, contacts(phone, name)")
+    .eq("session_id", code)
+    .overrideTypes<
+      {
+        id: string;
+        status: string;
+        error_message: string | null;
+        sent_at: string | null;
+        contacts: { phone: string; name: string | null } | null;
+      }[],
+      { merge: false }
+    >();
+  const invites: InviteRow[] = (inviteRows ?? []).map((i) => ({
+    id: i.id,
+    phone: i.contacts?.phone ?? "",
+    name: i.contacts?.name ?? null,
+    status: i.status,
+    error: i.error_message,
+    sentAt: i.sent_at,
+  }));
+
   const counts: Record<string, number> = {};
   for (const a of assignments ?? []) counts[a.theme_id] = (counts[a.theme_id] ?? 0) + 1;
 
@@ -73,6 +112,13 @@ export default async function AdminSessionDetail({
           </Link>
         </div>
       </header>
+
+      <WhatsAppInvites
+        code={session.id}
+        open={session.status === "open" && !session.archived_at}
+        lists={inviteLists}
+        invites={invites}
+      />
 
       <section className="space-y-3">
         <h2 className="text-sm font-medium text-muted-foreground">Edit session</h2>

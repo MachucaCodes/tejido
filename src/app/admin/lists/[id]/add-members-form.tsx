@@ -52,13 +52,14 @@ export default function AddMembersForm({ listId }: { listId: string }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           rows={5}
-          placeholder={"+506 8888 7777, Ana\n8888 6666, Luis\n+1 415 555 0100"}
+          placeholder={"+506 8888 7777, Ana, es\n8888 6666, Luis\n+1 415 555 0100, Sam, en"}
           className="w-full rounded-md border bg-background px-3 py-2 font-mono text-sm"
           required
         />
         <p className="text-xs text-muted-foreground">
-          One per line: phone, then an optional name after a comma or tab. Numbers
-          without a + are read as Costa Rica.
+          One per line: phone, then an optional name and language (en or es),
+          separated by commas or tabs. Numbers without a + are read as Costa Rica.
+          With no language, +506 numbers get Spanish and the rest English.
         </p>
       </div>
       <label className="flex items-center gap-2 text-sm">

@@ -1,11 +1,12 @@
+import { isLocale, type Locale } from "@/i18n/locales";
 import { DEFAULT_COUNTRY_ISO, parseLocalPhone } from "@/lib/countries";
 import { createAdmin } from "@/lib/supabase/admin";
 
-export type ContactLine = { phone: string; name: string | null };
+export type ContactLine = { phone: string; name: string | null; language: Locale | null };
 
 /**
- * Parse pasted contacts, one per line: `phone` or `phone, name` (a tab works
- * too, so a two-column spreadsheet paste just works). Numbers without a `+`
+ * Parse pasted contacts, one per line: `phone`, `phone, name` or
+ * `phone, name, en|es` (tabs work too, so a spreadsheet paste just works). Numbers without a `+`
  * are read as Costa Rica, same default as the phone sign-in.
  */
 export function parseContactLines(text: string): {
@@ -17,24 +18,28 @@ export function parseContactLines(text: string): {
   for (const raw of text.split(/\r?\n/)) {
     const line = raw.trim();
     if (!line) continue;
-    const cut = line.search(/[,\t;]/);
-    const phonePart = cut === -1 ? line : line.slice(0, cut);
-    const namePart = cut === -1 ? "" : line.slice(cut + 1).trim();
+    const [phonePart, ...rest] = line.split(/[,\t;]/).map((part) => part.trim());
+    const langPart = rest.map((r) => r.toLowerCase()).find(isLocale) ?? null;
+    const namePart = rest.filter((r) => r && r.toLowerCase() !== langPart).join(", ");
     const parsed = parseLocalPhone(DEFAULT_COUNTRY_ISO, phonePart);
     if (!parsed.ok) {
       invalid.push(line);
       continue;
     }
-    // A repeated number keeps the name from whichever line had one.
-    const prevName = byPhone.get(parsed.e164)?.name ?? null;
-    byPhone.set(parsed.e164, { phone: parsed.e164, name: namePart || prevName });
+    // A repeated number keeps the name/language from whichever line had one.
+    const prev = byPhone.get(parsed.e164);
+    byPhone.set(parsed.e164, {
+      phone: parsed.e164,
+      name: namePart || prev?.name || null,
+      language: langPart ?? prev?.language ?? null,
+    });
   }
   return { valid: [...byPhone.values()], invalid };
 }
 
 /**
- * Find-or-create a contact per phone and return their ids. A name on the line
- * overwrites the stored one; a blank name leaves it alone. `optedIn` stamps
+ * Find-or-create a contact per phone and return their ids. A name or language
+ * on the line overwrites the stored one; a blank leaves it alone. `optedIn` stamps
  * consent on contacts that don't have it yet — it never clears it.
  */
 export async function upsertContacts(
@@ -47,7 +52,7 @@ export async function upsertContacts(
 
   const { data: existing, error: selErr } = await admin
     .from("contacts")
-    .select("id, phone, name")
+    .select("id, phone, name, language")
     .in("phone", phones);
   if (selErr) throw new Error(selErr.message);
   const known = new Map((existing ?? []).map((c) => [c.phone as string, c]));
@@ -55,20 +60,24 @@ export async function upsertContacts(
   const now = new Date().toISOString();
   const toInsert = lines
     .filter((l) => !known.has(l.phone))
-    .map((l) => ({ phone: l.phone, name: l.name, opted_in_at: optedIn ? now : null }));
+    .map((l) => ({ phone: l.phone, name: l.name, language: l.language, opted_in_at: optedIn ? now : null }));
   if (toInsert.length) {
     const { data: inserted, error } = await admin
       .from("contacts")
       .insert(toInsert)
-      .select("id, phone, name");
+      .select("id, phone, name, language");
     if (error) throw new Error(error.message);
     for (const c of inserted ?? []) known.set(c.phone, c);
   }
 
   for (const l of lines) {
     const c = known.get(l.phone);
-    if (c && l.name && l.name !== c.name) {
-      await admin.from("contacts").update({ name: l.name }).eq("id", c.id);
+    if (!c) continue;
+    const patch: { name?: string; language?: string } = {};
+    if (l.name && l.name !== c.name) patch.name = l.name;
+    if (l.language && l.language !== c.language) patch.language = l.language;
+    if (Object.keys(patch).length) {
+      await admin.from("contacts").update(patch).eq("id", c.id);
     }
   }
   if (optedIn) {

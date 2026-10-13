@@ -8,7 +8,13 @@ import EditListForm from "./edit-list-form";
 import RemoveMemberButton from "./remove-member-button";
 
 type MemberRow = {
-  contacts: { id: string; phone: string; name: string | null; opted_in_at: string | null } | null;
+  contacts: {
+    id: string;
+    phone: string;
+    name: string | null;
+    language: string | null;
+    opted_in_at: string | null;
+  } | null;
 };
 
 export default async function AdminListDetail({
@@ -30,7 +36,7 @@ export default async function AdminListDetail({
 
   const { data: rows } = await admin
     .from("list_members")
-    .select("contacts(id, phone, name, opted_in_at)")
+    .select("contacts(id, phone, name, language, opted_in_at)")
     .eq("list_id", id)
     .order("created_at", { ascending: true })
     .returns<MemberRow[]>();
@@ -64,6 +70,9 @@ export default async function AdminListDetail({
                   {m.name && <p className="truncate text-xs text-muted-foreground">{m.name}</p>}
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
+                  {m.language && (
+                    <span className="text-xs uppercase text-muted-foreground">{m.language}</span>
+                  )}
                   <span
                     className={`rounded px-2 py-0.5 text-xs ${
                       m.opted_in_at ? "bg-secondary" : "text-muted-foreground"

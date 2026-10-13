@@ -9,13 +9,16 @@ import { createAdmin } from "@/lib/supabase/admin";
 import { localized } from "@/lib/translate-session";
 import ChatClient from "./chat-client";
 import type { Theme } from "./themes-panel";
+import { WhatsAppSignIn } from "./whatsapp-sign-in";
 
 type ChatMessage = { id: string; role: "user" | "assistant"; content: string };
 
 export default async function SessionPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ code: string }>;
+  searchParams: Promise<{ via?: string }>;
 }) {
   const t = await getTranslations("session");
   const locale = await getLocale();
@@ -28,6 +31,13 @@ export default async function SessionPage({
         <p className="text-muted-foreground">{t("startFailedBody")}</p>
       </div>
     );
+  }
+
+  // The WhatsApp results link. Their conversation is on the phone-keyed
+  // account; an anonymous visitor would otherwise get a fresh empty chat.
+  const { via } = await searchParams;
+  if (via === "whatsapp" && user.is_anonymous) {
+    return <WhatsAppSignIn sessionCode={code} />;
   }
 
   let session: Awaited<ReturnType<typeof getOrCreateParticipant>>["session"] | null = null;

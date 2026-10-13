@@ -147,5 +147,9 @@
   },
   "common": {
     "close": "Close"
+  },
+  "whatsappGate": {
+    "title": "Sign in to see your conversation",
+    "body": "Use the phone number you chatted with on WhatsApp. We'll text you a code."
   }
 }
