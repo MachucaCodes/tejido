@@ -96,6 +96,17 @@ export default async function ProfilePage() {
         <LogoutButton />
       </header>
 
+      {/* Any phone-verified account can start its own session. */}
+      {!isGuest && (
+        <Link
+          href="/admin"
+          className="mt-8 inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/60 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:border-[var(--accent)]/60 hover:text-foreground"
+        >
+          {t("createQuestion")}
+          <span aria-hidden>→</span>
+        </Link>
+      )}
+
       <section className="mt-10 sm:mt-12">
         <div className="flex items-center gap-4">
           <h2 className="font-mono text-[9.5px] uppercase tracking-[0.24em] text-muted-foreground">

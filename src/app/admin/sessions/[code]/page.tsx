@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
-import { requireAdmin } from "@/lib/admin-guard";
+import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import ArchiveToggle from "./archive-toggle";
 import CopyJoinLink from "./copy-join-link";
@@ -13,7 +13,7 @@ export default async function AdminSessionDetail({
 }: {
   params: Promise<{ code: string }>;
 }) {
-  const guard = await requireAdmin();
+  const guard = await requireOrganizer();
   if (!guard.ok) redirect("/admin/login");
   const { code } = await params;
   const admin = createAdmin();
@@ -21,11 +21,13 @@ export default async function AdminSessionDetail({
   const { data: session } = await admin
     .from("sessions")
     .select(
-      "id, topic, topic_es, intro_message, intro_message_es, context, instructions, status, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
+      "id, created_by, topic, topic_es, intro_message, intro_message_es, context, instructions, status, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
     )
     .eq("id", code)
     .single();
   if (!session) notFound();
+  // Non-admins only reach sessions they created — and don't learn that others exist.
+  if (!guard.isAdmin && session.created_by !== guard.user.id) notFound();
 
   const { data: participants } = await admin
     .from("participants")
@@ -103,21 +105,27 @@ export default async function AdminSessionDetail({
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <CopyJoinLink code={session.id} />
-          <Link
-            href={`/admin/sessions/${session.id}/logs`}
-            className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
-          >
-            LLM logs →
-          </Link>
+          {guard.isAdmin && (
+            <Link
+              href={`/admin/sessions/${session.id}/logs`}
+              className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
+            >
+              LLM logs →
+            </Link>
+          )}
         </div>
       </header>
 
-      <WhatsAppInvites
-        code={session.id}
-        open={session.status === "open" && !session.archived_at}
-        lists={inviteLists}
-        invites={invites}
-      />
+      {/* Invites go out through the shared WhatsApp number to the admins'
+          contact lists, so only admins see (and can send) them. */}
+      {guard.isAdmin && (
+        <WhatsAppInvites
+          code={session.id}
+          open={session.status === "open" && !session.archived_at}
+          lists={inviteLists}
+          invites={invites}
+        />
+      )}
 
       <section className="space-y-3">
         <h2 className="text-sm font-medium text-muted-foreground">Edit session</h2>

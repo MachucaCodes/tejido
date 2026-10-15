@@ -1,4 +1,4 @@
-import { requireAdmin } from "@/lib/admin-guard";
+import { requireOrganizer } from "@/lib/admin-guard";
 import { getAnthropic, SESSION_BUILDER_MODEL } from "@/lib/anthropic";
 import {
   PROPOSE_TOOL,
@@ -17,12 +17,8 @@ type Body = {
 };
 
 export async function POST(req: Request) {
-  const guard = await requireAdmin();
-  if (!guard.ok) {
-    return new Response(guard.reason === "unauth" ? "unauthenticated" : "not admin", {
-      status: guard.reason === "unauth" ? 401 : 403,
-    });
-  }
+  const guard = await requireOrganizer();
+  if (!guard.ok) return new Response("unauthenticated", { status: 401 });
 
   const { messages, currentDraft }: Body = await req.json();
   if (!messages?.length || messages.at(-1)?.role !== "user") {

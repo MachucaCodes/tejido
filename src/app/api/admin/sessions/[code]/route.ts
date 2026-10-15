@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { after } from "next/server";
 
-import { requireAdmin } from "@/lib/admin-guard";
+import { requireOrganizer } from "@/lib/admin-guard";
 import {
   backfillSessionTranslation,
   staleSpanishFields,
@@ -58,14 +58,21 @@ export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ code: string }> },
 ) {
-  const guard = await requireAdmin();
-  if (!guard.ok) {
-    return new Response(guard.reason === "unauth" ? "unauthenticated" : "not admin", {
-      status: guard.reason === "unauth" ? 401 : 403,
-    });
-  }
+  const guard = await requireOrganizer();
+  if (!guard.ok) return new Response("unauthenticated", { status: 401 });
 
   const { code } = await params;
+
+  // Admins can edit any session; everyone else only the ones they created.
+  if (!guard.isAdmin) {
+    const { data: owned } = await createAdmin()
+      .from("sessions")
+      .select("id")
+      .eq("id", code)
+      .eq("created_by", guard.user.id)
+      .maybeSingle();
+    if (!owned) return new Response("not your session", { status: 403 });
+  }
   const body = (await req.json()) as Body;
 
   const update: Record<string, unknown> = {};

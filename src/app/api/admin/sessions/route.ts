@@ -1,18 +1,14 @@
 import { NextResponse } from "next/server";
 import { after } from "next/server";
 
-import { requireAdmin } from "@/lib/admin-guard";
+import { requireOrganizer } from "@/lib/admin-guard";
 import { CODE_RE } from "@/lib/rename-session";
 import { createAdmin } from "@/lib/supabase/admin";
 import { backfillSessionTranslation } from "@/lib/translate-session";
 
 export async function POST(req: Request) {
-  const guard = await requireAdmin();
-  if (!guard.ok) {
-    return new Response(guard.reason === "unauth" ? "unauthenticated" : "not admin", {
-      status: guard.reason === "unauth" ? 401 : 403,
-    });
-  }
+  const guard = await requireOrganizer();
+  if (!guard.ok) return new Response("unauthenticated", { status: 401 });
 
   const { code, topic, intro_message, context, instructions, prompt_summary_system } =
     (await req.json()) as {

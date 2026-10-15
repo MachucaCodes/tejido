@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
-import { requireAdmin } from "@/lib/admin-guard";
+import { requireOrganizer } from "@/lib/admin-guard";
 import AdminLoginClient from "./login-client";
 
 export default async function AdminLoginPage({
@@ -12,7 +12,7 @@ export default async function AdminLoginPage({
   // Only allow same-origin destinations (e.g. the OAuth consent page).
   const dest = next && next.startsWith("/") && !next.startsWith("//") ? next : "/admin";
 
-  const guard = await requireAdmin();
+  const guard = await requireOrganizer();
   if (guard.ok) redirect(dest);
 
   return (

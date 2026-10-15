@@ -1,19 +1,22 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-import { requireAdmin } from "@/lib/admin-guard";
+import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import CreateSessionForm from "./create-session-form";
 import SessionBuilder from "./session-builder";
 
 export default async function AdminHome() {
-  const guard = await requireAdmin();
+  const guard = await requireOrganizer();
   if (!guard.ok) redirect("/admin/login");
   const admin = createAdmin();
-  const { data: sessions } = await admin
+  let query = admin
     .from("sessions")
     .select("id, topic, status, created_at, participants:participants(count)")
     .order("created_at", { ascending: false });
+  // Non-admin organizers only see the sessions they created.
+  if (!guard.isAdmin) query = query.eq("created_by", guard.user.id);
+  const { data: sessions } = await query;
 
   return (
     <div className="space-y-8">
@@ -29,7 +32,9 @@ export default async function AdminHome() {
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-sm font-medium text-muted-foreground">All sessions</h2>
+        <h2 className="text-sm font-medium text-muted-foreground">
+          {guard.isAdmin ? "All sessions" : "Your sessions"}
+        </h2>
         {!sessions || sessions.length === 0 ? (
           <p className="text-sm text-muted-foreground">No sessions yet.</p>
         ) : (

@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { parseLocalPhone } from "@/lib/countries";
 import { createClient } from "@/lib/supabase/client";
 
-// Admins are phone-keyed and (so far) US-based, so default the picker to the
-// US dial code. The picker + parseLocalPhone still accept a full +<country>
-// number typed directly, so non-US admins aren't locked out.
+// Organizers are phone-keyed and (so far) mostly US-based, so default the
+// picker to the US dial code. The picker + parseLocalPhone still accept a full
+// +<country> number typed directly, so non-US organizers aren't locked out.
 const ADMIN_DEFAULT_ISO = "US";
 
 export default function AdminLoginClient({ next = "/admin" }: { next?: string }) {
@@ -30,22 +30,21 @@ export default function AdminLoginClient({ next = "/admin" }: { next?: string })
     e.preventDefault();
     setError(null);
     // Normalize to E.164 before calling Supabase. A bare 10-digit number (no
-    // country code) doesn't match the stored phone identity, and with
-    // shouldCreateUser:false that returns otp_disabled with no SMS sent — a
-    // silent dead-end. Validating here turns "503-477-3405" into "+15034773405".
+    // country code) wouldn't match the stored phone identity and would sign
+    // up a second, malformed account. Validating here turns "503-477-3405"
+    // into "+15034773405".
     const parsed = parseLocalPhone(iso, localNumber);
     if (!parsed.ok) {
       setError(parsed.reason);
       return;
     }
     setBusy(true);
-    const { error: err } = await supabase.auth.signInWithOtp({
-      phone: parsed.e164,
-      options: { shouldCreateUser: false },
-    });
+    // Any phone can sign in: new numbers get an account and can create their
+    // own sessions. Admin-only pages still check the role server-side.
+    const { error: err } = await supabase.auth.signInWithOtp({ phone: parsed.e164 });
     setBusy(false);
     if (err) {
-      setError(friendlyError(err.message));
+      setError(err.message);
       return;
     }
     setSentTo(parsed.e164);
@@ -74,8 +73,10 @@ export default function AdminLoginClient({ next = "/admin" }: { next?: string })
   return (
     <div className="w-full space-y-6">
       <div className="space-y-1 text-center">
-        <h1 className="text-xl font-semibold">Admin sign-in</h1>
-        <p className="text-sm text-muted-foreground">Phone OTP only.</p>
+        <h1 className="text-xl font-semibold">Sign in</h1>
+        <p className="text-sm text-muted-foreground">
+          We&apos;ll text you a code. Once you&apos;re in, you can create a new question.
+        </p>
       </div>
 
       {step === "phone" ? (
@@ -133,14 +134,4 @@ export default function AdminLoginClient({ next = "/admin" }: { next?: string })
       {error && <p className="text-center text-sm text-destructive">{error}</p>}
     </div>
   );
-}
-
-// shouldCreateUser:false means an unknown (or non-admin) number comes back as
-// otp_disabled / "Signups not allowed for otp". Translate that GoTrue-speak
-// into something an admin can act on instead of a raw API error.
-function friendlyError(msg: string): string {
-  if (/signups not allowed|otp_disabled/i.test(msg)) {
-    return "No admin account found for that number. Check the country flag and that you entered the full number.";
-  }
-  return msg;
 }

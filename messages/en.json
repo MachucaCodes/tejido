@@ -46,7 +46,8 @@
     "completed": "Completed",
     "inProgress": "In progress",
     "logOut": "Log out",
-    "loggingOut": "Logging out…"
+    "loggingOut": "Logging out…",
+    "createQuestion": "Create a new question"
   },
   "auth": {
     "phonePlaceholder": "Phone number",
