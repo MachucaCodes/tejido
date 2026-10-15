@@ -113,6 +113,12 @@ export default async function AdminSessionDetail({
         </div>
         <div className="flex shrink-0 items-center gap-2">
           <CopyJoinLink code={session.id} />
+          <Link
+            href={`/admin/sessions/${session.id}/synthesis`}
+            className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
+          >
+            Synthesis history →
+          </Link>
           {guard.isAdmin && (
             <Link
               href={`/admin/sessions/${session.id}/logs`}

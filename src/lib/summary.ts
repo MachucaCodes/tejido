@@ -43,12 +43,15 @@ type RegenDecision =
   | { regenerate: false; reason: "no_data" | "too_few_points" | "no_change" }
   | {
       regenerate: true;
-      reason: "no_summary" | "tv_exceeded";
+      reason: "no_summary" | "tv_exceeded" | "forced";
       tv: number;
       currentShares: Shares;
     };
 
-async function decideRegen(sessionId: string): Promise<RegenDecision> {
+async function decideRegen(
+  sessionId: string,
+  force: boolean,
+): Promise<RegenDecision> {
   const admin = createAdmin();
 
   const { data: themes } = await admin
@@ -115,15 +118,21 @@ async function decideRegen(sessionId: string): Promise<RegenDecision> {
   if (tv >= TV_THRESHOLD) {
     return { regenerate: true, reason: "tv_exceeded", tv, currentShares };
   }
+  // An organizer asked for a rebuild — the room may have grown a lot without
+  // the theme mix shifting past the threshold.
+  if (force) return { regenerate: true, reason: "forced", tv, currentShares };
   return { regenerate: false, reason: "no_change" };
 }
 
-export async function regenerateSummaryIfStale(sessionId: string): Promise<{
+export async function regenerateSummaryIfStale(
+  sessionId: string,
+  { force = false }: { force?: boolean } = {},
+): Promise<{
   regenerated: boolean;
   reason: string;
   tv?: number;
 }> {
-  const decision = await decideRegen(sessionId);
+  const decision = await decideRegen(sessionId, force);
   if (!decision.regenerate) {
     return { regenerated: false, reason: decision.reason };
   }
