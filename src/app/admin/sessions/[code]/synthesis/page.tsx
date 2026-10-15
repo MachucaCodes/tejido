@@ -56,55 +56,56 @@ export default async function SynthesisHistoryPage({
 
   // Every summary ever generated lives in the LLM call log; the session row
   // only keeps the latest one.
-  const [{ data: logRows }, { data: pointRows }, { data: participantRows }] =
-    await Promise.all([
-      admin
-        .from("llm_call_logs")
-        .select("created_at, parsed_output")
-        .eq("session_id", code)
-        .eq("call_kind", "summarize_session")
-        .eq("status", "success")
-        .order("created_at", { ascending: true }),
-      admin
-        .from("extracted_points")
-        .select("id, participant_id, surface_phrase, created_at, participants!inner(session_id)")
-        .eq("participants.session_id", code)
-        .order("created_at", { ascending: true })
-        .range(0, 9999),
-      admin.from("participants").select("id, user_id").eq("session_id", code),
-    ]);
+  const [{ data: logRows }, { data: pointRows }] = await Promise.all([
+    admin
+      .from("llm_call_logs")
+      .select("created_at, parsed_output")
+      .eq("session_id", code)
+      .eq("call_kind", "summarize_session")
+      .eq("status", "success")
+      .order("created_at", { ascending: true }),
+    admin
+      .from("extracted_points")
+      .select(
+        "id, participant_id, surface_phrase, created_at, participants!inner(session_id)",
+      )
+      .eq("participants.session_id", code)
+      .order("created_at", { ascending: true })
+      .range(0, 9999),
+  ]);
 
   const summaries: Summary[] = (logRows ?? [])
     .map((r) => ({
-      text: ((r.parsed_output as { summary?: string } | null)?.summary ?? "").trim(),
+      text: (
+        (r.parsed_output as { summary?: string } | null)?.summary ?? ""
+      ).trim(),
       at: r.created_at as string,
     }))
     .filter((s) => s.text);
   // Sessions summarized before logging existed still have their current one.
-  if (summaries.length === 0 && session.summary_text && session.summary_generated_at) {
-    summaries.push({ text: session.summary_text, at: session.summary_generated_at });
+  if (
+    summaries.length === 0 &&
+    session.summary_text &&
+    session.summary_generated_at
+  ) {
+    summaries.push({
+      text: session.summary_text,
+      at: session.summary_generated_at,
+    });
   }
 
-  const points = (pointRows ?? []).filter((p) => p.participant_id) as PointRow[];
+  const points = (pointRows ?? []).filter(
+    (p) => p.participant_id,
+  ) as PointRow[];
 
-  // Label each person by name when we have one, otherwise "Voice N" in the
-  // order they first contributed.
-  const userIds = (participantRows ?? []).map((p) => p.user_id).filter(Boolean);
-  const { data: userRows } = userIds.length
-    ? await admin.from("users").select("id, full_name").in("id", userIds)
-    : { data: [] as { id: string; full_name: string | null }[] };
-  const nameByUser = new Map((userRows ?? []).map((u) => [u.id, u.full_name]));
-  const userByParticipant = new Map(
-    (participantRows ?? []).map((p) => [p.id, p.user_id as string | null]),
-  );
+  // Anonymous on purpose — "Voice N" in the order people first contributed,
+  // never their names.
   const labelByParticipant = new Map<string, string>();
   for (const p of points) {
     if (labelByParticipant.has(p.participant_id)) continue;
-    const userId = userByParticipant.get(p.participant_id);
-    const name = userId ? nameByUser.get(userId)?.trim() : null;
     labelByParticipant.set(
       p.participant_id,
-      name || `Voice ${labelByParticipant.size + 1}`,
+      `Voice ${labelByParticipant.size + 1}`,
     );
   }
 
@@ -138,7 +139,8 @@ export default async function SynthesisHistoryPage({
         </Link>
         <h1 className="text-lg font-semibold">Synthesis history</h1>
         <p className="text-sm text-muted-foreground">
-          Each summary, newest first, with the answers that came in just before it.
+          Each summary, newest first, with the answers that came in just before
+          it.
         </p>
       </header>
 
@@ -183,7 +185,9 @@ export default async function SynthesisHistoryPage({
                         {voicesAt[i] === 1 ? "voice" : "voices"}
                       </p>
                     </div>
-                    <p className="whitespace-pre-wrap text-sm leading-relaxed">{s.text}</p>
+                    <p className="whitespace-pre-wrap text-sm leading-relaxed">
+                      {s.text}
+                    </p>
                   </article>
                   <div className="space-y-2 border-l-2 border-border pl-4">
                     <p className="text-xs text-muted-foreground">
