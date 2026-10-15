@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import { voiceCountsBySession } from "@/lib/voice-counts";
 import CreateSessionForm from "./create-session-form";
 import SessionBuilder from "./session-builder";
 
@@ -12,11 +13,14 @@ export default async function AdminHome() {
   const admin = createAdmin();
   let query = admin
     .from("sessions")
-    .select("id, topic, status, created_at, participants:participants(count)")
+    .select("id, topic, status, created_at")
     .order("created_at", { ascending: false });
   // Non-admin organizers only see the sessions they created.
   if (!guard.isAdmin) query = query.eq("created_by", guard.user.id);
-  const { data: sessions } = await query;
+  const [{ data: sessions }, voiceCounts] = await Promise.all([
+    query,
+    voiceCountsBySession(admin),
+  ]);
 
   return (
     <div className="space-y-8">
@@ -40,10 +44,7 @@ export default async function AdminHome() {
         ) : (
           <ul className="space-y-2">
             {sessions.map((s) => {
-              const count =
-                Array.isArray(s.participants) && s.participants.length
-                  ? (s.participants[0] as { count: number }).count
-                  : 0;
+              const count = voiceCounts.get(s.id) ?? 0;
               return (
                 <li key={s.id}>
                   <Link
@@ -58,7 +59,7 @@ export default async function AdminHome() {
                     </div>
                     <div className="flex items-center gap-3 text-xs text-muted-foreground">
                       <span>
-                        {count} {count === 1 ? "participant" : "participants"}
+                        {count} {count === 1 ? "voice" : "voices"}
                       </span>
                       <span className="rounded bg-secondary px-2 py-0.5">
                         {s.status}

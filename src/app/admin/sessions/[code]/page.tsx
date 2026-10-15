@@ -35,6 +35,14 @@ export default async function AdminSessionDetail({
     .eq("session_id", code)
     .order("created_at", { ascending: true });
 
+  // Voices = participants whose answers turned into at least one point —
+  // the same count the room view shows. Opening the link alone doesn't count.
+  const { data: voiceRows } = await admin
+    .from("participants")
+    .select("id, extracted_points!inner(id)")
+    .eq("session_id", code);
+  const voiceCount = voiceRows?.length ?? 0;
+
   const { data: themes } = await admin
     .from("themes")
     .select("id, short_name, description")
@@ -154,13 +162,17 @@ export default async function AdminSessionDetail({
       <ArchiveToggle
         code={session.id}
         archivedAt={session.archived_at}
-        participantCount={participants?.length ?? 0}
+        participantCount={voiceCount}
       />
 
       <section className="space-y-2">
-        <h2 className="text-sm font-medium text-muted-foreground">Participants</h2>
+        <h2 className="text-sm font-medium text-muted-foreground">Voices</h2>
         <p className="text-sm">
-          {(participants ?? []).length} total
+          {voiceCount} {voiceCount === 1 ? "voice" : "voices"} — people whose
+          answers turned into points
+        </p>
+        <p className="text-xs text-muted-foreground">
+          {(participants ?? []).length} opened the link
           {Object.entries(phaseCounts).length > 0 && " — "}
           {Object.entries(phaseCounts)
             .map(([p, n]) => `${n} ${p.replace("_", " ")}`)

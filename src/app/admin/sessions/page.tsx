@@ -3,16 +3,20 @@ import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import { voiceCountsBySession } from "@/lib/voice-counts";
 
 export default async function AdminSessionsList() {
   const guard = await requireAdmin();
   if (!guard.ok) redirect("/admin/login");
 
   const admin = createAdmin();
-  const { data: sessions } = await admin
-    .from("sessions")
-    .select("id, topic, status, created_at, archived_at, participants:participants(count)")
-    .order("created_at", { ascending: false });
+  const [{ data: sessions }, voiceCounts] = await Promise.all([
+    admin
+      .from("sessions")
+      .select("id, topic, status, created_at, archived_at")
+      .order("created_at", { ascending: false }),
+    voiceCountsBySession(admin),
+  ]);
 
   // Admin keeps sight of archived sessions — they're retired, not deleted, and
   // this is the only place to find one again to un-archive it.
@@ -36,7 +40,7 @@ export default async function AdminSessionsList() {
       ) : (
         <ul className="space-y-2">
           {active.map((s) => (
-            <SessionRow key={s.id} session={s} />
+            <SessionRow key={s.id} session={s} count={voiceCounts.get(s.id) ?? 0} />
           ))}
         </ul>
       )}
@@ -48,7 +52,12 @@ export default async function AdminSessionsList() {
           </h2>
           <ul className="space-y-2">
             {archived.map((s) => (
-              <SessionRow key={s.id} session={s} archived />
+              <SessionRow
+                key={s.id}
+                session={s}
+                count={voiceCounts.get(s.id) ?? 0}
+                archived
+              />
             ))}
           </ul>
         </section>
@@ -62,20 +71,17 @@ type SessionListRow = {
   topic: string;
   status: string;
   created_at: string;
-  participants: unknown;
 };
 
 function SessionRow({
   session: s,
+  count,
   archived = false,
 }: {
   session: SessionListRow;
+  count: number;
   archived?: boolean;
 }) {
-  const count =
-    Array.isArray(s.participants) && s.participants.length
-      ? (s.participants[0] as { count: number }).count
-      : 0;
   return (
     <li>
       <Link
@@ -93,7 +99,7 @@ function SessionRow({
         </div>
         <div className="flex shrink-0 items-center gap-3 text-xs text-muted-foreground">
           <span>
-            {count} {count === 1 ? "participant" : "participants"}
+            {count} {count === 1 ? "voice" : "voices"}
           </span>
           <span className="rounded bg-secondary px-2 py-0.5">
             {archived ? "archived" : s.status}
