@@ -1,7 +1,8 @@
 import { revalidatePath } from "next/cache";
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
 
 import { analyzeParticipant } from "@/lib/analyze";
+import { regenerateSummaryIfStale } from "@/lib/summary";
 import { createClient as createServer } from "@/lib/supabase/server";
 import { createAdmin } from "@/lib/supabase/admin";
 
@@ -41,6 +42,15 @@ export async function POST(req: Request) {
   // re-fetch.
   if (!result.skipped) {
     revalidatePath(`/s/${sessionCode}`);
+    // Rebuild the summary if this voice grew the room 10%. Realtime
+    // delivers it to viewers; the 30-minute sweep catches any it misses.
+    after(async () => {
+      try {
+        await regenerateSummaryIfStale(sessionCode);
+      } catch (err) {
+        console.error("[finalize] summary regen failed:", err);
+      }
+    });
   }
 
   return NextResponse.json({ ok: true, ...result });

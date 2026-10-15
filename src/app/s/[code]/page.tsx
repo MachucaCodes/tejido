@@ -1,10 +1,8 @@
 import { notFound } from "next/navigation";
-import { after } from "next/server";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { getCurrentUser, getOrCreateParticipant } from "@/lib/participant";
-import { regenerateSummaryIfStale } from "@/lib/summary";
 import { createAdmin } from "@/lib/supabase/admin";
 import { localized } from "@/lib/translate-session";
 import ChatClient from "./chat-client";
@@ -145,19 +143,6 @@ export default async function SessionPage({
     text: summaryRes.data?.summary_text ?? null,
     generatedAt: summaryRes.data?.summary_generated_at ?? null,
   };
-
-  // Fire-and-forget: after the response is sent, check whether the room's
-  // share distribution has shifted enough (TV-distance on theme shares) to
-  // warrant a fresh summary. Realtime delivers the update to viewers.
-  if (initialHasAnalyzed) {
-    after(async () => {
-      try {
-        await regenerateSummaryIfStale(code);
-      } catch (err) {
-        console.error("[s/[code]] summary regen failed:", err);
-      }
-    });
-  }
 
   return (
     <ChatClient

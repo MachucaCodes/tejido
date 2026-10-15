@@ -2,6 +2,7 @@ import { isLocale, type Locale } from "@/i18n/locales";
 import { analyzeParticipant } from "@/lib/analyze";
 import { startFacilitatorTurn } from "@/lib/facilitator-turn";
 import { getOrCreateParticipant } from "@/lib/participant";
+import { regenerateSummaryIfStale } from "@/lib/summary";
 import { READY_TOKEN } from "@/lib/prompts/facilitator";
 import { createAdmin } from "@/lib/supabase/admin";
 import { transcribeAudio } from "@/lib/transcribe";
@@ -296,6 +297,12 @@ async function shareResults(
   } catch (err) {
     console.error("[whatsapp] analysis failed", err);
     return;
+  }
+  // Same rebuild check the web client gets after analysis.
+  try {
+    await regenerateSummaryIfStale(invite.session_id);
+  } catch (err) {
+    console.error("[whatsapp] summary regen failed", err);
   }
   if (invite.results_link_sent_at) return;
   const link = `${origin}/s/${encodeURIComponent(invite.session_id)}?via=whatsapp`;

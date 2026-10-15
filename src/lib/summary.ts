@@ -19,34 +19,31 @@ const SUMMARY_JSON_SCHEMA = {
   properties: { summary: { type: "string" } },
 } as const;
 
-const TV_THRESHOLD = 0.2;
-const MIN_TOTAL_POINTS_TO_GENERATE = 3;
+// Rebuild once the room has grown this much since the last summary. Each
+// summary reads every voice, so rebuilding per voice costs O(n²); growing
+// by a fixed fraction keeps the total to ~10× one final summary.
+const GROWTH_TO_REBUILD = 1.1;
 
-export type Shares = Record<string, number>;
-
-export function totalVariation(a: Shares, b: Shares): number {
-  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
-  let sum = 0;
-  for (const k of keys) sum += Math.abs((a[k] ?? 0) - (b[k] ?? 0));
-  return sum / 2;
-}
-
-function sharesFromCounts(counts: Record<string, number>): Shares {
-  const total = Object.values(counts).reduce((s, n) => s + n, 0);
-  if (total === 0) return {};
-  const out: Shares = {};
-  for (const [k, n] of Object.entries(counts)) out[k] = n / total;
-  return out;
-}
+// A rebuild holding the lock longer than this has died (the route's
+// maxDuration is 300s), so another may take over.
+const LOCK_STALE_MS = 5 * 60 * 1000;
 
 type RegenDecision =
-  | { regenerate: false; reason: "no_data" | "too_few_points" | "no_change" }
+  | { regenerate: false; reason: "no_data" | "no_change" }
   | {
       regenerate: true;
-      reason: "no_summary" | "tv_exceeded" | "forced";
-      tv: number;
-      currentShares: Shares;
+      reason: "no_summary" | "grew" | "forced";
+      voices: number;
     };
+
+// Voices = participants with at least one extracted point.
+async function countVoices(sessionId: string): Promise<number> {
+  const { count } = await createAdmin()
+    .from("participants")
+    .select("id, extracted_points!inner(id)", { count: "exact", head: true })
+    .eq("session_id", sessionId);
+  return count ?? 0;
+}
 
 async function decideRegen(
   sessionId: string,
@@ -54,89 +51,71 @@ async function decideRegen(
 ): Promise<RegenDecision> {
   const admin = createAdmin();
 
-  const { data: themes } = await admin
-    .from("themes")
-    .select("id")
-    .eq("session_id", sessionId);
-  const themeIds = (themes ?? []).map((t) => t.id);
-  if (themeIds.length === 0) return { regenerate: false, reason: "no_data" };
-
-  const { data: assignments } = await admin
-    .from("theme_assignments")
-    .select("theme_id, point_id")
-    .in("theme_id", themeIds);
-  // Dedupe by participant per theme. A single participant whose
-  // transcript yielded multiple points on the same theme should count
-  // as one voice on that theme — otherwise share-distributions and the
-  // TV-distance gate get distorted by participants who simply produced
-  // more points than others.
-  const pointIds = Array.from(
-    new Set((assignments ?? []).map((a) => a.point_id)),
-  );
-  const participantByPoint = new Map<string, string>();
-  if (pointIds.length) {
-    const { data: pointRows } = await admin
-      .from("extracted_points")
-      .select("id, participant_id")
-      .in("id", pointIds);
-    for (const p of pointRows ?? []) {
-      if (p.participant_id) participantByPoint.set(p.id, p.participant_id);
-    }
-  }
-  const participantsByTheme = new Map<string, Set<string>>();
-  for (const a of assignments ?? []) {
-    const pid = participantByPoint.get(a.point_id);
-    if (!pid) continue;
-    let set = participantsByTheme.get(a.theme_id);
-    if (!set) {
-      set = new Set();
-      participantsByTheme.set(a.theme_id, set);
-    }
-    set.add(pid);
-  }
-  const counts: Record<string, number> = {};
-  for (const [tid, set] of participantsByTheme) counts[tid] = set.size;
-  const total = Object.values(counts).reduce((s, n) => s + n, 0);
-  if (total < MIN_TOTAL_POINTS_TO_GENERATE) {
-    return { regenerate: false, reason: "too_few_points" };
-  }
-
-  const currentShares = sharesFromCounts(counts);
-
-  const { data: session } = await admin
-    .from("sessions")
-    .select("summary_text, summary_shares")
-    .eq("id", sessionId)
-    .single();
+  const [{ count: themeCount }, voices, { data: session }] = await Promise.all([
+    admin
+      .from("themes")
+      .select("id", { count: "exact", head: true })
+      .eq("session_id", sessionId),
+    countVoices(sessionId),
+    admin
+      .from("sessions")
+      .select("summary_text, summary_voice_count")
+      .eq("id", sessionId)
+      .single(),
+  ]);
+  if (!themeCount || voices === 0)
+    return { regenerate: false, reason: "no_data" };
 
   if (!session?.summary_text) {
-    return { regenerate: true, reason: "no_summary", tv: 1, currentShares };
+    return { regenerate: true, reason: "no_summary", voices };
   }
-
-  const prevShares = (session.summary_shares ?? {}) as Shares;
-  const tv = totalVariation(prevShares, currentShares);
-  if (tv >= TV_THRESHOLD) {
-    return { regenerate: true, reason: "tv_exceeded", tv, currentShares };
+  const prev = session.summary_voice_count ?? 0;
+  if (voices > prev && voices >= prev * GROWTH_TO_REBUILD) {
+    return { regenerate: true, reason: "grew", voices };
   }
-  // An organizer asked for a rebuild — the room may have grown a lot without
-  // the theme mix shifting past the threshold.
-  if (force) return { regenerate: true, reason: "forced", tv, currentShares };
+  // An organizer asked for a rebuild.
+  if (force) return { regenerate: true, reason: "forced", voices };
   return { regenerate: false, reason: "no_change" };
 }
 
 export async function regenerateSummaryIfStale(
   sessionId: string,
   { force = false }: { force?: boolean } = {},
-): Promise<{
-  regenerated: boolean;
-  reason: string;
-  tv?: number;
-}> {
+): Promise<{ regenerated: boolean; reason: string; voices?: number }> {
   const decision = await decideRegen(sessionId, force);
   if (!decision.regenerate) {
     return { regenerated: false, reason: decision.reason };
   }
 
+  // One rebuild per session at a time. Several analyses finishing together
+  // used to each fire a rebuild from the same input; the last to finish won.
+  const admin = createAdmin();
+  const staleBefore = new Date(Date.now() - LOCK_STALE_MS).toISOString();
+  const { data: claimed } = await admin
+    .from("sessions")
+    .update({ summary_regen_started_at: new Date().toISOString() })
+    .eq("id", sessionId)
+    .or(
+      `summary_regen_started_at.is.null,summary_regen_started_at.lt."${staleBefore}"`,
+    )
+    .select("id");
+  if (!claimed?.length)
+    return { regenerated: false, reason: "already_running" };
+
+  try {
+    return await buildSummary(sessionId, decision);
+  } finally {
+    await admin
+      .from("sessions")
+      .update({ summary_regen_started_at: null })
+      .eq("id", sessionId);
+  }
+}
+
+async function buildSummary(
+  sessionId: string,
+  decision: Extract<RegenDecision, { regenerate: true }>,
+): Promise<{ regenerated: boolean; reason: string; voices?: number }> {
   const admin = createAdmin();
 
   const { data: session } = await admin
@@ -330,7 +309,7 @@ export async function regenerateSummaryIfStale(
     .from("sessions")
     .update({
       summary_text: parsed.summary,
-      summary_shares: decision.currentShares,
+      summary_voice_count: decision.voices,
       summary_generated_at: new Date().toISOString(),
     })
     .eq("id", sessionId);
@@ -342,5 +321,9 @@ export async function regenerateSummaryIfStale(
   // session route reads the fresh summary instead of a cached snapshot.
   revalidatePath(`/s/${sessionId}`);
 
-  return { regenerated: true, reason: decision.reason, tv: decision.tv };
+  return {
+    regenerated: true,
+    reason: decision.reason,
+    voices: decision.voices,
+  };
 }
