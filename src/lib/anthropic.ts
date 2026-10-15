@@ -20,5 +20,7 @@ export const FACILITATOR_MODEL = "claude-haiku-5-5";
 // into the clustering pass.
 export const EXTRACTION_MODEL = "claude-opus-5-5";
 export const CLUSTERING_MODEL = "claude-opus-5-5";
+// Admin-only and low volume; drafting a good session is worth the bigger model.
+export const SESSION_BUILDER_MODEL = "claude-opus-5-5";
 // Mechanical, well-specified, high-volume-if-it-ever-grows.
 export const TRANSLATION_MODEL = "claude-haiku-5-5";

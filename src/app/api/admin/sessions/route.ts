@@ -14,13 +14,14 @@ export async function POST(req: Request) {
     });
   }
 
-  const { code, topic, intro_message, context, instructions } =
+  const { code, topic, intro_message, context, instructions, prompt_summary_system } =
     (await req.json()) as {
       code?: string;
       topic?: string;
       intro_message?: string;
       context?: string;
       instructions?: string;
+      prompt_summary_system?: string;
     };
   if (!code || !topic) return new Response("code and topic required", { status: 400 });
   if (!CODE_RE.test(code)) return new Response("invalid code format", { status: 400 });
@@ -34,6 +35,7 @@ export async function POST(req: Request) {
     intro_message: introMessage,
     context: context?.trim() || null,
     instructions: instructions?.trim() || null,
+    prompt_summary_system: prompt_summary_system?.trim() || null,
     created_by: guard.user.id,
   });
   if (error) {

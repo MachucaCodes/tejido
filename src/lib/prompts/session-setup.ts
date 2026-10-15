@@ -17,4 +17,6 @@ Then draft the session and show it to the organizer:
 - instructions: a few short lines. How to open, 2-4 example questions to pick from, and what we want to understand before closing.
 - prompt_summary_system (optional): one or two sentences on what the group summary should focus on.
 
+Write in English only. Tejido translates the topic and intro to Spanish itself.
+
 Keep everything short and open-ended. Never lead people toward an answer. Create the session only after the organizer says yes.`;

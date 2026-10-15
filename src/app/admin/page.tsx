@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import CreateSessionForm from "./create-session-form";
+import SessionBuilder from "./session-builder";
 
 export default async function AdminHome() {
   const guard = await requireAdmin();
@@ -18,7 +19,13 @@ export default async function AdminHome() {
     <div className="space-y-8">
       <section className="space-y-3">
         <h1 className="text-lg font-semibold">Create a session</h1>
-        <CreateSessionForm />
+        <SessionBuilder />
+        <details className="space-y-3">
+          <summary className="cursor-pointer text-sm text-muted-foreground">
+            Or fill in the form yourself
+          </summary>
+          <CreateSessionForm />
+        </details>
       </section>
 
       <section className="space-y-3">
