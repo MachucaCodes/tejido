@@ -6,6 +6,7 @@ import { z } from "zod";
 import { verifyMcpToken } from "@/lib/mcp-auth";
 import { ANALYSIS_PROMPT_PLACEHOLDERS } from "@/lib/prompts/analysis";
 import { PERSPECTIVES_PLACEHOLDER } from "@/lib/prompts/facilitator";
+import { SESSION_SETUP_GUIDE } from "@/lib/prompts/session-setup";
 import { SUMMARY_PROMPT_PLACEHOLDERS } from "@/lib/prompts/summary";
 import { CODE_RE, renameSession } from "@/lib/rename-session";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -114,12 +115,30 @@ async function publicOrigin() {
 
 const handler = createMcpHandler(
   (server) => {
+    server.registerPrompt(
+      "session_setup",
+      {
+        title: "Set up a session",
+        description: "Interview me and draft a new Tejido session.",
+      },
+      () => ({
+        messages: [
+          {
+            role: "user",
+            content: {
+              type: "text",
+              text: `Help me set up a new Tejido session.\n\n${SESSION_SETUP_GUIDE}`,
+            },
+          },
+        ],
+      }),
+    );
+
     server.registerTool(
       "create_session",
       {
         title: "Create session",
-        description:
-          "Create a new Tejido deliberation session. Participants join at /s/<code>.",
+        description: `Create a new Tejido session. Participants join at /s/<code>.\n\n${SESSION_SETUP_GUIDE}`,
         inputSchema: {
           code: z
             .string()
