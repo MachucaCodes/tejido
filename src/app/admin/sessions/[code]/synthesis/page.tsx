@@ -40,7 +40,10 @@ function groupByVoice(points: PointRow[]): VoiceGroup[] {
     g.phrases.push(phrase);
     g.lastAt = p.created_at;
   }
-  return [...groups.values()];
+  // Most recent voice first, matching the newest-first summaries.
+  return [...groups.values()].sort(
+    (a, b) => Date.parse(b.lastAt) - Date.parse(a.lastAt),
+  );
 }
 
 function fmt(at: string) {
