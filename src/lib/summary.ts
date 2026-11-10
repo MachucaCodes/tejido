@@ -36,6 +36,15 @@ type RegenDecision =
       voices: number;
     };
 
+function shuffle<T>(items: T[]): T[] {
+  const a = [...items];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 // Voices = participants with at least one extracted point.
 async function countVoices(sessionId: string): Promise<number> {
   const { count } = await createAdmin()
@@ -184,12 +193,16 @@ async function buildSummary(
 
   const themeInputs: ThemeForSummary[] = themeRows.map((t) => {
     const count = countsByTheme[t.id] ?? 0;
-    // Every distinct phrase under this theme, in chronological order.
-    const samples = Array.from(
-      new Set(
-        (pointIdsByTheme[t.id] ?? [])
-          .map((id) => phraseById.get(id) ?? "")
-          .filter(Boolean),
+    // Every distinct phrase under this theme, shuffled. In arrival order the
+    // newest phrases always sat last, right before the model wrote, and the
+    // summary leaned toward whoever spoke most recently.
+    const samples = shuffle(
+      Array.from(
+        new Set(
+          (pointIdsByTheme[t.id] ?? [])
+            .map((id) => phraseById.get(id) ?? "")
+            .filter(Boolean),
+        ),
       ),
     );
     return {
