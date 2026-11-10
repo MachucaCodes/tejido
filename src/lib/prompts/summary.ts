@@ -13,12 +13,14 @@ PHRASES PEOPLE ACTUALLY USED, GROUPED BY THEME (anonymous — every voice, not a
 {SAMPLES_BLOCK}
 
 What to write:
-- Lead with concrete content, not framing. Say what the largest group is actually pointing at: the specific amenities, the specific layout, the specific kind of access. NOT a category that "captures" what they want.
+- Lead with what the largest group is pointing at, in concrete terms. NOT a category that "captures" what they want.
   BAD (abstract, generic, could fit any room): "The room is gathering around expansion that actually lives the community's values." / "People want a thoughtful approach to growth." / "There's strong alignment around community-aligned development."
-  GOOD (concrete, this room specifically): "Most people want the new land to bring permanent stores, a town center close enough to walk to, and quieter zones for residents set back from the road."
-- Then name the main tension — where do views actually pull in different directions? Use specifics. If there's no real tension, name the biggest unresolved question or the most surprising minority thread instead.
+- Concrete means the room's own words for what it cares about. If people are talking about places and amenities, name the specific ones. If they are talking about values, use their values language, like "meet people where they are" or "presence, trust and abundance". Don't turn values into logistics.
+- Give each idea space in line with how many people raised it. The top two or three themes should carry most of the paragraph.
+- Then name the main tension — where do views pull in different directions? Only call something the main split if a real share of the room is on each side. Otherwise mention it as a smaller thread. If there's no real tension, name the biggest unresolved question or the most surprising minority thread instead.
+- Don't end on the split. Close on the larger themes.
 - Anchor in the participants' own language where possible.
-- The reader hasn't seen the phrases below. Don't drop a detail in without the context that makes it make sense.
+- The reader hasn't seen the phrases above. Don't drop a detail in without the context that makes it make sense.
 - Weigh every voice equally, no matter when it arrived. The phrases are in random order, not time order. Don't favor whatever sounds newest or freshest; a thread many people raised still belongs in the summary.
 - Avoid these LLM tells: "X that Y" framings ("expansion that lives its values," "growth that honors community"), the word "actually" used to add weight ("actually deliver," "actually lives"), nominalizations ("stakeholders express concerns about…," "values around community"), and any sentence that would read the same in a summary of any other room.
 - Don't list every theme. Don't recite counts or percentages. Don't preview what comes next.

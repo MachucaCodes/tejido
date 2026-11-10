@@ -192,7 +192,9 @@ export default async function AdminSessionDetail({
           <p className="text-sm text-muted-foreground/80">No themes yet.</p>
         ) : (
           <ul className="space-y-2">
-            {themes.map((t) => (
+            {[...themes]
+              .sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0))
+              .map((t) => (
               <li key={t.id} className="rounded-lg border bg-card p-3">
                 <div className="flex items-baseline justify-between gap-3">
                   <h3 className="font-medium">{t.short_name}</h3>
