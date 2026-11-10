@@ -15,7 +15,12 @@ type PointRow = {
 type Summary = { text: string; at: string };
 
 // One person's answers inside a gap between two summaries.
-type VoiceGroup = { participantId: string; phrases: string[] };
+type VoiceGroup = {
+  participantId: string;
+  phrases: string[];
+  firstAt: string;
+  lastAt: string;
+};
 
 function groupByVoice(points: PointRow[]): VoiceGroup[] {
   const groups = new Map<string, VoiceGroup>();
@@ -24,16 +29,26 @@ function groupByVoice(points: PointRow[]): VoiceGroup[] {
     if (!phrase) continue;
     let g = groups.get(p.participant_id);
     if (!g) {
-      g = { participantId: p.participant_id, phrases: [] };
+      g = {
+        participantId: p.participant_id,
+        phrases: [],
+        firstAt: p.created_at,
+        lastAt: p.created_at,
+      };
       groups.set(p.participant_id, g);
     }
     g.phrases.push(phrase);
+    g.lastAt = p.created_at;
   }
   return [...groups.values()];
 }
 
 function fmt(at: string) {
   return new Date(at).toLocaleString();
+}
+
+function fmtTime(at: string) {
+  return new Date(at).toLocaleTimeString();
 }
 
 export default async function SynthesisHistoryPage({
@@ -222,6 +237,11 @@ function VoiceList({
         <li key={g.participantId} className="text-sm">
           <p className="text-xs font-medium text-muted-foreground">
             {labels.get(g.participantId)}
+            <span className="ml-2 font-normal">
+              {fmt(g.firstAt)}
+              {fmtTime(g.lastAt) !== fmtTime(g.firstAt) &&
+                ` – ${fmtTime(g.lastAt)}`}
+            </span>
           </p>
           <ul className="list-disc space-y-0.5 pl-5">
             {g.phrases.map((phrase, j) => (
