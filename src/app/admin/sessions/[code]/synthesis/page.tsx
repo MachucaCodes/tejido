@@ -3,6 +3,8 @@ import { notFound, redirect } from "next/navigation";
 
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import { voiceLabels } from "@/lib/voice-labels";
+import FindSources from "./find-sources";
 import RebuildButton from "./rebuild-button";
 
 type PointRow = {
@@ -116,16 +118,7 @@ export default async function SynthesisHistoryPage({
     (p) => p.participant_id,
   ) as PointRow[];
 
-  // Anonymous on purpose — "Voice N" in the order people first contributed,
-  // never their names.
-  const labelByParticipant = new Map<string, string>();
-  for (const p of points) {
-    if (labelByParticipant.has(p.participant_id)) continue;
-    labelByParticipant.set(
-      p.participant_id,
-      `Voice ${labelByParticipant.size + 1}`,
-    );
-  }
+  const labelByParticipant = voiceLabels(points);
 
   // Split the points into gaps: the answers before summary 1, between
   // summary 1 and 2, … and those after the latest summary.
@@ -161,6 +154,8 @@ export default async function SynthesisHistoryPage({
           it.
         </p>
       </header>
+
+      <FindSources code={session.id} />
 
       <section className="space-y-3 rounded-lg border border-border bg-card p-4">
         <div className="flex items-start justify-between gap-3">
