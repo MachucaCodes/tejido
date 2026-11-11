@@ -34,11 +34,15 @@ export function PhoneAuthFlow({
   sessionCode,
   collectDetails = true,
   intro,
+  phoneStepExtra,
   onComplete,
 }: {
   sessionCode?: string;
   collectDetails?: boolean;
   intro?: ReactNode;
+  // Rendered on the phone step only, above the send button (e.g. a consent
+  // checkbox the caller owns).
+  phoneStepExtra?: ReactNode;
   onComplete: () => void;
 }) {
   const t = useTranslations("auth");
@@ -346,6 +350,7 @@ export function PhoneAuthFlow({
               autoFocus
             />
           </div>
+          {phoneStepExtra}
           <Button
             type="submit"
             disabled={busy || !localNumber.trim()}

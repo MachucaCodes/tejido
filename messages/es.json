@@ -79,6 +79,20 @@
     "title": "Vea lo que están diciendo los demás",
     "body": "Mientras eso corre, déjenos su número — le enviaremos un código de 6 dígitos por mensaje de texto para que pueda volver después. Sus respuestas se comparten igual de forma anónima con el grupo."
   },
+  "connect": {
+    "badgeConnect": "Sesión para conectar",
+    "badgeAnonymous": "Sesión anónima",
+    "introConnect": "Sus respuestas siguen siendo anónimas en el resumen del grupo. Si usted acepta, los organizadores podrían usarlas para conectarle con vecinos que comparten sus intereses. Primero le preguntaremos.",
+    "consentLabel": "Conéctenme con vecinos que comparten mis intereses",
+    "consentBody": "Los organizadores podrían usar su nombre y lo que usted compartió para presentarle a vecinos con intereses parecidos. Su nombre nunca aparece en el resumen del grupo. Puede desactivar esto cuando quiera.",
+    "consentOptional": "Puede dejar esto sin marcar y ver los resultados igual.",
+    "onTitle": "Usted está abierto a conectar",
+    "onBody": "Los organizadores podrían escribirle para presentarle a vecinos que comparten sus intereses. Ellos pueden ver su nombre junto con lo que usted compartió en esta sesión. Los demás vecinos no.",
+    "turnOn": "Conéctenme",
+    "turnOff": "Desactivar",
+    "saving": "Guardando…",
+    "saveFailed": "No se pudo guardar. Inténtelo de nuevo."
+  },
   "session": {
     "senseMakingTitle": "Construir sentido",
     "senseMakingNote1": "Las comunidades siempre han necesitado herramientas para entenderse entre sí. Antes nos sentábamos alrededor del fuego y conversábamos largo rato.",

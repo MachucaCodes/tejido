@@ -157,6 +157,8 @@ export default async function SessionPage({
       initialPoints={initialPoints}
       isAdmin={isAdmin}
       archived={Boolean(session.archived_at)}
+      connect={session.privacy === "connect"}
+      initialConnectConsent={Boolean(participant.connect_consent_at)}
     />
   );
 }

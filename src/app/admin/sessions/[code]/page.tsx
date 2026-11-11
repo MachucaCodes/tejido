@@ -4,6 +4,7 @@ import { notFound, redirect } from "next/navigation";
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import ArchiveToggle from "./archive-toggle";
+import PrivacyToggle from "./privacy-toggle";
 import CopyJoinLink from "./copy-join-link";
 import EditSessionForm from "./edit-session-form";
 import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-invites";
@@ -21,7 +22,7 @@ export default async function AdminSessionDetail({
   const { data: session } = await admin
     .from("sessions")
     .select(
-      "id, created_by, topic, topic_es, intro_message, intro_message_es, context, instructions, status, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
+      "id, created_by, topic, topic_es, intro_message, intro_message_es, context, instructions, status, privacy, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
     )
     .eq("id", code)
     .single();
@@ -31,7 +32,7 @@ export default async function AdminSessionDetail({
 
   const { data: participants } = await admin
     .from("participants")
-    .select("id, phase, created_at, completed_at")
+    .select("id, phase, created_at, completed_at, connect_consent_at")
     .eq("session_id", code)
     .order("created_at", { ascending: true });
 
@@ -164,6 +165,17 @@ export default async function AdminSessionDetail({
           }}
         />
       </section>
+
+      {/* Admin-only, matching the PATCH route. */}
+      {guard.isAdmin && (
+        <PrivacyToggle
+          code={session.id}
+          privacy={session.privacy === "connect" ? "connect" : "anonymous"}
+          consentCount={
+            (participants ?? []).filter((p) => p.connect_consent_at).length
+          }
+        />
+      )}
 
       <ArchiveToggle
         code={session.id}

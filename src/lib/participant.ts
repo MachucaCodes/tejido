@@ -6,6 +6,7 @@ export type ParticipantRecord = {
   session_id: string;
   user_id: string;
   phase: "in_conversation" | "complete";
+  connect_consent_at: string | null;
 };
 
 export type SessionRecord = {
@@ -17,6 +18,8 @@ export type SessionRecord = {
   intro_message_es: string | null;
   instructions: string | null;
   status: "open" | "closed";
+  // "connect" = participants may opt in to being introduced to neighbors.
+  privacy: "anonymous" | "connect";
   archived_at: string | null;
   prompt_task_framing: string | null;
   prompt_mechanics: string | null;
@@ -52,7 +55,7 @@ export async function getOrCreateParticipant(
   const { data: session, error: sessionErr } = await admin
     .from("sessions")
     .select(
-      "id, topic, topic_es, context, intro_message, intro_message_es, instructions, status, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions",
+      "id, topic, topic_es, context, intro_message, intro_message_es, instructions, status, privacy, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions",
     )
     .eq("id", sessionCode)
     .single();
@@ -60,7 +63,7 @@ export async function getOrCreateParticipant(
 
   const { data: existing } = await admin
     .from("participants")
-    .select("id, session_id, user_id, phase")
+    .select("id, session_id, user_id, phase, connect_consent_at")
     .eq("session_id", sessionCode)
     .eq("user_id", userId)
     .maybeSingle();
@@ -69,7 +72,7 @@ export async function getOrCreateParticipant(
   const { data: created, error: createErr } = await admin
     .from("participants")
     .insert({ session_id: sessionCode, user_id: userId })
-    .select("id, session_id, user_id, phase")
+    .select("id, session_id, user_id, phase, connect_consent_at")
     .single();
   if (createErr || !created) throw new Error(`participant create failed: ${createErr?.message}`);
   return { session, participant: created as ParticipantRecord };

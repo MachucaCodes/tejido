@@ -24,6 +24,7 @@ type Body = {
   instructions?: string | null;
   status?: "open" | "closed";
   archived?: boolean;
+  privacy?: "anonymous" | "connect";
   prompt_task_framing?: string | null;
   prompt_mechanics?: string | null;
   prompt_pacing?: string | null;
@@ -98,6 +99,12 @@ export async function PATCH(
   }
   if (body.status === "open" || body.status === "closed") {
     update.status = body.status;
+  }
+  if (body.privacy === "anonymous" || body.privacy === "connect") {
+    // Admin-only: a connect session asks people to share their name with the
+    // organizers, so it isn't something any self-serve organizer can switch on.
+    if (!guard.isAdmin) return new Response("admins only", { status: 403 });
+    update.privacy = body.privacy;
   }
   if (typeof body.archived === "boolean") {
     update.archived_at = body.archived ? new Date().toISOString() : null;

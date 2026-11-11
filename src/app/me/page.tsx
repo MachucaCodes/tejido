@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 
+import { ConnectConsentCard } from "@/components/connect-consent";
 import { getCurrentUser } from "@/lib/participant";
 import { createAdmin } from "@/lib/supabase/admin";
 import { localized } from "@/lib/translate-session";
@@ -13,6 +14,8 @@ type SessionEmbed = {
   topic: string;
   topic_es: string | null;
   status: string;
+  privacy: string;
+  archived_at: string | null;
 };
 type ParticipantRow = {
   id: string;
@@ -20,6 +23,7 @@ type ParticipantRow = {
   phase: "in_conversation" | "complete";
   created_at: string;
   completed_at: string | null;
+  connect_consent_at: string | null;
   sessions: SessionEmbed | SessionEmbed[] | null;
 };
 
@@ -48,7 +52,7 @@ export default async function ProfilePage() {
   const { data: rows } = await admin
     .from("participants")
     .select(
-      "id, session_id, phase, created_at, completed_at, sessions(id, topic, topic_es, status)",
+      "id, session_id, phase, created_at, completed_at, connect_consent_at, sessions(id, topic, topic_es, status, privacy, archived_at)",
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });
@@ -160,6 +164,18 @@ export default async function ProfilePage() {
                       </span>
                     </div>
                   </Link>
+                  {/* Their standing choice for a connect session, changeable
+                      here without reopening the conversation. */}
+                  {!isGuest &&
+                    session.privacy === "connect" &&
+                    (!session.archived_at || p.connect_consent_at) && (
+                      <div className="mt-2">
+                        <ConnectConsentCard
+                          sessionCode={session.id}
+                          consented={Boolean(p.connect_consent_at)}
+                        />
+                      </div>
+                    )}
                 </li>
               );
             })}

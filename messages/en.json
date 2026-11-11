@@ -79,6 +79,20 @@
     "title": "See what others are saying",
     "body": "While that runs, drop your number — we'll text a 6-digit code so you can come back later. Your responses are still shared anonymously with the group."
   },
+  "connect": {
+    "badgeConnect": "Connect session",
+    "badgeAnonymous": "Anonymous session",
+    "introConnect": "Your answers stay anonymous in the group summary. If you agree, the organizers may use them to connect you with neighbors who share your interests. We'll ask you first.",
+    "consentLabel": "Connect me with neighbors who share my interests",
+    "consentBody": "The organizers may use your name and what you shared to introduce you to neighbors with similar interests. Your name never appears in the group summary. You can turn this off anytime.",
+    "consentOptional": "You can leave this unchecked and still see the results.",
+    "onTitle": "You're open to connecting",
+    "onBody": "The organizers may reach out to introduce you to neighbors who share your interests. They can see your name with what you shared in this session. Other neighbors can't.",
+    "turnOn": "Connect me",
+    "turnOff": "Turn this off",
+    "saving": "Saving…",
+    "saveFailed": "Couldn't save that — try again."
+  },
   "session": {
     "senseMakingTitle": "Sense making",
     "senseMakingNote1": "Communities have always needed tools to understand one another. In the past, we sat around fires and yarned with each other.",

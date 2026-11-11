@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpIcon } from "lucide-react";
+import { ArrowUpIcon, Lock, Users } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
@@ -12,6 +12,7 @@ import {
 } from "@/components/ai-elements/conversation";
 import { Message, MessageContent, MessageResponse } from "@/components/ai-elements/message";
 import { SpeechInput, type SpeechInputHandle } from "@/components/ai-elements/speech-input";
+import { ConnectConsentCard } from "@/components/connect-consent";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { logEvent, setLogContext } from "@/lib/client-log";
 import { cn } from "@/lib/utils";
@@ -58,6 +59,8 @@ export default function ChatClient({
   initialPoints,
   isAdmin,
   archived,
+  connect,
+  initialConnectConsent,
 }: {
   sessionCode: string;
   topic: string;
@@ -70,6 +73,10 @@ export default function ChatClient({
   initialPoints: Point[];
   isAdmin: boolean;
   archived: boolean;
+  // "Connect" session: participants may opt in to being introduced to
+  // neighbors with similar interests. Everything shared stays anonymous.
+  connect: boolean;
+  initialConnectConsent: boolean;
 }) {
   const t = useTranslations("session");
   const intro = introMessage?.trim() ?? "";
@@ -88,6 +95,7 @@ export default function ChatClient({
   // calls router.refresh() to re-seed from the server).
   const [hasAnalyzed, setHasAnalyzed] = useState(initialHasAnalyzed);
   const [hasPhone, setHasPhone] = useState(initialHasPhone);
+  const [connectConsent, setConnectConsent] = useState(initialConnectConsent);
   // True while a /api/finalize call is in flight — drives the loader on
   // the perspectives panel.
   const [analyzing, setAnalyzing] = useState(false);
@@ -414,7 +422,11 @@ export default function ChatClient({
         />
       )}
 
-      <SenseMakingModal open={introOpen} onAcknowledge={acknowledgeIntro} />
+      <SenseMakingModal
+        open={introOpen}
+        connect={connect}
+        onAcknowledge={acknowledgeIntro}
+      />
 
       {isAdmin && (
         <AdminResultsModal
@@ -434,7 +446,7 @@ export default function ChatClient({
             {/* Hero scrolls with the conversation: it anchors the editorial
                 first impression but yields vertical real estate to the chat
                 as messages accumulate. */}
-            <Hero topic={topic} />
+            <Hero topic={topic} connect={connect} />
             {intro && <FacilitatorOpener text={intro} />}
             {(() => {
               // Anchor the panel + open-thread note to the LATEST
@@ -484,6 +496,15 @@ export default function ChatClient({
                       analyzing={showAnalyzing}
                     />
                   )}
+                  {/* Needs a phone-keyed account: there's no name or number
+                      to connect an anonymous guest with. */}
+                  {hasAnalyzed && connect && hasPhone && !archived && (
+                    <ConnectConsentCard
+                      sessionCode={sessionCode}
+                      consented={connectConsent}
+                      onChange={setConnectConsent}
+                    />
+                  )}
                   {hasAnalyzed && <OpenThreadNote />}
                   {messages.slice(splitAt).map(renderMsg)}
                 </>
@@ -508,7 +529,9 @@ export default function ChatClient({
           ) : showPhoneGate ? (
             <PhoneGate
               sessionCode={sessionCode}
-              onComplete={() => {
+              connect={connect}
+              onComplete={(consented) => {
+                if (consented) setConnectConsent(true);
                 const analyzeInFlight = analyzingRef.current;
                 logEvent("chat.gate_complete", {
                   analyzeInFlight,
@@ -564,12 +587,15 @@ export default function ChatClient({
 
 function SenseMakingModal({
   open,
+  connect,
   onAcknowledge,
 }: {
   open: boolean;
+  connect: boolean;
   onAcknowledge: () => void;
 }) {
   const t = useTranslations("session");
+  const tc = useTranslations("connect");
   return (
     <Dialog open={open} disablePointerDismissal>
       <DialogContent
@@ -638,6 +664,17 @@ function SenseMakingModal({
                 </p>
               </div>
             ))}
+            {connect && (
+              <div className="rounded-xl border border-[var(--primary)]/50 bg-background/60 p-3.5">
+                <p className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--primary)]">
+                  <Users className="size-3.5" aria-hidden />
+                  {tc("badgeConnect")}
+                </p>
+                <p className="mt-2 font-sans text-[15px] leading-[1.65] text-foreground/85">
+                  {tc("introConnect")}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -805,8 +842,9 @@ function AdminResetButton({ sessionCode }: { sessionCode: string }) {
 
 /* ───────────────────────── Hero ───────────────────────── */
 
-function Hero({ topic }: { topic: string }) {
+function Hero({ topic, connect }: { topic: string; connect: boolean }) {
   const t = useTranslations("session");
+  const tc = useTranslations("connect");
   return (
     <section className="mx-auto w-full max-w-3xl px-5 pt-10 pb-5 sm:px-8 sm:pt-14 sm:pb-7">
       <div className="tejido-stagger">
@@ -828,6 +866,29 @@ function Hero({ topic }: { topic: string }) {
             </em>{" "}
             {t("heroAmongNeighbors")}
           </p>
+        </div>
+        {/* Always say which kind of session this is, before anyone types. */}
+        <div className="mt-5 flex flex-col gap-2">
+          <span
+            className={cn(
+              "inline-flex w-fit items-center gap-1.5 rounded-full border px-2.5 py-1 font-mono text-[9.5px] uppercase tracking-[0.2em]",
+              connect
+                ? "border-[var(--primary)]/60 text-[var(--primary)]"
+                : "border-border text-muted-foreground",
+            )}
+          >
+            {connect ? (
+              <Users className="size-3" aria-hidden />
+            ) : (
+              <Lock className="size-3" aria-hidden />
+            )}
+            {connect ? tc("badgeConnect") : tc("badgeAnonymous")}
+          </span>
+          {connect && (
+            <p className="max-w-[34rem] text-sm leading-relaxed text-muted-foreground">
+              {tc("introConnect")}
+            </p>
+          )}
         </div>
       </div>
     </section>
