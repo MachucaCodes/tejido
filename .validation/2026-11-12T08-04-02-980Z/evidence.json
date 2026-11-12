@@ -1,0 +1,211 @@
+{
+  "tool": "clock-validate",
+  "name": "New session: manual path, form edits reach the chat, Create sends the drafted fields",
+  "outcome": "fail",
+  "commit": {
+    "sha": "b0c9f11c1adca52dafd7148659614698b51aca47",
+    "branch": "clock-29c0bd3f-ui-mockup-step-5-after-the-chat-drafts",
+    "dirty": false
+  },
+  "environment": "This branch rebased on main (next start, local), Tejido production Supabase; Create is tried on an existing link name so the insert is refused and nothing is written",
+  "base_url": "http://localhost:3013",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:04:04.121Z",
+  "duration_ms": 151401,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1533,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "watch the page's requests",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 77,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "manual form opens empty",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "one Create session button",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "manual path: the one form, empty",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"frontlandpurchase\" into `#slug`",
+      "check": false,
+      "status": "pass",
+      "ms": 44,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"What should we do with the front land?\" into `#q`",
+      "check": false,
+      "status": "pass",
+      "ms": 35,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Draft the rest from what I typed in the form, no questions. Keep my link name exactly.\" into `input[placeholder^='Describe what you want']`",
+      "check": false,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "chat drafts",
+      "check": true,
+      "status": "fail",
+      "ms": 120006,
+      "error": "locator.waitFor: Timeout 120000ms exceeded.",
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "the chat was sent what I typed in the form",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "the form now holds the chat's intro and instructions",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "fill",
+      "description": "Type \"frontlandpurchase\" into `#slug`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Create session\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Create posts and shows the server's answer",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_url",
+      "description": "stays on the page, nothing created",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "Create sent the chat's intro and instructions (not dropped)",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Create error shown under the form",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "No session is actually created; Create is checked up to the server's 'code already taken' answer"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

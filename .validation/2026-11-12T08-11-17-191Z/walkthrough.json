@@ -1,0 +1,45 @@
+{
+  "title": "New session: chat fills the one form",
+  "slug": "new-session-chat-fills-the-one-form",
+  "out_dir": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-11-17-191Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:11:29.518Z (commit 5317f4aaa0). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "New session: chat fills the one form",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-11-17-191Z/step-01.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-11-17-191Z/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-11-17-191Z/step-03.png",
+          "shows": "no back link repeating the tab",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-11-17-191Z/step-04.png",
+          "shows": "Page shows \"Or fill in the form yourself\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

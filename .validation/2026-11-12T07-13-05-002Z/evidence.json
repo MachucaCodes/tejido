@@ -1,0 +1,166 @@
+{
+  "tool": "clock-validate",
+  "name": "New session: chat fills the one form",
+  "outcome": "fail",
+  "commit": {
+    "sha": "92ec6fa7955b6272d859543b293c04b65fd9f408",
+    "branch": "clock-29c0bd3f-ui-mockup-step-5-after-the-chat-drafts",
+    "dirty": false
+  },
+  "environment": "PR #13 Vercel preview, production Supabase; nothing is created (Create is never clicked)",
+  "base_url": "https://tejido-git-clock-29c0bd3f-ui-mockup-0fa326-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:13:06.472Z",
+  "duration_ms": 167558,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 3711,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 31,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no back link repeating the tab",
+      "check": true,
+      "status": "pass",
+      "ms": 3048,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Or fill in the form yourself\"",
+      "check": true,
+      "status": "pass",
+      "ms": 26,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "before any draft: chat, form behind a link",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Please draft it right away, no questions: ask neighbours what they would like to grow in the shared garden and how much time they could give. Link name garden-draft-test.\" into `input[placeholder^='Describe what you want']`",
+      "check": false,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "chat proposes a draft",
+      "check": true,
+      "status": "fail",
+      "ms": 120009,
+      "error": "locator.waitFor: Timeout 120000ms exceeded.",
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "form link gone once the form is open",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no second draft panel",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "exactly one Create session button",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "the form holds the draft",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "after the draft: chat and the filled form",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click `#slug`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "form scrolled into view",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Create session is not clicked, so no session is saved"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

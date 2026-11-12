@@ -1,0 +1,147 @@
+{
+  "name": "New session: manual path, form edits reach the chat, Create sends the drafted fields",
+  "base_url": "http://localhost:3013",
+  "login": "tejido",
+  "environment": "This branch rebased on main (next start, local), Tejido production Supabase; Create is tried on an existing link name so the insert is refused and nothing is written",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "pace_ms": 500,
+  "limitations": [
+    "No session is actually created; Create is checked up to the server's 'code already taken' answer"
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "/admin/new"
+    },
+    {
+      "do": "expect_js",
+      "label": "watch the page's requests",
+      "equals": true,
+      "js": "(()=>{window.__req=[];const f=window.fetch.bind(window);window.fetch=(u,o)=>{window.__req.push({u:String(u),b:o&&o.body});return f(u,o)};return true})()"
+    },
+    {
+      "do": "click",
+      "text": "Or fill in the form yourself"
+    },
+    {
+      "do": "expect_js",
+      "label": "manual form opens empty",
+      "equals": "",
+      "js": "document.getElementById('slug').value + document.getElementById('q').value"
+    },
+    {
+      "do": "expect_js",
+      "label": "one Create session button",
+      "equals": 1,
+      "js": "[...document.querySelectorAll('button')].filter(b=>/Create session/.test(b.textContent)).length"
+    },
+    {
+      "do": "screenshot",
+      "label": "manual path: the one form, empty"
+    },
+    {
+      "do": "fill",
+      "selector": "#slug",
+      "value": "frontlandpurchase"
+    },
+    {
+      "do": "fill",
+      "selector": "#q",
+      "value": "What should we do with the front land?"
+    },
+    {
+      "do": "fill",
+      "selector": "input[placeholder^='Describe what you want']",
+      "value": "Draft the rest from what I typed in the form, no questions. Keep my link name exactly."
+    },
+    {
+      "do": "press",
+      "key": "Enter"
+    },
+    {
+      "do": "expect_text",
+      "text": "Filled in the form below.",
+      "timeout_ms": 120000,
+      "label": "chat drafts"
+    },
+    {
+      "do": "expect_js",
+      "label": "the chat was sent what I typed in the form",
+      "equals": "frontlandpurchase",
+      "js": "JSON.parse(window.__req.find(r=>r.u.includes('/api/admin/session-builder')).b).currentDraft.code"
+    },
+    {
+      "do": "expect_js",
+      "label": "the form now holds the chat's intro and instructions",
+      "equals": true,
+      "js": "document.getElementById('intro').value.length>0 && document.getElementById('instructions').value.length>0"
+    },
+    {
+      "do": "fill",
+      "selector": "#q",
+      "value": "What would you like us to do with the front land?"
+    },
+    {
+      "do": "fill",
+      "selector": "input[placeholder^='Describe what you want']",
+      "value": "Make the intro one sentence shorter. Keep everything else as it is in the form."
+    },
+    {
+      "do": "press",
+      "key": "Enter"
+    },
+    {
+      "do": "expect_js",
+      "label": "chat answered the revision",
+      "equals": true,
+      "timeout_ms": 120000,
+      "js": "new Promise(r=>{const t=setInterval(()=>{if(document.querySelectorAll('p').length&&[...document.querySelectorAll('p')].filter(p=>p.textContent==='Filled in the form below.').length>=2){clearInterval(t);r(true)}},500)})"
+    },
+    {
+      "do": "expect_js",
+      "label": "the revision was sent my edited question",
+      "equals": "What would you like us to do with the front land?",
+      "js": "JSON.parse(window.__req.filter(r=>r.u.includes('/api/admin/session-builder'))[1].b).currentDraft.topic"
+    },
+    {
+      "do": "screenshot",
+      "label": "after a revision"
+    },
+    {
+      "do": "fill",
+      "selector": "#slug",
+      "value": "frontlandpurchase"
+    },
+    {
+      "do": "wait",
+      "ms": 800
+    },
+    {
+      "do": "click",
+      "text": "Create session"
+    },
+    {
+      "do": "expect_text",
+      "text": "code already taken",
+      "label": "Create posts and shows the server's answer"
+    },
+    {
+      "do": "expect_url",
+      "match": "/admin/new",
+      "label": "stays on the page, nothing created"
+    },
+    {
+      "do": "expect_js",
+      "label": "Create sent the chat's intro and instructions (not dropped)",
+      "equals": true,
+      "js": "(()=>{const b=JSON.parse(window.__req.find(r=>r.u.includes('/api/admin/sessions')).b);return b.code==='frontlandpurchase'&&b.intro_message.length>0&&b.instructions.length>0})()"
+    },
+    {
+      "do": "screenshot",
+      "label": "Create error shown under the form"
+    }
+  ]
+}

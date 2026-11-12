@@ -1,0 +1,193 @@
+{
+  "tool": "clock-validate",
+  "name": "New session: chat fills the one form",
+  "outcome": "pass",
+  "commit": {
+    "sha": "b0c9f11c1adca52dafd7148659614698b51aca47",
+    "branch": "clock-29c0bd3f-ui-mockup-step-5-after-the-chat-drafts",
+    "dirty": true
+  },
+  "environment": "This branch (next start, local), Tejido production Supabase via dev env; nothing is created (Create is never clicked)",
+  "base_url": "http://localhost:3013",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:08:31.448Z",
+  "duration_ms": 34841,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1478,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 31,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no back link repeating the tab",
+      "check": true,
+      "status": "pass",
+      "ms": 3050,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Or fill in the form yourself\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "before any draft: chat, form behind a link",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Please draft it right away, no questions: ask neighbours what they would like to grow in the shared garden and how much time they could give. Link name garden-draft-test.\" into `input[placeholder^='Describe what you want']`",
+      "check": false,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "chat proposes a draft",
+      "check": true,
+      "status": "pass",
+      "ms": 6314,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "form link gone once the form is open",
+      "check": true,
+      "status": "pass",
+      "ms": 3048,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no second draft panel",
+      "check": true,
+      "status": "pass",
+      "ms": 3048,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "exactly one Create session button",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "the form holds the draft",
+      "check": true,
+      "status": "pass",
+      "ms": 2,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1509,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "after the draft: page scrolls to the filled form",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "form's first field is in view",
+      "check": true,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll to the end of the form",
+      "check": true,
+      "status": "pass",
+      "ms": 32,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 803,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "end of the form: the one Create session",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-18.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Create session is not clicked, so no session is saved"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

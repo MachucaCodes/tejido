@@ -1,0 +1,73 @@
+{
+  "title": "New session: chat fills the one form",
+  "slug": "new-session-chat-fills-the-one-form",
+  "out_dir": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:13:06.472Z (commit 92ec6fa795). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "New session: chat fills the one form",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-01.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-03.png",
+          "shows": "no back link repeating the tab",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-04.png",
+          "shows": "Page shows \"Or fill in the form yourself\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-05.png",
+          "shows": "before any draft: chat, form behind a link",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-06.png",
+          "shows": "Type \"Please draft it right away, no questions: ask neighbours what they would like to grow in the shared garden and how much time they could give. Link name garden-draft-test.\" into `input[placeholder^='Describe what you want']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-07.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T07-13-05-002Z/step-08.png",
+          "shows": "chat proposes a draft",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "name": "New session: chat fills the one form",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "Production (tejido-zeta.vercel.app) after merging #13; nothing is created (Create is never clicked)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "pace_ms": 600,
+  "limitations": [
+    "Create session is not clicked, so no session is saved"
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "/admin/new"
+    },
+    {
+      "do": "expect_text",
+      "text": "New session"
+    },
+    {
+      "do": "expect_no_text",
+      "text": "\u2190 Sessions",
+      "label": "no back link repeating the tab"
+    },
+    {
+      "do": "expect_text",
+      "text": "Or fill in the form yourself"
+    },
+    {
+      "do": "screenshot",
+      "label": "before any draft: chat, form behind a link"
+    },
+    {
+      "do": "fill",
+      "selector": "input[placeholder^='Describe what you want']",
+      "value": "Please draft it right away, no questions: ask neighbours what they would like to grow in the shared garden and how much time they could give. Link name garden-draft-test."
+    },
+    {
+      "do": "press",
+      "key": "Enter"
+    },
+    {
+      "do": "expect_text",
+      "text": "Filled in the form below.",
+      "timeout_ms": 120000,
+      "label": "chat proposes a draft"
+    },
+    {
+      "do": "expect_no_text",
+      "text": "Or fill in the form yourself",
+      "label": "form link gone once the form is open"
+    },
+    {
+      "do": "expect_no_text",
+      "text": "Draft session",
+      "label": "no second draft panel"
+    },
+    {
+      "do": "expect_js",
+      "js": "document.querySelectorAll('button').length > 0 && [...document.querySelectorAll('button')].filter(b => /Create session/.test(b.textContent)).length",
+      "equals": 1,
+      "label": "exactly one Create session button"
+    },
+    {
+      "do": "expect_js",
+      "js": "document.getElementById('slug').value.length > 0 && document.getElementById('q').value.length > 0",
+      "equals": true,
+      "label": "the form holds the draft"
+    },
+    {
+      "do": "wait",
+      "ms": 1500
+    },
+    {
+      "do": "screenshot",
+      "label": "after the draft: page scrolls to the filled form"
+    },
+    {
+      "do": "expect_js",
+      "js": "(()=>{const r=document.getElementById('slug').getBoundingClientRect();return r.top>0&&r.top<400})()",
+      "equals": true,
+      "label": "form's first field is in view"
+    },
+    {
+      "do": "expect_js",
+      "js": "(()=>{window.scrollTo(0,document.body.scrollHeight);return true})()",
+      "equals": true,
+      "label": "scroll to the end of the form"
+    },
+    {
+      "do": "wait",
+      "ms": 800
+    },
+    {
+      "do": "screenshot",
+      "label": "end of the form: the one Create session"
+    }
+  ],
+  "login": "tejido"
+}

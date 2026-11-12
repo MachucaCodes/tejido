@@ -1,0 +1,192 @@
+{
+  "title": "New session: manual path, form edits reach the chat, Create sends the drafted fields",
+  "slug": "new-session-manual-path-form-edits-reach-the-cha",
+  "out_dir": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:07:45.385Z (commit b0c9f11c1a). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "New session: manual path, form edits reach the chat, Create sends the drafted fields",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-01.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-02.png",
+          "shows": "watch the page's requests",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-03.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-04.png",
+          "shows": "manual form opens empty",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-05.png",
+          "shows": "one Create session button",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-06.png",
+          "shows": "manual path: the one form, empty",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-07.png",
+          "shows": "Type \"frontlandpurchase\" into `#slug`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-08.png",
+          "shows": "Type \"What should we do with the front land?\" into `#q`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-09.png",
+          "shows": "Type \"Draft the rest from what I typed in the form, no questions. Keep my link name exactly.\" into `input[placeholder^='Describe what you want']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-10.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-11.png",
+          "shows": "chat drafts",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-12.png",
+          "shows": "the chat was sent what I typed in the form",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-13.png",
+          "shows": "the form now holds the chat's intro and instructions",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-14.png",
+          "shows": "Type \"What would you like us to do with the front land?\" into `#q`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-15.png",
+          "shows": "Type \"Make the intro one sentence shorter. Keep everything else as it is in the form.\" into `input[placeholder^='Describe what you want']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-16.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-17.png",
+          "shows": "chat answered the revision",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-18.png",
+          "shows": "the revision was sent my edited question",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-19.png",
+          "shows": "after a revision",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-20.png",
+          "shows": "Type \"frontlandpurchase\" into `#slug`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-22.png",
+          "shows": "Click \"Create session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-23.png",
+          "shows": "Create posts and shows the server's answer",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-24.png",
+          "shows": "stays on the page, nothing created",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-25.png",
+          "shows": "Create sent the chat's intro and instructions (not dropped)",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/29c0bd3f/.validation/2026-11-12T08-07-43-933Z/step-26.png",
+          "shows": "Create error shown under the form",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
