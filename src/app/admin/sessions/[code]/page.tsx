@@ -3,13 +3,12 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 
+import { InfoTip } from "@/components/info-tip";
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import { LoadError } from "../../load-error";
 import ArchiveToggle from "./archive-toggle";
-import PrivacyToggle from "./privacy-toggle";
 import CopyJoinLink from "./copy-join-link";
-import EditSessionForm from "./edit-session-form";
 import SessionHeader from "./session-header";
 import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-invites";
 
@@ -17,9 +16,7 @@ async function loadSession(code: string) {
   const admin = createAdmin();
   const { data: session, error } = await admin
     .from("sessions")
-    .select(
-      "id, created_by, topic, topic_es, intro_message, intro_message_es, context, instructions, status, privacy, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
-    )
+    .select("id, created_by, topic, status, created_at, archived_at")
     .eq("id", code)
     .maybeSingle();
   // A malformed code (22P02) is a missing session; any other error is a
@@ -62,6 +59,17 @@ export default async function AdminSessionDetail({
         isAdmin={guard.isAdmin}
         actions={
           <>
+            {/* Invites go out through the shared WhatsApp number to the admins'
+                contact lists, so only admins see (and can send) them. An
+                archived session takes no answers: nothing to invite to. */}
+            {guard.isAdmin && !session.archived_at && (
+              <Suspense fallback={null}>
+                <InvitesButton
+                  code={session.id}
+                  open={session.status === "open"}
+                />
+              </Suspense>
+            )}
             {/* An archived session's link is dead: don't offer to share it. */}
             {!session.archived_at && (
               <>
@@ -82,45 +90,21 @@ export default async function AdminSessionDetail({
       {/* The rest needs several queries: stream it in behind a skeleton so
           opening a session shows something at once. */}
       <Suspense fallback={<SessionBodySkeleton />}>
-        <SessionBody session={session} isAdmin={guard.isAdmin} voiceCount={voiceCount} />
+        <SessionBody code={session.id} voiceCount={voiceCount} />
       </Suspense>
     </div>
   );
 }
 
-type SessionRowData = NonNullable<
-  Awaited<ReturnType<typeof loadSession>>["session"]
->;
-
-async function SessionBody({
-  session,
-  isAdmin,
-  voiceCount,
+// The invite lists and who was invited, for the header's Send invites dialog.
+async function InvitesButton({
+  code,
+  open,
 }: {
-  session: SessionRowData;
-  isAdmin: boolean;
-  voiceCount: number;
+  code: string;
+  open: boolean;
 }) {
-  const code = session.id;
   const admin = createAdmin();
-  const guard = { isAdmin };
-
-  const { data: participants, error: participantsError } = await admin
-    .from("participants")
-    .select("id, phase, created_at, completed_at, connect_consent_at")
-    .eq("session_id", code)
-    .order("created_at", { ascending: true });
-
-  const { data: themes, error: themesError } = await admin
-    .from("themes")
-    .select("id, short_name, description")
-    .eq("session_id", code)
-    .order("created_at", { ascending: true });
-
-  const { data: assignments, error: assignmentsError } = await admin
-    .from("theme_assignments")
-    .select("theme_id, point_id, themes!inner(session_id)")
-    .eq("themes.session_id", code);
 
   const { data: listRows, error: listsError } = await admin
     .from("lists")
@@ -159,9 +143,40 @@ async function SessionBody({
     sentAt: i.sent_at,
   }));
 
-  // Any failed query: one alert line, not "0 opened", "No themes yet." or an
-  // empty invite list that could lead an admin to re-send or rebuild.
-  if (participantsError || themesError || assignmentsError || listsError || invitesError) {
+  return (
+    <WhatsAppInvites
+      code={code}
+      open={open}
+      // An empty list after a failed load could lead an admin to re-send.
+      loadFailed={Boolean(listsError || invitesError)}
+      lists={inviteLists}
+      invites={invites}
+    />
+  );
+}
+
+async function SessionBody({ code, voiceCount }: { code: string; voiceCount: number }) {
+  const admin = createAdmin();
+
+  const { data: participants, error: participantsError } = await admin
+    .from("participants")
+    .select("id, phase, created_at")
+    .eq("session_id", code)
+    .order("created_at", { ascending: true });
+
+  const { data: themes, error: themesError } = await admin
+    .from("themes")
+    .select("id, short_name, description")
+    .eq("session_id", code)
+    .order("created_at", { ascending: true });
+
+  const { data: assignments, error: assignmentsError } = await admin
+    .from("theme_assignments")
+    .select("theme_id, point_id, themes!inner(session_id)")
+    .eq("themes.session_id", code);
+
+  // A failed query: one alert line, not "0 opened" or "No themes yet.".
+  if (participantsError || themesError || assignmentsError) {
     return <LoadError what="this session" />;
   }
 
@@ -175,12 +190,16 @@ async function SessionBody({
 
   return (
     <>
-      <section className="space-y-2">
-        <h2 className="text-sm font-medium text-muted-foreground">Voices</h2>
-        <p className="text-sm">
-          {voiceCount} {voiceCount === 1 ? "voice" : "voices"} — people whose
-          answers turned into points
-        </p>
+      <section className="space-y-1">
+        <div className="flex items-center gap-1.5">
+          <h2 className="text-sm font-medium">
+            {voiceCount} {voiceCount === 1 ? "voice" : "voices"}
+          </h2>
+          <InfoTip label="About voices">
+            People whose answers turned into at least one point. Opening the
+            link alone doesn&apos;t count.
+          </InfoTip>
+        </div>
         <p className="text-xs text-muted-foreground">
           {(participants ?? []).length} opened the link
           {Object.entries(phaseCounts).length > 0 && " — "}
@@ -244,55 +263,6 @@ async function SessionBody({
         )}
       </section>
 
-      {/* Invites go out through the shared WhatsApp number to the admins'
-          contact lists, so only admins see (and can send) them. */}
-      {guard.isAdmin && (
-        <WhatsAppInvites
-          code={session.id}
-          open={session.status === "open" && !session.archived_at}
-          archived={Boolean(session.archived_at)}
-          lists={inviteLists}
-          invites={invites}
-        />
-      )}
-
-      {/* Collapsed so the results come first and edits are deliberate. */}
-      <details className="space-y-3">
-        <summary className="cursor-pointer text-sm font-medium text-muted-foreground">
-          Edit session
-        </summary>
-        <EditSessionForm
-          code={session.id}
-          initialTopic={session.topic ?? ""}
-          initialTopicEs={session.topic_es ?? ""}
-          initialIntroMessage={session.intro_message ?? ""}
-          initialIntroMessageEs={session.intro_message_es ?? ""}
-          initialContext={session.context ?? ""}
-          initialInstructions={session.instructions ?? ""}
-          initialStatus={session.status as "open" | "closed"}
-          initialPromptOverrides={{
-            taskFraming: session.prompt_task_framing ?? "",
-            mechanics: session.prompt_mechanics ?? "",
-            pacing: session.prompt_pacing ?? "",
-            perspectivesInstructions: session.prompt_perspectives_instructions ?? "",
-            analysisSystem: session.prompt_analysis_system ?? "",
-            analysisPrompt: session.prompt_analysis_prompt ?? "",
-            summarySystem: session.prompt_summary_system ?? "",
-            summaryPrompt: session.prompt_summary_prompt ?? "",
-          }}
-        />
-      </details>
-
-      {/* Admin-only, matching the PATCH route. */}
-      {guard.isAdmin && (
-        <PrivacyToggle
-          code={session.id}
-          privacy={session.privacy === "connect" ? "connect" : "anonymous"}
-          consentCount={
-            (participants ?? []).filter((p) => p.connect_consent_at).length
-          }
-        />
-      )}
     </>
   );
 }

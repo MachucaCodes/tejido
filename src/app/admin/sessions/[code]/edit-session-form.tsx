@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { InfoTip } from "@/components/info-tip";
 import { Button } from "@/components/ui/button";
 import {
   DEFAULT_ANALYSIS_PROMPT,
@@ -18,8 +19,6 @@ import {
   DEFAULT_SUMMARY_PROMPT,
   DEFAULT_SUMMARY_SYSTEM,
 } from "@/lib/prompts/summary";
-
-type Status = "open" | "closed";
 
 type PromptOverrides = {
   taskFraming: string;
@@ -135,7 +134,6 @@ export default function EditSessionForm({
   initialIntroMessageEs,
   initialContext,
   initialInstructions,
-  initialStatus,
   initialPromptOverrides,
 }: {
   code: string;
@@ -145,7 +143,6 @@ export default function EditSessionForm({
   initialIntroMessageEs: string;
   initialContext: string;
   initialInstructions: string;
-  initialStatus: Status;
   initialPromptOverrides: PromptOverrides;
 }) {
   const router = useRouter();
@@ -158,7 +155,6 @@ export default function EditSessionForm({
   const [introMessageEs, setIntroMessageEs] = useState(initialIntroMessageEs);
   const [context, setContext] = useState(initialContext);
   const [instructions, setInstructions] = useState(initialInstructions);
-  const [status, setStatus] = useState<Status>(initialStatus);
   const [promptOverrides, setPromptOverrides] =
     useState<PromptOverrides>(initialPromptOverrides);
   const [busy, setBusy] = useState(false);
@@ -177,7 +173,6 @@ export default function EditSessionForm({
     introMessageEs !== initialIntroMessageEs ||
     context !== initialContext ||
     instructions !== initialInstructions ||
-    status !== initialStatus ||
     promptsDirty;
 
   const updateOverride = (key: PromptFieldKey, value: string) => {
@@ -211,7 +206,6 @@ export default function EditSessionForm({
       intro_message: introMessage,
       context,
       instructions,
-      status,
     };
     for (const f of PROMPT_FIELDS) {
       body[f.bodyField] = promptOverrides[f.key];
@@ -239,18 +233,23 @@ export default function EditSessionForm({
 
     // The code is the route segment, so a rename has to move the page with it.
     if (codeChanged) {
-      router.replace(`/admin/sessions/${newCode}`);
+      router.replace(`/admin/sessions/${newCode}/settings`);
       return;
     }
     router.refresh();
   };
 
   return (
-    <form onSubmit={submit} className="space-y-3 rounded-lg border bg-card p-4">
+    <form onSubmit={submit} className="space-y-4 rounded-lg border bg-card p-4">
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="code">
-          Session code
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="code">
+            Session code
+          </label>
+          <InfoTip label="About the session code">
+            Used in the join link: /s/{newCode || "…"}
+          </InfoTip>
+        </div>
         <input
           id="code"
           value={newCode}
@@ -260,9 +259,6 @@ export default function EditSessionForm({
           required
           className="w-full rounded-md border bg-background px-3 py-2 font-mono text-sm"
         />
-        <p className="text-xs text-muted-foreground">
-          Used in the join URL (/s/{newCode || "…"}).
-        </p>
         {codeChanged && (
           <p className="text-xs text-amber-700">
             Renaming from <code className="font-mono">{code}</code>. Participants
@@ -327,9 +323,15 @@ export default function EditSessionForm({
       </div>
 
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="context">
-          Context
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="context">
+            Context
+          </label>
+          <InfoTip label="About context">
+            Reference material for the facilitator AI. Not shown to the
+            participant unless they ask.
+          </InfoTip>
+        </div>
         <textarea
           id="context"
           value={context}
@@ -338,16 +340,18 @@ export default function EditSessionForm({
           placeholder="Background facts the facilitator can share only if asked. Optional."
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
-        <p className="text-xs text-muted-foreground">
-          Surfaced to the facilitator AI as reference material; not shown to the
-          participant unless they ask.
-        </p>
       </div>
 
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="instructions">
-          Instructions
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="instructions">
+            Instructions
+          </label>
+          <InfoTip label="About instructions">
+            Added to the facilitator&apos;s prompt. Takes precedence over the
+            global mechanics.
+          </InfoTip>
+        </div>
         <textarea
           id="instructions"
           value={instructions}
@@ -356,30 +360,16 @@ export default function EditSessionForm({
           placeholder="Per-session guidance for the facilitator AI. e.g. 'Open warmly — this is a big change. Don't lead with a binary choice; invite anything that comes up.'"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
-        <p className="text-xs text-muted-foreground">
-          Injected into the facilitator system prompt and takes precedence over
-          the global mechanics.
-        </p>
-      </div>
-
-      <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="status">
-          Status
-        </label>
-        <select
-          id="status"
-          value={status}
-          onChange={(e) => setStatus(e.target.value as Status)}
-          className="rounded-md border bg-background px-2 py-1.5 text-sm"
-        >
-          <option value="open">open</option>
-          <option value="closed">closed</option>
-        </select>
       </div>
 
       <details className="rounded-md border bg-background/50">
-        <summary className="cursor-pointer select-none px-3 py-2 text-xs font-medium">
+        <summary className="flex cursor-pointer select-none items-center gap-1 px-3 py-2 text-xs font-medium">
           Prompt overrides
+          <InfoTip label="About prompt overrides">
+            Each block shows the prompt the AI gets for this session: the
+            built-in default or a stored override. Edit takes over the text for
+            this session when you save; Revert to default drops the override.
+          </InfoTip>
           {promptsDirty && (
             <span className="ml-2 rounded-full bg-amber-500/15 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-amber-700">
               unsaved
@@ -387,13 +377,6 @@ export default function EditSessionForm({
           )}
         </summary>
         <div className="space-y-3 border-t px-3 py-3">
-          <p className="text-xs text-muted-foreground">
-            Each block shows the live prompt the LLM is currently receiving for
-            this session — either the built-in default or a stored override.
-            Click <b>Edit</b> to take ownership of the text for this session;
-            the value is persisted on save. <b>Revert to default</b> drops the
-            stored override and goes back to the built-in.
-          </p>
           {PROMPT_FIELDS.map((f) => (
             <PromptOverrideField
               key={f.key}
