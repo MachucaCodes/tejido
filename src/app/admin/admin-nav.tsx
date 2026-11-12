@@ -26,7 +26,12 @@ export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
 
   const action =
     pathname === "/admin" ? (
-      <Link href="/admin/new" className={buttonVariants({ size: "sm" })}>
+      // An empty list shows its own New session button: hide this one then,
+      // so the screen offers it once.
+      <Link
+        href="/admin/new"
+        className={buttonVariants({ size: "sm", className: "[body:has([data-sessions-empty])_&]:hidden" })}
+      >
         New session
       </Link>
     ) : pathname === "/admin/lists" && isAdmin ? (

@@ -40,7 +40,7 @@ export default async function AdminHome() {
           Couldn&apos;t load sessions. Reload the page to try again.
         </p>
       ) : active.length === 0 && archived.length === 0 ? (
-        <div className="space-y-3 rounded-lg border bg-card p-6 text-center">
+        <div data-sessions-empty className="space-y-3 rounded-lg border bg-card p-6 text-center">
           <p className="text-sm text-muted-foreground">No sessions yet.</p>
           <Link href="/admin/new" className={buttonVariants()}>
             New session
