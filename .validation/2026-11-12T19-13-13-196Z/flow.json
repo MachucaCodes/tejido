@@ -1,0 +1,16 @@
+{
+  "name": "Session overview header at 390px",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production (main @ 7713f8e), read-only",
+  "viewport": { "width": 390, "height": 900 },
+  "pace_ms": 600,
+  "limitations": ["Looks only; nothing clicked that changes data"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/esm-rental-policy" },
+    { "do": "expect_text", "text": "Overview" },
+    { "do": "expect_text", "text": "Copy join link" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "screenshot", "label": "390px overview header" },
+    { "do": "expect_js", "js": "Math.round(document.querySelector('h1').getBoundingClientRect().width) > 300", "equals": true, "label": "title uses the full width" }
+  ]
+}

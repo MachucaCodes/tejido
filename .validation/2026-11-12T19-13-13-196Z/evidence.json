@@ -1,0 +1,85 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview header at 390px",
+  "outcome": "fail",
+  "commit": {
+    "sha": "7713f8eaa16f051a79ef0c17791b8fe116620715",
+    "branch": "clock-fe97bacd-ui-fix-on-a-phone-the-new-edit-button",
+    "dirty": true
+  },
+  "environment": "production (main @ 7713f8e), read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 390,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T19:13:26.850Z",
+  "duration_ms": 17066,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 1340,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Overview\"",
+      "check": true,
+      "status": "fail",
+      "ms": 10024,
+      "error": "locator.waitFor: Timeout 10000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see \"Signing in on previews\" in clock-validate help))",
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Copy join link\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "390px overview header",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "title uses the full width",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Looks only; nothing clicked that changes data"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

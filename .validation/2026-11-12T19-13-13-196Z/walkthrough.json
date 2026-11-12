@@ -1,0 +1,31 @@
+{
+  "title": "Session overview header at 390px",
+  "slug": "session-overview-header-at-390px",
+  "out_dir": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-13-13-196Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T19:13:26.850Z (commit 7713f8eaa1). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview header at 390px",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-13-13-196Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-13-13-196Z/step-02.png",
+          "shows": "Page shows \"Overview\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

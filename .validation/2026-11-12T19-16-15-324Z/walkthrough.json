@@ -1,0 +1,66 @@
+{
+  "title": "Session overview + settings header and rows at 390px",
+  "slug": "session-overview-settings-header-and-rows-at-390",
+  "out_dir": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T19:16:17.277Z (commit 0d9d5b8ec5). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview + settings header and rows at 390px",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/step-02.png",
+          "shows": "Page shows \"Copy join link\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/step-04.png",
+          "shows": "overview 390",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/step-05.png",
+          "shows": "meta line has no 'open'",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/step-06.png",
+          "shows": "Open /admin/sessions/esm-rental-policy/settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/step-07.png",
+          "shows": "Page shows \"Make it a Connect session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/fe97bacd/.validation/2026-11-12T19-16-15-324Z/step-09.png",
+          "shows": "settings 390",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

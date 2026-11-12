@@ -1,0 +1,112 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview + settings header and rows at 390px",
+  "outcome": "pass",
+  "commit": {
+    "sha": "0d9d5b8ec5aebc14eed67e8cf68fd47f5025fa65",
+    "branch": "clock-fe97bacd-ui-fix-on-a-phone-the-new-edit-button",
+    "dirty": true
+  },
+  "environment": "PR #16 preview, production data, read-only (no buttons that save clicked)",
+  "base_url": "https://tejido-git-clock-fe97bacd-ui-fix-on-4ffbee-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T19:16:17.277Z",
+  "duration_ms": 14982,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 4218,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Copy join link\"",
+      "check": true,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "meta line has no 'open'",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/settings",
+      "check": false,
+      "status": "pass",
+      "ms": 1210,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Make it a Connect session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1007,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "settings 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Looks only; Close session / Connect buttons not clicked"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}
