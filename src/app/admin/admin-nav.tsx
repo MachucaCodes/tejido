@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { buttonVariants } from "@/components/ui/button";
 import CreateListForm from "./lists/create-list-form";
 
 /**
@@ -25,10 +26,7 @@ export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
 
   const action =
     pathname === "/admin" ? (
-      <Link
-        href="/admin/new"
-        className="rounded border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent"
-      >
+      <Link href="/admin/new" className={buttonVariants({ size: "sm" })}>
         New session
       </Link>
     ) : pathname === "/admin/lists" && isAdmin ? (

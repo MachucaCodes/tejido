@@ -6,6 +6,7 @@ import { voiceLabels } from "@/lib/voice-labels";
 import FindSources from "./find-sources";
 import RebuildButton from "./rebuild-button";
 import SessionHeader from "../session-header";
+import { LoadError } from "../../../load-error";
 import { InfoTip } from "@/components/info-tip";
 import { formatDateTime, formatTime } from "@/lib/format-date";
 
@@ -68,19 +69,20 @@ export default async function SynthesisHistoryPage({
   const { code } = await params;
   const admin = createAdmin();
 
-  const { data: session } = await admin
+  const { data: session, error: sessionError } = await admin
     .from("sessions")
     .select(
       "id, topic, status, archived_at, created_at, created_by, summary_text, summary_generated_at",
     )
     .eq("id", code)
-    .single();
+    .maybeSingle();
+  if (sessionError && sessionError.code !== "22P02") return <LoadError what="this session" />;
   if (!session) notFound();
   if (!guard.isAdmin && session.created_by !== guard.user.id) notFound();
 
   // Every summary ever generated lives in the LLM call log; the session row
   // only keeps the latest one.
-  const [{ data: logRows }, { data: pointRows }] = await Promise.all([
+  const [{ data: logRows, error: logsError }, { data: pointRows, error: pointsError }] = await Promise.all([
     admin
       .from("llm_call_logs")
       .select("created_at, parsed_output")
@@ -97,6 +99,16 @@ export default async function SynthesisHistoryPage({
       .order("created_at", { ascending: true })
       .range(0, 9999),
   ]);
+
+  // A failed load must not read as "No summary yet" (and offer a rebuild).
+  if (logsError || pointsError) {
+    return (
+      <div className="space-y-6">
+        <SessionHeader session={session} current="synthesis" isAdmin={guard.isAdmin} />
+        <LoadError what="the summaries" />
+      </div>
+    );
+  }
 
   const summaries: Summary[] = (logRows ?? [])
     .map((r) => ({

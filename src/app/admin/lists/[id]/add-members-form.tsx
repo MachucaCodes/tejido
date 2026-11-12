@@ -7,7 +7,15 @@ import { useEffect, useState } from "react";
 import type { PersonMatch } from "@/app/api/admin/people/route";
 import { InfoTip } from "@/components/info-tip";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 /**
  * "Add numbers" button for the Members heading. Search and paste live in a
@@ -183,9 +191,13 @@ export default function AddMembersForm({ listId, memberPhones }: { listId: strin
             </div>
             {error && <p className="text-xs text-destructive">{error}</p>}
             {result && <p className="text-xs text-muted-foreground">{result}</p>}
-            <Button type="submit" disabled={busy}>
-              {busy ? "Adding…" : "Add to list"}
-            </Button>
+            {/* Same footer as New list: Cancel + the main button on the right. */}
+            <DialogFooter>
+              <DialogClose render={<Button type="button" variant="outline" />}>Cancel</DialogClose>
+              <Button type="submit" disabled={busy}>
+                {busy ? "Adding…" : "Add to list"}
+              </Button>
+            </DialogFooter>
           </form>
         </div>
       </DialogContent>

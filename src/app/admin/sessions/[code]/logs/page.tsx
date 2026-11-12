@@ -4,6 +4,8 @@ import { notFound, redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import SessionHeader from "../session-header";
+import { LoadError } from "../../../load-error";
+import { voiceLabels } from "@/lib/voice-labels";
 import { formatDateTime } from "@/lib/format-date";
 import LogsFilter from "./logs-filter";
 
@@ -94,11 +96,12 @@ export default async function SessionLogsPage({
   const { status, kind, participant, before } = await searchParams;
   const admin = createAdmin();
 
-  const { data: session } = await admin
+  const { data: session, error: sessionError } = await admin
     .from("sessions")
     .select("id, topic, status, archived_at, created_at")
     .eq("id", code)
-    .single();
+    .maybeSingle();
+  if (sessionError && sessionError.code !== "22P02") return <LoadError what="this session" />;
   if (!session) notFound();
 
   let query = admin
@@ -125,18 +128,47 @@ export default async function SessionLogsPage({
     if (f.status && f.status !== "all") q = q.eq("status", f.status);
     if (f.kind && f.kind !== "all") q = q.eq("call_kind", f.kind);
     if (f.participant) q = q.eq("participant_id", f.participant);
-    return q.then(({ count }) => count ?? 0);
+    // null = the count failed; shown as a load error, never as 0.
+    return q.then(({ count, error }) => (error ? null : (count ?? 0)));
   };
 
-  const [{ data: rows, error }, kindCounts, statusCounts, matching] = await Promise.all([
-    query,
-    Promise.all(KINDS.map(async (k) => [k, await countRows({ kind: k })] as const)),
-    Promise.all(STATUSES.map(async (s) => [s, await countRows({ status: s })] as const)),
-    countRows({ status, kind, participant }),
-  ]);
-  const kindsPresent = kindCounts.filter(([k, n]) => n > 0 || k === kind);
-  const statusesPresent = statusCounts.filter(([s, n]) => n > 0 || s === status);
+  const [{ data: rows, error }, kindCounts, statusCounts, matching, { data: pointRows, error: pointsError }] =
+    await Promise.all([
+      query,
+      Promise.all(KINDS.map(async (k) => [k, await countRows({ kind: k })] as const)),
+      Promise.all(STATUSES.map(async (s) => [s, await countRows({ status: s })] as const)),
+      countRows({ status, kind, participant }),
+      // The same "Voice N" labels the Synthesis page uses, so a log row can be
+      // matched to its voice there.
+      admin
+        .from("extracted_points")
+        .select("participant_id, participants!inner(session_id)")
+        .eq("participants.session_id", code)
+        .order("created_at", { ascending: true })
+        .range(0, 9999),
+    ]);
+  const failed =
+    Boolean(error || pointsError) ||
+    matching === null ||
+    kindCounts.some(([, n]) => n === null) ||
+    statusCounts.some(([, n]) => n === null);
+  if (failed) {
+    return (
+      <div className="space-y-5">
+        <SessionHeader session={session} current="logs" isAdmin />
+        <LoadError what="the logs" />
+      </div>
+    );
+  }
+  const labels = voiceLabels(
+    (pointRows ?? []).filter((p): p is typeof p & { participant_id: string } => Boolean(p.participant_id)),
+  );
+  // People who never made a point have no voice label; keep a short id.
+  const personLabel = (id: string) => labels.get(id) ?? `No voice · ${id.slice(0, 8)}`;
+  const kindsPresent = kindCounts.filter(([k, n]) => (n ?? 0) > 0 || k === kind) as [string, number][];
+  const statusesPresent = statusCounts.filter(([s, n]) => (n ?? 0) > 0 || s === status) as [string, number][];
   const logs = (rows ?? []) as LogRow[];
+  const filtered = Boolean((status && status !== "all") || (kind && kind !== "all") || participant || before);
   const olderCursor = logs.length === PAGE_SIZE ? logs[logs.length - 1].created_at : null;
 
   // Changing a filter starts again from the newest rows; paging keeps filters.
@@ -160,12 +192,9 @@ export default async function SessionLogsPage({
     <div className="space-y-5">
       <SessionHeader session={session} current="logs" isAdmin />
 
-      {error && (
-        <div className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">
-          {error.message}
-        </div>
-      )}
-
+      {/* With nothing logged and no filter on, the empty card below says it
+          all: no count line, and no Filter button (there is nothing to pick). */}
+      {(logs.length > 0 || filtered) && (
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="text-xs text-muted-foreground">
           {logs.length === 0
@@ -213,16 +242,17 @@ export default async function SessionLogsPage({
               ? [{ label: KIND_LABEL[kind] ?? kind, removeHref: filterHref({ kind: "all" }) }]
               : []),
             ...(participant
-              ? [{ label: `Participant ${participant.slice(0, 8)}`, removeHref: filterHref({ participant: undefined }) }]
+              ? [{ label: personLabel(participant), removeHref: filterHref({ participant: undefined }) }]
               : []),
           ]}
         />
       </div>
+      )}
 
       {logs.length === 0 ? (
         <p className="rounded border bg-card p-6 text-center text-sm text-muted-foreground">
           {/* Say why it's empty: nothing logged yet, or the filters hide it. */}
-          {!status && !kind && !participant && !before
+          {!filtered
             ? "No AI calls yet for this session."
             : "No log rows match these filters."}
         </p>
@@ -260,8 +290,8 @@ export default async function SessionLogsPage({
                     </span>
                   )}
                   {row.participant_id && (
-                    <span className="ml-auto font-mono text-[10px] text-muted-foreground">
-                      {row.participant_id.slice(0, 8)}
+                    <span className="ml-auto text-xs text-muted-foreground">
+                      {personLabel(row.participant_id)}
                     </span>
                   )}
                 </summary>
@@ -292,6 +322,7 @@ export default async function SessionLogsPage({
                     {row.participant_id && (
                       <div>
                         <span className="font-medium">Participant: </span>
+                        {labels.get(row.participant_id) && `${labels.get(row.participant_id)} · `}
                         <Link
                           href={filterHref({ participant: row.participant_id })}
                           className="font-mono underline-offset-2 hover:underline"

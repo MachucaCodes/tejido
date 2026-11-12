@@ -8,7 +8,10 @@ export type SessionListRow = {
   created_at: string;
 };
 
-/** One session in an admin list. Archived rows are dimmed and say so. */
+/**
+ * One session in an admin list. Archived rows say so with a tag and a muted
+ * title; the row itself is not faded, so its second line stays readable.
+ */
 export function SessionRow({
   session: s,
   count,
@@ -22,14 +25,14 @@ export function SessionRow({
     <li>
       <Link
         href={`/admin/sessions/${s.id}`}
-        className={`flex items-center justify-between rounded-lg border bg-card p-3 transition-colors hover:bg-accent ${
-          archived ? "opacity-60" : ""
-        }`}
+        className="flex items-center justify-between gap-3 rounded-lg border bg-card p-3 transition-colors hover:bg-accent"
       >
         {/* Same as SessionHeader: topic as the title, code · date under it.
             The code keeps two sessions with the same topic apart. */}
         <div className="min-w-0">
-          <p className="truncate font-medium">{s.topic || s.id}</p>
+          <p className={`truncate font-medium ${archived ? "text-muted-foreground" : ""}`}>
+            {s.topic || s.id}
+          </p>
           <p className="truncate text-xs text-muted-foreground">
             {s.id} · {formatDateTime(s.created_at)}
           </p>
