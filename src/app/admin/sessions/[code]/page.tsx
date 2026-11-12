@@ -55,9 +55,14 @@ export default async function AdminSessionDetail({
         isAdmin={guard.isAdmin}
         actions={
           <>
-            <CopyJoinLink code={session.id} />
-            {/* Set apart: archiving changes what participants see. */}
-            <span className="mx-1 h-5 w-px bg-border" aria-hidden />
+            {/* An archived session's link is dead: don't offer to share it. */}
+            {!session.archived_at && (
+              <>
+                <CopyJoinLink code={session.id} />
+                {/* Set apart: archiving changes what participants see. */}
+                <span className="mx-1 h-5 w-px bg-border" aria-hidden />
+              </>
+            )}
             <ArchiveToggle
               code={session.id}
               topic={session.topic ?? ""}
@@ -232,6 +237,7 @@ async function SessionBody({
         <WhatsAppInvites
           code={session.id}
           open={session.status === "open" && !session.archived_at}
+          archived={Boolean(session.archived_at)}
           lists={inviteLists}
           invites={invites}
         />

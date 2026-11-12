@@ -221,7 +221,10 @@ export default async function SessionLogsPage({
 
       {logs.length === 0 ? (
         <p className="rounded border bg-card p-6 text-center text-sm text-muted-foreground">
-          No log rows match these filters.
+          {/* Say why it's empty: nothing logged yet, or the filters hide it. */}
+          {!status && !kind && !participant && !before
+            ? "No AI calls yet for this session."
+            : "No log rows match these filters."}
         </p>
       ) : (
         <ul className="space-y-2">

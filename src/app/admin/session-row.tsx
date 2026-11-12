@@ -26,20 +26,24 @@ export function SessionRow({
           archived ? "opacity-60" : ""
         }`}
       >
+        {/* Same as SessionHeader: topic as the title, code · date under it.
+            The code keeps two sessions with the same topic apart. */}
         <div className="min-w-0">
-          <p className="font-medium">{s.id}</p>
-          <p className="truncate text-sm text-muted-foreground">{s.topic}</p>
-          <p className="text-xs text-muted-foreground">
-            {formatDateTime(s.created_at)}
+          <p className="truncate font-medium">{s.topic || s.id}</p>
+          <p className="truncate text-xs text-muted-foreground">
+            {s.id} · {formatDateTime(s.created_at)}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-3 text-xs text-muted-foreground">
           <span>
             {count} {count === 1 ? "voice" : "voices"}
           </span>
-          <span className="rounded bg-secondary px-2 py-0.5">
-            {archived ? "archived" : s.status}
-          </span>
+          {/* "open" is the usual case; only flag the others. */}
+          {(archived || s.status !== "open") && (
+            <span className="rounded bg-secondary px-2 py-0.5">
+              {archived ? "archived" : s.status}
+            </span>
+          )}
         </div>
       </Link>
     </li>
