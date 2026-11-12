@@ -1,0 +1,59 @@
+{
+  "title": "Round 2: phone header and settings",
+  "slug": "round-2-phone-header-and-settings",
+  "out_dir": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-41-023Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:03:42.619Z (commit 97855c9205). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Round 2: phone header and settings",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-41-023Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-41-023Z/step-02.png",
+          "shows": "Page shows \"Send invites\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-41-023Z/step-03.png",
+          "shows": "Phone: overview header",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-41-023Z/step-04.png",
+          "shows": "Open /admin/sessions/esm-rental-policy/settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-41-023Z/step-05.png",
+          "shows": "Page shows \"Close session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-41-023Z/step-06.png",
+          "shows": "Phone: settings rows",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

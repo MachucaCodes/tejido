@@ -1,0 +1,87 @@
+{
+ "name": "Before merge: overview, invites dialog, settings, archived",
+ "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+ "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 700,
+ "redact": [
+  "[role=dialog] .font-mono",
+  "[role=dialog] li .ml-2"
+ ],
+ "limitations": [
+  "Looks only: Close session confirm opened then cancelled; nothing saved or sent"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy"
+  },
+  {
+   "do": "expect_text",
+   "text": "Themes"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Couldn't load"
+  },
+  {
+   "do": "screenshot",
+   "label": "Overview"
+  },
+  {
+   "do": "click",
+   "text": "Send invites"
+  },
+  {
+   "do": "expect_text",
+   "text": "Send on WhatsApp"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Couldn't load"
+  },
+  {
+   "do": "screenshot",
+   "label": "Send invites dialog (nothing sent)"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "selector": "nav[aria-label='Session pages'] >> text=Settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Close session"
+  },
+  {
+   "do": "expect_text",
+   "text": "Save changes"
+  },
+  {
+   "do": "screenshot",
+   "label": "Settings"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/why-statement-v2"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Send invites"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/no-such-session-xyz"
+  },
+  {
+   "do": "expect_text",
+   "text": "Session not found"
+  }
+ ]
+}

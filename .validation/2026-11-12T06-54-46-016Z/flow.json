@@ -1,0 +1,25 @@
+{
+  "name": "Session overview: results only, Settings tab, Send invites dialog",
+  "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+  "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 700,
+  "redact": ["[role=dialog] .font-mono", "[role=dialog] li .ml-2"],
+  "limitations": ["Looks only: no save, no invites sent, no privacy change"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/esm-rental-policy" },
+    { "do": "expect_text", "text": "Themes" },
+    { "do": "expect_no_text", "text": "Edit session" },
+    { "do": "expect_no_text", "text": "Privacy:" },
+    { "do": "screenshot", "label": "Overview: voices and themes only, Send invites in header" },
+    { "do": "click", "text": "Send invites" },
+    { "do": "expect_text", "text": "Send on WhatsApp" },
+    { "do": "screenshot", "label": "Send invites dialog" },
+    { "do": "press", "key": "Escape" },
+    { "do": "click", "selector": "nav[aria-label='Session pages'] >> text=Settings" },
+    { "do": "expect_url", "match": "/settings" },
+    { "do": "expect_text", "text": "Status:" },
+    { "do": "expect_text", "text": "Privacy:" },
+    { "do": "screenshot", "label": "Settings tab: status and privacy at the top" }
+  ]
+}

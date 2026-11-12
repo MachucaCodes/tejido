@@ -1,0 +1,31 @@
+{
+  "title": "Live: Round 2: phone header and settings",
+  "slug": "live-round-2-phone-header-and-settings",
+  "out_dir": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-06-158Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:07:13.572Z (commit 017bcb1ad1). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Live: Round 2: phone header and settings",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-06-158Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-06-158Z/step-02.png",
+          "shows": "Page shows \"Send invites\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

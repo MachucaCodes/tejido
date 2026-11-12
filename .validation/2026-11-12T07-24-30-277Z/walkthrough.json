@@ -1,0 +1,136 @@
+{
+  "title": "Round 3: settings, close confirm, archived header",
+  "slug": "round-3-settings-close-confirm-archived-header",
+  "out_dir": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:24:31.869Z (commit a7c226b452). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Round 3: settings, close confirm, archived header",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy/settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-02.png",
+          "shows": "Page shows \"Close session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-03.png",
+          "shows": "Page does not show \"Injected into the facilitator\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-04.png",
+          "shows": "Settings: status and privacy rows above the form",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-05.png",
+          "shows": "Click \"Close session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-06.png",
+          "shows": "Page shows \"Close this session?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-07.png",
+          "shows": "Close confirm",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-08.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-09.png",
+          "shows": "Page does not show \"Close this session?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-10.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-11.png",
+          "shows": "Page shows \"Send invites\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-12.png",
+          "shows": "Overview, open session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-13.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-14.png",
+          "shows": "Page shows \"Archived: not taking responses.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-15.png",
+          "shows": "Page does not show \"Send invites\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-16.png",
+          "shows": "Page does not show \"Copy join link\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-24-30-277Z/step-17.png",
+          "shows": "Archived session: no Send invites, no Copy join link",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

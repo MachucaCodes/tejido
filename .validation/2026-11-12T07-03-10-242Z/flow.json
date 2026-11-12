@@ -1,0 +1,55 @@
+{
+ "name": "Round 2: settings status row, desktop",
+ "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+ "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 700,
+ "redact": [
+  "[role=dialog] .font-mono",
+  "[role=dialog] li .ml-2"
+ ],
+ "limitations": [
+  "Looks only: Close session confirm opened then cancelled; nothing saved or sent"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy/settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Close session"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Injected into the facilitator"
+  },
+  {
+   "do": "screenshot",
+   "label": "Settings: status and privacy rows above the form"
+  },
+  {
+   "do": "click",
+   "text": "Close session"
+  },
+  {
+   "do": "expect_text",
+   "text": "Close this session?"
+  },
+  {
+   "do": "screenshot",
+   "label": "Close confirm"
+  },
+  {
+   "do": "click",
+   "text": "Cancel"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Close this session?"
+  }
+ ]
+}

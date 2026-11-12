@@ -1,0 +1,88 @@
+{
+  "tool": "clock-validate",
+  "name": "Live: Round 2: phone header and settings",
+  "outcome": "pass",
+  "commit": {
+    "sha": "017bcb1ad19e9d601d6dbe0e6abcae5380a770ad",
+    "branch": "clock-34d425ea-ui-mockup-overview-stacks-four-jobs",
+    "dirty": true
+  },
+  "environment": "production after merge, read-only (nothing saved or sent)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:08:35.072Z",
+  "duration_ms": 7651,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 1428,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Send invites\"",
+      "check": true,
+      "status": "pass",
+      "ms": 27,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Phone: overview header",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/settings",
+      "check": false,
+      "status": "pass",
+      "ms": 691,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Close session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Phone: settings rows",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "[role=dialog] .font-mono",
+    "[role=dialog] li .ml-2"
+  ],
+  "limitations": [
+    "Looks only"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

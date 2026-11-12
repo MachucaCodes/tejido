@@ -1,0 +1,44 @@
+{
+ "name": "Live: Round 2: phone header and settings",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "environment": "production after merge, read-only (nothing saved or sent)",
+ "viewport": {
+  "width": 390,
+  "height": 844
+ },
+ "pace_ms": 700,
+ "redact": [
+  "[role=dialog] .font-mono",
+  "[role=dialog] li .ml-2"
+ ],
+ "limitations": [
+  "Looks only"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy"
+  },
+  {
+   "do": "expect_text",
+   "text": "Send invites"
+  },
+  {
+   "do": "screenshot",
+   "label": "Phone: overview header"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy/settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Close session"
+  },
+  {
+   "do": "screenshot",
+   "label": "Phone: settings rows"
+  }
+ ],
+ "login": "tejido"
+}

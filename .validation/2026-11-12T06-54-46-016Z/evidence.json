@@ -1,0 +1,160 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview: results only, Settings tab, Send invites dialog",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c0d0e9c68e051ee89f91a5b2b0c4b28aceeb7cc9",
+    "branch": "clock-34d425ea-ui-mockup-overview-stacks-four-jobs",
+    "dirty": true
+  },
+  "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+  "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:54:47.404Z",
+  "duration_ms": 27079,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 2217,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes\"",
+      "check": true,
+      "status": "pass",
+      "ms": 43,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Edit session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3065,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Privacy:\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3050,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Overview: voices and themes only, Send invites in header",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Send invites\"",
+      "check": false,
+      "status": "pass",
+      "ms": 70,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Send on WhatsApp\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Send invites dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] >> text=Settings`",
+      "check": false,
+      "status": "pass",
+      "ms": 50,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /settings",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Status:\"",
+      "check": true,
+      "status": "pass",
+      "ms": 13,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Privacy:\"",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Settings tab: status and privacy at the top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "[role=dialog] .font-mono",
+    "[role=dialog] li .ml-2"
+  ],
+  "limitations": [
+    "Looks only: no save, no invites sent, no privacy change"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "title": "Live: Before merge: overview, invites dialog, settings, archived",
+  "slug": "live-before-merge-overview-invites-dialog-settin",
+  "out_dir": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:07:49.681Z (commit 017bcb1ad1). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Live: Before merge: overview, invites dialog, settings, archived",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-03.png",
+          "shows": "Page does not show \"Couldn't load\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-04.png",
+          "shows": "Overview",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-05.png",
+          "shows": "Click \"Send invites\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-06.png",
+          "shows": "Page shows \"Send on WhatsApp\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-07.png",
+          "shows": "Page does not show \"Couldn't load\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-08.png",
+          "shows": "Send invites dialog (nothing sent)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-09.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-10.png",
+          "shows": "Click `nav[aria-label='Session pages'] >> text=Settings`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-11.png",
+          "shows": "Page shows \"Close session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-12.png",
+          "shows": "Page shows \"Save changes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-13.png",
+          "shows": "Settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-14.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-15.png",
+          "shows": "Page does not show \"Send invites\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-16.png",
+          "shows": "Open /admin/sessions/no-such-session-xyz",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-07-47-995Z/step-17.png",
+          "shows": "Page shows \"Session not found\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

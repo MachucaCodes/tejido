@@ -1,0 +1,31 @@
+{
+  "title": "Live: Before merge: overview, invites dialog, settings, archived",
+  "slug": "live-before-merge-overview-invites-dialog-settin",
+  "out_dir": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-06-36-410Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:06:44.346Z (commit 017bcb1ad1). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Live: Before merge: overview, invites dialog, settings, archived",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-06-36-410Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T08-06-36-410Z/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

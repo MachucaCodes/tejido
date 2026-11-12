@@ -1,0 +1,88 @@
+{
+  "tool": "clock-validate",
+  "name": "Live: Round 2: phone header and settings",
+  "outcome": "fail",
+  "commit": {
+    "sha": "017bcb1ad19e9d601d6dbe0e6abcae5380a770ad",
+    "branch": "clock-34d425ea-ui-mockup-overview-stacks-four-jobs",
+    "dirty": true
+  },
+  "environment": "production after merge, read-only (nothing saved or sent)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:07:13.572Z",
+  "duration_ms": 12896,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 509,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Send invites\"",
+      "check": true,
+      "status": "fail",
+      "ms": 10011,
+      "error": "locator.waitFor: Timeout 10000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see \"Signing in on previews\" in clock-validate help))",
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Phone: overview header",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/settings",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Close session\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Phone: settings rows",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "[role=dialog] .font-mono",
+    "[role=dialog] li .ml-2"
+  ],
+  "limitations": [
+    "Looks only"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

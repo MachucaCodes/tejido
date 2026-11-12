@@ -1,0 +1,115 @@
+{
+  "title": "Session overview: results only, Settings tab, Send invites dialog",
+  "slug": "session-overview-results-only-settings-tab-send-",
+  "out_dir": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:54:03.576Z (commit c0d0e9c68e). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview: results only, Settings tab, Send invites dialog",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-03.png",
+          "shows": "Page does not show \"Edit session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-04.png",
+          "shows": "Page does not show \"Privacy:\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-05.png",
+          "shows": "Overview: voices and themes only, Send invites in header",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-06.png",
+          "shows": "Click \"Send invites\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-07.png",
+          "shows": "Page shows \"Send on WhatsApp\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-08.png",
+          "shows": "Send invites dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-09.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-10.png",
+          "shows": "Click `nav[aria-label='Session pages'] >> text=Settings`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-11.png",
+          "shows": "URL matches /settings",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-12.png",
+          "shows": "Page shows \"Status:\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-13.png",
+          "shows": "Page shows \"Privacy:\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T06-54-01-426Z/step-14.png",
+          "shows": "Settings tab: status and privacy at the top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

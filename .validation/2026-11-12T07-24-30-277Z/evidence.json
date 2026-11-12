@@ -1,0 +1,187 @@
+{
+  "tool": "clock-validate",
+  "name": "Round 3: settings, close confirm, archived header",
+  "outcome": "pass",
+  "commit": {
+    "sha": "a7c226b452a08d3e0499b5ced61d08fabdc37cb1",
+    "branch": "clock-34d425ea-ui-mockup-overview-stacks-four-jobs",
+    "dirty": true
+  },
+  "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+  "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:24:31.869Z",
+  "duration_ms": 42167,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/settings",
+      "check": false,
+      "status": "pass",
+      "ms": 2920,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Close session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Injected into the facilitator\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3078,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Settings: status and privacy rows above the form",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Close session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 57,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Close this session?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 14,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Close confirm",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "pass",
+      "ms": 117,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Close this session?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3056,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 1218,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Send invites\"",
+      "check": true,
+      "status": "pass",
+      "ms": 26,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Overview, open session",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 803,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Archived: not taking responses.\"",
+      "check": true,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Send invites\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3068,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Copy join link\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3044,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Archived session: no Send invites, no Copy join link",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-17.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "[role=dialog] .font-mono",
+    "[role=dialog] li .ml-2"
+  ],
+  "limitations": [
+    "Looks only: Close session confirm opened then cancelled; nothing saved or sent"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "title": "Round 2: settings status row, desktop",
+  "slug": "round-2-settings-status-row-desktop",
+  "out_dir": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:03:11.837Z (commit 97855c9205). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Round 2: settings status row, desktop",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy/settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-02.png",
+          "shows": "Page shows \"Close session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-03.png",
+          "shows": "Page does not show \"Injected into the facilitator\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-04.png",
+          "shows": "Settings: status and privacy rows above the form",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-05.png",
+          "shows": "Click \"Close session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-06.png",
+          "shows": "Page shows \"Close this session?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-07.png",
+          "shows": "Close confirm",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-08.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/34d425ea/.validation/2026-11-12T07-03-10-242Z/step-09.png",
+          "shows": "Page does not show \"Close this session?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

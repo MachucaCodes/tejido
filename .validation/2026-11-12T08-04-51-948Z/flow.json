@@ -1,0 +1,43 @@
+{
+ "name": "Round 2: phone header and settings",
+ "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+ "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+ "viewport": {
+  "width": 390,
+  "height": 844
+ },
+ "pace_ms": 700,
+ "redact": [
+  "[role=dialog] .font-mono",
+  "[role=dialog] li .ml-2"
+ ],
+ "limitations": [
+  "Looks only"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy"
+  },
+  {
+   "do": "expect_text",
+   "text": "Send invites"
+  },
+  {
+   "do": "screenshot",
+   "label": "Phone: overview header"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy/settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Close session"
+  },
+  {
+   "do": "screenshot",
+   "label": "Phone: settings rows"
+  }
+ ]
+}

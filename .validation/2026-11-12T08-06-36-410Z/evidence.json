@@ -1,0 +1,187 @@
+{
+  "tool": "clock-validate",
+  "name": "Live: Before merge: overview, invites dialog, settings, archived",
+  "outcome": "fail",
+  "commit": {
+    "sha": "017bcb1ad19e9d601d6dbe0e6abcae5380a770ad",
+    "branch": "clock-34d425ea-ui-mockup-overview-stacks-four-jobs",
+    "dirty": true
+  },
+  "environment": "production after merge, read-only (nothing saved or sent)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:06:44.346Z",
+  "duration_ms": 16715,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 1305,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes\"",
+      "check": true,
+      "status": "fail",
+      "ms": 10006,
+      "error": "locator.waitFor: Timeout 10000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see \"Signing in on previews\" in clock-validate help))",
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Couldn't load\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Overview",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Send invites\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Send on WhatsApp\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Couldn't load\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Send invites dialog (nothing sent)",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] >> text=Settings`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Close session\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Save changes\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Settings",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Send invites\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/no-such-session-xyz",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Session not found\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "[role=dialog] .font-mono",
+    "[role=dialog] li .ml-2"
+  ],
+  "limitations": [
+    "Looks only: Close session confirm opened then cancelled; nothing saved or sent"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

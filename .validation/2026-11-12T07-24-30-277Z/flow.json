@@ -1,0 +1,87 @@
+{
+ "name": "Round 3: settings, close confirm, archived header",
+ "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+ "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 700,
+ "redact": [
+  "[role=dialog] .font-mono",
+  "[role=dialog] li .ml-2"
+ ],
+ "limitations": [
+  "Looks only: Close session confirm opened then cancelled; nothing saved or sent"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy/settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Close session"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Injected into the facilitator"
+  },
+  {
+   "do": "screenshot",
+   "label": "Settings: status and privacy rows above the form"
+  },
+  {
+   "do": "click",
+   "text": "Close session"
+  },
+  {
+   "do": "expect_text",
+   "text": "Close this session?"
+  },
+  {
+   "do": "screenshot",
+   "label": "Close confirm"
+  },
+  {
+   "do": "click",
+   "text": "Cancel"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Close this session?"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy"
+  },
+  {
+   "do": "expect_text",
+   "text": "Send invites"
+  },
+  {
+   "do": "screenshot",
+   "label": "Overview, open session"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/why-statement-v2"
+  },
+  {
+   "do": "expect_text",
+   "text": "Archived: not taking responses."
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Send invites"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Copy join link"
+  },
+  {
+   "do": "screenshot",
+   "label": "Archived session: no Send invites, no Copy join link"
+  }
+ ]
+}

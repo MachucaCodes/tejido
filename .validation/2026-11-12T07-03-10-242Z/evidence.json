@@ -1,0 +1,115 @@
+{
+  "tool": "clock-validate",
+  "name": "Round 2: settings status row, desktop",
+  "outcome": "pass",
+  "commit": {
+    "sha": "97855c9205e375be5b5f2531ba44453ae22a419f",
+    "branch": "clock-34d425ea-ui-mockup-overview-stacks-four-jobs",
+    "dirty": true
+  },
+  "environment": "PR #10 Vercel preview, production Supabase, read-only (nothing saved or sent)",
+  "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:03:11.837Z",
+  "duration_ms": 23116,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/settings",
+      "check": false,
+      "status": "pass",
+      "ms": 2982,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Close session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 34,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Injected into the facilitator\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3050,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Settings: status and privacy rows above the form",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Close session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 129,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Close this session?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Close confirm",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "pass",
+      "ms": 82,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Close this session?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3080,
+      "error": null,
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "[role=dialog] .font-mono",
+    "[role=dialog] li .ml-2"
+  ],
+  "limitations": [
+    "Looks only: Close session confirm opened then cancelled; nothing saved or sent"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}
