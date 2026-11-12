@@ -113,8 +113,8 @@ export default function SessionBuilder() {
 
   return (
     <div className="space-y-3">
-      {/* Short while it only holds the greeting, so the sessions list below
-          stays in view; full height once a conversation starts. */}
+      {/* Short while it only holds the greeting; full height once a
+          conversation starts. */}
       <div
         className={`flex flex-col rounded-lg border bg-card ${
           messages.length === 0 ? "h-40" : "h-[28rem]"
