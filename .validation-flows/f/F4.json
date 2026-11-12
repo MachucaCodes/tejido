@@ -1,0 +1,14 @@
+{
+ "code": "F4",
+ "title": "Step 7: after Create, nothing says it worked and the share link is a small button; the page leads with empty results",
+ "kind": "clarity",
+ "severity": "medium",
+ "confidence": "medium",
+ "where": "/admin/sessions/<code> right after Create; seen on an existing open session with 0 voices (daily-life-together); post-Create from session-builder.tsx:115",
+ "what_happens": "Still there. Create from the chat draft also does router.push with no message. The page opens on 'Voices: 0 voices' and 'Themes: No themes yet'. 'Copy join link' is a small outline button top right; the link is never shown as text (only in a hover title). Invites are a card under the empty results.",
+ "who_hurts": "A first-time admin who just created a session: can't tell it saved, has to hunt for the link, and can't read the URL before sharing it.",
+ "suggested_fix": "When the session has 0 participants, show a 'Share it' block at the top of the overview in place of empty Voices/Themes: the full join URL as text with CopyJoinLink, the WhatsApp card under it.",
+ "rule": "Dane's UI rule: 'One page, one main job\u2026 give that the top of the page.'",
+ "origin": "earlier",
+ "fingerprint": "/admin/sessions/[code]|page.tsx|clarity|no created state share link hidden"
+}

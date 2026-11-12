@@ -1,0 +1,64 @@
+{
+ "name": "Tejido: page a new session lands on (existing 0-voice session)",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, look only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 300,
+ "redact": [
+  "ul.max-h-72 li"
+ ],
+ "limitations": [
+  "Existing session stands in for a just-created one"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelectorAll('ul.max-h-72 li').forEach(li=>{li.querySelectorAll('span.font-mono').forEach(s=>s.textContent='+00 000 000 0000');li.querySelectorAll('span.ml-2').forEach(s=>s.textContent='(hidden)')});return true})()",
+   "equals": true,
+   "label": "hide phone numbers and names"
+  },
+  {
+   "do": "screenshot",
+   "label": "session page as a new session lands (0 voices)"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{window.scrollTo(0,99999);return true})()",
+   "equals": true,
+   "label": "scroll down"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelectorAll('ul.max-h-72 li').forEach(li=>{li.querySelectorAll('span.font-mono').forEach(s=>s.textContent='+00 000 000 0000');li.querySelectorAll('span.ml-2').forEach(s=>s.textContent='(hidden)')});return true})()",
+   "equals": true,
+   "label": "hide again"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "session page bottom"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.documentElement.scrollHeight",
+   "equals": 0,
+   "label": "MEASURE height",
+   "timeout_ms": 500
+  }
+ ]
+}

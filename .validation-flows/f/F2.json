@@ -1,0 +1,14 @@
+{
+ "code": "F2",
+ "title": "Step 4\u20135: the draft arrives silently below the fold, and its form doesn't say what's required or optional",
+ "kind": "clarity",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/new, 1440x900, the turn the draft arrives and the 'Draft session' panel (session-builder.tsx:170-200)",
+ "what_happens": "On the 4th chat turn the model answered with no text, only a small grey 'Draft updated below.' The draft starts at the bottom edge of the screen; Create is ~700px further down. In the draft panel every field is a bare textarea (Link name too, with a resize handle), with none of the manual form's (i) tips or 'Optional' hints, and nothing marks Link name and Question as required. Clearing the Question just greys Create out with no reason. The Instructions box is 6 rows and the draft's last line is cut in half; you scroll inside the box to read it.",
+ "who_hurts": "A first-time admin: doesn't see that a draft appeared or that they can edit it, then can't tell what they must keep or why Create stopped working.",
+ "suggested_fix": "Have the model say one line when it proposes ('Here's a draft. Edit anything below, then Create.') and scroll the draft into view. In the panel reuse the manual form's field markup (input for Link name, InfoTips, 'Optional' placeholders) and let textareas grow to their content (field-sizing: content).",
+ "rule": "established pattern: the manual create form on the same page (create-session-form.tsx)",
+ "origin": "earlier",
+ "fingerprint": "/admin/new|session-builder.tsx|clarity|draft panel unlabeled required optional"
+}

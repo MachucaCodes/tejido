@@ -1,0 +1,297 @@
+{
+  "title": "Tejido hand-off: draft vs manual form, edits, revise, reload",
+  "slug": "tejido-hand-off-draft-vs-manual-form-edits-revis",
+  "out_dir": "/srv/agent-runs/7c0115a4/.validation/flow3/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:06:30.335Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Tejido hand-off: draft vs manual form, edits, revise, reload",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-03.png",
+          "shows": "Click \"New session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-04.png",
+          "shows": "URL matches /admin/new",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-06.png",
+          "shows": "Type \"I want people on our street to talk about a shared community garden we might start in the empty lot.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-07.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-09.png",
+          "shows": "reply arrived: turn1",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-11.png",
+          "shows": "Type \"Neighbours on Maple Lane, about 30 households, mixed ages.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-12.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-14.png",
+          "shows": "reply arrived: turn2",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-16.png",
+          "shows": "Type \"No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-17.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-19.png",
+          "shows": "reply arrived: turn3",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-21.png",
+          "shows": "Type \"What people would want to grow, how much time they could give, and any worries.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-22.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-24.png",
+          "shows": "reply arrived: turn4",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-27.png",
+          "shows": "scroll to bottom",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-29.png",
+          "shows": "bottom: Create and form link",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-30.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-32.png",
+          "shows": "manual form opened after draft",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-33.png",
+          "shows": "scroll to manual form",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-35.png",
+          "shows": "manual form is empty",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-36.png",
+          "shows": "scroll bottom",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-38.png",
+          "shows": "second Create at bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-39.png",
+          "shows": "two Create session buttons on the page",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-40.png",
+          "shows": "Type \"Maple Garden 2026\" into `#draft-code`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-41.png",
+          "shows": "to code",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-43.png",
+          "shows": "link name typed with spaces and capitals",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-44.png",
+          "shows": "Type \"\" into `#draft-topic`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-45.png",
+          "shows": "to create",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-47.png",
+          "shows": "topic cleared: Create disabled, no reason",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-48.png",
+          "shows": "draft Create disabled",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-49.png",
+          "shows": "Type \"What would a shared garden on our street mean to you?\" into `#draft-topic`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-50.png",
+          "shows": "Type \"Please make the intro message a bit shorter.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-51.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-52.png",
+          "shows": "revise reply arrived",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-55.png",
+          "shows": "after revise turn (chat)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-56.png",
+          "shows": "to draft",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-58.png",
+          "shows": "after revise: were my edits kept?",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-59.png",
+          "shows": "Reload the page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow3/step-62.png",
+          "shows": "after reload: chat and draft gone",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

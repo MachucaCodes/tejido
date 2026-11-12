@@ -1,0 +1,199 @@
+{
+  "title": "Tejido start-a-session path: admin to chat draft",
+  "slug": "tejido-start-a-session-path-admin-to-chat-draft",
+  "out_dir": "/srv/agent-runs/7c0115a4/.validation/flow1/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:04:16.398Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Tejido start-a-session path: admin to chat draft",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-03.png",
+          "shows": "step1 admin landing",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-04.png",
+          "shows": "Click \"New session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-05.png",
+          "shows": "URL matches /admin/new",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-07.png",
+          "shows": "step2 new session page as it opens",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-08.png",
+          "shows": "Type \"I want people on our street to talk about a shared community garden we might start in the empty lot.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-09.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-11.png",
+          "shows": "loading after: turn1",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-12.png",
+          "shows": "reply arrived: turn1",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-14.png",
+          "shows": "reply: turn1",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-15.png",
+          "shows": "Type \"Neighbours on Maple Lane, about 30 households, mixed ages.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-16.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-18.png",
+          "shows": "loading after: turn2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-19.png",
+          "shows": "reply arrived: turn2",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-21.png",
+          "shows": "reply: turn2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-22.png",
+          "shows": "Type \"No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-23.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-25.png",
+          "shows": "loading after: turn3",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-26.png",
+          "shows": "reply arrived: turn3",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-28.png",
+          "shows": "reply: turn3",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-29.png",
+          "shows": "Type \"What people would want to grow, how much time they could give, and any worries.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-30.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-32.png",
+          "shows": "loading after: turn4",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-33.png",
+          "shows": "reply arrived: turn4",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-35.png",
+          "shows": "reply: turn4",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow1/step-36.png",
+          "shows": "after 4 turns",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

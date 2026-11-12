@@ -1,0 +1,590 @@
+{
+  "tool": "clock-validate",
+  "name": "Tejido hand-off: draft vs manual form, edits, revise, reload",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-7c0115a4-ui-audit-path-audit-not-a-screen-audit",
+    "dirty": true
+  },
+  "environment": "production, signed in as tejido login, look only (no Create)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:06:30.335Z",
+  "duration_ms": 65663,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 915,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"New session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 73,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin/new",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1010,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "fill",
+      "description": "Type \"I want people on our street to talk about a shared community garden we might start in the empty lot.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn1",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn1",
+      "check": true,
+      "status": "pass",
+      "ms": 1878,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 807,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Neighbours on Maple Lane, about 30 households, mixed ages.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn2",
+      "check": false,
+      "status": "pass",
+      "ms": 1505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn2",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 806,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "fill",
+      "description": "Type \"No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 13,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn3",
+      "check": false,
+      "status": "pass",
+      "ms": 1515,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn3",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 805,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "fill",
+      "description": "Type \"What people would want to grow, how much time they could give, and any worries.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 35,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn4",
+      "check": false,
+      "status": "pass",
+      "ms": 1515,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn4",
+      "check": true,
+      "status": "pass",
+      "ms": 3504,
+      "error": null,
+      "screenshot": "step-24.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 807,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll to bottom",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-27.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "bottom: Create and form link",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 55,
+      "error": null,
+      "screenshot": "step-30.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "manual form opened after draft",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll to manual form",
+      "check": true,
+      "status": "pass",
+      "ms": 2,
+      "error": null,
+      "screenshot": "step-33.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "manual form is empty",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-35.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll bottom",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-36.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 506,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "second Create at bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-38.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "two Create session buttons on the page",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-39.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Maple Garden 2026\" into `#draft-code`",
+      "check": false,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-40.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "to code",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-41.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "link name typed with spaces and capitals",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-43.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"\" into `#draft-topic`",
+      "check": false,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-44.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "to create",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-45.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "topic cleared: Create disabled, no reason",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-47.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "draft Create disabled",
+      "check": true,
+      "status": "pass",
+      "ms": 2,
+      "error": null,
+      "screenshot": "step-48.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"What would a shared garden on our street mean to you?\" into `#draft-topic`",
+      "check": false,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-49.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Please make the intro message a bit shorter.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-50.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-51.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "revise reply arrived",
+      "check": true,
+      "status": "pass",
+      "ms": 3935,
+      "error": null,
+      "screenshot": "step-52.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 804,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "after revise turn (chat)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-55.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "to draft",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-56.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 506,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "after revise: were my edits kept?",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-58.png"
+    },
+    {
+      "do": "reload",
+      "description": "Reload the page",
+      "check": false,
+      "status": "pass",
+      "ms": 751,
+      "error": null,
+      "screenshot": "step-59.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2007,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 506,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "after reload: chat and draft gone",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-62.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Create is never clicked",
+    "Made-up topic"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

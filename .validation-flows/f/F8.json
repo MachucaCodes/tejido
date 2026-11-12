@@ -1,0 +1,14 @@
+{
+ "code": "F8",
+ "title": "Step 6: create errors use database words the form doesn't ('code already taken', 'invalid code format')",
+ "kind": "clarity",
+ "severity": "low",
+ "confidence": "medium",
+ "where": "/admin/new, error under the chat draft (session-builder.tsx:111-114) and the form. From code, not seen: needs a real submit.",
+ "what_happens": "Still there. api/admin/sessions/route.ts returns 'code and topic required', 'invalid code format', 'code already taken' or a raw Postgres message; the draft shows it as small red text under the draft panel, away from Link name.",
+ "who_hurts": "An admin whose link name is taken: 'code' matches no field they see.",
+ "suggested_fix": "Plain messages ('That link name is already used. Try another.') shown under the Link name field.",
+ "rule": "established pattern: the form's own labels",
+ "origin": "earlier",
+ "fingerprint": "/admin/new|api/admin/sessions|clarity|error says code not link name"
+}

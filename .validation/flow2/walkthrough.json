@@ -1,0 +1,199 @@
+{
+  "title": "Tejido chat draft hand-off",
+  "slug": "tejido-chat-draft-hand-off",
+  "out_dir": "/srv/agent-runs/7c0115a4/.validation/flow2/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:05:25.756Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Tejido chat draft hand-off",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-03.png",
+          "shows": "step1 admin landing",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-04.png",
+          "shows": "Click \"New session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-05.png",
+          "shows": "URL matches /admin/new",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-07.png",
+          "shows": "Type \"I want people on our street to talk about a shared community garden we might start in the empty lot.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-08.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-10.png",
+          "shows": "reply arrived: turn1",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-12.png",
+          "shows": "Type \"Neighbours on Maple Lane, about 30 households, mixed ages.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-13.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-15.png",
+          "shows": "reply arrived: turn2",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-17.png",
+          "shows": "Type \"No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-18.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-20.png",
+          "shows": "reply arrived: turn3",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-22.png",
+          "shows": "Type \"What people would want to grow, how much time they could give, and any worries.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-23.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-25.png",
+          "shows": "reply arrived: turn4",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-28.png",
+          "shows": "draft top",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-30.png",
+          "shows": "draft top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-31.png",
+          "shows": "draft middle",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-33.png",
+          "shows": "draft middle",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-34.png",
+          "shows": "draft instructions",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-36.png",
+          "shows": "draft instructions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-37.png",
+          "shows": "draft bottom with Create",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-39.png",
+          "shows": "draft bottom with Create",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-40.png",
+          "shows": "page height",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow2/step-41.png",
+          "shows": "MEASURE page height (expected to fail, records value)",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

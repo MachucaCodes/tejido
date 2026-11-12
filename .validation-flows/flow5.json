@@ -1,0 +1,45 @@
+{
+ "name": "Tejido: Edit session field names (open only, no save)",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, look only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 300,
+ "redact": [
+  "ul.max-h-72 li"
+ ],
+ "limitations": [
+  "Existing session stands in for a just-created one"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "click",
+   "text": "Edit session"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#code').scrollIntoView({block:'start'});window.scrollBy(0,-140);return true})()",
+   "equals": true,
+   "label": "to edit form"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "Edit session labels: Session code, Topic"
+  }
+ ]
+}

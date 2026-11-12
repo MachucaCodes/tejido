@@ -1,0 +1,14 @@
+{
+ "code": "F3",
+ "title": "Step 3\u20136: the chat and the draft are lost on reload or any click away, with no warning",
+ "kind": "state",
+ "severity": "medium",
+ "confidence": "high",
+ "where": "/admin/new, 1440x900, after 4\u20135 chat turns and edits to the draft",
+ "what_happens": "The conversation and draft live only in React state. After 5 chat turns and edits to the draft, a reload brought back the empty greeting. The same happens on the '\u2190 Sessions' link or the Sessions tab, both right above the chat. No 'leave page?' warning.",
+ "who_hurts": "An admin who has spent several turns and edits on a draft and steps away (checks the list, reloads a slow page): all of it is gone and they start over.",
+ "suggested_fix": "Keep messages and draft in sessionStorage (restore on mount, clear after Create), or at least a beforeunload warning while a draft exists.",
+ "rule": "general: don't lose user work without warning",
+ "origin": "earlier",
+ "fingerprint": "/admin/new|session-builder.tsx|state|draft lost on reload"
+}

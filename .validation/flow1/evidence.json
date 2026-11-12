@@ -1,0 +1,356 @@
+{
+  "tool": "clock-validate",
+  "name": "Tejido start-a-session path: admin to chat draft",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-7c0115a4-ui-audit-path-audit-not-a-screen-audit",
+    "dirty": true
+  },
+  "environment": "production, signed in as tejido login, look only (no Create)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:04:16.398Z",
+  "duration_ms": 37461,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1553,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "step1 admin landing",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"New session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 58,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin/new",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1002,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "step2 new session page as it opens",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"I want people on our street to talk about a shared community garden we might start in the empty lot.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 43,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn1",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "loading after: turn1",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn1",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 804,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "reply: turn1",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Neighbours on Maple Lane, about 30 households, mixed ages.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 28,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn2",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "loading after: turn2",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn2",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 811,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "reply: turn2",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 14,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn3",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "loading after: turn3",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn3",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-26.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 804,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "reply: turn3",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"What people would want to grow, how much time they could give, and any worries.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-30.png"
+    },
+    {
+      "do": "wait",
+      "description": "loading: turn4",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "loading after: turn4",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "reply arrived: turn4",
+      "check": true,
+      "status": "pass",
+      "ms": 2488,
+      "error": null,
+      "screenshot": "step-33.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 803,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "reply: turn4",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-35.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "after 4 turns",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-36.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Create is never clicked",
+    "Made-up topic"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

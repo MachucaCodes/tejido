@@ -1,0 +1,14 @@
+{
+ "code": "F7",
+ "title": "Step 6: Create turns back on before the new page loads, so a second click errors 'code already taken'",
+ "kind": "state",
+ "severity": "medium",
+ "confidence": "medium",
+ "where": "/admin/new, chat draft and form, right after clicking Create. From code, not seen: clicking would create a real session.",
+ "what_happens": "Still there in both: session-builder.tsx:111 setCreating(false) and create-session-form.tsx:37 setBusy(false) run before router.push. While the session page loads the button is enabled again; a second click shows 'code already taken'.",
+ "who_hurts": "An admin who clicks again because nothing seemed to happen: sees an error and thinks creating failed.",
+ "suggested_fix": "Reset busy/creating only in the !res.ok branch in both files.",
+ "rule": "general: no double submit",
+ "origin": "earlier",
+ "fingerprint": "/admin/new|create-session-form.tsx|state|create re-enables before navigation"
+}

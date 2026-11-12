@@ -1,0 +1,181 @@
+{
+ "name": "Tejido start-a-session path: admin to chat draft",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, signed in as tejido login, look only (no Create)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 400,
+ "limitations": [
+  "Create is never clicked",
+  "Made-up topic"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "step1 admin landing"
+  },
+  {
+   "do": "click",
+   "text": "New session"
+  },
+  {
+   "do": "expect_url",
+   "match": "/admin/new"
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "screenshot",
+   "label": "step2 new session page as it opens"
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "I want people on our street to talk about a shared community garden we might start in the empty lot."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn1"
+  },
+  {
+   "do": "screenshot",
+   "label": "loading after: turn1"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn1"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "reply: turn1"
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "Neighbours on Maple Lane, about 30 households, mixed ages."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn2"
+  },
+  {
+   "do": "screenshot",
+   "label": "loading after: turn2"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn2"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "reply: turn2"
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn3"
+  },
+  {
+   "do": "screenshot",
+   "label": "loading after: turn3"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn3"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "reply: turn3"
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "What people would want to grow, how much time they could give, and any worries."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn4"
+  },
+  {
+   "do": "screenshot",
+   "label": "loading after: turn4"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn4"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "reply: turn4"
+  },
+  {
+   "do": "screenshot",
+   "label": "after 4 turns"
+  }
+ ]
+}

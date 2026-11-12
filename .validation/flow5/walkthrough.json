@@ -1,0 +1,45 @@
+{
+  "title": "Tejido: Edit session field names (open only, no save)",
+  "slug": "tejido-edit-session-field-names-open-only-no-sav",
+  "out_dir": "/srv/agent-runs/7c0115a4/.validation/flow5/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:10:04.956Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Tejido: Edit session field names (open only, no save)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow5/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow5/step-03.png",
+          "shows": "Click \"Edit session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow5/step-04.png",
+          "shows": "to edit form",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow5/step-06.png",
+          "shows": "Edit session labels: Session code, Topic",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

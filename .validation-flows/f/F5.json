@@ -1,0 +1,14 @@
+{
+ "code": "F5",
+ "title": "Step 7: once created, the same fields get new names in Edit session ('Session code', 'Topic', 'Summarize \u00b7 system prompt')",
+ "kind": "consistency",
+ "severity": "low",
+ "confidence": "medium",
+ "where": "/admin/sessions/<code> \u2192 Edit session (edit-session-form.tsx:251-350, :112), vs the chat draft and create form",
+ "what_happens": "The draft and the create form say 'Link name', 'Question people are asked' and 'Summary focus'. After creating, Edit session calls the same fields 'Session code', 'Topic' and 'Summarize \u00b7 system prompt' (the last one inside the advanced prompt list).",
+ "who_hurts": "An admin who wants to fix something right after creating: can't match what they wrote to the fields, and may not find their summary focus at all.",
+ "suggested_fix": "Use the create form's labels in edit-session-form.tsx (Link name, Question people are asked, Summary focus).",
+ "rule": "established pattern: create form labels; Dane agreed earlier 'Same thing called \u2026 in different places'",
+ "origin": "earlier",
+ "fingerprint": "/admin/sessions/[code]|edit-session-form.tsx|consistency|edit labels differ from create"
+}

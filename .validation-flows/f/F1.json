@@ -1,0 +1,15 @@
+{
+ "code": "F1",
+ "title": "Step 5: after the chat drafts, the page has two forms and two Create buttons; 'fill in the form yourself' opens empty, not your draft",
+ "kind": "clarity",
+ "severity": "medium",
+ "confidence": "high",
+ "where": "/admin/new, 1440x900, after the chat has proposed a draft (session-builder.tsx draft panel + new/page.tsx <details> with create-session-form.tsx)",
+ "what_happens": "The draft shows as a 'Draft session' panel inside the chat area with its own 'Create session'. Under it, the 'Or fill in the form yourself' link is still there. Opening it (the obvious place to 'make manual edits') shows a second, empty form with the same six labels and a second 'Create session'. The draft is never copied into it. Two 'Create session' buttons are on the page at once.",
+ "who_hurts": "A first-time admin following Dane's intended path (chat drafts, then form for manual edits): they open the form to edit, find it blank, and can't tell which form Create will use, or think the draft was lost. If they retype into the empty form and create from there, the chat's intro, context and instructions are dropped.",
+ "suggested_fix": "One form, one Create. Smallest change: once a draft exists, hide the 'Or fill in the form yourself' disclosure (new/page.tsx) so the draft panel is the form. Better: make the draft panel and CreateSessionForm the same component (CreateSessionForm taking initial values), so the chat fills the real form.",
+ "rule": "Dane's rule: 'One page, one main job' and 'Be careful about redundant titles, headings\u2026' (two forms for the same job). Task: chat drafts, then the form for manual edits.",
+ "origin": "earlier: #6 (New session on its own page) put both on one page",
+ "mockup": "true",
+ "fingerprint": "/admin/new|session-builder.tsx|clarity|draft and empty form both shown"
+}

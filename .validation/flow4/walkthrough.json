@@ -1,0 +1,66 @@
+{
+  "title": "Tejido: page a new session lands on (existing 0-voice session)",
+  "slug": "tejido-page-a-new-session-lands-on-existing-0-vo",
+  "out_dir": "/srv/agent-runs/7c0115a4/.validation/flow4/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:07:58.919Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Tejido: page a new session lands on (existing 0-voice session)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow4/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow4/step-03.png",
+          "shows": "hide phone numbers and names",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow4/step-04.png",
+          "shows": "session page as a new session lands (0 voices)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow4/step-05.png",
+          "shows": "scroll down",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow4/step-06.png",
+          "shows": "hide again",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow4/step-08.png",
+          "shows": "session page bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7c0115a4/.validation/flow4/step-09.png",
+          "shows": "MEASURE height",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

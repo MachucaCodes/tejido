@@ -1,0 +1,214 @@
+{
+ "name": "Tejido chat draft hand-off",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, signed in as tejido login, look only (no Create)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 400,
+ "limitations": [
+  "Create is never clicked",
+  "Made-up topic"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "step1 admin landing"
+  },
+  {
+   "do": "click",
+   "text": "New session"
+  },
+  {
+   "do": "expect_url",
+   "match": "/admin/new"
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "I want people on our street to talk about a shared community garden we might start in the empty lot."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn1"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn1"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "Neighbours on Maple Lane, about 30 households, mixed ages."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn2"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn2"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn3"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn3"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "What people would want to grow, how much time they could give, and any worries."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn4"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn4"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#draft-code').scrollIntoView({block:'start'});window.scrollBy(0,-130);return true})()",
+   "equals": true,
+   "label": "draft top"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "draft top"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#draft-context').scrollIntoView({block:'start'});window.scrollBy(0,-130);return true})()",
+   "equals": true,
+   "label": "draft middle"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "draft middle"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#draft-instructions').scrollIntoView({block:'start'});window.scrollBy(0,-130);return true})()",
+   "equals": true,
+   "label": "draft instructions"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "draft instructions"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#draft-prompt_summary_system').scrollIntoView({block:'start'});window.scrollBy(0,-130);return true})()",
+   "equals": true,
+   "label": "draft bottom with Create"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "draft bottom with Create"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{window.__h=document.documentElement.scrollHeight;return true})()",
+   "equals": true,
+   "label": "page height"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.documentElement.scrollHeight",
+   "equals": 0,
+   "label": "MEASURE page height (expected to fail, records value)",
+   "timeout_ms": 500
+  }
+ ]
+}

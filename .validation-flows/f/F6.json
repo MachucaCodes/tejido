@@ -1,0 +1,14 @@
+{
+ "code": "F6",
+ "title": "Step 5: the form makes you name the link first, and silently strips spaces and capitals",
+ "kind": "clarity",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/new, draft panel 'Link name' (session-builder.tsx:185) and manual form (create-session-form.tsx:59)",
+ "what_happens": "Still there, and the chat draft does the same: typing 'Maple Garden 2026' into the draft's Link name became 'maplegarden2026' (spaces dropped, not hyphens), no message. The full join URL is never shown while editing. (In the chat path the model picks a good link name, which helps.)",
+ "who_hurts": "An admin editing the link name: gets a run-together word they didn't type, and doesn't see the link people will get.",
+ "suggested_fix": "Turn spaces into hyphens instead of dropping them; show the full join URL under the field.",
+ "rule": "opinion, plus Dane's earlier agreed finding that 'Slug' was jargon",
+ "origin": "earlier",
+ "fingerprint": "/admin/new|create-session-form.tsx|clarity|link name first silent strip"
+}

@@ -1,0 +1,307 @@
+{
+ "name": "Tejido hand-off: draft vs manual form, edits, revise, reload",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, signed in as tejido login, look only (no Create)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 400,
+ "limitations": [
+  "Create is never clicked",
+  "Made-up topic"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "click",
+   "text": "New session"
+  },
+  {
+   "do": "expect_url",
+   "match": "/admin/new"
+  },
+  {
+   "do": "wait",
+   "ms": 1000
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "I want people on our street to talk about a shared community garden we might start in the empty lot."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn1"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn1"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "Neighbours on Maple Lane, about 30 households, mixed ages."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn2"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn2"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "No reading needed. Facts if asked: the lot belongs to the city and they allow garden leases."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn3"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn3"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "What people would want to grow, how much time they could give, and any worries."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "wait",
+   "ms": 1500,
+   "label": "loading: turn4"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "reply arrived: turn4"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{window.scrollTo(0,99999);return true})()",
+   "equals": true,
+   "label": "scroll to bottom"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "bottom: Create and form link"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "manual form opened after draft"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#slug').scrollIntoView({block:'start'});window.scrollBy(0,-200);return true})()",
+   "equals": true,
+   "label": "scroll to manual form"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "manual form is empty"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{window.scrollTo(0,99999);return true})()",
+   "equals": true,
+   "label": "scroll bottom"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "second Create at bottom"
+  },
+  {
+   "do": "expect_js",
+   "js": "[...document.querySelectorAll('button')].filter(b=>b.textContent.trim()==='Create session').length",
+   "equals": 2,
+   "label": "two Create session buttons on the page"
+  },
+  {
+   "do": "fill",
+   "selector": "#draft-code",
+   "value": "Maple Garden 2026"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#draft-code').scrollIntoView({block:'center'});return true})()",
+   "equals": true,
+   "label": "to code"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "link name typed with spaces and capitals"
+  },
+  {
+   "do": "fill",
+   "selector": "#draft-topic",
+   "value": ""
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#draft-prompt_summary_system').scrollIntoView({block:'center'});return true})()",
+   "equals": true,
+   "label": "to create"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "topic cleared: Create disabled, no reason"
+  },
+  {
+   "do": "expect_js",
+   "js": "[...document.querySelectorAll('button')].find(b=>b.textContent.trim()==='Create session').disabled",
+   "equals": true,
+   "label": "draft Create disabled"
+  },
+  {
+   "do": "fill",
+   "selector": "#draft-topic",
+   "value": "What would a shared garden on our street mean to you?"
+  },
+  {
+   "do": "fill",
+   "selector": "input[placeholder^='Describe']",
+   "value": "Please make the intro message a bit shorter."
+  },
+  {
+   "do": "press",
+   "key": "Enter"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const i=document.querySelector('form input[placeholder^=\"Describe\"]');return !!i && !i.disabled})()",
+   "equals": true,
+   "timeout_ms": 90000,
+   "label": "revise reply arrived"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "after revise turn (chat)"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelector('#draft-code').scrollIntoView({block:'start'});window.scrollBy(0,-160);return true})()",
+   "equals": true,
+   "label": "to draft"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "after revise: were my edits kept?"
+  },
+  {
+   "do": "reload"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "after reload: chat and draft gone"
+  }
+ ]
+}
