@@ -1,0 +1,337 @@
+{
+  "tool": "clock-validate",
+  "name": "more",
+  "outcome": "fail",
+  "commit": {
+    "sha": "a0ba74c90b5378b66b6b3605ba5df79023d6c7f3",
+    "branch": "clock-ca7acf11-ui-audit-cold-audit-of-the-sessions",
+    "dirty": true
+  },
+  "environment": "production, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T03:50:34.717Z",
+  "duration_ms": 55205,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions",
+      "check": false,
+      "status": "pass",
+      "ms": 1140,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 98,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{document.querySelectorAll('body *').forEach(e=>{if(e.children.length===0&&/^taylor$/i.test(e.textContent.trim()))e.textContent='ADMIN'});return 'ok'})()` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "list-masked",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 2211,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Synthesis history\"",
+      "check": true,
+      "status": "pass",
+      "ms": 163,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const m = s => s.replace(/[^\\s]/g,'▇').slice(0,60);\n document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});\n document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');\n return 'ok'; })()\n` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 66,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{document.querySelectorAll('body *').forEach(e=>{if(e.children.length===0&&/^taylor$/i.test(e.textContent.trim()))e.textContent='ADMIN'});return 'ok'})()` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 28,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(document.querySelectorAll('h2').forEach(h=>{if(/^Archive session$/.test(h.textContent))h.closest('section').scrollIntoView({block:'center'})}),'ok')` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 61,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 300 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 329,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "detail-archive",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(document.querySelectorAll('h2').forEach(h=>{if(/^Voices$/.test(h.textContent))h.scrollIntoView({block:'start'})}),window.scrollBy(0,-80),'ok')` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 27,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 300 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 317,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "detail-voices-themes",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1391,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Synthesis history\"",
+      "check": true,
+      "status": "pass",
+      "ms": 112,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const m = s => s.replace(/[^\\s]/g,'▇').slice(0,60);\n document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});\n document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');\n return 'ok'; })()\n` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 40,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{document.querySelectorAll('body *').forEach(e=>{if(e.children.length===0&&/^taylor$/i.test(e.textContent.trim()))e.textContent='ADMIN'});return 'ok'})()` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 35,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "press",
+      "description": "Press End",
+      "check": false,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 412,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "detail-empty-bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 1036,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Synthesis history\"",
+      "check": true,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{document.querySelectorAll('body *').forEach(e=>{if(e.children.length===0&&/^taylor$/i.test(e.textContent.trim()))e.textContent='ADMIN'});return 'ok'})()` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-24.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "synth-empty",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 1630,
+      "error": null,
+      "screenshot": "step-26.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Synthesis history\"",
+      "check": true,
+      "status": "pass",
+      "ms": 87,
+      "error": null,
+      "screenshot": "step-27.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const m = s => s.replace(/[^\\s]/g,'▇').slice(0,60);\n document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});\n document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');\n return 'ok'; })()\n` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 47,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{document.querySelectorAll('body *').forEach(e=>{if(e.children.length===0&&/^taylor$/i.test(e.textContent.trim()))e.textContent='ADMIN'});return 'ok'})()` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "detail-archived-top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-30.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/frontlandpurchase/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 1065,
+      "error": null,
+      "screenshot": "step-31.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "synth big TTFB ms",
+      "check": true,
+      "status": "fail",
+      "ms": 10206,
+      "error": "got \"11\"",
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/frontlandpurchase",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "detail big TTFB ms",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [
+    "Minified React error #418; visit https://react.dev/errors/418?args[]=text&args[]= for the full message or use the non-minified dev environment for full errors and additional helpful warnings."
+  ],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

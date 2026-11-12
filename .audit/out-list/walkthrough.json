@@ -1,0 +1,52 @@
+{
+  "title": "list",
+  "slug": "list",
+  "out_dir": "/srv/agent-runs/ca7acf11/.audit/out-list/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T03:47:56.727Z (commit a0ba74c90b). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "list",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-list/step-01.png",
+          "shows": "Open /admin/sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-list/step-02.png",
+          "shows": "Page shows \"Sessions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-list/step-03.png",
+          "shows": "list-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-list/step-04.png",
+          "shows": "Press End",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-list/step-06.png",
+          "shows": "list-bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+signed in on https://tejido-zeta.vercel.app as Dane (dane+clock-owner@danemyers.com, a new session just for this run)
+✓ 1. Open /admin/sessions/evolving-why-statement/logs
+✓ 2. Page shows "LLM call logs"
+✓ 3. `(() => { const m = s => s.replace(/[^\s]/g,'▇').slice(0,60);
+ document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});
+ document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');
+ return 'ok'; })()
+` is "ok"
+✓ 4. logs-all
+✓ 5. Open /admin/sessions/evolving-why-statement/logs?kind=extract_points
+✓ 6. Page shows "LLM call logs"
+✓ 7. logs-extract-empty
+✓ 8. Open /admin/sessions/evolving-why-statement/logs?status=success
+✓ 9. Page shows "LLM call logs"
+✓ 10. `(() => { const m = s => s.replace(/[^\s]/g,'▇').slice(0,60);
+ document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});
+ document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');
+ return 'ok'; })()
+` is "ok"
+✓ 11. logs-success
+✓ 12. Open /admin/sessions/daily-life-together/logs
+✓ 13. Page shows "LLM call logs"
+✓ 14. logs-empty
+✓ 15. Open /admin/sessions/no-such-session-xyz
+✓ 16. Wait 1500 ms
+✓ 17. detail-404
+
+PASSED: evidence in /srv/agent-runs/ca7acf11/.audit/out-logs (evidence.json, evidence.md, flow.json, recording.webm, step-01.png, step-02.png, step-03.png, step-04.png, step-05.png, step-06.png, step-07.png, step-08.png, step-09.png, step-10.png, step-11.png, step-12.png, step-13.png, step-14.png, step-15.png, step-17.png, trace.zip, walkthrough.json)
+on the card: evidence comment a9d4e529-1a70-4d11-b546-4df6281c1022, video d8728426-a12b-4bf4-b6e3-14d2e6de2485 (Internal)

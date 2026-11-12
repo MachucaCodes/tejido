@@ -1,0 +1,2 @@
+{"name":"list","base_url":"https://tejido-zeta.vercel.app","login":"tejido","viewport":{"width":1440,"height":900},"pace_ms":400,
+"environment":"production, read-only","limitations":["Look only"],"steps":[{"do":"goto","url":"/admin/sessions"},{"do":"expect_text","text":"Sessions"},{"do":"screenshot","label":"list-top"},{"do":"press","key":"End"},{"do":"wait","ms":500},{"do":"screenshot","label":"list-bottom"}]}

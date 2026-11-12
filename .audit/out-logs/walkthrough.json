@@ -1,0 +1,129 @@
+{
+  "title": "logs",
+  "slug": "logs",
+  "out_dir": "/srv/agent-runs/ca7acf11/.audit/out-logs/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T03:49:04.059Z (commit a0ba74c90b). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "logs",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-02.png",
+          "shows": "Page shows \"LLM call logs\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-03.png",
+          "shows": "`(() => { const m = s => s.replace(/[^\\s]/g,'▇').slice(0,60);\n document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});\n document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');\n return 'ok'; })()\n` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-04.png",
+          "shows": "logs-all",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-05.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/logs?kind=extract_points",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-06.png",
+          "shows": "Page shows \"LLM call logs\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-07.png",
+          "shows": "logs-extract-empty",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-08.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/logs?status=success",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-09.png",
+          "shows": "Page shows \"LLM call logs\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-10.png",
+          "shows": "`(() => { const m = s => s.replace(/[^\\s]/g,'▇').slice(0,60);\n document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});\n document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');\n return 'ok'; })()\n` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-11.png",
+          "shows": "logs-success",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-12.png",
+          "shows": "Open /admin/sessions/daily-life-together/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-13.png",
+          "shows": "Page shows \"LLM call logs\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-14.png",
+          "shows": "logs-empty",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-15.png",
+          "shows": "Open /admin/sessions/no-such-session-xyz",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-logs/step-17.png",
+          "shows": "detail-404",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

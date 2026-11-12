@@ -1,0 +1,13 @@
+signed in on https://tejido-zeta.vercel.app as Dane (dane+clock-owner@danemyers.com, a new session just for this run)
+✓ 1. Open /admin/sessions/evolving-why-statement/synthesis
+✓ 2. Page shows "Synthesis history"
+✓ 3. `(() => { const m = s => s.replace(/[^\s]/g,'▇').slice(0,60);
+ document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});
+ document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');
+ return 'ok'; })()
+` is "ok"
+✓ 4. synth-top
+✗ 5. page height — got "7915"
+
+FAILED: evidence in /srv/agent-runs/ca7acf11/.audit/out-synth (evidence.json, evidence.md, flow.json, recording.webm, step-01.png, step-02.png, step-03.png, step-04.png, step-05.png, trace.zip, walkthrough.json)
+on the card: evidence comment ac9a2cad-6395-44e1-b980-554364fb030c, video b2190021-bdad-4e7f-8c9d-f797ad6bc29d (Internal)

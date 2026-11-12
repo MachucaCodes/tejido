@@ -1,0 +1,52 @@
+{
+  "title": "synth",
+  "slug": "synth",
+  "out_dir": "/srv/agent-runs/ca7acf11/.audit/out-synth/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T03:48:38.741Z (commit a0ba74c90b). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "synth",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-synth/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-synth/step-02.png",
+          "shows": "Page shows \"Synthesis history\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-synth/step-03.png",
+          "shows": "`(() => { const m = s => s.replace(/[^\\s]/g,'▇').slice(0,60);\n document.querySelectorAll('ul.list-disc li, article p.whitespace-pre-wrap, span.font-mono, li .text-xs.text-muted-foreground.ml-2, textarea, pre').forEach(e=>{ if(e.tagName==='TEXTAREA'){e.value=m(e.value);} else e.textContent=m(e.textContent)});\n document.querySelectorAll('a.font-mono').forEach(e=>e.textContent='participant-id');\n return 'ok'; })()\n` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-synth/step-04.png",
+          "shows": "synth-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ca7acf11/.audit/out-synth/step-05.png",
+          "shows": "page height",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
