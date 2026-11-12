@@ -48,7 +48,7 @@ export default function CreateListForm() {
         if (!next) setError(null);
       }}
     >
-      <DialogTrigger className="rounded border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent">
+      <DialogTrigger render={<Button size="sm" />}>
         New list
       </DialogTrigger>
       <DialogContent>

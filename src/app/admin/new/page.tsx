@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { requireOrganizer } from "@/lib/admin-guard";
@@ -12,12 +11,8 @@ export default async function NewSession() {
 
   return (
     <div className="space-y-6">
-      <header className="space-y-1">
-        <Link href="/admin" className="text-xs text-muted-foreground hover:text-foreground">
-          ← {guard.isAdmin ? "Sessions" : "Your sessions"}
-        </Link>
-        <h1 className="text-lg font-semibold">New session</h1>
-      </header>
+      {/* No back link: the admin bar's marked Sessions tab is the way back. */}
+      <h1 className="text-lg font-semibold">New session</h1>
       <SessionBuilder />
       <details className="space-y-3">
         <summary className="cursor-pointer text-sm text-muted-foreground">
