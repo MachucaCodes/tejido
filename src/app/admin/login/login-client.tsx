@@ -90,12 +90,12 @@ export default function AdminLoginClient({ next = "/admin" }: { next?: string })
               placeholder="Phone number"
               value={localNumber}
               onChange={(e) => setLocalNumber(e.target.value)}
-              className="h-11 w-full min-w-0 flex-1 rounded-r-lg border bg-background px-3 text-base tabular-nums focus:outline-none focus:ring-2 focus:ring-ring"
+              className="h-11 w-full min-w-0 flex-1 rounded-r-lg border bg-background px-3 text-base tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
               required
               autoFocus
             />
           </div>
-          <Button type="submit" disabled={busy || !localNumber.trim()} className="w-full">
+          <Button type="submit" disabled={busy || !localNumber.trim()} className="h-11 w-full">
             {busy ? "Sending…" : "Send code"}
           </Button>
         </form>
@@ -110,12 +110,12 @@ export default function AdminLoginClient({ next = "/admin" }: { next?: string })
             placeholder="123456"
             value={token}
             onChange={(e) => setToken(e.target.value.replace(/\D/g, "").slice(0, 6))}
-            className="w-full rounded-md border bg-background px-3 py-2 text-base tracking-widest"
+            className="h-11 w-full rounded-lg border bg-background px-3 text-base tracking-widest tabular-nums outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
             required
             autoFocus
             maxLength={6}
           />
-          <Button type="submit" disabled={busy} className="w-full">
+          <Button type="submit" disabled={busy} className="h-11 w-full">
             {busy ? "Verifying…" : "Verify"}
           </Button>
           <button

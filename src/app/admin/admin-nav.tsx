@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import { buttonVariants } from "@/components/ui/button";
 import CreateListForm from "./lists/create-list-form";
 
 /**
@@ -25,9 +26,11 @@ export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
 
   const action =
     pathname === "/admin" ? (
+      // An empty list shows its own New session button: hide this one then,
+      // so the screen offers it once.
       <Link
         href="/admin/new"
-        className="rounded border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent"
+        className={buttonVariants({ size: "sm", className: "[body:has([data-sessions-empty])_&]:hidden" })}
       >
         New session
       </Link>

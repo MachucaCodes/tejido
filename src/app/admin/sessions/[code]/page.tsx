@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { InfoTip } from "@/components/info-tip";
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import { LoadError } from "../../load-error";
 import ArchiveToggle from "./archive-toggle";
 import CopyJoinLink from "./copy-join-link";
 import SessionHeader from "./session-header";
@@ -13,14 +14,15 @@ import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-inv
 
 async function loadSession(code: string) {
   const admin = createAdmin();
-  const { data: session } = await admin
+  const { data: session, error } = await admin
     .from("sessions")
-    .select(
-      "id, created_by, topic, status, created_at, archived_at",
-    )
+    .select("id, created_by, topic, status, created_at, archived_at")
     .eq("id", code)
-    .single();
-  return session;
+    .maybeSingle();
+  // A malformed code (22P02) is a missing session; any other error is a
+  // failed load, which must not read as "Session not found".
+  if (error && error.code !== "22P02") return { session: null, failed: true as const };
+  return { session, failed: false as const };
 }
 
 export default async function AdminSessionDetail({
@@ -33,17 +35,20 @@ export default async function AdminSessionDetail({
   const { code } = await params;
   const admin = createAdmin();
 
-  const session = await loadSession(code);
+  const { session, failed } = await loadSession(code);
+  if (failed) return <LoadError what="this session" />;
   if (!session) notFound();
   // Non-admins only reach sessions they created — and don't learn that others exist.
   if (!guard.isAdmin && session.created_by !== guard.user.id) notFound();
 
   // Voices = participants whose answers turned into at least one point —
   // the same count the room view shows. Opening the link alone doesn't count.
-  const { data: voiceRows } = await admin
+  const { data: voiceRows, error: voiceError } = await admin
     .from("participants")
     .select("id, extracted_points!inner(id)")
     .eq("session_id", code);
+  // Without the count, the archive confirm and the Voices line would say 0.
+  if (voiceError) return <LoadError what="this session" />;
   const voiceCount = voiceRows?.length ?? 0;
 
   return (
@@ -101,7 +106,7 @@ async function InvitesButton({
 }) {
   const admin = createAdmin();
 
-  const { data: listRows } = await admin
+  const { data: listRows, error: listsError } = await admin
     .from("lists")
     .select("id, name, list_members(contact_id)")
     .order("name", { ascending: true })
@@ -115,7 +120,7 @@ async function InvitesButton({
     members: l.list_members.length,
   }));
 
-  const { data: inviteRows } = await admin
+  const { data: inviteRows, error: invitesError } = await admin
     .from("session_invites")
     .select("id, status, error_message, sent_at, contacts(phone, name)")
     .eq("session_id", code)
@@ -142,6 +147,8 @@ async function InvitesButton({
     <WhatsAppInvites
       code={code}
       open={open}
+      // An empty list after a failed load could lead an admin to re-send.
+      loadFailed={Boolean(listsError || invitesError)}
       lists={inviteLists}
       invites={invites}
     />
@@ -151,22 +158,27 @@ async function InvitesButton({
 async function SessionBody({ code, voiceCount }: { code: string; voiceCount: number }) {
   const admin = createAdmin();
 
-  const { data: participants } = await admin
+  const { data: participants, error: participantsError } = await admin
     .from("participants")
     .select("id, phase, created_at")
     .eq("session_id", code)
     .order("created_at", { ascending: true });
 
-  const { data: themes } = await admin
+  const { data: themes, error: themesError } = await admin
     .from("themes")
     .select("id, short_name, description")
     .eq("session_id", code)
     .order("created_at", { ascending: true });
 
-  const { data: assignments } = await admin
+  const { data: assignments, error: assignmentsError } = await admin
     .from("theme_assignments")
     .select("theme_id, point_id, themes!inner(session_id)")
     .eq("themes.session_id", code);
+
+  // A failed query: one alert line, not "0 opened" or "No themes yet.".
+  if (participantsError || themesError || assignmentsError) {
+    return <LoadError what="this session" />;
+  }
 
   const counts: Record<string, number> = {};
   for (const a of assignments ?? []) counts[a.theme_id] = (counts[a.theme_id] ?? 0) + 1;

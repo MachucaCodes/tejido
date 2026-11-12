@@ -2,6 +2,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import { LoadError } from "../../../load-error";
 import EditSessionForm from "../edit-session-form";
 import PrivacyToggle from "../privacy-toggle";
 import SessionHeader from "../session-header";
@@ -22,24 +23,29 @@ export default async function SessionSettings({
   const { code } = await params;
   const admin = createAdmin();
 
-  const { data: session } = await admin
+  const { data: session, error: sessionError } = await admin
     .from("sessions")
     .select(
       "id, created_by, topic, topic_es, intro_message, intro_message_es, context, instructions, status, privacy, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
     )
     .eq("id", code)
-    .single();
+    .maybeSingle();
+  // A malformed code (22P02) is a missing session; anything else is a failed
+  // load, which must not read as "Session not found".
+  if (sessionError && sessionError.code !== "22P02") return <LoadError what="this session" />;
   if (!session) notFound();
   if (!guard.isAdmin && session.created_by !== guard.user.id) notFound();
 
   // Admin-only, matching the PATCH route.
   let consentCount = 0;
   if (guard.isAdmin) {
-    const { count } = await admin
+    const { count, error: consentError } = await admin
       .from("participants")
       .select("id", { count: "exact", head: true })
       .eq("session_id", code)
       .not("connect_consent_at", "is", null);
+    // Without it the privacy confirm would claim 0 opt-ins.
+    if (consentError) return <LoadError what="this session" />;
     consentCount = count ?? 0;
   }
 

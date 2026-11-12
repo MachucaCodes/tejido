@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { InfoTip } from "@/components/info-tip";
+import { LoadError } from "../../load-error";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -33,11 +34,13 @@ const STATUS_ORDER = ["accepted", "sent", "declined", "failed", "pending"];
 export default function WhatsAppInvites({
   code,
   open,
+  loadFailed = false,
   lists,
   invites,
 }: {
   code: string;
   open: boolean;
+  loadFailed?: boolean;
   lists: InviteList[];
   invites: InviteRow[];
 }) {
@@ -127,7 +130,9 @@ export default function WhatsAppInvites({
           </div>
         </DialogHeader>
 
-        {lists.length === 0 ? (
+        {loadFailed ? (
+          <LoadError what="the lists and invites" />
+        ) : lists.length === 0 ? (
           <p className="text-sm text-muted-foreground">
             No lists yet. <Link href="/admin/lists" className="underline">Create one</Link>.
           </p>
@@ -160,7 +165,7 @@ export default function WhatsAppInvites({
         {error && <p className="text-xs text-destructive">{error}</p>}
         {result && <p className="text-xs text-muted-foreground">{result}</p>}
 
-        {invites.length > 0 && (
+        {!loadFailed && invites.length > 0 && (
           <div className="space-y-2">
             <p className="text-xs text-muted-foreground">
               Invited so far:{" "}
@@ -190,7 +195,7 @@ export default function WhatsAppInvites({
         <DialogFooter>
           <Button
             onClick={() => void send()}
-            disabled={busy || !open || picked.size === 0}
+            disabled={busy || !open || loadFailed || picked.size === 0}
           >
             {busy ? "Sending…" : "Send invites"}
           </Button>

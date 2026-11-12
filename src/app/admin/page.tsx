@@ -1,4 +1,7 @@
+import Link from "next/link";
 import { redirect } from "next/navigation";
+
+import { buttonVariants } from "@/components/ui/button";
 
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -20,7 +23,7 @@ export default async function AdminHome() {
     query,
     voiceCountsBySession(admin),
   ]);
-  // Archived sessions are retired, not deleted: keep them apart and dimmed so
+  // Archived sessions are retired, not deleted: keep them apart and tagged so
   // nobody mistakes one for a live session, but findable to un-archive.
   const active = (sessions ?? []).filter((s) => !s.archived_at);
   const archived = (sessions ?? []).filter((s) => s.archived_at);
@@ -37,7 +40,12 @@ export default async function AdminHome() {
           Couldn&apos;t load sessions. Reload the page to try again.
         </p>
       ) : active.length === 0 && archived.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No sessions yet.</p>
+        <div data-sessions-empty className="space-y-3 rounded-lg border bg-card p-6 text-center">
+          <p className="text-sm text-muted-foreground">No sessions yet.</p>
+          <Link href="/admin/new" className={buttonVariants()}>
+            New session
+          </Link>
+        </div>
       ) : (
         <ul className="space-y-2">
           {active.map((s) => (

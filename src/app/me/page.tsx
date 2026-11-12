@@ -74,7 +74,18 @@ export default async function ProfilePage() {
     }
   }
 
-  const fullName = profile?.full_name?.trim() || null;
+  // Organizers (admins, or anyone who has made a session) get a way back to
+  // the admin side: from admin, the name in the header leads here.
+  let isOrganizer = false;
+  if (!user.is_anonymous) {
+    const [{ data: role }, { count: created }] = await Promise.all([
+      admin.from("users").select("role").eq("id", user.id).maybeSingle(),
+      admin.from("sessions").select("id", { count: "exact", head: true }).eq("created_by", user.id),
+    ]);
+    isOrganizer = role?.role === "admin" || (created ?? 0) > 0;
+  }
+
+    const fullName = profile?.full_name?.trim() || null;
   const lotNumber = profile?.lot_number?.trim() || null;
   const isGuest = user.is_anonymous;
 
@@ -102,13 +113,18 @@ export default async function ProfilePage() {
 
       {/* Any phone-verified account can start its own session. */}
       {!isGuest && (
-        <Link
-          href="/admin/new"
-          className="mt-8 inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/60 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:border-[var(--accent)]/60 hover:text-foreground"
-        >
-          {t("createQuestion")}
-          <span aria-hidden>→</span>
-        </Link>
+        <div className="mt-8 flex flex-wrap gap-3">
+          {isOrganizer && (
+            <Link href="/admin" className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/60 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:border-[var(--accent)]/60 hover:text-foreground">
+              {t("manageSessions")}
+              <span aria-hidden>→</span>
+            </Link>
+          )}
+          <Link href="/admin/new" className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/60 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:border-[var(--accent)]/60 hover:text-foreground">
+            {t("createQuestion")}
+            <span aria-hidden>→</span>
+          </Link>
+        </div>
       )}
 
       <section className="mt-10 sm:mt-12">

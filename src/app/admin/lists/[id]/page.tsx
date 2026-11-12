@@ -60,10 +60,9 @@ export default async function AdminListDetail({
 
   return (
     <div className="space-y-8">
+      {/* No back link: the admin bar's marked Lists tab is the way back, as on
+          a session's page. */}
       <header className="space-y-1">
-        <Link href="/admin/lists" className="text-xs text-muted-foreground hover:text-foreground">
-          ← Lists
-        </Link>
         <div className="flex items-center gap-2">
           <h1 className="text-lg font-semibold">{list.name}</h1>
           <EditListForm listId={list.id} name={list.name} description={list.description} />

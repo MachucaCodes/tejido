@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -137,10 +138,9 @@ export default function EditListForm({
               />
             </div>
             {error && <p className="text-xs text-destructive">{error}</p>}
-            <div className="flex items-center justify-between gap-2">
-              <Button type="submit" disabled={busy}>
-                {busy ? "Saving…" : "Save"}
-              </Button>
+            {/* Same footer as New list: Cancel + Save on the right. Delete is a
+                quiet icon on the far left, set apart from Save. */}
+            <DialogFooter className="sm:justify-between">
               <Tooltip>
                 <TooltipTrigger
                   type="button"
@@ -149,13 +149,19 @@ export default function EditListForm({
                     setError(null);
                     setConfirming(true);
                   }}
-                  className="rounded p-1.5 text-muted-foreground hover:bg-accent hover:text-destructive"
+                  className="self-start rounded p-1.5 text-muted-foreground hover:bg-accent hover:text-destructive sm:self-center"
                 >
                   <Trash2Icon className="size-4" aria-hidden />
                 </TooltipTrigger>
                 <TooltipContent>Delete list</TooltipContent>
               </Tooltip>
-            </div>
+              <div className="flex flex-col-reverse gap-2 sm:flex-row">
+                <DialogClose render={<Button type="button" variant="outline" />}>Cancel</DialogClose>
+                <Button type="submit" disabled={busy}>
+                  {busy ? "Saving…" : "Save"}
+                </Button>
+              </div>
+            </DialogFooter>
           </form>
         )}
       </DialogContent>
