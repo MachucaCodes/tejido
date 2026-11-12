@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowUpIcon } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import type { BuilderMessage, SessionDraft } from "@/lib/session-builder";
@@ -16,23 +15,19 @@ import { Button } from "@/components/ui/button";
 const OPENER =
   "Hi! I'll help you set up a session. What do you want people to open up about?";
 
-// Same labels as the manual form (create-session-form.tsx).
-const FIELDS: { key: keyof SessionDraft; label: string; rows: number }[] = [
-  { key: "code", label: "Link name", rows: 1 },
-  { key: "topic", label: "Question people are asked", rows: 2 },
-  { key: "intro_message", label: "Intro message", rows: 4 },
-  { key: "context", label: "Context", rows: 4 },
-  { key: "instructions", label: "Instructions", rows: 6 },
-  { key: "prompt_summary_system", label: "Summary focus", rows: 2 },
-];
-
-export default function SessionBuilder() {
-  const router = useRouter();
+// The chat writes its draft into the page's one form (create-session-form.tsx);
+// it has no form or Create button of its own.
+export default function SessionBuilder({
+  draft,
+  onDraft,
+}: {
+  // What the form holds now, so the chat builds on the organizer's edits.
+  draft: SessionDraft | null;
+  onDraft: (draft: SessionDraft) => void;
+}) {
   const [messages, setMessages] = useState<BuilderMessage[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
-  const [draft, setDraft] = useState<SessionDraft | null>(null);
-  const [creating, setCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const send = async (e: React.FormEvent) => {
@@ -83,7 +78,7 @@ export default function SessionBuilder() {
           }
           if (event.draft) {
             updateLast({ draft: event.draft });
-            setDraft(event.draft);
+            onDraft(event.draft);
           }
           if (event.error) setError(event.error);
         }
@@ -94,26 +89,9 @@ export default function SessionBuilder() {
     setBusy(false);
   };
 
-  const create = async () => {
-    if (!draft) return;
-    setError(null);
-    setCreating(true);
-    const res = await fetch("/api/admin/sessions", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(draft),
-    });
-    setCreating(false);
-    if (!res.ok) {
-      setError(await res.text());
-      return;
-    }
-    router.push(`/admin/sessions/${draft.code}`);
-  };
-
   return (
     <div className="space-y-3">
-      {/* Short while it only holds the greeting, so the sessions list below
+      {/* Short while it only holds the greeting, so the form link below
           stays in view; full height once a conversation starts. */}
       <div
         className={`flex flex-col rounded-lg border bg-card ${
@@ -136,7 +114,7 @@ export default function SessionBuilder() {
                     <span className="text-muted-foreground">…</span>
                   )}
                   {m.draft && (
-                    <p className="text-xs text-muted-foreground">Draft updated below.</p>
+                    <p className="text-xs text-muted-foreground">Filled in the form below.</p>
                   )}
                 </MessageContent>
               </Message>
@@ -157,37 +135,6 @@ export default function SessionBuilder() {
           </Button>
         </form>
       </div>
-
-      {draft && (
-        <div className="space-y-3 rounded-lg border bg-card p-4">
-          <p className="text-sm font-medium">Draft session</p>
-          {FIELDS.map(({ key, label, rows }) => (
-            <div key={key} className="space-y-1">
-              <label className="text-xs font-medium" htmlFor={`draft-${key}`}>
-                {label}
-              </label>
-              <textarea
-                id={`draft-${key}`}
-                value={draft[key] ?? ""}
-                onChange={(e) =>
-                  setDraft({
-                    ...draft,
-                    [key]:
-                      key === "code"
-                        ? e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, "")
-                        : e.target.value,
-                  })
-                }
-                rows={rows}
-                className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-              />
-            </div>
-          ))}
-          <Button onClick={create} disabled={creating || !draft.code || !draft.topic}>
-            {creating ? "Creating…" : "Create session"}
-          </Button>
-        </div>
-      )}
 
       {error && <p className="text-xs text-destructive">{error}</p>}
     </div>

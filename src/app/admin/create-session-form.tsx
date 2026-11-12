@@ -3,17 +3,42 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import type { SessionDraft } from "@/lib/session-builder";
 import { InfoTip } from "@/components/info-tip";
 import { Button } from "@/components/ui/button";
 
-export default function CreateSessionForm() {
+export const EMPTY_SESSION: SessionDraft = {
+  code: "",
+  topic: "",
+  intro_message: "",
+  context: "",
+  instructions: "",
+  prompt_summary_system: "",
+};
+
+// The one form on /admin/new. Controlled from the page, so the chat can fill
+// it in and the organizer edits the same fields before creating.
+export default function CreateSessionForm({
+  values,
+  onChange,
+}: {
+  values: SessionDraft;
+  onChange: (next: SessionDraft) => void;
+}) {
   const router = useRouter();
-  const [code, setCode] = useState("");
-  const [topic, setTopic] = useState("");
-  const [introMessage, setIntroMessage] = useState("");
-  const [context, setContext] = useState("");
-  const [instructions, setInstructions] = useState("");
-  const [summaryFocus, setSummaryFocus] = useState("");
+  const code = values.code;
+  const topic = values.topic;
+  const introMessage = values.intro_message ?? "";
+  const context = values.context ?? "";
+  const instructions = values.instructions ?? "";
+  const summaryFocus = values.prompt_summary_system ?? "";
+  const set = (key: keyof SessionDraft) => (value: string) => onChange({ ...values, [key]: value });
+  const setCode = set("code");
+  const setTopic = set("topic");
+  const setIntroMessage = set("intro_message");
+  const setContext = set("context");
+  const setInstructions = set("instructions");
+  const setSummaryFocus = set("prompt_summary_system");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,7 +63,7 @@ export default function CreateSessionForm() {
       setError(await res.text());
       return;
     }
-    // Same as the builder: open the new session.
+    // Open the new session.
     router.push(`/admin/sessions/${code}`);
   };
 
@@ -66,10 +91,11 @@ export default function CreateSessionForm() {
         <label className="text-xs font-medium" htmlFor="q">
           Question people are asked
         </label>
-        <input
+        <textarea
           id="q"
           value={topic}
           onChange={(e) => setTopic(e.target.value)}
+          rows={2}
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           required
         />
@@ -87,7 +113,7 @@ export default function CreateSessionForm() {
           id="intro"
           value={introMessage}
           onChange={(e) => setIntroMessage(e.target.value)}
-          rows={3}
+          rows={4}
           placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
@@ -123,7 +149,7 @@ export default function CreateSessionForm() {
           id="instructions"
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
-          rows={4}
+          rows={6}
           placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
