@@ -71,16 +71,13 @@ export default async function AdminListDetail({
         {list.description && (
           <p className="text-sm text-muted-foreground">{list.description}</p>
         )}
-        {!membersError && (
-          <p className="text-sm text-muted-foreground">
-            {members.length} {members.length === 1 ? "number" : "numbers"}
-          </p>
-        )}
       </header>
 
       <section className="space-y-2">
         <div className="flex items-center justify-between gap-2">
-          <h2 className="text-sm font-medium">Members</h2>
+          <h2 className="text-sm font-medium">
+            Members{!membersError && ` (${members.length})`}
+          </h2>
           {!membersError && (
             <AddMembersForm listId={list.id} memberPhones={members.map((m) => m.phone)} />
           )}
@@ -90,7 +87,7 @@ export default async function AdminListDetail({
             Couldn&apos;t load the numbers in this list. Reload the page to try again.
           </p>
         ) : members.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No numbers yet.</p>
+          <p className="text-sm text-muted-foreground">No members yet.</p>
         ) : (
           <ul className="divide-y rounded-lg border bg-card">
             {members.map((m) => (

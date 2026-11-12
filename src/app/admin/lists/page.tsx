@@ -49,7 +49,7 @@ export default async function AdminListsPage() {
                     )}
                   </div>
                   <span className="shrink-0 text-xs text-muted-foreground">
-                    {count} {count === 1 ? "number" : "numbers"}
+                    {count} {count === 1 ? "member" : "members"}
                   </span>
                 </Link>
               </li>
