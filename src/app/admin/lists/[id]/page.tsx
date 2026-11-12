@@ -64,7 +64,10 @@ export default async function AdminListDetail({
         <Link href="/admin/lists" className="text-xs text-muted-foreground hover:text-foreground">
           ← Lists
         </Link>
-        <h1 className="text-lg font-semibold">{list.name}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg font-semibold">{list.name}</h1>
+          <EditListForm listId={list.id} name={list.name} description={list.description} />
+        </div>
         {list.description && (
           <p className="text-sm text-muted-foreground">{list.description}</p>
         )}
@@ -112,8 +115,6 @@ export default async function AdminListDetail({
           </ul>
         )}
       </section>
-
-      <EditListForm listId={list.id} name={list.name} description={list.description} />
     </div>
   );
 }
