@@ -1,0 +1,65 @@
+{
+  "tool": "clock-validate",
+  "name": "List page before (production)",
+  "outcome": "fail",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-ac58e0ba-ui-review-ui-mockup-list-page-opens-on",
+    "dirty": true
+  },
+  "environment": "production, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:19:51.090Z",
+  "duration_ms": 15270,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 673,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members\"",
+      "check": true,
+      "status": "fail",
+      "ms": 10005,
+      "error": "locator.waitFor: Timeout 10000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see \"Signing in on previews\" in clock-validate help))",
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{const h=document.querySelector(\"h1\");if(h)h.textContent=\"Example list\";const hp=document.querySelectorAll(\"header p.text-sm\");if(hp.length>1)hp[0].textContent=\"Neighbours for the March session\";document.querySelectorAll(\"main li p.truncate, section li p.truncate\").forEach((e,i)=>e.textContent=\"Member \"+(i+1));document.querySelectorAll(\"section li .font-mono\").forEach(e=>e.textContent=\"+506 0000 0000\");return true})()` is true",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "before 1440",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

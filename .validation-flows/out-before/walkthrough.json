@@ -1,0 +1,31 @@
+{
+  "title": "List page before (production)",
+  "slug": "list-page-before-production",
+  "out_dir": "/srv/agent-runs/ac58e0ba/.validation-flows/out-before/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:19:51.090Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "List page before (production)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-before/step-01.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-before/step-02.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,245 @@
+{
+  "tool": "clock-validate",
+  "name": "List page after (PR preview)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-ac58e0ba-ui-review-ui-mockup-list-page-opens-on",
+    "dirty": true
+  },
+  "environment": "PR #5 preview, prod data, read-only",
+  "base_url": "https://tejido-git-clock-02d9bcf8-ui-mockup-e5f195-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:20:12.934Z",
+  "duration_ms": 22368,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 1770,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Add numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 38,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{const h=document.querySelector(\"h1\");if(h)h.textContent=\"Example list\";const hp=document.querySelectorAll(\"header p.text-sm\");if(hp.length>1)hp[0].textContent=\"Neighbours for the March session\";document.querySelectorAll(\"main li p.truncate, section li p.truncate\").forEach((e,i)=>e.textContent=\"Member \"+(i+1));document.querySelectorAll(\"section li .font-mono\").forEach(e=>e.textContent=\"+506 0000 0000\");return true})()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 24,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "after 1440",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Add numbers\"",
+      "check": false,
+      "status": "pass",
+      "ms": 75,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Or paste numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "add dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='How to paste numbers']`",
+      "check": false,
+      "status": "pass",
+      "ms": 110,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "info clicked desktop",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 26,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 405,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Edit\"",
+      "check": false,
+      "status": "pass",
+      "ms": 25,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Edit list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 24,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{document.querySelector('#list-name').value='Example list';document.querySelector('#list-description').value='Neighbours for the March session';return true})()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "edit dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Delete list']`",
+      "check": false,
+      "status": "pass",
+      "ms": 107,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Its numbers are kept\"",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{const t=[...document.querySelectorAll('[data-slot=dialog-title]')].pop();if(t)t.textContent='Delete “Example list”?';return true})()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "delete confirm",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "pass",
+      "ms": 50,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 300 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 303,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "after cancel",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-24.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

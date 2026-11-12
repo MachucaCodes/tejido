@@ -1,0 +1,9 @@
+{"code":"F1","title":"Paste-format help behind the (i) icon still can't be opened by a click or tap",
+"kind":"clarity","severity":"low","confidence":"high",
+"where":"/admin/lists/[id], Add numbers dialog, 'Or paste numbers' (i) icon, 1440 and 390",
+"what_happens":"Still there from round 1. Clicking the (i) next to 'Or paste numbers' shows nothing (screenshot taken 0.5s after the click, at 1440 and at 390). The help is a hover tooltip, so on a phone a tap never shows it.",
+"who_hurts":"An admin adding numbers from a phone who wants to know the paste format (name, language, Costa Rica default) can't read it.",
+"suggested_fix":"Swap the Tooltip for the app's Popover (src/components/ui/popover.tsx) on that (i) button in add-members-form.tsx, so a click or tap opens the same text.",
+"rule":"Dane's rule: explanation goes 'behind a small \"i\" icon or tooltip' - it has to open on the devices admins use. General: WCAG 2.2 1.4.13.",
+"origin":"this change (round 1 finding, not yet fixed)",
+"fingerprint":"/admin/lists/[id]|add-members-form|clarity|paste help hover only"}

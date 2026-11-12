@@ -1,0 +1,164 @@
+{
+  "title": "List page after phone",
+  "slug": "list-page-after-phone",
+  "out_dir": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:20:41.346Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "List page after phone",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-01.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-02.png",
+          "shows": "Page shows \"Add numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-03.png",
+          "shows": "`(()=>{const h=document.querySelector(\"h1\");if(h)h.textContent=\"Example list\";const hp=document.querySelectorAll(\"header p.text-sm\");if(hp.length>1)hp[0].textContent=\"Neighbours for the March session\";document.querySelectorAll(\"main li p.truncate, section li p.truncate\").forEach((e,i)=>e.textContent=\"Member \"+(i+1));document.querySelectorAll(\"section li .font-mono\").forEach(e=>e.textContent=\"+506 0000 0000\");return true})()` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-04.png",
+          "shows": "after 1440",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-05.png",
+          "shows": "Click \"Add numbers\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-06.png",
+          "shows": "Page shows \"Or paste numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-07.png",
+          "shows": "add dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-08.png",
+          "shows": "Click `[aria-label='How to paste numbers']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-10.png",
+          "shows": "info clicked desktop",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-11.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-12.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-14.png",
+          "shows": "Click \"Edit\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-15.png",
+          "shows": "Page shows \"Edit list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-16.png",
+          "shows": "`(()=>{document.querySelector('#list-name').value='Example list';document.querySelector('#list-description').value='Neighbours for the March session';return true})()` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-17.png",
+          "shows": "edit dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-18.png",
+          "shows": "Click `[aria-label='Delete list']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-19.png",
+          "shows": "Page shows \"Its numbers are kept\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-20.png",
+          "shows": "`(()=>{const t=[...document.querySelectorAll('[data-slot=dialog-title]')].pop();if(t)t.textContent='Delete “Example list”?';return true})()` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-21.png",
+          "shows": "delete confirm",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-22.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/ac58e0ba/.validation-flows/out-after-phone/step-24.png",
+          "shows": "after cancel",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
