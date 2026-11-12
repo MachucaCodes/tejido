@@ -1,0 +1,22 @@
+{
+  "name": "Page a new session lands on (existing near-empty session, look only)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production, look only",
+  "login": "tejido",
+  "viewport": {"width": 1440, "height": 900},
+  "pace_ms": 700,
+  "limitations": ["Existing session with 0 voices stands in for a just-created one; nothing clicked that saves"],
+  "steps": [
+    {"do": "goto", "url": "/admin/sessions/daily-life-together"},
+    {"do": "wait", "ms": 3500},
+    {"do": "expect_js", "js": "(()=>{document.querySelectorAll('li, td, span, p').forEach(el=>{if(el.children.length===0 && /\\+?\\d[\\d\\s-]{7,}/.test(el.textContent)) el.textContent='+•• ••• ••• ••••'}); return 'ok'})()", "equals": "ok", "label": "hide phone numbers"},
+    {"do": "screenshot", "label": "05 session landing, first screen"},
+    {"do": "expect_js", "js": "(()=>{window.scrollTo(0, 700); return 'ok'})()", "equals": "ok", "label": "scroll"},
+    {"do": "wait", "ms": 600},
+    {"do": "screenshot", "label": "06 session landing, scrolled"},
+    {"do": "expect_js", "js": "(()=>{window.scrollTo(0, 99999); return 'ok'})()", "equals": "ok", "label": "scroll end"},
+    {"do": "wait", "ms": 600},
+    {"do": "screenshot", "label": "07 session landing, bottom"},
+    {"do": "expect_js", "js": "JSON.stringify({h: document.documentElement.scrollHeight, text: document.querySelector('main').innerText.replace(/\\+?\\d[\\d\\s-]{7,}/g,'#').slice(0,1500)})", "equals": "dump", "label": "dump"}
+  ]
+}

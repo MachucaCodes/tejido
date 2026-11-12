@@ -1,0 +1,220 @@
+{
+  "tool": "clock-validate",
+  "name": "Start a session path: /admin to /admin/new (look only)",
+  "outcome": "fail",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-f708d36b-ui-audit-path-audit-not-a-screen-audit",
+    "dirty": true
+  },
+  "environment": "production, look only, nothing submitted",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:57:35.432Z",
+  "duration_ms": 46788,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1086,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "01 admin landing",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "body",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "measure admin",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"New session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 71,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "02 new page as it opens",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "measure new",
+      "check": true,
+      "status": "pass",
+      "ms": 20,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 59,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 817,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "03 form opened",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "measure form",
+      "check": true,
+      "status": "pass",
+      "ms": 10,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"My Test Session!\" into `#slug`",
+      "check": false,
+      "status": "pass",
+      "ms": 78,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"What should we change about the park?\" into `#q`",
+      "check": false,
+      "status": "pass",
+      "ms": 50,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 511,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "slug after typing spaces and caps",
+      "check": true,
+      "status": "pass",
+      "ms": 14,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll to Create",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 512,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "04 form filled up to Create (not clicked)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "dump measurements",
+      "check": true,
+      "status": "fail",
+      "ms": 10097,
+      "error": "got \"{\\\"audit_\\\\\\\"slug after typing spaces and caps\\\\\\\"\\\":\\\"mytestsession\\\",\\\"audit_\\\\\\\"measure form\\\\\\\"\\\":\\\"{\\\\\\\"h\\\\\\\":1174,\\\\\\\"btns\\\\\\\":[[\\\\\\\"\\\\\\\",331],[\\\\\\\"\\\\\\\",455],[\\\\\\\"\\\\\\\",601],[\\\\\\\"\\\\\\\",719],[\\\\\\\"\\\\\\\",857],[\\\\\\\"\\\\\\\",995],[\\\\\\\"Create session\\\\\\\",1093]]}\\\",\\\"audit_\\\\\\\"measure admin\\\\\\\"\\\":\\\"{\\\\\\\"sessions\\\\\\\":10,\\\\\\\"newBtn\\\\\\\":[{\\\\\\\"x\\\\\\\":1056.890625,\\\\\\\"y\\\\\\\":74,\\\\\\\"width\\\\\\\":95.109375,\\\\\\\"he",
+      "screenshot": "step-21.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Create is never clicked; no form saved"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

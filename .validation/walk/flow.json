@@ -1,0 +1,116 @@
+{
+ "name": "Start a session path: /admin to /admin/new (look only)",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "environment": "production, look only, nothing submitted",
+ "login": "tejido",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 700,
+ "limitations": [
+  "Create is never clicked; no form saved"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "screenshot",
+   "label": "01 admin landing"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.body.innerText.length>0",
+   "equals": true,
+   "label": "body"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const k='audit_'+\"\\\"measure admin\\\"\"; sessionStorage.setItem(k, JSON.stringify({sessions: document.querySelectorAll('main ul li').length, newBtn: [...document.querySelectorAll('a')].filter(a=>a.textContent.trim()==='New session').map(a=>a.getBoundingClientRect().toJSON()), h: document.documentElement.scrollHeight})); return 'ok'})()",
+   "equals": "ok",
+   "label": "measure admin"
+  },
+  {
+   "do": "click",
+   "text": "New session"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "screenshot",
+   "label": "02 new page as it opens"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const k='audit_'+\"\\\"measure new\\\"\"; sessionStorage.setItem(k, JSON.stringify({h: document.documentElement.scrollHeight, sum: document.querySelector('details summary')?.getBoundingClientRect().toJSON(), text: document.querySelector('main').innerText.slice(0,400)})); return 'ok'})()",
+   "equals": "ok",
+   "label": "measure new"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "03 form opened"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const k='audit_'+\"\\\"measure form\\\"\"; sessionStorage.setItem(k, JSON.stringify({h: document.documentElement.scrollHeight, btns: [...document.querySelectorAll('button')].map(b=>[b.textContent.trim(), Math.round(b.getBoundingClientRect().top)])})); return 'ok'})()",
+   "equals": "ok",
+   "label": "measure form"
+  },
+  {
+   "do": "fill",
+   "selector": "#slug",
+   "value": "My Test Session!"
+  },
+  {
+   "do": "fill",
+   "selector": "#q",
+   "value": "What should we change about the park?"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const k='audit_'+\"\\\"slug after typing spaces and caps\\\"\"; sessionStorage.setItem(k, document.querySelector('#slug').value); return 'ok'})()",
+   "equals": "ok",
+   "label": "slug after typing spaces and caps"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const b=[...document.querySelectorAll('form button[type=submit]')].pop(); b.scrollIntoView({block:'center'}); return 'ok'})()",
+   "equals": "ok",
+   "label": "scroll to Create"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "04 form filled up to Create (not clicked)"
+  },
+  {
+   "do": "expect_js",
+   "js": "JSON.stringify(Object.fromEntries(Object.entries(sessionStorage).filter(([k])=>k.startsWith('audit_'))))",
+   "equals": "dump",
+   "label": "dump measurements"
+  }
+ ]
+}

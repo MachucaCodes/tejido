@@ -1,0 +1,129 @@
+{
+  "title": "Start a session path: /admin to /admin/new (look only)",
+  "slug": "start-a-session-path-admin-to-admin-new-look-onl",
+  "out_dir": "/srv/agent-runs/f708d36b/.validation/walk/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:57:35.432Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Start a session path: /admin to /admin/new (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-03.png",
+          "shows": "01 admin landing",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-04.png",
+          "shows": "body",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-05.png",
+          "shows": "measure admin",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-06.png",
+          "shows": "Click \"New session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-08.png",
+          "shows": "02 new page as it opens",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-09.png",
+          "shows": "measure new",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-10.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-12.png",
+          "shows": "03 form opened",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-13.png",
+          "shows": "measure form",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-14.png",
+          "shows": "Type \"My Test Session!\" into `#slug`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-15.png",
+          "shows": "Type \"What should we change about the park?\" into `#q`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-17.png",
+          "shows": "slug after typing spaces and caps",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-18.png",
+          "shows": "scroll to Create",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-20.png",
+          "shows": "04 form filled up to Create (not clicked)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/walk/step-21.png",
+          "shows": "dump measurements",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

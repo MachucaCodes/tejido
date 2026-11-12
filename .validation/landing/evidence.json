@@ -1,0 +1,130 @@
+{
+  "tool": "clock-validate",
+  "name": "Page a new session lands on (existing near-empty session, look only)",
+  "outcome": "fail",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-f708d36b-ui-audit-path-audit-not-a-screen-audit",
+    "dirty": true
+  },
+  "environment": "production, look only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:58:43.108Z",
+  "duration_ms": 32980,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1370,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3511,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "hide phone numbers",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "05 session landing, first screen",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 607,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "06 session landing, scrolled",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll end",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 604,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "07 session landing, bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "dump",
+      "check": true,
+      "status": "fail",
+      "ms": 10177,
+      "error": "got \"{\\\"h\\\":965,\\\"text\\\":\\\"When we're all living here, what do you picture yourself doing with your neighbors?\\\\n\\\\ndaily-life-together · open · Nov 10, 2026, 7:16 PM CST\\\\n\\\\nCopy join link\\\\nOverview\\\\nSynthesis\\\\nLogs\\\\nVoices\\\\n\\\\n0 voices — people whose answers turned into points\\\\n\\\\n1 opened the link — 1 in conversation\\\\n\\\\nThemes\\\\n\\\\nNo themes yet.\\\\n\\\\nSend on WhatsApp\\\\nTest\\\\n2 number",
+      "screenshot": "step-11.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Existing session with 0 voices stands in for a just-created one; nothing clicked that saves"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

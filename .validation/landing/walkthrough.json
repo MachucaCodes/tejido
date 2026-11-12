@@ -1,0 +1,73 @@
+{
+  "title": "Page a new session lands on (existing near-empty session, look only)",
+  "slug": "page-a-new-session-lands-on-existing-near-empty-",
+  "out_dir": "/srv/agent-runs/f708d36b/.validation/landing/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:58:43.108Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Page a new session lands on (existing near-empty session, look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-03.png",
+          "shows": "hide phone numbers",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-04.png",
+          "shows": "05 session landing, first screen",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-05.png",
+          "shows": "scroll",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-07.png",
+          "shows": "06 session landing, scrolled",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-08.png",
+          "shows": "scroll end",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-10.png",
+          "shows": "07 session landing, bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/f708d36b/.validation/landing/step-11.png",
+          "shows": "dump",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
