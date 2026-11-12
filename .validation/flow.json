@@ -1,0 +1,22 @@
+{
+  "name": "Admin: sessions list at /admin, New session on its own page",
+  "base_url": "http://127.0.0.1:4187",
+  "environment": "next start of this branch, prod Supabase, read-only",
+  "login": "tejido",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 500,
+  "steps": [
+    { "do": "goto", "url": "/admin" },
+    { "do": "expect_text", "text": "New session" },
+    { "do": "screenshot" },
+    { "do": "click", "text": "New session" },
+    { "do": "expect_text", "text": "Or fill in the form yourself" },
+    { "do": "screenshot" },
+    { "do": "click", "text": "Or fill in the form yourself" },
+    { "do": "screenshot" },
+    { "do": "goto", "url": "/admin/sessions" },
+    { "do": "expect_url", "match": "/admin$" },
+    { "do": "expect_text", "text": "New session" },
+    { "do": "screenshot" }
+  ]
+}

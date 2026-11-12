@@ -1,0 +1,137 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin: sessions list at /admin, New session on its own page",
+  "outcome": "pass",
+  "commit": {
+    "sha": "3dcc3331da787ea49c2d9c8d06f242bff49719fa",
+    "branch": "clock-cf251da5-ui-mockup-home-does-two-big-jobs-create",
+    "dirty": false
+  },
+  "environment": "next start of this branch, prod Supabase, read-only",
+  "base_url": "http://127.0.0.1:4187",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:56:28.391Z",
+  "duration_ms": 16005,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1108,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 26,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Screenshot",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"New session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 32,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Or fill in the form yourself\"",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Screenshot",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 79,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Screenshot",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions",
+      "check": false,
+      "status": "pass",
+      "ms": 1350,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin$",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Screenshot",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

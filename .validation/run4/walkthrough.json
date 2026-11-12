@@ -1,0 +1,101 @@
+{
+  "title": "Admin: sessions list at /admin, New session on its own page",
+  "slug": "admin-sessions-list-at-admin-new-session-on-its-",
+  "out_dir": "/srv/agent-runs/cf251da5/.validation/run4/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:22:20.639Z (commit 2eb78f636e). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin: sessions list at /admin, New session on its own page",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-03.png",
+          "shows": "Screenshot",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-04.png",
+          "shows": "Click \"New session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-05.png",
+          "shows": "Page shows \"Or fill in the form yourself\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-06.png",
+          "shows": "Screenshot",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-07.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-08.png",
+          "shows": "Screenshot",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-09.png",
+          "shows": "Open /admin/sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-10.png",
+          "shows": "URL matches /admin$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-11.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/cf251da5/.validation/run4/step-12.png",
+          "shows": "Screenshot",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
