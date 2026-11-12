@@ -56,7 +56,7 @@ export default function LogsFilter({
                   }}
                 >
                   {g.options.map((o) => (
-                    <DropdownMenuRadioItem key={o.value} value={o.value}>
+                    <DropdownMenuRadioItem key={o.value} value={o.value} closeOnClick>
                       {o.label}
                       {o.value !== "all" && (
                         <span className="ml-auto tabular-nums text-xs text-muted-foreground">
