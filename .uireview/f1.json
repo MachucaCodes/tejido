@@ -1,0 +1,8 @@
+{"code":"F1","title":"List page has a '← Lists' back link under a marked Lists tab; session pages have no back link","kind":"consistency","severity":"low","confidence":"high",
+"where":"/admin/lists/[id] header (page.tsx), 1440px, as it opens",
+"what_happens":"The admin bar already shows Lists as the current tab, and the page adds a '← Lists' link right under it. A session's page (SessionHeader) has no back link: the Sessions tab is the way back. Same job done two ways.",
+"who_hurts":"An admin moving between a session and a list: two ways back on one page, a different way on the other.",
+"suggested_fix":"Drop the '← Lists' link from the list header (src/app/admin/lists/[id]/page.tsx header) so the Lists tab is the one way back, as on session pages. Keep the link on the not-found card, where it is the only action.",
+"rule":"Dane's UI rule: 'Be careful about redundant titles, headings and nav entries. Consolidate where possible.' Established pattern: SessionHeader has no back link.",
+"origin":"earlier: list header since #5",
+"fingerprint":"/admin/lists/[id]|header|consistency|redundant back link"}

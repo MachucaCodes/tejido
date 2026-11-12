@@ -1,0 +1,340 @@
+{
+  "tool": "clock-validate",
+  "name": "Lists audit (look only)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-bb2dac2a-ui-audit-cold-audit-of-the-lists-part",
+    "dirty": true
+  },
+  "environment": "production, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:45:48.465Z",
+  "duration_ms": 48883,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1103,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "sessions-index",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 573,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "lists-index",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"New list\"",
+      "check": false,
+      "status": "pass",
+      "ms": 66,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 804,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "new-list-dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 13,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 1068,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members\"",
+      "check": true,
+      "status": "pass",
+      "ms": 24,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{document.querySelectorAll('ul.divide-y li').forEach((li,i)=>{const n=li.querySelector('p.truncate');if(n)n.textContent='Member '+(i+1);const p=li.querySelector('.font-mono');if(p)p.textContent='+506 0000 000'+i;});return 'ok'})()` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "list-detail",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Edit\"",
+      "check": false,
+      "status": "pass",
+      "ms": 35,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 812,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "edit-dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 506,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Add numbers\"",
+      "check": false,
+      "status": "pass",
+      "ms": 68,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 807,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "add-numbers-dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 23,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Member actions']`",
+      "check": false,
+      "status": "pass",
+      "ms": 47,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 605,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "member-menu",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-27.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 23,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+      "check": false,
+      "status": "pass",
+      "ms": 899,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "list-404",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-31.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/not-a-uuid",
+      "check": false,
+      "status": "pass",
+      "ms": 826,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "list-bad-id",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-34.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "li .font-mono",
+    "li p.truncate.font-medium"
+  ],
+  "limitations": [
+    "Look only: no saves, no removes"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

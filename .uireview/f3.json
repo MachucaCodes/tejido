@@ -1,0 +1,9 @@
+{"code":"F3","title":"Removing a member is confirmed by 'Click again' in the same spot, so a double-click removes them","kind":"clarity","severity":"low","confidence":"medium",
+"where":"/admin/lists/[id], member row '…' menu (remove-member-button.tsx), 1440px",
+"what_happens":"The '…' menu shows 'Remove from list'. One click turns it into 'Click again to remove' in the same place; the second click removes. Delete list and Archive session ask in a dialog instead. Seen: the menu (screenshot). From code, not clicked: I did not press it on production.",
+"who_hurts":"An admin who double-clicks the menu item (common habit) removes a person from the list with no real chance to stop.",
+"suggested_fix":"Open a small confirm dialog from the menu item ('Remove <name> from <list>?' Cancel / Remove), the same as Delete list in edit-list-form.tsx.",
+"rule":"Dane's UI rule: destructive actions 'always ask for confirmation before they run'. Established pattern: Delete list / Archive session confirm in a dialog.",
+"origin":"earlier: fix for UI-197",
+"owners_call":"Is the 'click again' step enough confirm for removing one number (it's easy to add back)?",
+"fingerprint":"/admin/lists/[id]|RemoveMemberButton|clarity|click-again confirm"}

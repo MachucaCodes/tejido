@@ -1,0 +1,8 @@
+{"code":"F2","title":"The three Lists dialogs place their buttons three different ways","kind":"consistency","severity":"low","confidence":"high",
+"where":"New list dialog (/admin/lists), Edit list and Add numbers dialogs (/admin/lists/[id]), 1440px",
+"what_happens":"New list: grey footer bar, Cancel + Create list on the right. Edit list: Save on the left, no Cancel, no footer, trash on the right. Add numbers: 'Add to list' on the left inside the body, no footer. Archive session also uses the footer with Cancel on the right.",
+"who_hurts":"An admin has to look for the main button in a different corner in each dialog; small, but it makes the three feel built separately.",
+"suggested_fix":"Use DialogFooter for Edit list and Add numbers like create-list-form.tsx and archive-toggle.tsx: main button on the right. For Edit, keep the trash icon on the left of the footer, set apart from Save.",
+"rule":"Established pattern: create-list-form.tsx and sessions/[code]/archive-toggle.tsx use DialogFooter with Cancel + main action on the right.",
+"origin":"earlier: #5 / #8",
+"fingerprint":"/admin/lists|dialogs|consistency|dialog button placement differs"}

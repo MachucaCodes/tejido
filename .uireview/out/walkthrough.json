@@ -1,0 +1,192 @@
+{
+  "title": "Lists audit (look only)",
+  "slug": "lists-audit-look-only",
+  "out_dir": "/srv/agent-runs/bb2dac2a/.uireview/out/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:45:48.465Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Lists audit (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-03.png",
+          "shows": "sessions-index",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-04.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-05.png",
+          "shows": "Page shows \"New list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-06.png",
+          "shows": "lists-index",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-07.png",
+          "shows": "Click \"New list\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-09.png",
+          "shows": "new-list-dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-10.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-11.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-12.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-13.png",
+          "shows": "`(()=>{document.querySelectorAll('ul.divide-y li').forEach((li,i)=>{const n=li.querySelector('p.truncate');if(n)n.textContent='Member '+(i+1);const p=li.querySelector('.font-mono');if(p)p.textContent='+506 0000 000'+i;});return 'ok'})()` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-14.png",
+          "shows": "list-detail",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-15.png",
+          "shows": "Click \"Edit\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-17.png",
+          "shows": "edit-dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-18.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-20.png",
+          "shows": "Click \"Add numbers\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-22.png",
+          "shows": "add-numbers-dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-23.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-25.png",
+          "shows": "Click `[aria-label='Member actions']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-27.png",
+          "shows": "member-menu",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-28.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-29.png",
+          "shows": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-31.png",
+          "shows": "list-404",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-32.png",
+          "shows": "Open /admin/lists/not-a-uuid",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/bb2dac2a/.uireview/out/step-34.png",
+          "shows": "list-bad-id",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
