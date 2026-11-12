@@ -50,6 +50,9 @@ export function AccountMenu({
     );
   }
 
+  // Already on the sign-in page: a second "Sign in" would just repeat it.
+  if (pathname === "/admin/login") return null;
+
   return (
     <>
       <button

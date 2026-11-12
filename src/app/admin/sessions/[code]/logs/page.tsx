@@ -3,12 +3,17 @@ import { notFound, redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import { formatDateTime } from "@/lib/format-date";
 
 type SearchParams = Promise<{
   status?: string;
   kind?: string;
   participant?: string;
+  before?: string;
 }>;
+
+const PAGE_SIZE = 200;
+const STATUSES = ["success", "error", "parse_error", "stream_aborted"] as const;
 
 const STATUS_BADGE: Record<string, string> = {
   success: "bg-green-100 text-green-800 border-green-200",
@@ -19,9 +24,15 @@ const STATUS_BADGE: Record<string, string> = {
 
 const KIND_LABEL: Record<string, string> = {
   facilitator_turn: "facilitator",
+  analyze_participant: "analyze",
+  summarize_session: "summary",
   extract_points: "extract",
   cluster_points: "cluster",
 };
+
+// Every kind the app can log. The chips only show the ones this session
+// actually has, so a filter never points at calls that don't exist.
+const KINDS = Object.keys(KIND_LABEL);
 
 type LogRow = {
   id: string;
@@ -71,7 +82,7 @@ export default async function SessionLogsPage({
   if (!guard.ok) redirect("/admin/login");
 
   const { code } = await params;
-  const { status, kind, participant } = await searchParams;
+  const { status, kind, participant, before } = await searchParams;
   const admin = createAdmin();
 
   const { data: session } = await admin
@@ -88,26 +99,50 @@ export default async function SessionLogsPage({
     )
     .eq("session_id", code)
     .order("created_at", { ascending: false })
-    .limit(200);
+    .limit(PAGE_SIZE);
 
   if (status && status !== "all") query = query.eq("status", status);
   if (kind && kind !== "all") query = query.eq("call_kind", kind);
   if (participant) query = query.eq("participant_id", participant);
+  if (before) query = query.lt("created_at", before);
 
-  const { data: rows, error } = await query;
+  // Real totals, not counts of the page we fetched. Chips count the whole
+  // session; "matching" counts the current filters across all pages.
+  const countRows = (f: { status?: string; kind?: string; participant?: string }) => {
+    let q = admin
+      .from("llm_call_logs")
+      .select("id", { count: "exact", head: true })
+      .eq("session_id", code);
+    if (f.status && f.status !== "all") q = q.eq("status", f.status);
+    if (f.kind && f.kind !== "all") q = q.eq("call_kind", f.kind);
+    if (f.participant) q = q.eq("participant_id", f.participant);
+    return q.then(({ count }) => count ?? 0);
+  };
+
+  const [{ data: rows, error }, kindCounts, statusCounts, matching] = await Promise.all([
+    query,
+    Promise.all(KINDS.map(async (k) => [k, await countRows({ kind: k })] as const)),
+    Promise.all(STATUSES.map(async (s) => [s, await countRows({ status: s })] as const)),
+    countRows({ status, kind, participant }),
+  ]);
+  const kindsPresent = kindCounts.filter(([k, n]) => n > 0 || k === kind);
+  const counts = Object.fromEntries(statusCounts) as Record<string, number>;
   const logs = (rows ?? []) as LogRow[];
+  const olderCursor = logs.length === PAGE_SIZE ? logs[logs.length - 1].created_at : null;
 
-  const counts = logs.reduce<Record<string, number>>((acc, r) => {
-    acc[r.status] = (acc[r.status] ?? 0) + 1;
-    return acc;
-  }, {});
-
-  function filterHref(next: { status?: string; kind?: string; participant?: string }) {
+  // Changing a filter starts again from the newest rows; paging keeps filters.
+  function filterHref(next: {
+    status?: string;
+    kind?: string;
+    participant?: string;
+    before?: string;
+  }) {
     const params = new URLSearchParams();
-    const merged = { status, kind, participant, ...next };
+    const merged = { status, kind, participant, before: undefined, ...next };
     if (merged.status && merged.status !== "all") params.set("status", merged.status);
     if (merged.kind && merged.kind !== "all") params.set("kind", merged.kind);
     if (merged.participant) params.set("participant", merged.participant);
+    if (merged.before) params.set("before", merged.before);
     const qs = params.toString();
     return `/admin/sessions/${code}/logs${qs ? `?${qs}` : ""}`;
   }
@@ -135,7 +170,7 @@ export default async function SessionLogsPage({
 
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="text-muted-foreground">Status:</span>
-        {(["all", "success", "error", "parse_error", "stream_aborted"] as const).map(
+        {(["all", ...STATUSES] as const).map(
           (s) => (
             <Link
               key={s}
@@ -157,21 +192,20 @@ export default async function SessionLogsPage({
 
       <div className="flex flex-wrap items-center gap-2 text-xs">
         <span className="text-muted-foreground">Kind:</span>
-        {(["all", "facilitator_turn", "extract_points", "cluster_points"] as const).map(
-          (k) => (
-            <Link
-              key={k}
-              href={filterHref({ kind: k })}
-              className={`rounded border px-2 py-0.5 ${
-                (kind ?? "all") === k
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-border bg-card hover:bg-accent"
-              }`}
-            >
-              {k === "all" ? "all" : (KIND_LABEL[k] ?? k)}
-            </Link>
-          ),
-        )}
+        {[["all", 0] as const, ...kindsPresent].map(([k, n]) => (
+          <Link
+            key={k}
+            href={filterHref({ kind: k })}
+            className={`rounded border px-2 py-0.5 ${
+              (kind ?? "all") === k
+                ? "border-foreground bg-foreground text-background"
+                : "border-border bg-card hover:bg-accent"
+            }`}
+          >
+            {k === "all" ? "all" : (KIND_LABEL[k] ?? k)}
+            {k !== "all" && <span className="ml-1 text-muted-foreground">{n}</span>}
+          </Link>
+        ))}
         {participant && (
           <Link
             href={filterHref({ participant: undefined })}
@@ -181,6 +215,12 @@ export default async function SessionLogsPage({
           </Link>
         )}
       </div>
+
+      <p className="text-xs text-muted-foreground">
+        {logs.length === 0
+          ? `0 of ${matching} matching calls`
+          : `Showing ${logs.length} of ${matching} matching calls${before ? " (older page)" : ", newest first"}`}
+      </p>
 
       {logs.length === 0 ? (
         <p className="rounded border bg-card p-6 text-center text-sm text-muted-foreground">
@@ -206,7 +246,7 @@ export default async function SessionLogsPage({
                     {KIND_LABEL[row.call_kind] ?? row.call_kind}
                   </span>
                   <span className="text-xs text-muted-foreground">
-                    {new Date(row.created_at).toLocaleString()}
+                    {formatDateTime(row.created_at)}
                   </span>
                   <span className="text-xs tabular-nums text-muted-foreground">
                     {fmtDuration(row.duration_ms)}
@@ -332,6 +372,29 @@ export default async function SessionLogsPage({
             </li>
           ))}
         </ul>
+      )}
+
+      {(before || olderCursor) && (
+        <nav className="flex items-center justify-between text-xs">
+          {before ? (
+            <Link
+              href={filterHref({})}
+              className="rounded border border-border bg-card px-2 py-1 hover:bg-accent"
+            >
+              ← Newest
+            </Link>
+          ) : (
+            <span />
+          )}
+          {olderCursor && (
+            <Link
+              href={filterHref({ before: olderCursor })}
+              className="rounded border border-border bg-card px-2 py-1 hover:bg-accent"
+            >
+              Older →
+            </Link>
+          )}
+        </nav>
       )}
     </div>
   );

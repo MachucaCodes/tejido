@@ -47,7 +47,7 @@ export default function CreateSessionForm() {
     <form onSubmit={submit} className="space-y-3 rounded-lg border bg-card p-4">
       <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="slug">
-          Slug
+          Link name
         </label>
         <input
           id="slug"
@@ -58,7 +58,7 @@ export default function CreateSessionForm() {
           required
         />
         <p className="text-xs text-muted-foreground">
-          Lowercase, used in /s/&lt;slug&gt; URLs.
+          Lowercase, no spaces. The join link is /s/&lt;link name&gt;.
         </p>
       </div>
       <div className="space-y-1">
@@ -72,6 +72,7 @@ export default function CreateSessionForm() {
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           required
         />
+        <p className="text-xs text-muted-foreground">The question people are asked.</p>
       </div>
       <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="intro">

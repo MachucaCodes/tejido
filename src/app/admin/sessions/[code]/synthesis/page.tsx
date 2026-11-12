@@ -6,6 +6,7 @@ import { createAdmin } from "@/lib/supabase/admin";
 import { voiceLabels } from "@/lib/voice-labels";
 import FindSources from "./find-sources";
 import RebuildButton from "./rebuild-button";
+import { formatDateTime, formatTime } from "@/lib/format-date";
 
 type PointRow = {
   id: string;
@@ -49,11 +50,11 @@ function groupByVoice(points: PointRow[]): VoiceGroup[] {
 }
 
 function fmt(at: string) {
-  return new Date(at).toLocaleString();
+  return formatDateTime(at);
 }
 
 function fmtTime(at: string) {
-  return new Date(at).toLocaleTimeString();
+  return formatTime(at);
 }
 
 export default async function SynthesisHistoryPage({
