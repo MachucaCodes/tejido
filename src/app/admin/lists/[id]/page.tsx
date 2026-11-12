@@ -64,7 +64,10 @@ export default async function AdminListDetail({
         <Link href="/admin/lists" className="text-xs text-muted-foreground hover:text-foreground">
           ← Lists
         </Link>
-        <h1 className="text-lg font-semibold">{list.name}</h1>
+        <div className="flex items-center gap-2">
+          <h1 className="text-lg font-semibold">{list.name}</h1>
+          <EditListForm listId={list.id} name={list.name} description={list.description} />
+        </div>
         {list.description && (
           <p className="text-sm text-muted-foreground">{list.description}</p>
         )}
@@ -75,10 +78,13 @@ export default async function AdminListDetail({
         )}
       </header>
 
-      <AddMembersForm listId={list.id} memberPhones={members.map((m) => m.phone)} />
-
       <section className="space-y-2">
-        <h2 className="text-sm font-medium">Members</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm font-medium">Members</h2>
+          {!membersError && (
+            <AddMembersForm listId={list.id} memberPhones={members.map((m) => m.phone)} />
+          )}
+        </div>
         {membersError ? (
           <p role="alert" className="text-sm text-destructive">
             Couldn&apos;t load the numbers in this list. Reload the page to try again.
@@ -109,8 +115,6 @@ export default async function AdminListDetail({
           </ul>
         )}
       </section>
-
-      <EditListForm listId={list.id} name={list.name} description={list.description} />
     </div>
   );
 }
