@@ -20,8 +20,6 @@ import {
   DEFAULT_SUMMARY_SYSTEM,
 } from "@/lib/prompts/summary";
 
-type Status = "open" | "closed";
-
 type PromptOverrides = {
   taskFraming: string;
   mechanics: string;
@@ -136,9 +134,7 @@ export default function EditSessionForm({
   initialIntroMessageEs,
   initialContext,
   initialInstructions,
-  initialStatus,
   initialPromptOverrides,
-  privacy,
 }: {
   code: string;
   initialTopic: string;
@@ -147,10 +143,7 @@ export default function EditSessionForm({
   initialIntroMessageEs: string;
   initialContext: string;
   initialInstructions: string;
-  initialStatus: Status;
   initialPromptOverrides: PromptOverrides;
-  /** The privacy row (admins only); it saves on its own, after a confirm. */
-  privacy?: React.ReactNode;
 }) {
   const router = useRouter();
   const [newCode, setNewCode] = useState(code);
@@ -162,7 +155,6 @@ export default function EditSessionForm({
   const [introMessageEs, setIntroMessageEs] = useState(initialIntroMessageEs);
   const [context, setContext] = useState(initialContext);
   const [instructions, setInstructions] = useState(initialInstructions);
-  const [status, setStatus] = useState<Status>(initialStatus);
   const [promptOverrides, setPromptOverrides] =
     useState<PromptOverrides>(initialPromptOverrides);
   const [busy, setBusy] = useState(false);
@@ -181,7 +173,6 @@ export default function EditSessionForm({
     introMessageEs !== initialIntroMessageEs ||
     context !== initialContext ||
     instructions !== initialInstructions ||
-    status !== initialStatus ||
     promptsDirty;
 
   const updateOverride = (key: PromptFieldKey, value: string) => {
@@ -215,7 +206,6 @@ export default function EditSessionForm({
       intro_message: introMessage,
       context,
       instructions,
-      status,
     };
     for (const f of PROMPT_FIELDS) {
       body[f.bodyField] = promptOverrides[f.key];
@@ -251,30 +241,6 @@ export default function EditSessionForm({
 
   return (
     <form onSubmit={submit} className="space-y-4 rounded-lg border bg-card p-4">
-      {/* Status and privacy first: they're what people come here to change
-          most, and they used to be buried at the bottom. */}
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-border pb-4">
-        <div className="flex items-center gap-2 text-sm">
-          <label className="text-muted-foreground" htmlFor="status">
-            Status:
-          </label>
-          <select
-            id="status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value as Status)}
-            className="rounded-md border bg-background px-2 py-1 text-sm font-medium"
-          >
-            <option value="open">Open</option>
-            <option value="closed">Closed</option>
-          </select>
-          <InfoTip label="About status">
-            Closed sessions stop taking new answers. Saved with the rest of the
-            form.
-          </InfoTip>
-        </div>
-        {privacy && <div className="min-w-0 flex-1">{privacy}</div>}
-      </div>
-
       <div className="space-y-1">
         <div className="flex items-center gap-1">
           <label className="text-xs font-medium" htmlFor="code">
@@ -394,10 +360,6 @@ export default function EditSessionForm({
           placeholder="Per-session guidance for the facilitator AI. e.g. 'Open warmly — this is a big change. Don't lead with a binary choice; invite anything that comes up.'"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
-        <p className="text-xs text-muted-foreground">
-          Injected into the facilitator system prompt and takes precedence over
-          the global mechanics.
-        </p>
       </div>
 
       <details className="rounded-md border bg-background/50">

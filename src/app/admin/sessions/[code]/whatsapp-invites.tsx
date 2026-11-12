@@ -33,13 +33,11 @@ const STATUS_ORDER = ["accepted", "sent", "declined", "failed", "pending"];
 export default function WhatsAppInvites({
   code,
   open,
-  archived = false,
   lists,
   invites,
 }: {
   code: string;
   open: boolean;
-  archived?: boolean;
   lists: InviteList[];
   invites: InviteRow[];
 }) {
@@ -156,7 +154,7 @@ export default function WhatsAppInvites({
 
         {!open && (
           <p className="text-xs text-muted-foreground">
-            {archived ? "Un-archive the session to send invites." : "Open the session to send invites."}
+            The session is closed. Reopen it in Settings to send invites.
           </p>
         )}
         {error && <p className="text-xs text-destructive">{error}</p>}

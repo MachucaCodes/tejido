@@ -5,6 +5,7 @@ import { createAdmin } from "@/lib/supabase/admin";
 import EditSessionForm from "../edit-session-form";
 import PrivacyToggle from "../privacy-toggle";
 import SessionHeader from "../session-header";
+import StatusToggle from "../status-toggle";
 
 /**
  * The session's settings on their own tab, so the Overview stays about the
@@ -45,6 +46,26 @@ export default async function SessionSettings({
   return (
     <div className="space-y-6">
       <SessionHeader session={session} current="settings" isAdmin={guard.isAdmin} />
+      {/* Status and privacy each save on their own after a confirm, so they
+          sit above the form rather than inside it. */}
+      <section className="divide-y divide-border rounded-lg border bg-card px-4">
+        <div className="py-2">
+          <StatusToggle
+            code={session.id}
+            status={session.status === "closed" ? "closed" : "open"}
+          />
+        </div>
+        {/* Admin-only, matching the PATCH route. */}
+        {guard.isAdmin && (
+          <div className="py-2">
+            <PrivacyToggle
+              code={session.id}
+              privacy={session.privacy === "connect" ? "connect" : "anonymous"}
+              consentCount={consentCount}
+            />
+          </div>
+        )}
+      </section>
       <EditSessionForm
         code={session.id}
         initialTopic={session.topic ?? ""}
@@ -53,7 +74,6 @@ export default async function SessionSettings({
         initialIntroMessageEs={session.intro_message_es ?? ""}
         initialContext={session.context ?? ""}
         initialInstructions={session.instructions ?? ""}
-        initialStatus={session.status as "open" | "closed"}
         initialPromptOverrides={{
           taskFraming: session.prompt_task_framing ?? "",
           mechanics: session.prompt_mechanics ?? "",
@@ -64,15 +84,6 @@ export default async function SessionSettings({
           summarySystem: session.prompt_summary_system ?? "",
           summaryPrompt: session.prompt_summary_prompt ?? "",
         }}
-        privacy={
-          guard.isAdmin ? (
-            <PrivacyToggle
-              code={session.id}
-              privacy={session.privacy === "connect" ? "connect" : "anonymous"}
-              consentCount={consentCount}
-            />
-          ) : undefined
-        }
       />
     </div>
   );

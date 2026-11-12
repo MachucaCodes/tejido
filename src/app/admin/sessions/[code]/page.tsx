@@ -55,13 +55,13 @@ export default async function AdminSessionDetail({
         actions={
           <>
             {/* Invites go out through the shared WhatsApp number to the admins'
-                contact lists, so only admins see (and can send) them. */}
-            {guard.isAdmin && (
+                contact lists, so only admins see (and can send) them. An
+                archived session takes no answers: nothing to invite to. */}
+            {guard.isAdmin && !session.archived_at && (
               <Suspense fallback={null}>
                 <InvitesButton
                   code={session.id}
-                  open={session.status === "open" && !session.archived_at}
-                  archived={Boolean(session.archived_at)}
+                  open={session.status === "open"}
                 />
               </Suspense>
             )}
@@ -95,11 +95,9 @@ export default async function AdminSessionDetail({
 async function InvitesButton({
   code,
   open,
-  archived,
 }: {
   code: string;
   open: boolean;
-  archived: boolean;
 }) {
   const admin = createAdmin();
 
@@ -144,7 +142,6 @@ async function InvitesButton({
     <WhatsAppInvites
       code={code}
       open={open}
-      archived={archived}
       lists={inviteLists}
       invites={invites}
     />

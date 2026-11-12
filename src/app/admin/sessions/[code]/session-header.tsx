@@ -37,7 +37,8 @@ export default function SessionHeader({
 
   return (
     <header className="space-y-3">
-      <div className="flex items-start justify-between gap-3">
+      {/* Actions go under the title on a phone so the title keeps its width. */}
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
         <div className="min-w-0 space-y-1">
           <h1 className="text-lg font-semibold">{session.topic || session.id}</h1>
           <p className="text-xs text-muted-foreground">
@@ -45,7 +46,7 @@ export default function SessionHeader({
             {formatDateTime(session.created_at)}
           </p>
         </div>
-        {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+        {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
       </div>
       {session.archived_at && (
         <p className="rounded-md border border-border bg-muted px-3 py-2 text-xs text-muted-foreground">
