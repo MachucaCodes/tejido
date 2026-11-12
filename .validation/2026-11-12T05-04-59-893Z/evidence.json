@@ -1,0 +1,114 @@
+{
+  "tool": "clock-validate",
+  "name": "Lists load failure shows an error (simulated locally)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "da86f18f1fba5ab4c991343e0ed1d20bee8e1b83",
+    "branch": "clock-df16d974-lists-load-error",
+    "dirty": true
+  },
+  "environment": "local build of the fix with the lists/list_members table names changed in an uncommitted edit to force a query error; real DB read-only",
+  "base_url": "http://localhost:4173",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:05:01.050Z",
+  "duration_ms": 21118,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 1381,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Couldn't load lists\"",
+      "check": true,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"No lists yet.\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3055,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "lists page, load failed",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 1926,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Couldn't load the numbers in this list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 51,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"No numbers yet.\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3058,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"0 numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3052,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "list detail, members load failed",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    ".font-mono"
+  ],
+  "limitations": [
+    "Failure forced by a local-only table-name change, not a real outage"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

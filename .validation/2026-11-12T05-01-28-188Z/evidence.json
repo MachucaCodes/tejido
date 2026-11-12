@@ -1,0 +1,78 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin home archived group (scrolled)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "3315ac872ee847a82bd2ca676dd2597a071c41c6",
+    "branch": "clock-df16d974-ui-fix-admin-home-lists-archived",
+    "dirty": false
+  },
+  "environment": "local next start of this branch, prod Supabase, read-only",
+  "base_url": "http://localhost:4173",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:01:29.541Z",
+  "duration_ms": 8259,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1961,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Archived (1)\"",
+      "check": true,
+      "status": "pass",
+      "ms": 44,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "press",
+      "description": "Press End",
+      "check": false,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 805,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "bottom of admin home",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    ".font-mono"
+  ],
+  "limitations": [
+    "Member removal is opened to its confirm step but not run, so no real member is removed"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

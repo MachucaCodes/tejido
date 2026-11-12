@@ -1,0 +1,92 @@
+{
+  "tool": "clock-validate",
+  "name": "tab isolation 2",
+  "outcome": "pass",
+  "commit": {
+    "sha": "8397bcebff58da6c31d33f86bc749f79e2c025a8",
+    "branch": "clock-df16d974-admin-nav-headers",
+    "dirty": true
+  },
+  "environment": null,
+  "base_url": "http://localhost:4173",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:29:51.368Z",
+  "duration_ms": 18565,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 6454,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] a[href$='/synthesis']`",
+      "check": false,
+      "status": "pass",
+      "ms": 95,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /synthesis$",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] a[href$='/evolving-why-statement']`",
+      "check": false,
+      "status": "pass",
+      "ms": 28,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /evolving-why-statement$",
+      "check": true,
+      "status": "pass",
+      "ms": 4810,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `a[href='/admin/lists']`",
+      "check": false,
+      "status": "pass",
+      "ms": 54,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin/lists$",
+      "check": true,
+      "status": "pass",
+      "ms": 208,
+      "error": null,
+      "screenshot": "step-07.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "title": "production: old LLM logs link client nav",
+  "slug": "production-old-llm-logs-link-client-nav",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-33-760Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:28:35.319Z (commit 8397bcebff). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "production: old LLM logs link client nav",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-33-760Z/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-33-760Z/step-02.png",
+          "shows": "Click `a[href$='/logs']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-33-760Z/step-03.png",
+          "shows": "URL matches /logs$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,519 @@
+{
+  "tool": "clock-validate",
+  "name": "PR3: archive confirm, session layout, logs kinds/paging, dates, list delete, language, wording",
+  "outcome": "pass",
+  "commit": {
+    "sha": "3a9d2bca3f19b8cc6b5b4d0fa3f40ab494a5afcc",
+    "branch": "clock-df16d974-archive-confirm-log-kinds",
+    "dirty": false
+  },
+  "environment": "production after merge, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:18:44.559Z",
+  "duration_ms": 90489,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 2368,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Home\"",
+      "check": true,
+      "status": "pass",
+      "ms": 45,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Your questions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3063,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 60,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Link name\"",
+      "check": true,
+      "status": "pass",
+      "ms": 23,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"The question people are asked.\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "home: Home nav, manual form labels",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 2644,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`h1` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"CST\"",
+      "check": true,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"points\"",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Archive session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3081,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "session page: topic h1, results first, archive icon in header",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Archive session']`",
+      "check": false,
+      "status": "pass",
+      "ms": 67,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Nothing is deleted\"",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "archive confirm",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "pass",
+      "ms": 53,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Nothing is deleted\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3072,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 6489,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"analyze\"",
+      "check": true,
+      "status": "pass",
+      "ms": 2549,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"summary\"",
+      "check": true,
+      "status": "pass",
+      "ms": 2771,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "no extract/cluster chips",
+      "check": true,
+      "status": "pass",
+      "ms": 70,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Showing 200 of 522 matching calls\"",
+      "check": true,
+      "status": "pass",
+      "ms": 2533,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs: real kinds and totals",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-24.png"
+    },
+    {
+      "do": "press",
+      "description": "Press End",
+      "check": false,
+      "status": "pass",
+      "ms": 47,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 544,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "logs: Older link",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-27.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Older →\"",
+      "check": false,
+      "status": "pass",
+      "ms": 2402,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"older page\"",
+      "check": true,
+      "status": "pass",
+      "ms": 8937,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"← Newest\"",
+      "check": true,
+      "status": "pass",
+      "ms": 972,
+      "error": null,
+      "screenshot": "step-30.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs: older page",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-31.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `a[href$='/logs?kind=summarize_session']`",
+      "check": false,
+      "status": "pass",
+      "ms": 120,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches kind=summarize_session",
+      "check": true,
+      "status": "pass",
+      "ms": 807,
+      "error": null,
+      "screenshot": "step-33.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs: summary filter",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-34.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 958,
+      "error": null,
+      "screenshot": "step-35.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"CST\"",
+      "check": true,
+      "status": "pass",
+      "ms": 47,
+      "error": null,
+      "screenshot": "step-36.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "synthesis times with zone",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-37.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 896,
+      "error": null,
+      "screenshot": "step-38.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"(auto)\"",
+      "check": true,
+      "status": "pass",
+      "ms": 23,
+      "error": null,
+      "screenshot": "step-39.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Click again to delete\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3049,
+      "error": null,
+      "screenshot": "step-40.png"
+    },
+    {
+      "do": "press",
+      "description": "Press End",
+      "check": false,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-41.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "list: language with auto, trash icon",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-43.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Delete list']`",
+      "check": false,
+      "status": "pass",
+      "ms": 70,
+      "error": null,
+      "screenshot": "step-44.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Its numbers are kept\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-45.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "delete list confirm",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-46.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "pass",
+      "ms": 90,
+      "error": null,
+      "screenshot": "step-47.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/not-a-uuid",
+      "check": false,
+      "status": "pass",
+      "ms": 735,
+      "error": null,
+      "screenshot": "step-48.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"List not found\"",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-49.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Lists\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-50.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "malformed list id",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-51.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+      "check": false,
+      "status": "pass",
+      "ms": 654,
+      "error": null,
+      "screenshot": "step-52.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"List not found\"",
+      "check": true,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-53.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "unknown list id",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-54.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    ".font-mono"
+  ],
+  "limitations": [
+    "Archive and Delete list dialogs are opened and cancelled, never confirmed"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "title": "tab isolation 2",
+  "slug": "tab-isolation-2",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-53-318Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:28:54.510Z (commit 8397bcebff). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "tab isolation 2",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-53-318Z/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-53-318Z/step-02.png",
+          "shows": "Click `nav[aria-label='Session pages'] a[href$='/logs']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-28-53-318Z/step-03.png",
+          "shows": "URL matches /logs$",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

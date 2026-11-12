@@ -1,0 +1,510 @@
+{
+  "tool": "clock-validate",
+  "name": "PR4: admin nav, session tabs, synthesis, loading, not-found, member error, list description, home",
+  "outcome": "pass",
+  "commit": {
+    "sha": "47a6d4f1721cfaf9bb18117403dd70c456e7b583",
+    "branch": "clock-df16d974-admin-nav-headers",
+    "dirty": true
+  },
+  "environment": "local build of this branch with two local-only simulations (4s delay on the session page; remove-member request pointed at a missing route); prod Supabase read-only",
+  "base_url": "http://localhost:4173",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:34:48.869Z",
+  "duration_ms": 64334,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1337,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"All sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 32,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "home at 900px: sessions start in view",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 815,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`document.querySelector('nav[aria-label=Admin] [aria-current=page]')?.textContent` is \"Lists\"",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "nav lines up with content",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "lists: Lists marked current, edges aligned",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 751,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Internal testing\"",
+      "check": true,
+      "status": "pass",
+      "ms": 23,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "list detail: description under heading",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Member actions']`",
+      "check": false,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Remove from list\"",
+      "check": false,
+      "status": "pass",
+      "ms": 42,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Click again to remove\"",
+      "check": false,
+      "status": "pass",
+      "ms": 35,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Couldn't remove\"",
+      "check": true,
+      "status": "pass",
+      "ms": 25,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "member removal failure shown (simulated)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions",
+      "check": false,
+      "status": "pass",
+      "ms": 675,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"evolving-why-statement\"",
+      "check": false,
+      "status": "pass",
+      "ms": 71,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1511,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_visible",
+      "description": "`[aria-busy=true]` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`h1` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 23,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "header shown with skeleton while the session body loads (4s simulated delay)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Overview\"",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`document.querySelector('nav[aria-label=\"Session pages\"] [aria-current=page]')?.textContent` is \"Overview\"",
+      "check": true,
+      "status": "pass",
+      "ms": 40,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`document.querySelector('nav[aria-label=Admin] [aria-current=page]')?.textContent` is \"Sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-24.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "session overview with tabs",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "press",
+      "description": "Press End",
+      "check": false,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-26.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 507,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "admin nav sticks under the site header",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "scrolled: admin nav still visible",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Synthesis\"",
+      "check": false,
+      "status": "pass",
+      "ms": 64,
+      "error": null,
+      "screenshot": "step-30.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Find sources\"",
+      "check": true,
+      "status": "pass",
+      "ms": 833,
+      "error": null,
+      "screenshot": "step-31.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Where did this come from?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3105,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "synthesis: Find sources in header",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-33.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Find sources\"",
+      "check": false,
+      "status": "pass",
+      "ms": 81,
+      "error": null,
+      "screenshot": "step-34.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Where did this come from?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 14,
+      "error": null,
+      "screenshot": "step-35.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "find sources dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-36.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 14,
+      "error": null,
+      "screenshot": "step-37.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] a[href$='/logs']`",
+      "check": false,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-38.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /logs$",
+      "check": true,
+      "status": "pass",
+      "ms": 5501,
+      "error": null,
+      "screenshot": "step-39.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"matching calls\"",
+      "check": true,
+      "status": "pass",
+      "ms": 2264,
+      "error": null,
+      "screenshot": "step-40.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`document.querySelector('nav[aria-label=\"Session pages\"] [aria-current=page]')?.textContent` is \"Logs\"",
+      "check": true,
+      "status": "pass",
+      "ms": 49,
+      "error": null,
+      "screenshot": "step-41.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs with same header",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-42.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/shared-spaces/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 1704,
+      "error": null,
+      "screenshot": "step-43.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"No summary yet. It's written once people have answered.\"",
+      "check": true,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-44.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Find sources\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3040,
+      "error": null,
+      "screenshot": "step-45.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Rebuild\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3035,
+      "error": null,
+      "screenshot": "step-46.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"every answer so far\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3126,
+      "error": null,
+      "screenshot": "step-47.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "empty synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-48.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/no-such-session-xyz",
+      "check": false,
+      "status": "pass",
+      "ms": 792,
+      "error": null,
+      "screenshot": "step-49.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Session not found\"",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-50.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "missing session",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-51.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"← Sessions\"",
+      "check": false,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-52.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin/sessions$",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-53.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    ".font-mono"
+  ],
+  "limitations": [
+    "Loading delay and member-removal failure are simulated locally; no member is removed"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

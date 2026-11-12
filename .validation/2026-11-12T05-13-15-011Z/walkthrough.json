@@ -1,0 +1,381 @@
+{
+  "title": "PR3: archive confirm, session layout, logs kinds/paging, dates, list delete, language, wording",
+  "slug": "pr3-archive-confirm-session-layout-logs-kinds-pa",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:13:16.090Z (commit 17af2870eb). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "PR3: archive confirm, session layout, logs kinds/paging, dates, list delete, language, wording",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-02.png",
+          "shows": "Page shows \"Home\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-03.png",
+          "shows": "Page does not show \"Your questions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-04.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-05.png",
+          "shows": "Page shows \"Link name\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-06.png",
+          "shows": "Page shows \"The question people are asked.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-07.png",
+          "shows": "home: Home nav, manual form labels",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-08.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-09.png",
+          "shows": "`h1` is visible",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-10.png",
+          "shows": "Page shows \"CST\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-11.png",
+          "shows": "Page shows \"points\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-12.png",
+          "shows": "Page does not show \"Archive session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-13.png",
+          "shows": "session page: topic h1, results first, archive icon in header",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-14.png",
+          "shows": "Click `[aria-label='Archive session']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-15.png",
+          "shows": "Page shows \"Nothing is deleted\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-16.png",
+          "shows": "archive confirm",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-17.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-18.png",
+          "shows": "Page does not show \"Nothing is deleted\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-19.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-20.png",
+          "shows": "Page shows \"analyze\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-21.png",
+          "shows": "Page shows \"summary\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-22.png",
+          "shows": "no extract/cluster chips",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-23.png",
+          "shows": "Page shows \"Showing 200 of 522 matching calls\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-24.png",
+          "shows": "logs: real kinds and totals",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-25.png",
+          "shows": "Press End",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-27.png",
+          "shows": "logs: Older link",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-28.png",
+          "shows": "Click \"Older →\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-29.png",
+          "shows": "Page shows \"older page\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-30.png",
+          "shows": "Page shows \"← Newest\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-31.png",
+          "shows": "logs: older page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-32.png",
+          "shows": "Click `a[href$='/logs?kind=summarize_session']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-33.png",
+          "shows": "URL matches kind=summarize_session",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-34.png",
+          "shows": "logs: summary filter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-35.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-36.png",
+          "shows": "Page shows \"CST\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-37.png",
+          "shows": "synthesis times with zone",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-38.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-39.png",
+          "shows": "Page shows \"(auto)\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-40.png",
+          "shows": "Page does not show \"Click again to delete\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-41.png",
+          "shows": "Press End",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-43.png",
+          "shows": "list: language with auto, trash icon",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-44.png",
+          "shows": "Click `[aria-label='Delete list']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-45.png",
+          "shows": "Page shows \"Its numbers are kept\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-46.png",
+          "shows": "delete list confirm",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-47.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-48.png",
+          "shows": "Open /admin/lists/not-a-uuid",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-49.png",
+          "shows": "Page shows \"List not found\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-50.png",
+          "shows": "Page shows \"Lists\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-51.png",
+          "shows": "malformed list id",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-52.png",
+          "shows": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-53.png",
+          "shows": "Page shows \"List not found\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-13-15-011Z/step-54.png",
+          "shows": "unknown list id",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

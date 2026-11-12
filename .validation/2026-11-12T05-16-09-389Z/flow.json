@@ -1,0 +1,44 @@
+{
+ "name": "Admin login signed out: no admin nav, no scroll, session wording",
+ "base_url": "http://localhost:4173",
+ "environment": "local next start of this branch",
+ "login": "none",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/login"
+  },
+  {
+   "do": "expect_text",
+   "text": "create a new session"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Your questions"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Your sessions"
+  },
+  {
+   "do": "expect_js",
+   "js": "[...document.querySelectorAll('header button')].filter(b=>/sign in/i.test(b.textContent)).length",
+   "equals": 0,
+   "label": "no Sign in pill in header"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.documentElement.scrollHeight <= window.innerHeight",
+   "equals": true,
+   "label": "fits in 900px, no scroll"
+  },
+  {
+   "do": "screenshot",
+   "label": "login page"
+  }
+ ]
+}

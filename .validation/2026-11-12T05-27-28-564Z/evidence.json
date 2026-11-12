@@ -1,0 +1,128 @@
+{
+  "tool": "clock-validate",
+  "name": "tab click isolation",
+  "outcome": "fail",
+  "commit": {
+    "sha": "8397bcebff58da6c31d33f86bc749f79e2c025a8",
+    "branch": "clock-df16d974-admin-nav-headers",
+    "dirty": true
+  },
+  "environment": null,
+  "base_url": "http://localhost:4173",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:27:29.661Z",
+  "duration_ms": 45026,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 1570,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] a[href$='/logs']`",
+      "check": false,
+      "status": "pass",
+      "ms": 69,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /logs$",
+      "check": true,
+      "status": "fail",
+      "ms": 30070,
+      "error": "URL is http://localhost:4173/admin/sessions/evolving-why-statement/synthesis",
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/synthesis",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Find sources\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Where did this come from?\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1000 ms",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "`document.body.style.pointerEvents + '|' + document.querySelectorAll('[data-slot=dialog-content]').length + '|' + document.querySelectorAll('[inert]').length` is \"|0|0\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] a[href$='/logs']`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /logs$",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

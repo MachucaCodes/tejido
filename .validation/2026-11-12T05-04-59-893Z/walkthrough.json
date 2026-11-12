@@ -1,0 +1,80 @@
+{
+  "title": "Lists load failure shows an error (simulated locally)",
+  "slug": "lists-load-failure-shows-an-error-simulated-loca",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:05:01.050Z (commit da86f18f1f). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Lists load failure shows an error (simulated locally)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-01.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-02.png",
+          "shows": "Page shows \"Couldn't load lists\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-03.png",
+          "shows": "Page does not show \"No lists yet.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-04.png",
+          "shows": "lists page, load failed",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-05.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-06.png",
+          "shows": "Page shows \"Couldn't load the numbers in this list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-07.png",
+          "shows": "Page does not show \"No numbers yet.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-08.png",
+          "shows": "Page does not show \"0 numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-04-59-893Z/step-09.png",
+          "shows": "list detail, members load failed",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

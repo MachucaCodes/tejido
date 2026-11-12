@@ -1,0 +1,231 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin home archived split, admin 404, member menu",
+  "outcome": "pass",
+  "commit": {
+    "sha": "3315ac872ee847a82bd2ca676dd2597a071c41c6",
+    "branch": "clock-df16d974-ui-fix-admin-home-lists-archived",
+    "dirty": false
+  },
+  "environment": "production after merge",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:03:04.109Z",
+  "duration_ms": 30861,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 2309,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"All sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 28,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "archived session is in its own group",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"archived\"",
+      "check": true,
+      "status": "pass",
+      "ms": 13,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "admin home, archived apart and dimmed",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/zz-no-such-session",
+      "check": false,
+      "status": "pass",
+      "ms": 829,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Back to sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "admin nav is shown",
+      "check": true,
+      "status": "pass",
+      "ms": 14,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "admin 404 inside admin layout",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Back to sessions\"",
+      "check": false,
+      "status": "pass",
+      "ms": 65,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin$",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 1380,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no top-level Remove on rows",
+      "check": true,
+      "status": "pass",
+      "ms": 3086,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "member rows with … menu",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Member actions']`",
+      "check": false,
+      "status": "pass",
+      "ms": 42,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Remove from list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "menu open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Remove from list\"",
+      "check": false,
+      "status": "pass",
+      "ms": 32,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Click again to remove\"",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "confirm step",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Click again to remove\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3062,
+      "error": null,
+      "screenshot": "step-22.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    ".font-mono"
+  ],
+  "limitations": [
+    "Member removal is opened to its confirm step but not run, so no real member is removed"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

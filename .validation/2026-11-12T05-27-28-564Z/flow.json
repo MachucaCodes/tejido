@@ -1,0 +1,19 @@
+{
+  "name": "tab click isolation",
+  "base_url": "http://localhost:4173",
+  "login": "tejido",
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/evolving-why-statement/synthesis" },
+    { "do": "click", "selector": "nav[aria-label='Session pages'] a[href$='/logs']" },
+    { "do": "expect_url", "match": "/logs$", "timeout_ms": 30000 },
+    { "do": "goto", "url": "/admin/sessions/evolving-why-statement/synthesis" },
+    { "do": "click", "text": "Find sources" },
+    { "do": "expect_text", "text": "Where did this come from?" },
+    { "do": "press", "key": "Escape" },
+    { "do": "wait", "ms": 1000 },
+    { "do": "expect_js", "js": "document.body.style.pointerEvents + '|' + document.querySelectorAll('[data-slot=dialog-content]').length + '|' + document.querySelectorAll('[inert]').length", "equals": "|0|0" },
+    { "do": "click", "selector": "nav[aria-label='Session pages'] a[href$='/logs']" },
+    { "do": "expect_url", "match": "/logs$", "timeout_ms": 30000 }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "title": "Admin home archived group (scrolled)",
+  "slug": "admin-home-archived-group-scrolled",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-01-28-188Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:01:29.541Z (commit 3315ac872e). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin home archived group (scrolled)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-01-28-188Z/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-01-28-188Z/step-02.png",
+          "shows": "Page shows \"Archived (1)\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-01-28-188Z/step-03.png",
+          "shows": "Press End",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-01-28-188Z/step-05.png",
+          "shows": "bottom of admin home",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "tool": "clock-validate",
+  "name": "Lists pages render normally on production after the error-state change",
+  "outcome": "pass",
+  "commit": {
+    "sha": "da86f18f1fba5ab4c991343e0ed1d20bee8e1b83",
+    "branch": "clock-df16d974-lists-load-error",
+    "dirty": false
+  },
+  "environment": "production after merge, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:06:48.748Z",
+  "duration_ms": 21954,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 2339,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Test\"",
+      "check": true,
+      "status": "pass",
+      "ms": 23,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Couldn't load\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3047,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"No lists yet.\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3033,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "lists page normal",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 1253,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"2 numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 45,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Couldn't load\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3058,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`[aria-label='Member actions']` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "list detail normal",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    ".font-mono"
+  ],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

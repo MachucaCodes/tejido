@@ -1,0 +1,11 @@
+{
+  "name": "production: old LLM logs link client nav",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "login": "tejido",
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/evolving-why-statement" },
+    { "do": "click", "selector": "a[href$='/logs']" },
+    { "do": "expect_url", "match": "/logs$", "timeout_ms": 30000 }
+  ]
+}

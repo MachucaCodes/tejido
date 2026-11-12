@@ -1,0 +1,56 @@
+{
+  "tool": "clock-validate",
+  "name": "production: old LLM logs link client nav",
+  "outcome": "pass",
+  "commit": {
+    "sha": "8397bcebff58da6c31d33f86bc749f79e2c025a8",
+    "branch": "clock-df16d974-admin-nav-headers",
+    "dirty": true
+  },
+  "environment": null,
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:28:35.319Z",
+  "duration_ms": 11932,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 3068,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `a[href$='/logs']`",
+      "check": false,
+      "status": "pass",
+      "ms": 99,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /logs$",
+      "check": true,
+      "status": "pass",
+      "ms": 4640,
+      "error": null,
+      "screenshot": "step-03.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

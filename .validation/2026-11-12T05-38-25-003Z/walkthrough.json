@@ -1,0 +1,325 @@
+{
+  "title": "PR4: admin nav, session tabs, synthesis, loading, not-found, member error, list description, home",
+  "slug": "pr4-admin-nav-session-tabs-synthesis-loading-not",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:38:26.173Z (commit 47a6d4f172). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "PR4: admin nav, session tabs, synthesis, loading, not-found, member error, list description, home",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-02.png",
+          "shows": "Page shows \"All sessions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-03.png",
+          "shows": "home at 900px: sessions start in view",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-04.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-05.png",
+          "shows": "`document.querySelector('nav[aria-label=Admin] [aria-current=page]')?.textContent` is \"Lists\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-06.png",
+          "shows": "nav lines up with content",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-07.png",
+          "shows": "lists: Lists marked current, edges aligned",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-08.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-09.png",
+          "shows": "Page shows \"Internal testing\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-10.png",
+          "shows": "list detail: description under heading",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-11.png",
+          "shows": "Open /admin/sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-12.png",
+          "shows": "Click \"evolving-why-statement\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-14.png",
+          "shows": "`h1` is visible",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-15.png",
+          "shows": "Page shows \"Overview\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-16.png",
+          "shows": "`document.querySelector('nav[aria-label=\"Session pages\"] [aria-current=page]')?.textContent` is \"Overview\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-17.png",
+          "shows": "`document.querySelector('nav[aria-label=Admin] [aria-current=page]')?.textContent` is \"Sessions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-18.png",
+          "shows": "session overview with tabs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-19.png",
+          "shows": "Press End",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-21.png",
+          "shows": "admin nav sticks under the site header",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-22.png",
+          "shows": "scrolled: admin nav still visible",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-23.png",
+          "shows": "Click \"Synthesis\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-24.png",
+          "shows": "Page shows \"Find sources\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-25.png",
+          "shows": "Page does not show \"Where did this come from?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-26.png",
+          "shows": "synthesis: Find sources in header",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-27.png",
+          "shows": "Click \"Find sources\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-28.png",
+          "shows": "Page shows \"Where did this come from?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-29.png",
+          "shows": "find sources dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-30.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-31.png",
+          "shows": "Click `nav[aria-label='Session pages'] a[href$='/logs']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-32.png",
+          "shows": "URL matches /logs$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-33.png",
+          "shows": "Page shows \"matching calls\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-34.png",
+          "shows": "`document.querySelector('nav[aria-label=\"Session pages\"] [aria-current=page]')?.textContent` is \"Logs\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-35.png",
+          "shows": "logs with same header",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-36.png",
+          "shows": "Open /admin/sessions/shared-spaces/synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-37.png",
+          "shows": "Page shows \"No summary yet. It's written once people have answered.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-38.png",
+          "shows": "Page does not show \"Find sources\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-39.png",
+          "shows": "Page does not show \"Rebuild\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-40.png",
+          "shows": "Page does not show \"every answer so far\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-41.png",
+          "shows": "empty synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-42.png",
+          "shows": "Open /admin/sessions/no-such-session-xyz",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-43.png",
+          "shows": "Page shows \"Session not found\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-44.png",
+          "shows": "missing session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-45.png",
+          "shows": "Click \"← Sessions\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-38-25-003Z/step-46.png",
+          "shows": "URL matches /admin/sessions$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

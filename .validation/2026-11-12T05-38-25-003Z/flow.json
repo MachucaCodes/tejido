@@ -1,0 +1,215 @@
+{
+ "name": "PR4: admin nav, session tabs, synthesis, loading, not-found, member error, list description, home",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "environment": "production after merge, read-only (no simulations)",
+ "login": "tejido",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 400,
+ "redact": [
+  ".font-mono"
+ ],
+ "limitations": [
+  "No simulations on production: skeleton and remove-failure were checked locally"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "expect_text",
+   "text": "All sessions"
+  },
+  {
+   "do": "screenshot",
+   "label": "home at 900px: sessions start in view"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('nav[aria-label=Admin] [aria-current=page]')?.textContent",
+   "equals": "Lists"
+  },
+  {
+   "do": "expect_js",
+   "js": "Math.abs(document.querySelector('nav[aria-label=Admin] a').getBoundingClientRect().left - document.querySelector('main h1').getBoundingClientRect().left) < 2",
+   "equals": true,
+   "label": "nav lines up with content"
+  },
+  {
+   "do": "screenshot",
+   "label": "lists: Lists marked current, edges aligned"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"
+  },
+  {
+   "do": "expect_text",
+   "text": "Internal testing"
+  },
+  {
+   "do": "screenshot",
+   "label": "list detail: description under heading"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions"
+  },
+  {
+   "do": "click",
+   "text": "evolving-why-statement"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "expect_visible",
+   "selector": "h1"
+  },
+  {
+   "do": "expect_text",
+   "text": "Overview",
+   "timeout_ms": 15000
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('nav[aria-label=\"Session pages\"] [aria-current=page]')?.textContent",
+   "equals": "Overview"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('nav[aria-label=Admin] [aria-current=page]')?.textContent",
+   "equals": "Sessions"
+  },
+  {
+   "do": "screenshot",
+   "label": "session overview with tabs"
+  },
+  {
+   "do": "press",
+   "key": "End"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('nav[aria-label=Admin]').getBoundingClientRect().top",
+   "equals": 64,
+   "label": "admin nav sticks under the site header"
+  },
+  {
+   "do": "screenshot",
+   "label": "scrolled: admin nav still visible"
+  },
+  {
+   "do": "click",
+   "text": "Synthesis"
+  },
+  {
+   "do": "expect_text",
+   "text": "Find sources"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Where did this come from?"
+  },
+  {
+   "do": "screenshot",
+   "label": "synthesis: Find sources in header"
+  },
+  {
+   "do": "click",
+   "text": "Find sources"
+  },
+  {
+   "do": "expect_text",
+   "text": "Where did this come from?"
+  },
+  {
+   "do": "screenshot",
+   "label": "find sources dialog"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "selector": "nav[aria-label='Session pages'] a[href$='/logs']"
+  },
+  {
+   "do": "expect_url",
+   "match": "/logs$",
+   "timeout_ms": 15000
+  },
+  {
+   "do": "expect_text",
+   "text": "matching calls",
+   "timeout_ms": 15000
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('nav[aria-label=\"Session pages\"] [aria-current=page]')?.textContent",
+   "equals": "Logs"
+  },
+  {
+   "do": "screenshot",
+   "label": "logs with same header"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/shared-spaces/synthesis"
+  },
+  {
+   "do": "expect_text",
+   "text": "No summary yet. It's written once people have answered."
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Find sources"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Rebuild"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "every answer so far"
+  },
+  {
+   "do": "screenshot",
+   "label": "empty synthesis"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/no-such-session-xyz"
+  },
+  {
+   "do": "expect_text",
+   "text": "Session not found",
+   "timeout_ms": 15000
+  },
+  {
+   "do": "screenshot",
+   "label": "missing session"
+  },
+  {
+   "do": "click",
+   "text": "\u2190 Sessions"
+  },
+  {
+   "do": "expect_url",
+   "match": "/admin/sessions$"
+  }
+ ]
+}

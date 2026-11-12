@@ -1,0 +1,92 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin login signed out: no admin nav, no scroll, session wording",
+  "outcome": "pass",
+  "commit": {
+    "sha": "3a9d2bca3f19b8cc6b5b4d0fa3f40ab494a5afcc",
+    "branch": "clock-df16d974-archive-confirm-log-kinds",
+    "dirty": false
+  },
+  "environment": "production after merge, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:20:23.314Z",
+  "duration_ms": 12948,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/login",
+      "check": false,
+      "status": "pass",
+      "ms": 455,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"create a new session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 31,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Your questions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3050,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Your sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3031,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "no Sign in pill in header",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "fits in 900px, no scroll",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "login page",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

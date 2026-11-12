@@ -1,0 +1,59 @@
+{
+  "title": "Admin login signed out: no admin nav, no scroll, session wording",
+  "slug": "admin-login-signed-out-no-admin-nav-no-scroll-se",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-15-07-645Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:15:08.089Z (commit 17af2870eb). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin login signed out: no admin nav, no scroll, session wording",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-15-07-645Z/step-01.png",
+          "shows": "Open /admin/login",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-15-07-645Z/step-02.png",
+          "shows": "Page shows \"create a new session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-15-07-645Z/step-03.png",
+          "shows": "Page does not show \"Your questions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-15-07-645Z/step-04.png",
+          "shows": "Page does not show \"Your sessions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-15-07-645Z/step-05.png",
+          "shows": "fits in 900px, no scroll",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-15-07-645Z/step-06.png",
+          "shows": "login page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

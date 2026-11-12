@@ -1,0 +1,39 @@
+{
+ "name": "Admin home archived group (scrolled)",
+ "base_url": "http://localhost:4173",
+ "environment": "local next start of this branch, prod Supabase, read-only",
+ "login": "tejido",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "redact": [
+  ".font-mono"
+ ],
+ "limitations": [
+  "Member removal is opened to its confirm step but not run, so no real member is removed"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "expect_text",
+   "text": "Archived (1)"
+  },
+  {
+   "do": "press",
+   "key": "End"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "bottom of admin home"
+  }
+ ]
+}

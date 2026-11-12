@@ -1,0 +1,66 @@
+{
+  "title": "tab isolation 2",
+  "slug": "tab-isolation-2",
+  "out_dir": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:29:51.368Z (commit 8397bcebff). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "tab isolation 2",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/step-02.png",
+          "shows": "Click `nav[aria-label='Session pages'] a[href$='/synthesis']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/step-03.png",
+          "shows": "URL matches /synthesis$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/step-04.png",
+          "shows": "Click `nav[aria-label='Session pages'] a[href$='/evolving-why-statement']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/step-05.png",
+          "shows": "URL matches /evolving-why-statement$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/step-06.png",
+          "shows": "Click `a[href='/admin/lists']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/df16d974/.validation/2026-11-12T05-29-49-707Z/step-07.png",
+          "shows": "URL matches /admin/lists$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

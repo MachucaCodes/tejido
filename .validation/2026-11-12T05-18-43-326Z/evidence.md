@@ -1,0 +1,68 @@
+**Browser check — PR3: archive confirm, session layout, logs kinds/paging, dates, list delete, language, wording: PASSED** (24/24 checks, 54/54 steps)
+
+- Kind: continuous browser recording (Playwright video + trace) of an automated run, not a hand-made demo
+- Commit: `3a9d2bca3f` on `clock-df16d974-archive-confirm-log-kinds`
+- Environment: production after merge, read-only — https://tejido-zeta.vercel.app, Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after), 1440×900, on clock-fsn1
+- Ran: 2026-11-12T05:18:44.559Z (90.5s)
+
+**Steps**
+
+1. ✅ Open /admin (2368 ms)
+2. ✅ **Check:** Page shows "Home" (45 ms)
+3. ✅ **Check:** Page does not show "Your questions" (3063 ms)
+4. ✅ Click "Or fill in the form yourself" (60 ms)
+5. ✅ **Check:** Page shows "Link name" (23 ms)
+6. ✅ **Check:** Page shows "The question people are asked." (6 ms)
+7. ✅ home: Home nav, manual form labels (0 ms)
+8. ✅ Open /admin/sessions/evolving-why-statement (2644 ms)
+9. ✅ **Check:** `h1` is visible (18 ms)
+10. ✅ **Check:** Page shows "CST" (16 ms)
+11. ✅ **Check:** Page shows "points" (15 ms)
+12. ✅ **Check:** Page does not show "Archive session" (3081 ms)
+13. ✅ session page: topic h1, results first, archive icon in header (0 ms)
+14. ✅ Click `[aria-label='Archive session']` (67 ms)
+15. ✅ **Check:** Page shows "Nothing is deleted" (11 ms)
+16. ✅ archive confirm (0 ms)
+17. ✅ Click "Cancel" (53 ms)
+18. ✅ **Check:** Page does not show "Nothing is deleted" (3072 ms)
+19. ✅ Open /admin/sessions/evolving-why-statement/logs (6489 ms)
+20. ✅ **Check:** Page shows "analyze" (2549 ms)
+21. ✅ **Check:** Page shows "summary" (2771 ms)
+22. ✅ **Check:** no extract/cluster chips (70 ms)
+23. ✅ **Check:** Page shows "Showing 200 of 522 matching calls" (2533 ms)
+24. ✅ logs: real kinds and totals (0 ms)
+25. ✅ Press End (47 ms)
+26. ✅ Wait 500 ms (544 ms)
+27. ✅ logs: Older link (0 ms)
+28. ✅ Click "Older →" (2402 ms)
+29. ✅ **Check:** Page shows "older page" (8937 ms)
+30. ✅ **Check:** Page shows "← Newest" (972 ms)
+31. ✅ logs: older page (0 ms)
+32. ✅ Click `a[href$='/logs?kind=summarize_session']` (120 ms)
+33. ✅ **Check:** URL matches kind=summarize_session (807 ms)
+34. ✅ logs: summary filter (0 ms)
+35. ✅ Open /admin/sessions/evolving-why-statement/synthesis (958 ms)
+36. ✅ **Check:** Page shows "CST" (47 ms)
+37. ✅ synthesis times with zone (0 ms)
+38. ✅ Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb (896 ms)
+39. ✅ **Check:** Page shows "(auto)" (23 ms)
+40. ✅ **Check:** Page does not show "Click again to delete" (3049 ms)
+41. ✅ Press End (4 ms)
+42. ✅ Wait 500 ms (505 ms)
+43. ✅ list: language with auto, trash icon (0 ms)
+44. ✅ Click `[aria-label='Delete list']` (70 ms)
+45. ✅ **Check:** Page shows "Its numbers are kept" (6 ms)
+46. ✅ delete list confirm (0 ms)
+47. ✅ Click "Cancel" (90 ms)
+48. ✅ Open /admin/lists/not-a-uuid (735 ms)
+49. ✅ **Check:** Page shows "List not found" (18 ms)
+50. ✅ **Check:** Page shows "Lists" (3 ms)
+51. ✅ malformed list id (0 ms)
+52. ✅ Open /admin/lists/00000000-0000-0000-0000-000000000000 (654 ms)
+53. ✅ **Check:** Page shows "List not found" (29 ms)
+54. ✅ unknown list id (0 ms)
+
+**What this does not show**
+
+- Archive and Delete list dialogs are opened and cancelled, never confirmed
+- A browser recording shows what the page displayed; it does not prove back-end or security rules on its own.

@@ -1,0 +1,15 @@
+{
+  "name": "tab isolation 2",
+  "base_url": "http://localhost:4173",
+  "login": "tejido",
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/evolving-why-statement", "timeout_ms": 20000 },
+    { "do": "click", "selector": "nav[aria-label='Session pages'] a[href$='/logs']" },
+    { "do": "expect_url", "match": "/logs$", "timeout_ms": 30000 },
+    { "do": "click", "selector": "nav[aria-label='Session pages'] a[href$='/synthesis']" },
+    { "do": "expect_url", "match": "/synthesis$", "timeout_ms": 30000 },
+    { "do": "click", "selector": "nav[aria-label='Session pages'] a[href$='/evolving-why-statement']" },
+    { "do": "expect_url", "match": "/evolving-why-statement$", "timeout_ms": 30000 }
+  ]
+}
