@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ExternalLinkIcon } from "lucide-react";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
@@ -207,9 +207,14 @@ async function SessionBody({
                         {n > 0 && (
                           <Link
                             href={`/s/${code}/points?theme=${t.id}`}
-                            className="inline-block text-xs underline underline-offset-2 hover:text-foreground"
+                            // The participant-side points page has no admin nav;
+                            // a new tab keeps this overview where it was.
+                            target="_blank"
+                            rel="noopener"
+                            className="inline-flex items-center gap-1 text-xs underline underline-offset-2 hover:text-foreground"
                           >
                             See the {n} {n === 1 ? "point" : "points"}
+                            <ExternalLinkIcon className="size-3" aria-hidden />
                           </Link>
                         )}
                       </div>
