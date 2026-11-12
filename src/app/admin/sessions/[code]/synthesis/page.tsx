@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 import { requireOrganizer } from "@/lib/admin-guard";
@@ -6,6 +5,9 @@ import { createAdmin } from "@/lib/supabase/admin";
 import { voiceLabels } from "@/lib/voice-labels";
 import FindSources from "./find-sources";
 import RebuildButton from "./rebuild-button";
+import SessionHeader from "../session-header";
+import { InfoIcon } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { formatDateTime, formatTime } from "@/lib/format-date";
 
 type PointRow = {
@@ -69,7 +71,9 @@ export default async function SynthesisHistoryPage({
 
   const { data: session } = await admin
     .from("sessions")
-    .select("id, topic, created_by, summary_text, summary_generated_at")
+    .select(
+      "id, topic, status, archived_at, created_at, created_by, summary_text, summary_generated_at",
+    )
     .eq("id", code)
     .single();
   if (!session) notFound();
@@ -142,40 +146,60 @@ export default async function SynthesisHistoryPage({
 
   return (
     <div className="space-y-6">
-      <header className="space-y-1">
-        <Link
-          href={`/admin/sessions/${session.id}`}
-          className="text-xs text-muted-foreground hover:underline"
-        >
-          ← {session.id}
-        </Link>
-        <h1 className="text-lg font-semibold">Synthesis history</h1>
-        <p className="text-sm text-muted-foreground">
-          Each summary, newest first, with the answers that came in just before
-          it.
-        </p>
-      </header>
-
-      <FindSources code={session.id} />
-
-      <section className="space-y-3 rounded-lg border border-border bg-card p-4">
-        <div className="flex items-start justify-between gap-3">
-          <div className="space-y-1">
-            <h2 className="text-sm font-medium">Not in the summary yet</h2>
-            <p className="text-xs text-muted-foreground">
-              {pending.length === 0
-                ? "The latest summary includes every answer so far."
-                : `${pendingVoices.length} ${pendingVoices.length === 1 ? "voice" : "voices"}, ${pending.length} ${pending.length === 1 ? "point" : "points"} since ${summaries.length ? fmt(summaries[summaries.length - 1].at) : "the start"}.`}
-            </p>
-          </div>
-          <RebuildButton code={session.id} />
-        </div>
-        <VoiceList groups={pendingVoices} labels={labelByParticipant} />
-      </section>
+      <SessionHeader
+        session={session}
+        current="synthesis"
+        isAdmin={guard.isAdmin}
+        actions={summaries.length > 0 ? <FindSources code={session.id} /> : undefined}
+      />
 
       {summaries.length === 0 ? (
-        <p className="text-sm text-muted-foreground">No summaries yet.</p>
+        <section className="space-y-3 rounded-lg border border-border bg-card p-4">
+          <div className="flex items-start justify-between gap-3">
+            <p className="text-sm text-muted-foreground">
+              No summary yet. It&apos;s written once people have answered.
+            </p>
+            {/* Nothing to summarise without answers. */}
+            {points.length > 0 && <RebuildButton code={session.id} />}
+          </div>
+          <VoiceList groups={pendingVoices} labels={labelByParticipant} />
+        </section>
       ) : (
+        <>
+          <p className="text-sm text-muted-foreground">
+            Each summary, newest first, with the answers that came in just
+            before it.
+          </p>
+          <section className="space-y-3 rounded-lg border border-border bg-card p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="space-y-1">
+                <h2 className="flex items-center gap-1.5 text-sm font-medium">
+                  Not in the summary yet
+                  {pending.length === 0 && (
+                    <Tooltip>
+                      <TooltipTrigger
+                        aria-label="The latest summary includes every answer so far."
+                        className="text-muted-foreground hover:text-foreground"
+                      >
+                        <InfoIcon className="size-3.5" aria-hidden />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        The latest summary includes every answer so far.
+                      </TooltipContent>
+                    </Tooltip>
+                  )}
+                </h2>
+                {pending.length > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    {`${pendingVoices.length} ${pendingVoices.length === 1 ? "voice" : "voices"}, ${pending.length} ${pending.length === 1 ? "point" : "points"} since ${fmt(summaries[summaries.length - 1].at)}.`}
+                  </p>
+                )}
+              </div>
+              <RebuildButton code={session.id} />
+            </div>
+            <VoiceList groups={pendingVoices} labels={labelByParticipant} />
+          </section>
+
         <ol className="space-y-6">
           {summaries
             .map((s, i) => ({ s, i }))
@@ -217,6 +241,7 @@ export default async function SynthesisHistoryPage({
               );
             })}
         </ol>
+        </>
       )}
     </div>
   );

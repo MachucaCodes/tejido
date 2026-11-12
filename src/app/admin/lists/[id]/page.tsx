@@ -65,6 +65,9 @@ export default async function AdminListDetail({
           ← Lists
         </Link>
         <h1 className="text-lg font-semibold">{list.name}</h1>
+        {list.description && (
+          <p className="text-sm text-muted-foreground">{list.description}</p>
+        )}
         {!membersError && (
           <p className="text-sm text-muted-foreground">
             {members.length} {members.length === 1 ? "number" : "numbers"}

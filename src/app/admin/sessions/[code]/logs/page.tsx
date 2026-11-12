@@ -3,6 +3,7 @@ import { notFound, redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
+import SessionHeader from "../session-header";
 import { formatDateTime } from "@/lib/format-date";
 
 type SearchParams = Promise<{
@@ -87,7 +88,7 @@ export default async function SessionLogsPage({
 
   const { data: session } = await admin
     .from("sessions")
-    .select("id, topic")
+    .select("id, topic, status, archived_at, created_at")
     .eq("id", code)
     .single();
   if (!session) notFound();
@@ -149,18 +150,7 @@ export default async function SessionLogsPage({
 
   return (
     <div className="space-y-5">
-      <header className="space-y-2">
-        <p className="text-xs uppercase tracking-wide text-muted-foreground">
-          {session.id} · LLM call logs
-        </p>
-        <p className="text-sm text-muted-foreground">{session.topic}</p>
-        <Link
-          href={`/admin/sessions/${code}`}
-          className="text-xs text-muted-foreground underline-offset-2 hover:underline"
-        >
-          ← Back to session
-        </Link>
-      </header>
+      <SessionHeader session={session} current="logs" isAdmin />
 
       {error && (
         <div className="rounded border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800">

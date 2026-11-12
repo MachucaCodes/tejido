@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 
 import { requireOrganizer } from "@/lib/admin-guard";
@@ -7,8 +6,8 @@ import ArchiveToggle from "./archive-toggle";
 import PrivacyToggle from "./privacy-toggle";
 import CopyJoinLink from "./copy-join-link";
 import EditSessionForm from "./edit-session-form";
+import SessionHeader from "./session-header";
 import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-invites";
-import { formatDateTime } from "@/lib/format-date";
 
 export default async function AdminSessionDetail({
   params,
@@ -103,40 +102,24 @@ export default async function AdminSessionDetail({
 
   return (
     <div className="space-y-8">
-      <header className="flex items-start justify-between gap-3">
-        <div className="min-w-0 space-y-1">
-          <h1 className="text-lg font-semibold">{session.topic || session.id}</h1>
-          <p className="text-xs text-muted-foreground">
-            {session.id} · {session.archived_at ? "archived" : session.status} ·{" "}
-            {formatDateTime(session.created_at)}
-          </p>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <CopyJoinLink code={session.id} />
-          <Link
-            href={`/admin/sessions/${session.id}/synthesis`}
-            className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
-          >
-            Synthesis history →
-          </Link>
-          {guard.isAdmin && (
-            <Link
-              href={`/admin/sessions/${session.id}/logs`}
-              className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
-            >
-              LLM logs →
-            </Link>
-          )}
-          {/* Set apart from the links: archiving changes what participants see. */}
-          <span className="mx-1 h-5 w-px bg-border" aria-hidden />
-          <ArchiveToggle
-            code={session.id}
-            topic={session.topic ?? ""}
-            archivedAt={session.archived_at}
-            voiceCount={voiceCount}
-          />
-        </div>
-      </header>
+      <SessionHeader
+        session={session}
+        current="overview"
+        isAdmin={guard.isAdmin}
+        actions={
+          <>
+            <CopyJoinLink code={session.id} />
+            {/* Set apart: archiving changes what participants see. */}
+            <span className="mx-1 h-5 w-px bg-border" aria-hidden />
+            <ArchiveToggle
+              code={session.id}
+              topic={session.topic ?? ""}
+              archivedAt={session.archived_at}
+              voiceCount={voiceCount}
+            />
+          </>
+        }
+      />
 
       <section className="space-y-2">
         <h2 className="text-sm font-medium text-muted-foreground">Voices</h2>
