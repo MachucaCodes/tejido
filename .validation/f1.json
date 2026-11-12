@@ -1,0 +1,11 @@
+{"code":"F1","title":"List page opens on a big add-members form; the members themselves start low on the screen",
+"kind":"rule","severity":"medium","confidence":"high",
+"where":"/admin/lists/<id>, 1440×900, list with 2 members",
+"what_happens":"The first card is the add form: a search box, a 4-line paste box, a 2-line help paragraph and a button. The Members heading starts at about 626px of a 900px screen, and List settings is below the fold. The list's own content (who is in it) comes second.",
+"who_hurts":"An admin who opens a list to check who is in it, before sending invites. They scroll past an empty form every time, and with a long list the form pushes members further away.",
+"suggested_fix":"Put Members first. Turn the add form into an 'Add numbers' button next to the Members heading that opens a Dialog (components/ui/dialog, already used for Delete list) holding the search and the paste box. src/app/admin/lists/[id]/page.tsx and add-members-form.tsx.",
+"rule":"Dane's UI rule: 'One page, one main job... A second job does not get a second big section stacked on the same screen: it becomes a button that opens its own page or dialog.'",
+"origin":"earlier: list detail as first built",
+"owners_call":"Is adding numbers the main thing people do on this page? If so, say so and keep the form on top but collapsed.",
+"mockup":true,
+"fingerprint":"/admin/lists/[id]|AddMembersForm|rule|add form above members"}

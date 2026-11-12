@@ -1,0 +1,9 @@
+{"code":"F3","title":"Explanation text sits on the page: a subtitle on Lists and a 2-line paragraph under the paste box",
+"kind":"rule","severity":"medium","confidence":"high",
+"where":"/admin/lists (subtitle) and /admin/lists/<id> (under 'Or paste numbers'), 1440×900",
+"what_happens":"Lists has 'Named groups of phone numbers. A number can be in more than one list.' under its title. The list page has 'One per line: phone, then an optional name and language (en or es)... Numbers without a + are read as Costa Rica. With no language, +506 numbers get Spanish and the rest English.' always shown under the textarea.",
+"who_hurts":"Admins scanning the page: the text adds weight and length every visit, though it is only needed the first time someone pastes numbers.",
+"suggested_fix":"Drop the Lists subtitle (the title and rows say it). Move the paste rules behind a small 'i' Tooltip next to the 'Or paste numbers' label (components/ui/tooltip is already used on this page); the placeholder already shows the format.",
+"rule":"Dane's UI rule: 'Keep explanation off the top level of the page... text that explains what it does goes behind a small \"i\" icon or tooltip.'",
+"origin":"earlier",
+"fingerprint":"/admin/lists|page copy|rule|explanation on top level"}

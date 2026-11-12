@@ -1,0 +1,9 @@
+{"code":"F2","title":"Lists index stacks a create-list card above the lists; Sessions uses a 'New session' button instead",
+"kind":"rule","severity":"medium","confidence":"high",
+"where":"/admin/lists, 1440×900, 1 list",
+"what_happens":"Under the title sits a full-width card with a name box and a green 'Create list' button, before the lists. On /admin/sessions the same job is one small 'New session' button at the right of the title.",
+"who_hurts":"An admin who comes to find a list. The create card is the strongest thing on the page (the only green button) and the two pages in the same nav work differently.",
+"suggested_fix":"Replace the CreateListForm card with a 'New list' button in the header, styled like 'New session' (src/app/admin/sessions/page.tsx header), opening a small Dialog with the name field. src/app/admin/lists/page.tsx, create-list-form.tsx.",
+"rule":"Dane's UI rule: 'One page, one main job... (most often \"create new\" on a page that lists things)... it becomes a button that opens its own page or dialog.' Also established pattern: /admin/sessions.",
+"origin":"earlier: lists index as first built",
+"fingerprint":"/admin/lists|CreateListForm|rule|create card above lists"}

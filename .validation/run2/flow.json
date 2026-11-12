@@ -1,0 +1,66 @@
+{
+ "name": "Admin Lists audit part 2 (look only)",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, read-only look",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "redact": [
+  "main ul.divide-y li p",
+  "main ul.divide-y li .font-mono"
+ ],
+ "limitations": [
+  "Look only: no form submitted, no member removed"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"
+  },
+  {
+   "do": "expect_text",
+   "text": "Members"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelectorAll('main ul.divide-y li').forEach((li,i)=>{const ps=li.querySelectorAll('p');ps.forEach(p=>{p.textContent=p.classList.contains('font-mono')?'+506 0000 000'+i:'Member '+(i+1)})});return true})()",
+   "equals": true,
+   "label": "hide member names and phones"
+  },
+  {
+   "do": "click",
+   "selector": "[aria-label='Member actions']"
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "member actions menu open (not clicked)"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists/00000000-0000-0000-0000-000000000000"
+  },
+  {
+   "do": "screenshot",
+   "label": "missing list (valid uuid)"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists/not-a-list"
+  },
+  {
+   "do": "screenshot",
+   "label": "malformed list id"
+  }
+ ]
+}

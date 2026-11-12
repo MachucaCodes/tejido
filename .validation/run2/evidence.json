@@ -1,0 +1,133 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin Lists audit part 2 (look only)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-b1b6022f-ui-audit-cold-audit-of-the-lists-part",
+    "dirty": true
+  },
+  "environment": "production, read-only look",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:49:42.017Z",
+  "duration_ms": 15164,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 982,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members\"",
+      "check": true,
+      "status": "pass",
+      "ms": 25,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "hide member names and phones",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Member actions']`",
+      "check": false,
+      "status": "pass",
+      "ms": 49,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 407,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "member actions menu open (not clicked)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 12,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+      "check": false,
+      "status": "pass",
+      "ms": 774,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "missing list (valid uuid)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/not-a-list",
+      "check": false,
+      "status": "pass",
+      "ms": 687,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "malformed list id",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "main ul.divide-y li p",
+    "main ul.divide-y li .font-mono"
+  ],
+  "limitations": [
+    "Look only: no form submitted, no member removed"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

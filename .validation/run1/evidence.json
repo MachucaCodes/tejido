@@ -1,0 +1,241 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin Lists audit (look only)",
+  "outcome": "fail",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-b1b6022f-ui-audit-cold-audit-of-the-lists-part",
+    "dirty": true
+  },
+  "environment": "production, read-only look",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:48:24.802Z",
+  "duration_ms": 34487,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 995,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Lists\"",
+      "check": true,
+      "status": "pass",
+      "ms": 39,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "lists index as it opens",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions",
+      "check": false,
+      "status": "pass",
+      "ms": 752,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "sessions index for comparison",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 893,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "admin home for comparison",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 1163,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members\"",
+      "check": true,
+      "status": "pass",
+      "ms": 45,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "hide member names and phones",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "list detail top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(()=>{window.scrollTo(0,document.body.scrollHeight);return true})()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "list detail bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "measure page height and where Members starts",
+      "check": true,
+      "status": "fail",
+      "ms": 10149,
+      "error": "got \"{\\\"h\\\":1079,\\\"membersTop\\\":626}\"",
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Member actions']`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "member actions menu open (not clicked)",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "missing list (valid uuid)",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/not-a-list",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "malformed list id",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "main ul.divide-y li p",
+    "main ul.divide-y li .font-mono"
+  ],
+  "limitations": [
+    "Look only: no form submitted, no member removed"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

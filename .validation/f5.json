@@ -1,0 +1,9 @@
+{"code":"F5","title":"No loading state on the Lists pages",
+"kind":"state","severity":"low","confidence":"medium",
+"where":"/admin/lists and /admin/lists/<id>, any width, while the server loads",
+"what_happens":"From code, not seen: neither route has a loading.tsx or Suspense fallback (only the session page has a skeleton, SessionBodySkeleton). Clicking a list keeps the old page with no sign anything is happening until the server answers. Not visible in a screenshot on a fast connection.",
+"who_hurts":"An admin on a slow connection who clicks a list and may click again.",
+"suggested_fix":"Add src/app/admin/lists/loading.tsx and lists/[id]/loading.tsx with a small skeleton, reusing the style of SessionBodySkeleton in src/app/admin/sessions/[code]/page.tsx.",
+"rule":"established pattern: /admin/sessions/[code] skeleton",
+"origin":"earlier",
+"fingerprint":"/admin/lists|page|state|no loading state"}

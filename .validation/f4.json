@@ -1,0 +1,9 @@
+{"code":"F4","title":"List page's three blocks each have a different heading style, and the count sits away from the members",
+"kind":"consistency","severity":"low","confidence":"high",
+"where":"/admin/lists/<id>, 1440×900",
+"what_happens":"The add card has no heading, 'Members' is a heading outside its box, and 'List settings' is a heading inside its card. The '2 numbers' count is a third grey line in the page header, not next to Members. The page header also calls them 'numbers' while the section says 'Members'.",
+"who_hurts":"Admins reading the page: it is harder to see what the parts are and how they relate.",
+"suggested_fix":"Give each block the same heading treatment (e.g. heading above the box, like Members) and show the count on the Members heading: 'Members (2)'. Pick one word, 'members' or 'numbers'. src/app/admin/lists/[id]/page.tsx.",
+"rule":"established pattern: /admin/sessions uses one heading style ('Archived (n)') above each group",
+"origin":"earlier",
+"fingerprint":"/admin/lists/[id]|page|consistency|mixed section headings"}

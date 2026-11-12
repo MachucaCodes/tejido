@@ -1,0 +1,87 @@
+{
+  "title": "Admin Lists audit part 2 (look only)",
+  "slug": "admin-lists-audit-part-2-look-only",
+  "out_dir": "/srv/agent-runs/b1b6022f/.validation/run2/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:49:42.017Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin Lists audit part 2 (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-01.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-02.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-03.png",
+          "shows": "hide member names and phones",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-04.png",
+          "shows": "Click `[aria-label='Member actions']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-06.png",
+          "shows": "member actions menu open (not clicked)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-07.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-08.png",
+          "shows": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-09.png",
+          "shows": "missing list (valid uuid)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-10.png",
+          "shows": "Open /admin/lists/not-a-list",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run2/step-11.png",
+          "shows": "malformed list id",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

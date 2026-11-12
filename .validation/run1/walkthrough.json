@@ -1,0 +1,115 @@
+{
+  "title": "Admin Lists audit (look only)",
+  "slug": "admin-lists-audit-look-only",
+  "out_dir": "/srv/agent-runs/b1b6022f/.validation/run1/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:48:24.802Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin Lists audit (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-01.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-02.png",
+          "shows": "Page shows \"Lists\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-03.png",
+          "shows": "lists index as it opens",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-04.png",
+          "shows": "Open /admin/sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-05.png",
+          "shows": "sessions index for comparison",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-06.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-07.png",
+          "shows": "admin home for comparison",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-08.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-09.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-10.png",
+          "shows": "hide member names and phones",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-11.png",
+          "shows": "list detail top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-12.png",
+          "shows": "`(()=>{window.scrollTo(0,document.body.scrollHeight);return true})()` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-14.png",
+          "shows": "list detail bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b1b6022f/.validation/run1/step-15.png",
+          "shows": "measure page height and where Members starts",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
