@@ -17,7 +17,8 @@ import {
 
 /**
  * Open ↔ closed as one labelled row, built like PrivacyToggle: it saves on
- * its own after a confirm, so it never waits on the edit form's Save.
+ * its own, so it never waits on the edit form's Save. Closing asks first;
+ * reopening is harmless and saves at once.
  */
 export default function StatusToggle({
   code,
@@ -71,28 +72,30 @@ export default function StatusToggle({
           variant="ghost"
           size="sm"
           className="ml-auto"
-          onClick={() => setOpen(true)}
+          disabled={busy}
+          onClick={() => (isOpen ? setOpen(true) : void toggle())}
         >
-          {isOpen ? "Close session" : "Reopen session"}
+          {!isOpen && busy ? "Saving…" : isOpen ? "Close session" : "Reopen session"}
         </Button>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>{isOpen ? "Close this session?" : "Reopen this session?"}</DialogTitle>
+            <DialogTitle>Close this session?</DialogTitle>
             <DialogDescription>
-              {isOpen
-                ? "It stops taking new answers. Everything said so far stays, and you can reopen it at any time."
-                : "It takes new answers again through the same link."}
+              It stops taking new answers. Everything said so far stays, and you
+              can reopen it at any time.
             </DialogDescription>
           </DialogHeader>
           {error && <p className="text-xs text-destructive">{error}</p>}
           <DialogFooter>
             <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
             <Button type="button" disabled={busy} onClick={() => void toggle()}>
-              {busy ? "Saving…" : isOpen ? "Close session" : "Reopen session"}
+              {busy ? "Saving…" : "Close session"}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      {/* Reopening has no dialog, so its error shows on the row. */}
+      {!isOpen && error && <p className="w-full text-xs text-destructive">{error}</p>}
     </div>
   );
 }
