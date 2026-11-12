@@ -1,0 +1,20 @@
+{
+  "name": "Admin session header and account link (look only)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "login": "tejido",
+  "environment": "production, read-only look",
+  "viewport": {"width": 1440, "height": 900},
+  "pace_ms": 500,
+  "steps": [
+    {"do": "goto", "url": "/admin/sessions/using-tejido"},
+    {"do": "wait", "ms": 2000},
+    {"do": "screenshot", "label": "session page top"},
+    {"do": "goto", "url": "/admin"},
+    {"do": "wait", "ms": 1200},
+    {"do": "expect_js", "js": "document.querySelector('header a[href=\"/me\"]')?.getAttribute('href')", "equals": "/me", "label": "account name links to /me"},
+    {"do": "expect_js", "js": "(()=>{const a=[...document.querySelectorAll('main li a')].pop(); const s=getComputedStyle(a); return s.opacity})()", "equals": "0.6", "label": "archived row opacity"},
+    {"do": "goto", "url": "/me"},
+    {"do": "wait", "ms": 1500},
+    {"do": "screenshot", "label": "where the account name goes"}
+  ]
+}

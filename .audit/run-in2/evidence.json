@@ -1,0 +1,200 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin home, nav, new session (look only)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-19c06f01-ui-audit-cold-audit-of-the-admin-home",
+    "dirty": true
+  },
+  "environment": "production, read-only look",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:45:58.659Z",
+  "duration_ms": 25244,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 922,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "admin home first screen",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "rows shown",
+      "check": true,
+      "status": "pass",
+      "ms": 10,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "scroll to bottom",
+      "check": true,
+      "status": "pass",
+      "ms": 10,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 605,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "admin home bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1031,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1509,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "new session page",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 56,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 605,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "manual form open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 962,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "lists index",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/nope-audit",
+      "check": false,
+      "status": "pass",
+      "ms": 872,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "admin 404",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-19.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin session header and account link (look only)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-19c06f01-ui-audit-cold-audit-of-the-admin-home",
+    "dirty": true
+  },
+  "environment": "production, read-only look",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:47:03.762Z",
+  "duration_ms": 15712,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/using-tejido",
+      "check": false,
+      "status": "pass",
+      "ms": 1283,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2004,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "session page top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 555,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1200 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1206,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "account name links to /me",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "archived row opacity",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /me",
+      "check": false,
+      "status": "pass",
+      "ms": 787,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "where the account name goes",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

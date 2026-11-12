@@ -1,0 +1,52 @@
+{
+  "title": "Admin sign-in signed out",
+  "slug": "admin-sign-in-signed-out",
+  "out_dir": "/srv/agent-runs/19c06f01/.audit/run-out/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:45:37.726Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin sign-in signed out",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-out/step-01.png",
+          "shows": "Open /admin/login",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-out/step-03.png",
+          "shows": "sign-in page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-out/step-04.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-out/step-06.png",
+          "shows": "signed-out /admin goes to sign-in",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-out/step-07.png",
+          "shows": "after /admin signed out",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

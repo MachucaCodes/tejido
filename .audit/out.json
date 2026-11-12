@@ -1,0 +1,17 @@
+{
+  "name": "Admin sign-in signed out",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "login": "none",
+  "environment": "production, signed out",
+  "viewport": {"width": 1440, "height": 900},
+  "pace_ms": 500,
+  "steps": [
+    {"do": "goto", "url": "/admin/login"},
+    {"do": "wait", "ms": 1500},
+    {"do": "screenshot", "label": "sign-in page"},
+    {"do": "goto", "url": "/admin"},
+    {"do": "wait", "ms": 1500},
+    {"do": "expect_js", "js": "location.pathname", "equals": "/admin/login", "label": "signed-out /admin goes to sign-in"},
+    {"do": "screenshot", "label": "after /admin signed out"}
+  ]
+}

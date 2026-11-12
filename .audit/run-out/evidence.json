@@ -1,0 +1,92 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin sign-in signed out",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-19c06f01-ui-audit-cold-audit-of-the-admin-home",
+    "dirty": true
+  },
+  "environment": "production, signed out",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:45:37.726Z",
+  "duration_ms": 9988,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/login",
+      "check": false,
+      "status": "pass",
+      "ms": 526,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "sign-in page",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 725,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "signed-out /admin goes to sign-in",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "after /admin signed out",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

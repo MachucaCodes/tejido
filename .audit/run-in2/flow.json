@@ -1,0 +1,93 @@
+{
+ "name": "Admin home, nav, new session (look only)",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, read-only look",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 500,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "admin home first screen"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelectorAll('main li').length>0",
+   "equals": true,
+   "label": "rows shown"
+  },
+  {
+   "do": "expect_js",
+   "js": "(window.scrollTo(0, document.body.scrollHeight), true)",
+   "equals": true,
+   "label": "scroll to bottom"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "screenshot",
+   "label": "admin home bottom"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "new session page"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "screenshot",
+   "label": "manual form open"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "lists index"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/nope-audit"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "admin 404"
+  }
+ ]
+}

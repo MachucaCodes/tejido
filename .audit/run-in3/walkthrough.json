@@ -1,0 +1,66 @@
+{
+  "title": "Admin session header and account link (look only)",
+  "slug": "admin-session-header-and-account-link-look-only",
+  "out_dir": "/srv/agent-runs/19c06f01/.audit/run-in3/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:47:03.762Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin session header and account link (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-in3/step-01.png",
+          "shows": "Open /admin/sessions/using-tejido",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-in3/step-03.png",
+          "shows": "session page top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-in3/step-04.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-in3/step-06.png",
+          "shows": "account name links to /me",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-in3/step-07.png",
+          "shows": "archived row opacity",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-in3/step-08.png",
+          "shows": "Open /me",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/19c06f01/.audit/run-in3/step-10.png",
+          "shows": "where the account name goes",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
