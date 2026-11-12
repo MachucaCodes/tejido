@@ -1,0 +1,14 @@
+{
+ "code": "F6",
+ "title": "Logs name a person by a hex id while Synthesis gives the same person a voice label",
+ "kind": "consistency",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions/[code]/logs, 1440x900, any row with a participant",
+ "what_happens": "Each log row ends with a bare id like '8d565981', and the opened row shows the full UUID. Synthesis groups answers under a voice label (voiceLabels). Nothing links the two.",
+ "who_hurts": "An admin chasing why one person's answer did or didn't reach the summary can't match a log row to the voice on Synthesis.",
+ "suggested_fix": "Use the same voiceLabels(...) label in the log row and the participant filter chip, keeping the id in the opened details.",
+ "rule": "established pattern: /admin/sessions/[code]/synthesis voice labels",
+ "origin": "earlier",
+ "fingerprint": "/admin/sessions/[code]/logs|log row|consistency|hex id vs voice label"
+}

@@ -1,0 +1,14 @@
+{
+ "code": "F7",
+ "title": "Long topic in the sessions list runs into the voice count",
+ "kind": "clarity",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin (sessions list), 1440x900, a topic longer than the row",
+ "what_happens": "The truncated topic ends '\u2026play in s...' directly against '3 voices' with no space between them.",
+ "who_hurts": "Admins scanning the list read the count as part of the title.",
+ "suggested_fix": "Add a gap between the two sides of the row (gap-4 on the Link's flex), session-row.tsx:26.",
+ "rule": "general",
+ "origin": "earlier: #9",
+ "fingerprint": "/admin/sessions|SessionRow|clarity|truncated topic hits count"
+}

@@ -1,0 +1,197 @@
+{
+ "name": "Sessions audit: synthesis, logs, states",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, read-only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 800,
+ "redact": [
+  "main ul.max-h-72 li",
+  "main ol ul li",
+  "main section ul ul li",
+  "main ol article p.whitespace-pre-wrap"
+ ],
+ "limitations": [
+  "Look only; no saving"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy/synthesis"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "screenshot",
+   "label": "syn-top"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollTo(0,800); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "screenshot",
+   "label": "syn-mid"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy/logs"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "screenshot",
+   "label": "logs-top"
+  },
+  {
+   "do": "click",
+   "text": "Filter"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "logs-filter-open"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('main details summary').click(); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "logs-row-open"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "screenshot",
+   "label": "empty-detail"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together/synthesis"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "screenshot",
+   "label": "empty-syn"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together/logs"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "screenshot",
+   "label": "empty-logs"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/why-statement-v2"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "screenshot",
+   "label": "archived-detail"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/no-such-session-xyz"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "screenshot",
+   "label": "missing"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy"
+  },
+  {
+   "do": "wait",
+   "ms": 3000
+  },
+  {
+   "do": "expect_js",
+   "js": "[...document.querySelectorAll('main details > summary')].find(s=>s.textContent.includes('Edit session')).click(); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "expect_js",
+   "js": "[...document.querySelectorAll('main details > summary')].find(s=>s.textContent.includes('Edit session')).scrollIntoView(); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "screenshot",
+   "label": "edit-open"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollBy(0,800); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "edit-open-2"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.documentElement.scrollHeight",
+   "equals": 0,
+   "label": "height with edit open (info)"
+  }
+ ]
+}

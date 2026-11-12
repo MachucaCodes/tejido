@@ -1,0 +1,14 @@
+{
+ "code": "F2",
+ "title": "Explanations sit on the page: under 'Voices' and under every Edit field",
+ "kind": "rule",
+ "severity": "medium",
+ "confidence": "high",
+ "where": "/admin/sessions/[code] (Overview), Voices section and the opened Edit form",
+ "what_happens": "'3 voices \u2014 people whose answers turned into points' explains the term inline. The Edit form has help lines under fields: 'Used in the join URL (/s/\u2026)', 'Surfaced to the facilitator AI as reference material; not shown to the participant unless they ask.', 'Injected into the facilitator system prompt and takes precedence over the global mechanics.', and placeholders 'Auto-translated after you save. Edit to override.'",
+ "who_hurts": "Admins re-read the same paragraphs on every visit; the form reads as dense text and the help competes with the values.",
+ "suggested_fix": "Move each explanation into the existing InfoTip (as already done for Privacy and 'Send on WhatsApp'): 'Voices (i)' and an (i) next to Context, Instructions and the code label. edit-session-form.tsx help <p>s; page.tsx:127-130.",
+ "rule": "Dane's UI rule: 'Keep explanation off the top level of the page ... text that explains what it does goes behind a small \"i\" icon or tooltip.'",
+ "origin": "earlier (the create form got the same fix; the edit form didn't)",
+ "fingerprint": "/admin/sessions/[code]|EditSessionForm|rule|field help text on page"
+}

@@ -1,0 +1,14 @@
+{
+ "code": "F3",
+ "title": "A failed load on a session's pages looks like 'Session not found', '0 voices' or 'No summary yet'",
+ "kind": "state",
+ "severity": "medium",
+ "confidence": "medium",
+ "where": "/admin/sessions/[code], /synthesis, /logs: error paths (from code, not seen)",
+ "what_happens": "Found in code, can't be reached without breaking the database. loadSession (page.tsx:15-25) ignores the error, so a failed query shows the 'Session not found' page. SessionBody ignores errors on participants, themes, assignments, lists and invites, so a failure shows '0 voices', 'No themes yet.' and an empty invite list. Synthesis ignores both of its query errors and says 'No summary yet'. Logs show the raw Supabase error.message. The sessions list already handles this correctly ('Couldn't load sessions. Reload the page to try again.').",
+ "who_hurts": "An admin during a database hiccup is told a live session has no answers or doesn't exist, and may act on it (re-send invites, rebuild, re-create the session).",
+ "suggested_fix": "Check `error` on each query as admin/page.tsx does and show the same role='alert' line ('Couldn't load this session. Reload the page to try again.') instead of the empty states; on logs, swap error.message for that line.",
+ "rule": "established pattern: /admin sessions list error state",
+ "origin": "earlier",
+ "fingerprint": "/admin/sessions/[code]|query errors|state|errors look empty or missing"
+}

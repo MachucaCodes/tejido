@@ -1,0 +1,15 @@
+{
+ "code": "F1",
+ "title": "Overview stacks four jobs: results, a WhatsApp invite card, a full inline Edit form and Privacy",
+ "kind": "rule",
+ "severity": "medium",
+ "confidence": "high",
+ "where": "/admin/sessions/[code] (Overview tab), 1440x900, session with themes; Edit session opened",
+ "what_happens": "Below the results the page stacks a 'Send on WhatsApp' card, an 'Edit session' disclosure that opens a ~2,000px form inline (topic, both languages, intro, context, instructions, Status, prompt overrides, Save), and a Privacy row. With Edit open the page is about 2.5 screens and the results scroll away.",
+ "who_hurts": "An admin who opens a session to read results gets three other jobs on the same screen; someone who wants to edit or close the session has to find a small disclosure at the bottom, and 'Status: open/closed' is buried inside the edit form.",
+ "suggested_fix": "Keep Overview to Voices + Themes. Move Edit (with Status and Privacy inside it) to its own page or a 'Settings' tab in SessionHeader, opened by a small 'Edit' button in the header actions; make 'Send invites' a header button that opens the list picker in a dialog. page.tsx:254-298, whatsapp-invites.tsx:93.",
+ "rule": "Dane's UI rule: 'One page, one main job ... Everything else on the page (creating, editing settings, adding to it) does not get its own big section stacked on the same screen: each becomes a button that opens its own page or dialog, or the jobs are split into tabs.'",
+ "origin": "earlier: #7/#9 kept invites, edit and privacy on the overview",
+ "mockup": true,
+ "fingerprint": "/admin/sessions/[code]|overview sections|rule|invites edit privacy stacked"
+}

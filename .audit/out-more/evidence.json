@@ -1,0 +1,414 @@
+{
+  "tool": "clock-validate",
+  "name": "Sessions audit: synthesis, logs, states",
+  "outcome": "fail",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-7fd4f6b1-ui-audit-cold-audit-of-the-sessions",
+    "dirty": true
+  },
+  "environment": "production, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:46:36.756Z",
+  "duration_ms": 108879,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 1262,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3002,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "syn-top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollTo(0,800); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 604,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "syn-mid",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 1724,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3010,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "logs-top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Filter\"",
+      "check": false,
+      "status": "pass",
+      "ms": 319,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 815,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "logs-filter-open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`document.querySelector('main details summary').click(); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 816,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "logs-row-open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1178,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3003,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "empty-detail",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 786,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3003,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "empty-syn",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 633,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3003,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "empty-logs",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 841,
+      "error": null,
+      "screenshot": "step-26.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3011,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "archived-detail",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/no-such-session-xyz",
+      "check": false,
+      "status": "pass",
+      "ms": 707,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3003,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "missing",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-31.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 835,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3004,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "`[...document.querySelectorAll('main details > summary')].find(s=>s.textContent.includes('Edit session')).click(); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-34.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 806,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "`[...document.querySelectorAll('main details > summary')].find(s=>s.textContent.includes('Edit session')).scrollIntoView(); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-36.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 606,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "edit-open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-38.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollBy(0,800); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 12,
+      "error": null,
+      "screenshot": "step-39.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 511,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "edit-open-2",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-41.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "height with edit open (info)",
+      "check": true,
+      "status": "fail",
+      "ms": 10099,
+      "error": "got 2079",
+      "screenshot": "step-42.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "main ul.max-h-72 li",
+    "main ol ul li",
+    "main section ul ul li",
+    "main ol article p.whitespace-pre-wrap"
+  ],
+  "limitations": [
+    "Look only; no saving"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

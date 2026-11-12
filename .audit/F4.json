@@ -1,0 +1,14 @@
+{
+ "code": "F4",
+ "title": "Title and tabs jump when you switch tabs, because each tab puts different buttons next to the title",
+ "kind": "consistency",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions/[code] \u2192 /synthesis \u2192 /logs, 1440x900",
+ "what_happens": "Overview has Copy join link + archive beside the title, Synthesis has (i) + Rebuild + Find sources, Logs has none. The title column width changes, so the topic re-wraps and the tab row moves up or down (e.g. 'daily-life-together': tabs at y\u2248244 on Overview, y\u2248216 on Synthesis and Logs).",
+ "who_hurts": "Admins moving between the three tabs see the header shift each time, and the tab they want to click moves.",
+ "suggested_fix": "Keep the session header fixed (title + Copy link + archive on every tab) and put each tab's own actions (Rebuild, Find sources, Filter) at the right end of the tab row or the first row under it. session-header.tsx:52-61.",
+ "rule": "established pattern: the admin bar keeps its tabs fixed and puts the page button at the right of the same row (admin-nav.tsx)",
+ "origin": "earlier: #9",
+ "fingerprint": "/admin/sessions/[code]/*|SessionHeader|consistency|header shifts between tabs"
+}

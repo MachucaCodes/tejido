@@ -1,0 +1,15 @@
+{
+ "code": "F5",
+ "title": "Theme list shows near-duplicate and 0-point themes with mixed capitalisation",
+ "kind": "clarity",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions/[code] (Overview), Themes \u00b7 8, esm-rental-policy",
+ "what_happens": "'not a holiday park' (2 points) and 'Not a holiday park' (1 point) both appear; 'those who really live here' (2) and 'Who really lives here' (0); 'Rentals pay their share' has 0 points. Some titles start lowercase, some uppercase. The heading counts all 8.",
+ "who_hurts": "An admin reading results can't tell which theme to trust and over-counts what came out of the session.",
+ "suggested_fix": "Dim 0-point themes or fold them under a 'N empty themes' line, and show titles with a capitalised first letter. Merging the duplicates is a clustering issue, out of this screen.",
+ "rule": "general clarity",
+ "origin": "earlier",
+ "owners_call": "Should 0-point themes show on Overview at all?",
+ "fingerprint": "/admin/sessions/[code]|themes list|clarity|duplicate and empty themes"
+}

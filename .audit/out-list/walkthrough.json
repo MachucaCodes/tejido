@@ -1,0 +1,94 @@
+{
+  "title": "Sessions audit: list + detail",
+  "slug": "sessions-audit-list-detail",
+  "out_dir": "/srv/agent-runs/7fd4f6b1/.audit/out-list/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:45:30.249Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Sessions audit: list + detail",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-01.png",
+          "shows": "Open /admin/sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-03.png",
+          "shows": "list-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-04.png",
+          "shows": "`window.scrollTo(0, document.body.scrollHeight); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-06.png",
+          "shows": "list-bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-07.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-09.png",
+          "shows": "detail-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-10.png",
+          "shows": "`window.scrollTo(0, 900); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-12.png",
+          "shows": "detail-mid",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-13.png",
+          "shows": "`window.scrollTo(0, document.body.scrollHeight); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-15.png",
+          "shows": "detail-bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7fd4f6b1/.audit/out-list/step-16.png",
+          "shows": "page height (info)",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

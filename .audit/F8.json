@@ -1,0 +1,14 @@
+{
+ "code": "F8",
+ "title": "Empty logs show '0 of 0 matching calls' above 'No AI calls yet'",
+ "kind": "state",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions/[code]/logs, session with no AI calls, no filter on",
+ "what_happens": "Two lines say the same thing, and the first one says 'matching' though no filter is on (the Filter button is correctly hidden).",
+ "who_hurts": "Admins briefly wonder whether a filter is hiding rows.",
+ "suggested_fix": "Hide the count line when there are no rows and no filter; keep the empty card. logs/page.tsx:441-444.",
+ "rule": "Dane's UI rule: 'Be careful about redundant titles, headings ... avoid repeating the same thing twice on one screen.'",
+ "origin": "earlier: #9",
+ "fingerprint": "/admin/sessions/[code]/logs|empty state|state|empty count line redundant"
+}

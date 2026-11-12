@@ -1,0 +1,28 @@
+{
+  "name": "Sessions audit: list + detail",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "login": "tejido",
+  "environment": "production, read-only",
+  "viewport": {"width": 1440, "height": 900},
+  "pace_ms": 800,
+  "redact": ["main ul.max-h-72 li", "main ol ul li", "main section ul ul li", "main ol article p.whitespace-pre-wrap"],
+  "limitations": ["Look only; no saving"],
+  "steps": [
+    {"do": "goto", "url": "/admin/sessions"},
+    {"do": "wait", "ms": 2500},
+    {"do": "screenshot", "label": "list-top"},
+    {"do": "expect_js", "js": "window.scrollTo(0, document.body.scrollHeight); true", "equals": true},
+    {"do": "wait", "ms": 600},
+    {"do": "screenshot", "label": "list-bottom"},
+    {"do": "goto", "url": "/admin/sessions/esm-rental-policy"},
+    {"do": "wait", "ms": 3500},
+    {"do": "screenshot", "label": "detail-top"},
+    {"do": "expect_js", "js": "window.scrollTo(0, 900); true", "equals": true},
+    {"do": "wait", "ms": 600},
+    {"do": "screenshot", "label": "detail-mid"},
+    {"do": "expect_js", "js": "window.scrollTo(0, document.body.scrollHeight); true", "equals": true},
+    {"do": "wait", "ms": 600},
+    {"do": "screenshot", "label": "detail-bottom"},
+    {"do": "expect_js", "js": "document.documentElement.scrollHeight", "equals": 0, "label": "page height (info)"}
+  ]
+}
