@@ -1,0 +1,71 @@
+{
+ "name": "Session overview round 2: privacy one line, info tooltips (live)",
+ "base_url": "https://tejido-git-main-dane-myers-projects.vercel.app",
+ "environment": "main-branch deployment of the merge commit (the build production serves), production database, looked only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "redact": [
+  "ul.max-h-72",
+  "input",
+  "textarea"
+ ],
+ "limitations": [
+  "Looks only: nothing sent, saved or toggled"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement"
+  },
+  {
+   "do": "expect_text",
+   "text": "Themes \u00b7 28",
+   "timeout_ms": 30000
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Sends the invite template to everyone",
+   "label": "invite explanation not on the page"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Nobody is asked to share their name",
+   "label": "privacy explanation not on the page"
+  },
+  {
+   "do": "expect_js",
+   "js": "(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Anonymous session')||e.textContent.includes('Connect session')); h.scrollIntoView({block:'center'}); return true; })()",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "invites and privacy at 1440"
+  },
+  {
+   "do": "expect_js",
+   "js": "(() => { document.querySelector('button[aria-label^=\"Nobody is asked\"]').focus(); return true; })()",
+   "equals": true,
+   "label": "focus the privacy info icon (keyboard)"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "expect_visible",
+   "selector": "[data-slot=tooltip-content], [role=tooltip]",
+   "label": "privacy explanation shows in the tooltip"
+  },
+  {
+   "do": "screenshot",
+   "label": "privacy tooltip open"
+  }
+ ]
+}

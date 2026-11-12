@@ -1,0 +1,134 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview round 2: privacy one line, info tooltips (live)",
+  "outcome": "fail",
+  "commit": {
+    "sha": "f70ad7bde6f21d841d8aa66c4a821b7cff27422a",
+    "branch": "clock-2d4e9318-ui-mockup-session-overview-is-7-screens",
+    "dirty": true
+  },
+  "environment": "production after merge, looked only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:22:26.746Z",
+  "duration_ms": 40549,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 758,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes · 28\"",
+      "check": true,
+      "status": "fail",
+      "ms": 30004,
+      "error": "locator.waitFor: Timeout 30000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see \"Signing in on previews\" in clock-validate help))",
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "invite explanation not on the page",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "privacy explanation not on the page",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Anonymous session')||e.textContent.includes('Connect session')); h.scrollIntoView({block:'center'}); return true; })()` is true",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "invites and privacy at 1440",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "focus the privacy info icon (keyboard)",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1200 ms",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_visible",
+      "description": "privacy explanation shows in the tooltip",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "privacy tooltip open",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-72",
+    "input",
+    "textarea"
+  ],
+  "limitations": [
+    "Looks only: nothing sent, saved or toggled"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

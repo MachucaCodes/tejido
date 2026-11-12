@@ -1,0 +1,122 @@
+{
+  "title": "Session overview: other states (connect, no themes, 0-point theme, archived)",
+  "slug": "session-overview-other-states-connect-no-themes-",
+  "out_dir": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:20:47.826Z (commit f70ad7bde6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview: other states (connect, no themes, 0-point theme, archived)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-02.png",
+          "shows": "no themes: empty line",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-03.png",
+          "shows": "Page shows \"Connect session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-04.png",
+          "shows": "Page shows \"Make anonymous\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-05.png",
+          "shows": "focus connect info icon",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-07.png",
+          "shows": "connect explanation in tooltip",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-08.png",
+          "shows": "connect session, no themes",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-09.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-10.png",
+          "shows": "Page shows \"Themes · 8\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-11.png",
+          "shows": "zero-point themes show 0 points",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-12.png",
+          "shows": "0-point theme opens with no points link",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-14.png",
+          "shows": "0-point theme open",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-15.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-16.png",
+          "shows": "archived: invites disabled with its note",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-20-46-571Z/step-17.png",
+          "shows": "archived session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

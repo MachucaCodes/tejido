@@ -1,0 +1,52 @@
+{
+  "title": "Session overview round 2 at phone width",
+  "slug": "session-overview-round-2-at-phone-width",
+  "out_dir": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-12-59-111Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:13:00.872Z (commit f70ad7bde6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview round 2 at phone width",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-12-59-111Z/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-12-59-111Z/step-02.png",
+          "shows": "Page shows \"Themes · 28\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-12-59-111Z/step-03.png",
+          "shows": "themes at 390",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-12-59-111Z/step-04.png",
+          "shows": "`(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Anonymous session')||e.textContent.includes('Connect session')); h.scrollIntoView({block:'center'}); return true; })()` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-12-59-111Z/step-06.png",
+          "shows": "invites and privacy at 390",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "title": "Session overview: compact themes, actions close behind",
+  "slug": "session-overview-compact-themes-actions-close-be",
+  "out_dir": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:01:23.716Z (commit 6720767d41). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview: compact themes, actions close behind",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-02.png",
+          "shows": "Page shows \"Themes · 28\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-03.png",
+          "shows": "top of the overview",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-04.png",
+          "shows": "Send on WhatsApp starts within ~2.4 screens (was 6,057px)",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-05.png",
+          "shows": "open the top theme",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-06.png",
+          "shows": "Page shows \"See the\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-07.png",
+          "shows": "top theme open, full description and points link",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-08.png",
+          "shows": "`(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Send on WhatsApp')); h.scrollIntoView({block:'center'}); return true; })()` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-01-21-990Z/step-10.png",
+          "shows": "end of theme list, invites, edit, privacy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

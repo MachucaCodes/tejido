@@ -1,0 +1,89 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview round 2 at phone width",
+  "outcome": "pass",
+  "commit": {
+    "sha": "f70ad7bde6f21d841d8aa66c4a821b7cff27422a",
+    "branch": "clock-2d4e9318-ui-mockup-session-overview-is-7-screens",
+    "dirty": true
+  },
+  "environment": "PR #7 preview, production database, read-only (no clicks that write)",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:13:00.872Z",
+  "duration_ms": 9267,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 2867,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes · 28\"",
+      "check": true,
+      "status": "pass",
+      "ms": 88,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "themes at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Anonymous session')||e.textContent.includes('Connect session')); h.scrollIntoView({block:'center'}); return true; })()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 521,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "invites and privacy at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-72",
+    "input",
+    "textarea"
+  ],
+  "limitations": [
+    "Looks only: nothing sent, saved or toggled"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

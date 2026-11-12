@@ -1,0 +1,31 @@
+{
+  "title": "Session overview round 2: privacy one line, info tooltips (live)",
+  "slug": "session-overview-round-2-privacy-one-line-info-t",
+  "out_dir": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-22-18-522Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:22:26.746Z (commit f70ad7bde6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview round 2: privacy one line, info tooltips (live)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-22-18-522Z/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2d4e9318/.validation/2026-11-12T06-22-18-522Z/step-02.png",
+          "shows": "Page shows \"Themes · 28\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

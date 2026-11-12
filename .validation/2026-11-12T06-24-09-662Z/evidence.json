@@ -1,0 +1,134 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview round 2: privacy one line, info tooltips (live)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "f70ad7bde6f21d841d8aa66c4a821b7cff27422a",
+    "branch": "clock-2d4e9318-ui-mockup-session-overview-is-7-screens",
+    "dirty": true
+  },
+  "environment": "main-branch deployment of the merge commit (the build production serves), production database, looked only",
+  "base_url": "https://tejido-git-main-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:24:11.975Z",
+  "duration_ms": 25562,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 3199,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes · 28\"",
+      "check": true,
+      "status": "pass",
+      "ms": 56,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "invite explanation not on the page",
+      "check": true,
+      "status": "pass",
+      "ms": 3105,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "privacy explanation not on the page",
+      "check": true,
+      "status": "pass",
+      "ms": 3098,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Anonymous session')||e.textContent.includes('Connect session')); h.scrollIntoView({block:'center'}); return true; })()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 12,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 510,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "invites and privacy at 1440",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "focus the privacy info icon (keyboard)",
+      "check": true,
+      "status": "pass",
+      "ms": 28,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1200 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1207,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_visible",
+      "description": "privacy explanation shows in the tooltip",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "privacy tooltip open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-72",
+    "input",
+    "textarea"
+  ],
+  "limitations": [
+    "Looks only: nothing sent, saved or toggled"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

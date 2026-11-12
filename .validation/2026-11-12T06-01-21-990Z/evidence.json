@@ -1,0 +1,125 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview: compact themes, actions close behind",
+  "outcome": "pass",
+  "commit": {
+    "sha": "6720767d417998ba1465c74eb5764f0bd565b8cd",
+    "branch": "clock-2d4e9318-ui-mockup-session-overview-is-7-screens",
+    "dirty": true
+  },
+  "environment": "PR #7 preview, production database, read-only (no clicks that write)",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:01:23.716Z",
+  "duration_ms": 15792,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 2912,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes · 28\"",
+      "check": true,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "top of the overview",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "Send on WhatsApp starts within ~2.4 screens (was 6,057px)",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "open the top theme",
+      "check": false,
+      "status": "pass",
+      "ms": 46,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"See the\"",
+      "check": true,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "top theme open, full description and points link",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Send on WhatsApp')); h.scrollIntoView({block:'center'}); return true; })()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 511,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "end of theme list, invites, edit, privacy",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-72",
+    "input",
+    "textarea"
+  ],
+  "limitations": [
+    "Looks only: nothing sent, saved or toggled"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

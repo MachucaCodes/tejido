@@ -1,0 +1,188 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview: other states (connect, no themes, 0-point theme, archived)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "f70ad7bde6f21d841d8aa66c4a821b7cff27422a",
+    "branch": "clock-2d4e9318-ui-mockup-session-overview-is-7-screens",
+    "dirty": true
+  },
+  "environment": "PR #7 preview, production database, read-only (no clicks that write)",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:20:47.826Z",
+  "duration_ms": 25255,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1696,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "no themes: empty line",
+      "check": true,
+      "status": "pass",
+      "ms": 84,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Connect session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 12,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Make anonymous\"",
+      "check": true,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "focus connect info icon",
+      "check": true,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1200 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1205,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_visible",
+      "description": "connect explanation in tooltip",
+      "check": true,
+      "status": "pass",
+      "ms": 10,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "connect session, no themes",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 936,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes · 8\"",
+      "check": true,
+      "status": "pass",
+      "ms": 43,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "zero-point themes show 0 points",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "0-point theme opens with no points link",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 409,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "0-point theme open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 1021,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "archived: invites disabled with its note",
+      "check": true,
+      "status": "pass",
+      "ms": 64,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "archived session",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-17.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-72",
+    "input",
+    "textarea"
+  ],
+  "limitations": [
+    "Looks only: nothing sent, saved or toggled"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

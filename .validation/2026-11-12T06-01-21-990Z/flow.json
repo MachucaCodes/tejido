@@ -1,0 +1,21 @@
+{
+  "name": "Session overview: compact themes, actions close behind",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "environment": "PR #7 preview, production database, read-only (no clicks that write)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 600,
+  "redact": ["ul.max-h-72", "input", "textarea"],
+  "limitations": ["Looks only: nothing sent, saved or toggled"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/evolving-why-statement" },
+    { "do": "expect_text", "text": "Themes · 28", "timeout_ms": 30000 },
+    { "do": "screenshot", "label": "top of the overview" },
+    { "do": "expect_js", "js": "(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Send on WhatsApp')); return h ? (h.getBoundingClientRect().top + scrollY < 2200) : 'missing'; })()", "equals": true, "label": "Send on WhatsApp starts within ~2.4 screens (was 6,057px)" },
+    { "do": "click", "selector": "details.group summary", "label": "open the top theme" },
+    { "do": "expect_text", "text": "See the" },
+    { "do": "screenshot", "label": "top theme open, full description and points link" },
+    { "do": "expect_js", "js": "(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Send on WhatsApp')); h.scrollIntoView({block:'center'}); return true; })()", "equals": true },
+    { "do": "wait", "ms": 500 },
+    { "do": "screenshot", "label": "end of theme list, invites, edit, privacy" }
+  ]
+}

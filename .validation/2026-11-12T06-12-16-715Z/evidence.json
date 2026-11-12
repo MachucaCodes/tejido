@@ -1,0 +1,125 @@
+{
+  "tool": "clock-validate",
+  "name": "Session overview round 2: privacy one line, info tooltips",
+  "outcome": "fail",
+  "commit": {
+    "sha": "f70ad7bde6f21d841d8aa66c4a821b7cff27422a",
+    "branch": "clock-2d4e9318-ui-mockup-session-overview-is-7-screens",
+    "dirty": true
+  },
+  "environment": "PR #7 preview, production database, read-only (no clicks that write)",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:12:18.466Z",
+  "duration_ms": 34847,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 3224,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes · 28\"",
+      "check": true,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "invite explanation not on the page",
+      "check": true,
+      "status": "pass",
+      "ms": 3111,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "privacy explanation not on the page",
+      "check": true,
+      "status": "pass",
+      "ms": 3109,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { const h=[...document.querySelectorAll('h2')].find(e=>e.textContent.includes('Anonymous session')||e.textContent.includes('Connect session')); h.scrollIntoView({block:'center'}); return true; })()` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 13,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 509,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "invites and privacy at 1440",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "hover/click the privacy info icon",
+      "check": false,
+      "status": "pass",
+      "ms": 55,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Nobody is asked to share their name\"",
+      "check": true,
+      "status": "fail",
+      "ms": 10014,
+      "error": "locator.waitFor: Timeout 10000ms exceeded.",
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "privacy tooltip open",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-72",
+    "input",
+    "textarea"
+  ],
+  "limitations": [
+    "Looks only: nothing sent, saved or toggled"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}
