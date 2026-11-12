@@ -1,9 +1,20 @@
 "use client";
 
+import { Trash2Icon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export default function EditListForm({
   listId,
@@ -18,7 +29,8 @@ export default function EditListForm({
   const [name, setName] = useState(initialName);
   const [description, setDescription] = useState(initialDescription ?? "");
   const [busy, setBusy] = useState(false);
-  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const save = async (e: React.FormEvent) => {
@@ -39,16 +51,12 @@ export default function EditListForm({
   };
 
   const remove = async () => {
-    // Two-step instead of a browser confirm() dialog.
-    if (!confirmDelete) {
-      setConfirmDelete(true);
-      return;
-    }
     setBusy(true);
+    setDeleteError(null);
     const res = await fetch(`/api/admin/lists/${listId}`, { method: "DELETE" });
     setBusy(false);
     if (!res.ok) {
-      setError(await res.text());
+      setDeleteError((await res.text()) || `failed (${res.status})`);
       return;
     }
     router.push("/admin/lists");
@@ -57,7 +65,50 @@ export default function EditListForm({
 
   return (
     <form onSubmit={save} className="space-y-3 rounded-lg border bg-card p-4">
-      <h2 className="text-sm font-medium">List settings</h2>
+      <div className="flex items-center justify-between gap-2">
+        <h2 className="text-sm font-medium">List settings</h2>
+        {/* Delete sits apart from Save, as a quiet icon that always asks first. */}
+        <Dialog
+          open={confirmOpen}
+          onOpenChange={(next) => {
+            setConfirmOpen(next);
+            if (!next) setDeleteError(null);
+          }}
+        >
+          <Tooltip>
+            <TooltipTrigger
+              type="button"
+              aria-label="Delete list"
+              onClick={() => setConfirmOpen(true)}
+              className="rounded p-1.5 text-muted-foreground hover:bg-accent hover:text-destructive"
+            >
+              <Trash2Icon className="size-4" aria-hidden />
+            </TooltipTrigger>
+            <TooltipContent>Delete list</TooltipContent>
+          </Tooltip>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Delete “{initialName}”?</DialogTitle>
+              <DialogDescription>
+                The list is removed. Its numbers are kept and stay in any other
+                lists.
+              </DialogDescription>
+            </DialogHeader>
+            {deleteError && <p className="text-xs text-destructive">{deleteError}</p>}
+            <DialogFooter>
+              <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+              <Button
+                type="button"
+                variant="destructive"
+                disabled={busy}
+                onClick={() => void remove()}
+              >
+                {busy ? "Deleting…" : "Delete list"}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
       <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="list-name">
           Name
@@ -83,22 +134,11 @@ export default function EditListForm({
         />
       </div>
       {error && <p className="text-xs text-destructive">{error}</p>}
-      <div className="flex items-center justify-between gap-2">
+      <div>
         <Button type="submit" disabled={busy}>
           Save
         </Button>
-        <button
-          type="button"
-          onClick={remove}
-          disabled={busy}
-          className="text-xs text-destructive hover:underline disabled:opacity-50"
-        >
-          {confirmDelete ? "Click again to delete this list" : "Delete list"}
-        </button>
       </div>
-      <p className="text-xs text-muted-foreground">
-        Deleting a list keeps the numbers — they stay in any other lists.
-      </p>
     </form>
   );
 }

@@ -75,7 +75,7 @@ export default function AdminLoginClient({ next = "/admin" }: { next?: string })
       <div className="space-y-1 text-center">
         <h1 className="text-xl font-semibold">Sign in</h1>
         <p className="text-sm text-muted-foreground">
-          We&apos;ll text you a code. Once you&apos;re in, you can create a new question.
+          We&apos;ll text you a code. Once you&apos;re in, you can create a new session.
         </p>
       </div>
 

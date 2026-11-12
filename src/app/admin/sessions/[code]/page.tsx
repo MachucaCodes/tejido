@@ -8,6 +8,7 @@ import PrivacyToggle from "./privacy-toggle";
 import CopyJoinLink from "./copy-join-link";
 import EditSessionForm from "./edit-session-form";
 import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-invites";
+import { formatDateTime } from "@/lib/format-date";
 
 export default async function AdminSessionDetail({
   params,
@@ -103,13 +104,11 @@ export default async function AdminSessionDetail({
   return (
     <div className="space-y-8">
       <header className="flex items-start justify-between gap-3">
-        <div className="space-y-1">
-          <p className="text-xs uppercase tracking-wide text-muted-foreground">
-            {session.id}
-          </p>
+        <div className="min-w-0 space-y-1">
+          <h1 className="text-lg font-semibold">{session.topic || session.id}</h1>
           <p className="text-xs text-muted-foreground">
-            {session.archived_at ? "archived" : session.status} ·{" "}
-            {new Date(session.created_at).toLocaleString()}
+            {session.id} · {session.archived_at ? "archived" : session.status} ·{" "}
+            {formatDateTime(session.created_at)}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-2">
@@ -128,60 +127,16 @@ export default async function AdminSessionDetail({
               LLM logs →
             </Link>
           )}
+          {/* Set apart from the links: archiving changes what participants see. */}
+          <span className="mx-1 h-5 w-px bg-border" aria-hidden />
+          <ArchiveToggle
+            code={session.id}
+            topic={session.topic ?? ""}
+            archivedAt={session.archived_at}
+            voiceCount={voiceCount}
+          />
         </div>
       </header>
-
-      {/* Invites go out through the shared WhatsApp number to the admins'
-          contact lists, so only admins see (and can send) them. */}
-      {guard.isAdmin && (
-        <WhatsAppInvites
-          code={session.id}
-          open={session.status === "open" && !session.archived_at}
-          lists={inviteLists}
-          invites={invites}
-        />
-      )}
-
-      <section className="space-y-3">
-        <h2 className="text-sm font-medium text-muted-foreground">Edit session</h2>
-        <EditSessionForm
-          code={session.id}
-          initialTopic={session.topic ?? ""}
-          initialTopicEs={session.topic_es ?? ""}
-          initialIntroMessage={session.intro_message ?? ""}
-          initialIntroMessageEs={session.intro_message_es ?? ""}
-          initialContext={session.context ?? ""}
-          initialInstructions={session.instructions ?? ""}
-          initialStatus={session.status as "open" | "closed"}
-          initialPromptOverrides={{
-            taskFraming: session.prompt_task_framing ?? "",
-            mechanics: session.prompt_mechanics ?? "",
-            pacing: session.prompt_pacing ?? "",
-            perspectivesInstructions: session.prompt_perspectives_instructions ?? "",
-            analysisSystem: session.prompt_analysis_system ?? "",
-            analysisPrompt: session.prompt_analysis_prompt ?? "",
-            summarySystem: session.prompt_summary_system ?? "",
-            summaryPrompt: session.prompt_summary_prompt ?? "",
-          }}
-        />
-      </section>
-
-      {/* Admin-only, matching the PATCH route. */}
-      {guard.isAdmin && (
-        <PrivacyToggle
-          code={session.id}
-          privacy={session.privacy === "connect" ? "connect" : "anonymous"}
-          consentCount={
-            (participants ?? []).filter((p) => p.connect_consent_at).length
-          }
-        />
-      )}
-
-      <ArchiveToggle
-        code={session.id}
-        archivedAt={session.archived_at}
-        participantCount={voiceCount}
-      />
 
       <section className="space-y-2">
         <h2 className="text-sm font-medium text-muted-foreground">Voices</h2>
@@ -210,8 +165,8 @@ export default async function AdminSessionDetail({
               <li key={t.id} className="rounded-lg border bg-card p-3">
                 <div className="flex items-baseline justify-between gap-3">
                   <h3 className="font-medium">{t.short_name}</h3>
-                  <span className="text-xs tabular-nums text-muted-foreground">
-                    {counts[t.id] ?? 0}
+                  <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
+                    {counts[t.id] ?? 0} {(counts[t.id] ?? 0) === 1 ? "point" : "points"}
                   </span>
                 </div>
                 <p className="mt-1 text-sm text-muted-foreground">{t.description}</p>
@@ -220,6 +175,55 @@ export default async function AdminSessionDetail({
           </ul>
         )}
       </section>
+
+      {/* Invites go out through the shared WhatsApp number to the admins'
+          contact lists, so only admins see (and can send) them. */}
+      {guard.isAdmin && (
+        <WhatsAppInvites
+          code={session.id}
+          open={session.status === "open" && !session.archived_at}
+          lists={inviteLists}
+          invites={invites}
+        />
+      )}
+
+      {/* Collapsed so the results come first and edits are deliberate. */}
+      <details className="space-y-3">
+        <summary className="cursor-pointer text-sm font-medium text-muted-foreground">
+          Edit session
+        </summary>
+        <EditSessionForm
+          code={session.id}
+          initialTopic={session.topic ?? ""}
+          initialTopicEs={session.topic_es ?? ""}
+          initialIntroMessage={session.intro_message ?? ""}
+          initialIntroMessageEs={session.intro_message_es ?? ""}
+          initialContext={session.context ?? ""}
+          initialInstructions={session.instructions ?? ""}
+          initialStatus={session.status as "open" | "closed"}
+          initialPromptOverrides={{
+            taskFraming: session.prompt_task_framing ?? "",
+            mechanics: session.prompt_mechanics ?? "",
+            pacing: session.prompt_pacing ?? "",
+            perspectivesInstructions: session.prompt_perspectives_instructions ?? "",
+            analysisSystem: session.prompt_analysis_system ?? "",
+            analysisPrompt: session.prompt_analysis_prompt ?? "",
+            summarySystem: session.prompt_summary_system ?? "",
+            summaryPrompt: session.prompt_summary_prompt ?? "",
+          }}
+        />
+      </details>
+
+      {/* Admin-only, matching the PATCH route. */}
+      {guard.isAdmin && (
+        <PrivacyToggle
+          code={session.id}
+          privacy={session.privacy === "connect" ? "connect" : "anonymous"}
+          consentCount={
+            (participants ?? []).filter((p) => p.connect_consent_at).length
+          }
+        />
+      )}
     </div>
   );
 }

@@ -1,28 +1,44 @@
 "use client";
 
+import { ArchiveIcon, ArchiveRestoreIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /**
- * Archive / un-archive control. Deliberately separate from EditSessionForm:
- * this is a state change with a visible consequence for participants, not
- * another field to save alongside the topic.
+ * Archive / un-archive as a small quiet icon in the page header. It always
+ * asks first: the confirm names the session and its voices and says what
+ * archiving does, so that explanation doesn't need to sit on the page.
  */
 export default function ArchiveToggle({
   code,
+  topic,
   archivedAt,
-  participantCount,
+  voiceCount,
 }: {
   code: string;
+  topic: string;
   archivedAt: string | null;
-  participantCount: number;
+  voiceCount: number;
 }) {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const archived = Boolean(archivedAt);
+  const action = archived ? "Un-archive session" : "Archive session";
+  const voices = `${voiceCount} ${voiceCount === 1 ? "voice" : "voices"}`;
 
   async function toggle() {
     setBusy(true);
@@ -37,48 +53,64 @@ export default function ArchiveToggle({
       setError((await res.text()) || `failed (${res.status})`);
       return;
     }
+    setOpen(false);
     router.refresh();
   }
 
+  const Icon = archived ? ArchiveRestoreIcon : ArchiveIcon;
+
   return (
-    <section className="space-y-3 rounded-lg border border-border bg-card p-4">
-      <div className="space-y-1">
-        <h2 className="text-sm font-medium">
-          {archived ? "Archived" : "Archive session"}
-        </h2>
-        <p className="text-xs text-muted-foreground">
-          {archived ? (
-            <>
-              Archived {new Date(archivedAt as string).toLocaleString()}. Hidden
-              from the landing page and read-only for participants. All{" "}
-              {participantCount}{" "}
-              {participantCount === 1 ? "response" : "responses"} and their
-              transcripts are untouched.
-            </>
-          ) : (
-            <>
-              Removes this session from the landing page and stops it taking new
-              responses. Nothing is deleted — the{" "}
-              {participantCount === 1
-                ? "1 response"
-                : `${participantCount} responses`}
-              , transcripts and themes stay, and you can un-archive at any time.
-            </>
-          )}
-        </p>
-      </div>
-
-      <Button
-        type="button"
-        variant={archived ? "default" : "outline"}
-        size="sm"
-        disabled={busy}
-        onClick={() => void toggle()}
-      >
-        {busy ? "Saving…" : archived ? "Un-archive" : "Archive"}
-      </Button>
-
-      {error && <p className="text-xs text-destructive">{error}</p>}
-    </section>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next);
+        if (!next) setError(null);
+      }}
+    >
+      <Tooltip>
+        <TooltipTrigger
+          aria-label={action}
+          onClick={() => setOpen(true)}
+          className="rounded p-1.5 text-muted-foreground hover:bg-accent hover:text-foreground"
+        >
+          <Icon className="size-4" aria-hidden />
+        </TooltipTrigger>
+        <TooltipContent>{action}</TooltipContent>
+      </Tooltip>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>
+            {archived ? "Un-archive" : "Archive"} “{code}”?
+          </DialogTitle>
+          <DialogDescription>
+            {topic && <span className="block font-medium text-foreground">{topic}</span>}
+            {archived ? (
+              <>
+                It goes back on the landing page and takes responses again. Its{" "}
+                {voices} and their transcripts are unchanged.
+              </>
+            ) : (
+              <>
+                It leaves the landing page and stops taking new responses, even
+                mid-conversation. Nothing is deleted: its {voices}, transcripts
+                and themes stay, and you can un-archive at any time.
+              </>
+            )}
+          </DialogDescription>
+        </DialogHeader>
+        {error && <p className="text-xs text-destructive">{error}</p>}
+        <DialogFooter>
+          <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+          <Button
+            type="button"
+            variant={archived ? "default" : "destructive"}
+            disabled={busy}
+            onClick={() => void toggle()}
+          >
+            {busy ? "Saving…" : archived ? "Un-archive" : "Archive"}
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

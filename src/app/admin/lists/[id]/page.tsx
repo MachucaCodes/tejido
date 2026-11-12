@@ -6,6 +6,8 @@ import { createAdmin } from "@/lib/supabase/admin";
 import AddMembersForm from "./add-members-form";
 import EditListForm from "./edit-list-form";
 import RemoveMemberButton from "./remove-member-button";
+import { isLocale } from "@/i18n/locales";
+import { contactLanguage } from "@/lib/whatsapp-conversation";
 
 type MemberRow = {
   contacts: {
@@ -31,7 +33,9 @@ export default async function AdminListDetail({
     .select("id, name, description")
     .eq("id", id)
     .maybeSingle();
-  // A failed load is not a missing list: say so instead of showing a 404.
+  // A malformed id (22P02: not a uuid) is a missing list. Any other failed
+  // load is not: say so instead of showing a 404.
+  if (listError?.code === "22P02") notFound();
   if (listError) {
     return (
       <div className="space-y-2">
@@ -89,9 +93,12 @@ export default async function AdminListDetail({
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
-                  {m.language && (
-                    <span className="text-xs uppercase text-muted-foreground">{m.language}</span>
-                  )}
+                  {/* Effective language: the saved one, else the same default
+                      the invite sender uses, marked (auto). */}
+                  <span className="text-xs text-muted-foreground">
+                    <span className="uppercase">{contactLanguage(m)}</span>
+                    {!isLocale(m.language) && <span className="ml-1 opacity-70">(auto)</span>}
+                  </span>
                   <RemoveMemberButton listId={list.id} contactId={m.id} />
                 </div>
               </li>

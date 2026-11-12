@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { formatDateTime } from "@/lib/format-date";
 
 export type SessionListRow = {
   id: string;
@@ -29,7 +30,7 @@ export function SessionRow({
           <p className="font-medium">{s.id}</p>
           <p className="truncate text-sm text-muted-foreground">{s.topic}</p>
           <p className="text-xs text-muted-foreground">
-            {new Date(s.created_at).toLocaleString()}
+            {formatDateTime(s.created_at)}
           </p>
         </div>
         <div className="flex shrink-0 items-center gap-3 text-xs text-muted-foreground">

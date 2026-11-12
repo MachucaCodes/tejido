@@ -47,7 +47,7 @@
     "inProgress": "En curso",
     "logOut": "Cerrar sesión",
     "loggingOut": "Cerrando sesión…",
-    "createQuestion": "Crear una nueva pregunta"
+    "createQuestion": "Crear una nueva sesión"
   },
   "auth": {
     "phonePlaceholder": "Número de teléfono",

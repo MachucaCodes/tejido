@@ -16,7 +16,7 @@ export default async function AdminLoginPage({
   if (guard.ok) redirect(dest);
 
   return (
-    <div className="mx-auto flex min-h-dvh w-full max-w-md flex-col items-center justify-center px-6">
+    <div className="mx-auto flex w-full max-w-md flex-col items-center justify-center px-6 py-16">
       <AdminLoginClient next={dest} />
     </div>
   );

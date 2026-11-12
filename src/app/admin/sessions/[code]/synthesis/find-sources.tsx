@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { formatDateTime } from "@/lib/format-date";
 
 type Match = {
   id: string;
@@ -67,7 +68,7 @@ export default function FindSources({ code }: { code: string }) {
                 <p className="text-xs font-medium text-muted-foreground">
                   {m.voice}
                   <span className="ml-2 font-normal">
-                    {new Date(m.at).toLocaleString()}
+                    {formatDateTime(m.at)}
                   </span>
                 </p>
                 <p>“{m.phrase}”</p>
