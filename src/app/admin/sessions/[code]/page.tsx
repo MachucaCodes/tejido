@@ -1,3 +1,5 @@
+import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Suspense } from "react";
 
@@ -171,24 +173,50 @@ async function SessionBody({
       </section>
 
       <section className="space-y-3">
-        <h2 className="text-sm font-medium text-muted-foreground">Themes</h2>
+        <h2 className="text-sm font-medium text-muted-foreground">
+          Themes{themes && themes.length > 0 && ` · ${themes.length}`}
+        </h2>
         {!themes || themes.length === 0 ? (
           <p className="text-sm text-muted-foreground/80">No themes yet.</p>
         ) : (
-          <ul className="space-y-2">
+          // One line per theme so the titles scan and the actions below stay
+          // close; the full description opens in place.
+          <ul className="divide-y divide-border rounded-lg border bg-card">
             {[...themes]
               .sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0))
-              .map((t) => (
-              <li key={t.id} className="rounded-lg border bg-card p-3">
-                <div className="flex items-baseline justify-between gap-3">
-                  <h3 className="font-medium">{t.short_name}</h3>
-                  <span className="shrink-0 text-xs tabular-nums text-muted-foreground">
-                    {counts[t.id] ?? 0} {(counts[t.id] ?? 0) === 1 ? "point" : "points"}
-                  </span>
-                </div>
-                <p className="mt-1 text-sm text-muted-foreground">{t.description}</p>
-              </li>
-            ))}
+              .map((t) => {
+                const n = counts[t.id] ?? 0;
+                return (
+                  <li key={t.id}>
+                    <details className="group">
+                      <summary className="flex cursor-pointer list-none items-center gap-3 px-3 py-2 hover:bg-muted/40 [&::-webkit-details-marker]:hidden">
+                        <ChevronRight
+                          className="size-3.5 shrink-0 text-muted-foreground transition-transform group-open:rotate-90"
+                          aria-hidden
+                        />
+                        <span className="shrink-0 font-medium">{t.short_name}</span>
+                        <span className="hidden min-w-0 flex-1 truncate text-sm text-muted-foreground group-open:invisible sm:block">
+                          {t.description}
+                        </span>
+                        <span className="ml-auto shrink-0 text-xs tabular-nums text-muted-foreground">
+                          {n} {n === 1 ? "point" : "points"}
+                        </span>
+                      </summary>
+                      <div className="space-y-2 px-3 pb-3 pl-9">
+                        <p className="text-sm text-muted-foreground">{t.description}</p>
+                        {n > 0 && (
+                          <Link
+                            href={`/s/${code}/points?theme=${t.id}`}
+                            className="inline-block text-xs underline underline-offset-2 hover:text-foreground"
+                          >
+                            See the {n} {n === 1 ? "point" : "points"}
+                          </Link>
+                        )}
+                      </div>
+                    </details>
+                  </li>
+                );
+              })}
           </ul>
         )}
       </section>
