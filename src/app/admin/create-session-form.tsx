@@ -64,7 +64,7 @@ export default function CreateSessionForm({
       return;
     }
     // Open the new session.
-    router.push(`/admin/sessions/${code}`);
+    router.push(`/admin/sessions/${code}?created=1`);
   };
 
   return (

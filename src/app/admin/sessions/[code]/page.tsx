@@ -10,6 +10,7 @@ import { LoadError } from "../../load-error";
 import ArchiveToggle from "./archive-toggle";
 import CopyJoinLink from "./copy-join-link";
 import SessionHeader from "./session-header";
+import ShareLink from "./share-link";
 import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-invites";
 
 async function loadSession(code: string) {
@@ -27,12 +28,15 @@ async function loadSession(code: string) {
 
 export default async function AdminSessionDetail({
   params,
+  searchParams,
 }: {
   params: Promise<{ code: string }>;
+  searchParams: Promise<{ created?: string }>;
 }) {
   const guard = await requireOrganizer();
   if (!guard.ok) redirect("/admin/login");
   const { code } = await params;
+  const { created } = await searchParams;
   const admin = createAdmin();
 
   const { session, failed } = await loadSession(code);
@@ -51,6 +55,12 @@ export default async function AdminSessionDetail({
   if (voiceError) return <LoadError what="this session" />;
   const voiceCount = voiceRows?.length ?? 0;
 
+  // Until the first voice comes in there are no results to show, and the job
+  // is getting people in: the link and the invites lead the page instead of
+  // sitting in the header. Not for a closed or archived session: nobody can
+  // answer there.
+  const sharing = voiceCount === 0 && session.status === "open" && !session.archived_at;
+
   return (
     <div className="space-y-8">
       <SessionHeader
@@ -62,7 +72,7 @@ export default async function AdminSessionDetail({
             {/* Invites go out through the shared WhatsApp number to the admins'
                 contact lists, so only admins see (and can send) them. An
                 archived session takes no answers: nothing to invite to. */}
-            {guard.isAdmin && !session.archived_at && (
+            {guard.isAdmin && !session.archived_at && !sharing && (
               <Suspense fallback={null}>
                 <InvitesButton
                   code={session.id}
@@ -71,7 +81,7 @@ export default async function AdminSessionDetail({
               </Suspense>
             )}
             {/* An archived session's link is dead: don't offer to share it. */}
-            {!session.archived_at && (
+            {!session.archived_at && !sharing && (
               <>
                 <CopyJoinLink code={session.id} />
                 {/* Set apart: archiving changes what participants see. */}
@@ -90,7 +100,13 @@ export default async function AdminSessionDetail({
       {/* The rest needs several queries: stream it in behind a skeleton so
           opening a session shows something at once. */}
       <Suspense fallback={<SessionBodySkeleton />}>
-        <SessionBody code={session.id} voiceCount={voiceCount} />
+        <SessionBody
+          code={session.id}
+          voiceCount={voiceCount}
+          sharing={sharing}
+          created={created === "1"}
+          isAdmin={guard.isAdmin}
+        />
       </Suspense>
     </div>
   );
@@ -100,9 +116,11 @@ export default async function AdminSessionDetail({
 async function InvitesButton({
   code,
   open,
+  inline = false,
 }: {
   code: string;
   open: boolean;
+  inline?: boolean;
 }) {
   const admin = createAdmin();
 
@@ -149,13 +167,26 @@ async function InvitesButton({
       open={open}
       // An empty list after a failed load could lead an admin to re-send.
       loadFailed={Boolean(listsError || invitesError)}
+      inline={inline}
       lists={inviteLists}
       invites={invites}
     />
   );
 }
 
-async function SessionBody({ code, voiceCount }: { code: string; voiceCount: number }) {
+async function SessionBody({
+  code,
+  voiceCount,
+  sharing,
+  created,
+  isAdmin,
+}: {
+  code: string;
+  voiceCount: number;
+  sharing: boolean;
+  created: boolean;
+  isAdmin: boolean;
+}) {
   const admin = createAdmin();
 
   const { data: participants, error: participantsError } = await admin
@@ -187,6 +218,25 @@ async function SessionBody({ code, voiceCount }: { code: string; voiceCount: num
     acc[p.phase] = (acc[p.phase] ?? 0) + 1;
     return acc;
   }, {});
+
+  if (sharing) {
+    const opened = (participants ?? []).length;
+    const activity =
+      opened === 0
+        ? null
+        : `${opened} opened the link — ` +
+          Object.entries(phaseCounts)
+            .map(([p, n]) => `${n} ${p.replace("_", " ")}`)
+            .join(", ");
+    return (
+      <div className="space-y-3">
+        <ShareLink code={code} created={created} activity={activity} />
+        {/* Invites go out through the shared WhatsApp number to the admins'
+            contact lists, so only admins see (and can send) them. */}
+        {isAdmin && <InvitesButton code={code} open inline />}
+      </div>
+    );
+  }
 
   return (
     <>

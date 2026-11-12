@@ -35,12 +35,15 @@ export default function WhatsAppInvites({
   code,
   open,
   loadFailed = false,
+  inline = false,
   lists,
   invites,
 }: {
   code: string;
   open: boolean;
   loadFailed?: boolean;
+  /** A card on the page instead of a header button: used while sharing is the page's main job. */
+  inline?: boolean;
   lists: InviteList[];
   invites: InviteRow[];
 }) {
@@ -99,6 +102,96 @@ export default function WhatsAppInvites({
     (a, b) => STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status),
   );
 
+  const body = (
+    <>
+      {loadFailed ? (
+        <LoadError what="the lists and invites" />
+      ) : lists.length === 0 ? (
+        <p className="text-sm text-muted-foreground">
+          No lists yet. <Link href="/admin/lists" className="underline">Create one</Link>.
+        </p>
+      ) : (
+        <ul className="space-y-1.5">
+          {lists.map((l) => (
+            <li key={l.id}>
+              <label className="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={picked.has(l.id)}
+                  onChange={() => toggle(l.id)}
+                  disabled={!open}
+                />
+                <span>{l.name}</span>
+                <span className="text-xs text-muted-foreground">
+                  {l.members} {l.members === 1 ? "number" : "numbers"}
+                </span>
+              </label>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {!open && (
+        <p className="text-xs text-muted-foreground">
+          The session is closed. Reopen it in Settings to send invites.
+        </p>
+      )}
+      {error && <p className="text-xs text-destructive">{error}</p>}
+      {result && <p className="text-xs text-muted-foreground">{result}</p>}
+
+      {!loadFailed && invites.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-xs text-muted-foreground">
+            Invited so far:{" "}
+            {STATUS_ORDER.filter((s) => counts[s])
+              .map((s) => `${counts[s]} ${s}`)
+              .join(" · ")}
+          </p>
+          <ul className="max-h-56 divide-y overflow-y-auto rounded border text-sm">
+            {sorted.map((i) => (
+              <li key={i.id} className="flex items-center justify-between gap-3 px-3 py-1.5">
+                <div className="min-w-0">
+                  <span className="font-mono">{i.phone}</span>
+                  {i.name && <span className="ml-2 text-xs text-muted-foreground">{i.name}</span>}
+                  {i.error && (
+                    <p className="truncate text-xs text-destructive" title={i.error}>
+                      {i.error}
+                    </p>
+                  )}
+                </div>
+                <span className="shrink-0 rounded bg-secondary px-2 py-0.5 text-xs">{i.status}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
+  );
+  const sendButton = (
+    <Button
+      onClick={() => void send()}
+      disabled={busy || !open || loadFailed || picked.size === 0}
+    >
+      {busy ? "Sending…" : "Send invites"}
+    </Button>
+  );
+  const title = (
+    <div className="flex items-center gap-1.5">
+      <h2 className="text-sm font-medium">Send on WhatsApp</h2>
+      <InfoTip label="About WhatsApp invites">{INVITE_HELP}</InfoTip>
+    </div>
+  );
+
+  if (inline) {
+    return (
+      <section className="space-y-3 rounded-lg border border-border bg-card p-4">
+        {title}
+        {body}
+        <div>{sendButton}</div>
+      </section>
+    );
+  }
+
   // A header button, not a section on the overview: sending invites is a
   // separate job from reading the results. The picker and who was invited
   // live in the dialog.
@@ -130,75 +223,10 @@ export default function WhatsAppInvites({
           </div>
         </DialogHeader>
 
-        {loadFailed ? (
-          <LoadError what="the lists and invites" />
-        ) : lists.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            No lists yet. <Link href="/admin/lists" className="underline">Create one</Link>.
-          </p>
-        ) : (
-          <ul className="space-y-1.5">
-            {lists.map((l) => (
-              <li key={l.id}>
-                <label className="flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={picked.has(l.id)}
-                    onChange={() => toggle(l.id)}
-                    disabled={!open}
-                  />
-                  <span>{l.name}</span>
-                  <span className="text-xs text-muted-foreground">
-                    {l.members} {l.members === 1 ? "number" : "numbers"}
-                  </span>
-                </label>
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {!open && (
-          <p className="text-xs text-muted-foreground">
-            The session is closed. Reopen it in Settings to send invites.
-          </p>
-        )}
-        {error && <p className="text-xs text-destructive">{error}</p>}
-        {result && <p className="text-xs text-muted-foreground">{result}</p>}
-
-        {!loadFailed && invites.length > 0 && (
-          <div className="space-y-2">
-            <p className="text-xs text-muted-foreground">
-              Invited so far:{" "}
-              {STATUS_ORDER.filter((s) => counts[s])
-                .map((s) => `${counts[s]} ${s}`)
-                .join(" · ")}
-            </p>
-            <ul className="max-h-56 divide-y overflow-y-auto rounded border text-sm">
-              {sorted.map((i) => (
-                <li key={i.id} className="flex items-center justify-between gap-3 px-3 py-1.5">
-                  <div className="min-w-0">
-                    <span className="font-mono">{i.phone}</span>
-                    {i.name && <span className="ml-2 text-xs text-muted-foreground">{i.name}</span>}
-                    {i.error && (
-                      <p className="truncate text-xs text-destructive" title={i.error}>
-                        {i.error}
-                      </p>
-                    )}
-                  </div>
-                  <span className="shrink-0 rounded bg-secondary px-2 py-0.5 text-xs">{i.status}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        {body}
 
         <DialogFooter>
-          <Button
-            onClick={() => void send()}
-            disabled={busy || !open || loadFailed || picked.size === 0}
-          >
-            {busy ? "Sending…" : "Send invites"}
-          </Button>
+          {sendButton}
         </DialogFooter>
       </DialogContent>
     </Dialog>
