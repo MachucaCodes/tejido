@@ -9,7 +9,7 @@ export default async function AdminListsPage() {
   const guard = await requireAdmin();
   if (!guard.ok) redirect("/admin/login");
 
-  const { data: lists } = await createAdmin()
+  const { data: lists, error } = await createAdmin()
     .from("lists")
     .select("id, name, description, created_at, members:list_members(count)")
     .order("name", { ascending: true });
@@ -25,7 +25,13 @@ export default async function AdminListsPage() {
 
       <CreateListForm />
 
-      {(lists ?? []).length === 0 ? (
+      {/* A failed load must not look like an empty one, or an admin may
+          re-create lists that are still there. */}
+      {error ? (
+        <p role="alert" className="text-sm text-destructive">
+          Couldn&apos;t load lists. Reload the page to try again.
+        </p>
+      ) : (lists ?? []).length === 0 ? (
         <p className="text-sm text-muted-foreground">No lists yet.</p>
       ) : (
         <ul className="space-y-2">

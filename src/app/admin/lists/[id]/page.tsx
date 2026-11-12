@@ -26,14 +26,27 @@ export default async function AdminListDetail({
   const { id } = await params;
   const admin = createAdmin();
 
-  const { data: list } = await admin
+  const { data: list, error: listError } = await admin
     .from("lists")
     .select("id, name, description")
     .eq("id", id)
     .maybeSingle();
+  // A failed load is not a missing list: say so instead of showing a 404.
+  if (listError) {
+    return (
+      <div className="space-y-2">
+        <Link href="/admin/lists" className="text-xs text-muted-foreground hover:text-foreground">
+          ← Lists
+        </Link>
+        <p role="alert" className="text-sm text-destructive">
+          Couldn&apos;t load this list. Reload the page to try again.
+        </p>
+      </div>
+    );
+  }
   if (!list) notFound();
 
-  const { data: rows } = await admin
+  const { data: rows, error: membersError } = await admin
     .from("list_members")
     .select("contacts(id, phone, name, language)")
     .eq("list_id", id)
@@ -48,16 +61,22 @@ export default async function AdminListDetail({
           ← Lists
         </Link>
         <h1 className="text-lg font-semibold">{list.name}</h1>
-        <p className="text-sm text-muted-foreground">
-          {members.length} {members.length === 1 ? "number" : "numbers"}
-        </p>
+        {!membersError && (
+          <p className="text-sm text-muted-foreground">
+            {members.length} {members.length === 1 ? "number" : "numbers"}
+          </p>
+        )}
       </header>
 
       <AddMembersForm listId={list.id} memberPhones={members.map((m) => m.phone)} />
 
       <section className="space-y-2">
         <h2 className="text-sm font-medium">Members</h2>
-        {members.length === 0 ? (
+        {membersError ? (
+          <p role="alert" className="text-sm text-destructive">
+            Couldn&apos;t load the numbers in this list. Reload the page to try again.
+          </p>
+        ) : members.length === 0 ? (
           <p className="text-sm text-muted-foreground">No numbers yet.</p>
         ) : (
           <ul className="divide-y rounded-lg border bg-card">
