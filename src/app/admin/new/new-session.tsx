@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { SessionDraft } from "@/lib/session-builder";
 import CreateSessionForm, { EMPTY_SESSION } from "../create-session-form";
@@ -12,6 +12,13 @@ import SessionBuilder from "../session-builder";
 export default function NewSession() {
   const [values, setValues] = useState<SessionDraft>(EMPTY_SESSION);
   const [formOpen, setFormOpen] = useState(false);
+  // Bumped each time the chat fills the form, to bring the form into view.
+  const [filled, setFilled] = useState(0);
+  const formRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (filled) formRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, [filled]);
 
   const touched = Object.values(values).some((v) => v && v.trim());
 
@@ -22,10 +29,14 @@ export default function NewSession() {
         onDraft={(draft) => {
           setValues({ ...EMPTY_SESSION, ...draft });
           setFormOpen(true);
+          setFilled((n) => n + 1);
         }}
       />
       {formOpen ? (
-        <CreateSessionForm values={values} onChange={setValues} />
+        // scroll-mt clears the sticky site header and admin bar.
+        <div ref={formRef} className="scroll-mt-32">
+          <CreateSessionForm values={values} onChange={setValues} />
+        </div>
       ) : (
         <button
           type="button"

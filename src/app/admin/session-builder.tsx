@@ -53,7 +53,7 @@ export default function SessionBuilder({
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ messages: history, currentDraft: draft }),
       });
-      if (!res.ok || !res.body) throw new Error(await res.text());
+      if (!res.ok || !res.body) throw new Error((await res.text()) || "Something went wrong. Try again.");
 
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
