@@ -1,0 +1,22 @@
+{
+  "name": "PR7 session overview after, 1440",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "environment": "PR 7 preview, prod Supabase, read-only",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 400,
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/evolving-why-statement" },
+    { "do": "expect_text", "text": "Themes" },
+    { "do": "screenshot", "label": "top" },
+    { "do": "expect_js", "js": "(window.scrollTo(0, 900), true)", "equals": true, "label": "scroll" },
+    { "do": "wait", "ms": 400 },
+    { "do": "screenshot", "label": "below themes: invites, edit, privacy" },
+    { "do": "expect_js", "js": "(window.scrollTo(0, 99999), true)", "equals": true, "label": "scroll bottom" },
+    { "do": "wait", "ms": 400 },
+    { "do": "screenshot", "label": "bottom" },
+    { "do": "expect_js", "js": "(window.scrollTo(0,0), document.querySelector('details.group summary').click(), true)", "equals": true, "label": "open first theme" },
+    { "do": "wait", "ms": 400 },
+    { "do": "screenshot", "label": "first theme open" },
+    { "do": "expect_js", "js": "(()=>{const a=[...document.querySelectorAll('a')].find(x=>x.textContent.startsWith('See the'));return a?a.getAttribute('href'):null})()", "equals": "/s/evolving-why-statement/points?theme=?", "label": "points link href" }
+  ]
+}

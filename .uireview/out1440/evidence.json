@@ -1,0 +1,65 @@
+{
+  "tool": "clock-validate",
+  "name": "PR7 session overview after, 1440",
+  "outcome": "fail",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-4b3bf469-ui-review-ui-mockup-session-overview-is",
+    "dirty": true
+  },
+  "environment": "PR 7 preview, prod Supabase, read-only",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:16:19.863Z",
+  "duration_ms": 19154,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 2644,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes\"",
+      "check": true,
+      "status": "pass",
+      "ms": 45,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "measure",
+      "check": true,
+      "status": "fail",
+      "ms": 10172,
+      "error": "got \"{\\\"h\\\":1893,\\\"themes\\\":28,\\\"wa\\\":1598,\\\"edit\\\":1743,\\\"priv\\\":1824,\\\"widest\\\":0}\"",
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "top",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

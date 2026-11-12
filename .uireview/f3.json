@@ -1,0 +1,13 @@
+{
+  "code": "F3",
+  "title": "Privacy still switches on one click, now right beside the label",
+  "kind": "clarity", "severity": "low", "confidence": "high",
+  "where": "/admin/sessions/<code> Overview, privacy card, 1440px and 390px",
+  "what_happens": "'Make it a Connect session' / 'Make anonymous' runs on one click with no confirmation (from code; not clicked). The explanation of what participants will be told is now only in the tooltip, so nothing on the way says what the switch changes.",
+  "who_hurts": "Dane switching privacy by mistake changes what new participants are told (asked to opt in to being connected) with no second look.",
+  "suggested_fix": "Ask first in a small Dialog that carries the explanation text (the same pattern ArchiveToggle now uses), which also solves F2 for privacy.",
+  "rule": "Dane's UI rule: 'text that explains what it does goes ... in the confirmation for an action that needs one'; Dane agreed earlier: 'Privacy ... switches with one click'",
+  "origin": "earlier: privacy toggle before this PR",
+  "owners_call": "Does switching privacy need a confirm, or is one click fine for an admin-only setting?",
+  "fingerprint": "/admin/sessions/[code]|privacy toggle|clarity|switches one click no confirm"
+}

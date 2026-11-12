@@ -1,0 +1,87 @@
+{
+  "title": "PR7 session overview after, 1440",
+  "slug": "pr7-session-overview-after-1440",
+  "out_dir": "/srv/agent-runs/4b3bf469/.uireview/o1440/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:16:50.190Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "PR7 session overview after, 1440",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-03.png",
+          "shows": "top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-04.png",
+          "shows": "scroll",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-06.png",
+          "shows": "below themes: invites, edit, privacy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-07.png",
+          "shows": "scroll bottom",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-09.png",
+          "shows": "bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-10.png",
+          "shows": "open first theme",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-12.png",
+          "shows": "first theme open",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o1440/step-13.png",
+          "shows": "points link href",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

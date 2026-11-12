@@ -1,0 +1,38 @@
+{
+  "title": "PR7 session overview after, 1440",
+  "slug": "pr7-session-overview-after-1440",
+  "out_dir": "/srv/agent-runs/4b3bf469/.uireview/out1440/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:16:19.863Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "PR7 session overview after, 1440",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/out1440/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/out1440/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/out1440/step-03.png",
+          "shows": "measure",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

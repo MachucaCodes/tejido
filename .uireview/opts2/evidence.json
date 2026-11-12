@@ -1,0 +1,83 @@
+{
+  "tool": "clock-validate",
+  "name": "PR7 theme points link target",
+  "outcome": "pass",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-4b3bf469-ui-review-ui-mockup-session-overview-is",
+    "dirty": true
+  },
+  "environment": "PR 7 preview, prod Supabase, read-only",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:20:16.450Z",
+  "duration_ms": 11711,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 1982,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "open first theme",
+      "check": true,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"See the 38 points\"",
+      "check": false,
+      "status": "pass",
+      "ms": 128,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2534,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "mask participant quotes",
+      "check": true,
+      "status": "pass",
+      "ms": 49,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "points page from admin (quotes masked)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

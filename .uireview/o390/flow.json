@@ -1,0 +1,62 @@
+{
+ "name": "PR7 session overview after, 390",
+ "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+ "environment": "PR 7 preview, prod Supabase, read-only",
+ "viewport": {
+  "width": 390,
+  "height": 844
+ },
+ "pace_ms": 400,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement"
+  },
+  {
+   "do": "expect_text",
+   "text": "Themes"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const s=document.querySelector('details.group summary');window.scrollTo(0, s.getBoundingClientRect().top+scrollY-80);return true})()",
+   "equals": true,
+   "label": "scroll to themes"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "screenshot",
+   "label": "themes"
+  },
+  {
+   "do": "expect_js",
+   "js": "(window.scrollTo(0, 99999), true)",
+   "equals": true,
+   "label": "scroll bottom"
+  },
+  {
+   "do": "wait",
+   "ms": 300
+  },
+  {
+   "do": "screenshot",
+   "label": "bottom"
+  },
+  {
+   "do": "expect_js",
+   "js": "(document.querySelector('[aria-label^=\"Nobody is asked\"],[aria-label^=\"Participants are told\"]').focus(), true)",
+   "equals": true,
+   "label": "focus privacy info"
+  },
+  {
+   "do": "wait",
+   "ms": 700
+  },
+  {
+   "do": "screenshot",
+   "label": "privacy tooltip"
+  }
+ ]
+}

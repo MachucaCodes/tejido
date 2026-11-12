@@ -1,0 +1,12 @@
+{
+  "code": "F2",
+  "title": "On a phone, the new (i) explanations for privacy and invites can't be opened by a tap",
+  "kind": "clarity", "severity": "low", "confidence": "medium",
+  "where": "/admin/sessions/<code> Overview, 'Send on WhatsApp' and 'Anonymous/Connect session' info icons, 390px",
+  "what_happens": "Both explanations moved into a Tooltip (Base UI). It opens on hover and keyboard focus (seen: focus shows it at 390px), but Base UI tooltips don't open on a touch tap, so on a phone the text can't be read. Tap behaviour read from the component, not tested on a real phone.",
+  "who_hurts": "Dane (or an organizer) on a phone deciding whether to switch a session to Connect: he can't read what Connect tells participants before switching.",
+  "suggested_fix": "Use a Popover (opens on click/tap) for these two info icons instead of Tooltip, or whatever fix the earlier paste-format (i) finding gets, so both work the same way.",
+  "rule": "established pattern: Dane agreed earlier 'On a phone, the paste-format help behind the (i) icon can't be opened by a tap'",
+  "origin": "this change",
+  "fingerprint": "/admin/sessions/[code]|privacy+invite info icons|clarity|tooltip not tappable phone"
+}

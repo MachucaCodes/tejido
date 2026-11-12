@@ -1,0 +1,73 @@
+{
+  "title": "PR7 session overview after, 700",
+  "slug": "pr7-session-overview-after-700",
+  "out_dir": "/srv/agent-runs/4b3bf469/.uireview/o700/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 700,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:18:19.007Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "PR7 session overview after, 700",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-03.png",
+          "shows": "scroll to themes",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-05.png",
+          "shows": "themes",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-06.png",
+          "shows": "scroll bottom",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-08.png",
+          "shows": "bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-09.png",
+          "shows": "focus privacy info",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/4b3bf469/.uireview/o700/step-11.png",
+          "shows": "privacy tooltip",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

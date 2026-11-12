@@ -1,0 +1,13 @@
+{
+  "name": "PR7 session overview after, 1440",
+  "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+  "environment": "PR 7 preview, prod Supabase, read-only",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 400,
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/evolving-why-statement" },
+    { "do": "expect_text", "text": "Themes" },
+    { "do": "expect_js", "js": "JSON.stringify({h: document.documentElement.scrollHeight, themes: document.querySelectorAll('details.group').length, wa: (()=>{const e=[...document.querySelectorAll('h2')].find(x=>x.textContent.includes('Send on WhatsApp'));return e?Math.round(e.getBoundingClientRect().top+scrollY):null})(), edit: (()=>{const e=[...document.querySelectorAll('summary')].find(x=>x.textContent.includes('Edit session'));return e?Math.round(e.getBoundingClientRect().top+scrollY):null})(), priv: (()=>{const e=[...document.querySelectorAll('h2')].find(x=>/session$/.test(x.textContent.trim())&&/Connect|Anonymous/.test(x.textContent));return e?Math.round(e.getBoundingClientRect().top+scrollY):null})(), widest: Math.max(...[...document.querySelectorAll('details.group summary')].map(s=>s.scrollWidth-s.clientWidth))})", "equals": "x", "label": "measure" },
+    { "do": "screenshot", "label": "top" }
+  ]
+}

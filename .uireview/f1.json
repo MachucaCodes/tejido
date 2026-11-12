@@ -1,0 +1,13 @@
+{
+  "code": "F1",
+  "title": "'See the N points' still leaves admin, and its back link goes to the participant chat",
+  "kind": "clarity", "severity": "low", "confidence": "high",
+  "where": "/admin/sessions/<code> Overview, open theme row -> 'See the N points', 1440px",
+  "what_happens": "Still there from round 1 (the lane kept it as a stated decision in the PR). The link opens /s/<code>/points, the participant-side page: no admin nav, and its only back link ('← <code>') goes to the session chat, not back to the admin overview.",
+  "who_hurts": "Dane checking a theme's points: to get back he has to use the browser back button; the visible back link drops him into the participant chat.",
+  "suggested_fix": "Smallest: open the points link in a new tab (target=_blank) so the admin page stays put, or keep it as is and accept the browser-back return. An admin-side points view is its own change.",
+  "rule": "established pattern: admin sub-pages (Synthesis, Logs) keep the admin bar and SessionHeader tabs",
+  "origin": "this change",
+  "owners_call": "Is leaving admin for the participant points page OK here, or should it open in a new tab?",
+  "fingerprint": "/admin/sessions/[code]|theme points link|clarity|leaves admin back to chat"
+}

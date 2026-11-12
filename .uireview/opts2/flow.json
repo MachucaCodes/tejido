@@ -1,0 +1,40 @@
+{
+ "name": "PR7 theme points link target",
+ "base_url": "https://tejido-git-clock-2d4e9318-ui-mockup-2d6068-dane-myers-projects.vercel.app",
+ "environment": "PR 7 preview, prod Supabase, read-only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 400,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement"
+  },
+  {
+   "do": "expect_js",
+   "js": "(document.querySelector('details.group summary').click(), true)",
+   "equals": true,
+   "label": "open first theme"
+  },
+  {
+   "do": "click",
+   "text": "See the 38 points"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{document.querySelectorAll('main p, main blockquote, main li p, main div').forEach(e=>{if(e.children.length===0 && e.textContent.trim().length>30 && e.getBoundingClientRect().top>420) e.textContent='\u2588'.repeat(Math.min(60,e.textContent.length))});return true})()",
+   "equals": true,
+   "label": "mask participant quotes"
+  },
+  {
+   "do": "screenshot",
+   "label": "points page from admin (quotes masked)"
+  }
+ ]
+}
