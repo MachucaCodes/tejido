@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { requireOrganizer } from "@/lib/admin-guard";
@@ -28,17 +27,8 @@ export default async function AdminHome() {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">
-          {guard.isAdmin ? "Sessions" : "Your sessions"}
-        </h1>
-        <Link
-          href="/admin/new"
-          className="rounded border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent"
-        >
-          New session
-        </Link>
-      </header>
+      {/* The admin bar's marked tab is the visible title; New session sits in it. */}
+      <h1 className="sr-only">{guard.isAdmin ? "Sessions" : "Your sessions"}</h1>
 
       {/* A failed load must not look like an empty one, or an admin may
           re-create a session that is still there. */}

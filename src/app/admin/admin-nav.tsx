@@ -3,9 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import CreateListForm from "./lists/create-list-form";
+
 /**
- * Admin bar: sticks under the 64px site header, lines up with the page
- * content, and marks the section you're in.
+ * Admin bar: sticks under the 64px site header and lines up with the page.
+ * Sessions and Lists sit together as tabs, with the current one marked. On an
+ * index page the bar is the page's title, and its one main button (New
+ * session / New list) sits at the right of the same row.
  */
 export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
   const pathname = usePathname() ?? "";
@@ -19,28 +23,41 @@ export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
   const isCurrent = (href: string, match: string[]) =>
     pathname === href || match.some(under) || (href !== "/admin" && under(href));
 
-  const [home, ...rest] = links;
-  const item = (l: (typeof links)[number]) => {
-    const current = isCurrent(l.href, l.match);
-    return (
+  const action =
+    pathname === "/admin" ? (
       <Link
-        key={l.href}
-        href={l.href}
-        aria-current={current ? "page" : undefined}
-        className={`text-sm hover:text-foreground ${
-          current ? "font-medium text-foreground" : "text-muted-foreground"
-        }`}
+        href="/admin/new"
+        className="rounded border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent"
       >
-        {l.label}
+        New session
       </Link>
-    );
-  };
+    ) : pathname === "/admin/lists" && isAdmin ? (
+      <CreateListForm />
+    ) : null;
 
   return (
     <nav className="sticky top-16 z-10 border-b bg-card" aria-label="Admin">
-      <div className="mx-auto flex max-w-4xl items-center justify-between gap-4 px-4 py-3">
-        {item(home)}
-        {rest.length > 0 && <div className="flex items-center gap-4">{rest.map(item)}</div>}
+      <div className="mx-auto flex h-12 max-w-4xl items-center justify-between gap-4 px-4">
+        <div className="flex h-full items-stretch gap-5">
+          {links.map((l) => {
+            const current = isCurrent(l.href, l.match);
+            return (
+              <Link
+                key={l.href}
+                href={l.href}
+                aria-current={current ? "page" : undefined}
+                className={`-mb-px flex items-center border-b-2 text-sm hover:text-foreground ${
+                  current
+                    ? "border-foreground font-medium text-foreground"
+                    : "border-transparent text-muted-foreground"
+                }`}
+              >
+                {l.label}
+              </Link>
+            );
+          })}
+        </div>
+        {action}
       </div>
     </nav>
   );

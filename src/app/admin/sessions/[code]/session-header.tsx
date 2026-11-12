@@ -46,6 +46,11 @@ export default function SessionHeader({
         </div>
         {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
       </div>
+      {session.archived_at && (
+        <p className="rounded-md border border-border bg-muted px-3 py-2 text-xs text-muted-foreground">
+          Archived: not taking responses.
+        </p>
+      )}
       <nav className="flex gap-4 border-b border-border text-sm" aria-label="Session pages">
         {tabs.map((t) => (
           <Link

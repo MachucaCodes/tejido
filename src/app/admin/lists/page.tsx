@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
-import CreateListForm from "./create-list-form";
 
 export default async function AdminListsPage() {
   const guard = await requireAdmin();
@@ -16,10 +15,8 @@ export default async function AdminListsPage() {
 
   return (
     <div className="space-y-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-lg font-semibold">Lists</h1>
-        <CreateListForm />
-      </header>
+      {/* The admin bar's marked tab is the visible title; New list sits in it. */}
+      <h1 className="sr-only">Lists</h1>
 
       {/* A failed load must not look like an empty one, or an admin may
           re-create lists that are still there. */}
@@ -49,7 +46,7 @@ export default async function AdminListsPage() {
                     )}
                   </div>
                   <span className="shrink-0 text-xs text-muted-foreground">
-                    {count} {count === 1 ? "number" : "numbers"}
+                    {count} {count === 1 ? "member" : "members"}
                   </span>
                 </Link>
               </li>
