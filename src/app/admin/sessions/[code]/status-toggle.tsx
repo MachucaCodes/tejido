@@ -50,15 +50,20 @@ export default function StatusToggle({
     router.refresh();
   }
 
+  // Label, value and tip stay together; the action sits at the right of the
+  // same line from sm up, and on its own line under them on a phone. Same
+  // in StatusToggle and PrivacyToggle so the two rows match.
   return (
-    <div className="flex flex-wrap items-center gap-2 text-sm">
-      <span className="text-muted-foreground">Status:</span>
-      <span className="font-medium">{isOpen ? "Open" : "Closed"}</span>
-      <InfoTip label="About status">
-        {isOpen
-          ? "Open sessions take new answers."
-          : "Closed sessions don't take new answers. Reopen to take them again."}
-      </InfoTip>
+    <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+      <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto">
+        <span className="text-muted-foreground">Status:</span>
+        <span className="font-medium">{isOpen ? "Open" : "Closed"}</span>
+        <InfoTip label="About status">
+          {isOpen
+            ? "Open sessions take new answers."
+            : "Closed sessions don't take new answers. Reopen to take them again."}
+        </InfoTip>
+      </div>
 
       <Dialog
         open={open}
