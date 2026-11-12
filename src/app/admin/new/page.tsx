@@ -12,7 +12,7 @@ export default async function NewSessionPage() {
     <div className="space-y-6">
       {/* No back link: the admin bar's marked Sessions tab is the way back. */}
       <h1 className="text-lg font-semibold">New session</h1>
-      <NewSession />
+      <NewSession userId={guard.user.id} />
     </div>
   );
 }

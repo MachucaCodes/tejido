@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { after } from "next/server";
 
 import { requireOrganizer } from "@/lib/admin-guard";
+import type { CreateSessionError } from "@/lib/link-name";
 import { CODE_RE } from "@/lib/rename-session";
 import { createAdmin } from "@/lib/supabase/admin";
 import { backfillSessionTranslation } from "@/lib/translate-session";
@@ -19,8 +20,16 @@ export async function POST(req: Request) {
       instructions?: string;
       prompt_summary_system?: string;
     };
-  if (!code || !topic) return new Response("code and topic required", { status: 400 });
-  if (!CODE_RE.test(code)) return new Response("invalid code format", { status: 400 });
+  // Errors use the form's words (Link name, Question), not the column names.
+  const refuse = (body: CreateSessionError, status = 400) => NextResponse.json(body, { status });
+  if (!code) return refuse({ error: "Add a link name.", field: "code" });
+  if (!topic?.trim()) return refuse({ error: "Add the question people are asked.", field: "topic" });
+  if (!CODE_RE.test(code)) {
+    return refuse({
+      error: "Use lowercase letters, numbers and hyphens, starting with a letter or number.",
+      field: "code",
+    });
+  }
 
   const introMessage = intro_message?.trim() || null;
 
@@ -35,9 +44,11 @@ export async function POST(req: Request) {
     created_by: guard.user.id,
   });
   if (error) {
-    return new Response(error.code === "23505" ? "code already taken" : error.message, {
-      status: 400,
-    });
+    if (error.code === "23505") {
+      return refuse({ error: "That link name is already used. Try another.", field: "code" }, 409);
+    }
+    console.error("create session failed", error);
+    return refuse({ error: "Couldn't create the session. Try again." }, 500);
   }
 
   // Fill the Spanish copy after the response — the admin shouldn't wait on a

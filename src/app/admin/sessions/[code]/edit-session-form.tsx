@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { InfoTip } from "@/components/info-tip";
+import { toLinkName } from "@/lib/link-name";
 import { Button } from "@/components/ui/button";
 import {
   DEFAULT_ANALYSIS_PROMPT,
@@ -15,10 +16,7 @@ import {
   DEFAULT_PERSPECTIVES_INSTRUCTIONS,
   DEFAULT_TASK_FRAMING,
 } from "@/lib/prompts/facilitator";
-import {
-  DEFAULT_SUMMARY_PROMPT,
-  DEFAULT_SUMMARY_SYSTEM,
-} from "@/lib/prompts/summary";
+import { DEFAULT_SUMMARY_PROMPT } from "@/lib/prompts/summary";
 
 type PromptOverrides = {
   taskFraming: string;
@@ -52,6 +50,8 @@ type PromptFieldSpec = {
     | "prompt_summary_prompt";
 };
 
+// Summary focus (prompt_summary_system) is its own field above, as on the
+// create form, so it isn't in this list.
 const PROMPT_FIELDS: PromptFieldSpec[] = [
   {
     key: "taskFraming",
@@ -107,14 +107,6 @@ const PROMPT_FIELDS: PromptFieldSpec[] = [
     bodyField: "prompt_analysis_prompt",
   },
   {
-    key: "summarySystem",
-    label: "Summarize · system prompt",
-    description: "System message for the session-level summary pass.",
-    defaultValue: DEFAULT_SUMMARY_SYSTEM,
-    rows: 3,
-    bodyField: "prompt_summary_system",
-  },
-  {
     key: "summaryPrompt",
     label: "Summarize · user prompt template",
     description:
@@ -164,6 +156,7 @@ export default function EditSessionForm({
   const promptsDirty = PROMPT_FIELDS.some(
     (f) => promptOverrides[f.key] !== initialPromptOverrides[f.key],
   );
+  const summaryFocus = promptOverrides.summarySystem;
   const codeChanged = newCode !== code;
   const dirty =
     codeChanged ||
@@ -173,6 +166,7 @@ export default function EditSessionForm({
     introMessageEs !== initialIntroMessageEs ||
     context !== initialContext ||
     instructions !== initialInstructions ||
+    summaryFocus !== initialPromptOverrides.summarySystem ||
     promptsDirty;
 
   const updateOverride = (key: PromptFieldKey, value: string) => {
@@ -195,7 +189,7 @@ export default function EditSessionForm({
     }
 
     if (codeChanged && !newCode.trim()) {
-      setError("Session code cannot be empty.");
+      setError("Link name cannot be empty.");
       return;
     }
 
@@ -210,6 +204,7 @@ export default function EditSessionForm({
     for (const f of PROMPT_FIELDS) {
       body[f.bodyField] = promptOverrides[f.key];
     }
+    body.prompt_summary_system = summaryFocus;
 
     // Only send the Spanish when it was actually hand-edited. Sending it on
     // every save would pin it permanently and the auto-translation would never
@@ -244,17 +239,17 @@ export default function EditSessionForm({
       <div className="space-y-1">
         <div className="flex items-center gap-1">
           <label className="text-xs font-medium" htmlFor="code">
-            Session code
+            Link name
           </label>
-          <InfoTip label="About the session code">
-            Used in the join link: /s/{newCode || "…"}
+          <InfoTip label="About the link name">
+            Lowercase, no spaces. The join link is /s/{newCode || "…"}
           </InfoTip>
         </div>
         <input
           id="code"
           value={newCode}
           onChange={(e) =>
-            setNewCode(e.target.value.toLowerCase().replace(/[^a-z0-9_-]/g, ""))
+            setNewCode(toLinkName(e.target.value))
           }
           required
           className="w-full rounded-md border bg-background px-3 py-2 font-mono text-sm"
@@ -270,7 +265,7 @@ export default function EditSessionForm({
 
       <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="topic">
-          Topic
+          Question people are asked
         </label>
         <input
           id="topic"
@@ -282,42 +277,55 @@ export default function EditSessionForm({
       </div>
 
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="topic-es">
-          Topic · Español
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="topic-es">
+            Question · Español
+          </label>
+          <InfoTip label="About the Spanish question">
+            Translated for you after you save. Edit it to use your own wording.
+          </InfoTip>
+        </div>
         <input
           id="topic-es"
           value={topicEs}
           onChange={(e) => setTopicEs(e.target.value)}
-          placeholder="Auto-translated after you save. Edit to override."
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>
 
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="intro">
-          Intro message
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="intro">
+            Intro message
+          </label>
+          <InfoTip label="About the intro message">
+            Shown as the first message in the chat. Leave blank for the default.
+          </InfoTip>
+        </div>
         <textarea
           id="intro"
           value={introMessage}
           onChange={(e) => setIntroMessage(e.target.value)}
           rows={3}
-          placeholder="Shown as the first assistant message. Leave blank for none."
+          placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>
 
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="intro-es">
-          Intro message · Español
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="intro-es">
+            Intro message · Español
+          </label>
+          <InfoTip label="About the Spanish intro message">
+            Translated for you after you save. Edit it to use your own wording.
+          </InfoTip>
+        </div>
         <textarea
           id="intro-es"
           value={introMessageEs}
           onChange={(e) => setIntroMessageEs(e.target.value)}
           rows={3}
-          placeholder="Auto-translated after you save. Edit to override."
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>
@@ -337,7 +345,7 @@ export default function EditSessionForm({
           value={context}
           onChange={(e) => setContext(e.target.value)}
           rows={4}
-          placeholder="Background facts the facilitator can share only if asked. Optional."
+          placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>
@@ -357,7 +365,26 @@ export default function EditSessionForm({
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
           rows={6}
-          placeholder="Per-session guidance for the facilitator AI. e.g. 'Open warmly — this is a big change. Don't lead with a binary choice; invite anything that comes up.'"
+          placeholder="Optional"
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        />
+      </div>
+
+      <div className="space-y-1">
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="summary-focus">
+            Summary focus
+          </label>
+          <InfoTip label="About summary focus">
+            Guidance for the AI that writes the session summary. Leave blank for the default.
+          </InfoTip>
+        </div>
+        <textarea
+          id="summary-focus"
+          value={summaryFocus}
+          onChange={(e) => updateOverride("summarySystem", e.target.value)}
+          rows={2}
+          placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>

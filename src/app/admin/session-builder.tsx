@@ -18,14 +18,18 @@ const OPENER =
 // The chat writes its draft into the page's one form (create-session-form.tsx);
 // it has no form or Create button of its own.
 export default function SessionBuilder({
+  messages,
+  setMessages,
   draft,
   onDraft,
 }: {
+  // Held by the page, which keeps them through a reload.
+  messages: BuilderMessage[];
+  setMessages: React.Dispatch<React.SetStateAction<BuilderMessage[]>>;
   // What the form holds now, so the chat builds on the organizer's edits.
   draft: SessionDraft | null;
   onDraft: (draft: SessionDraft) => void;
 }) {
-  const [messages, setMessages] = useState<BuilderMessage[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -110,10 +114,16 @@ export default function SessionBuilder({
                 <MessageContent>
                   {m.content ? (
                     <MessageResponse>{m.content}</MessageResponse>
-                  ) : m.draft ? null : (
+                  ) : m.draft ? (
+                    // The model sometimes proposes without a word: say it here
+                    // so the draft never arrives silently.
+                    <MessageResponse>
+                      {"Here's a draft in the form below. Edit anything, then Create session."}
+                    </MessageResponse>
+                  ) : (
                     <span className="text-muted-foreground">…</span>
                   )}
-                  {m.draft && (
+                  {m.draft && m.content && (
                     <p className="text-xs text-muted-foreground">Filled in the form below.</p>
                   )}
                 </MessageContent>

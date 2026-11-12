@@ -37,38 +37,47 @@ export default function SessionHeader({
 
   return (
     <header className="space-y-3">
-      {/* Actions go under the title on a phone so the title keeps its width. */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
-        <div className="min-w-0 space-y-1">
-          <h1 className="text-lg font-semibold">{session.topic || session.id}</h1>
-          <p className="text-xs text-muted-foreground">
-            {session.id} · {session.archived_at ? "archived" : session.status} ·{" "}
-            {formatDateTime(session.created_at)}
-          </p>
-        </div>
-        {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
+      <div className="min-w-0 space-y-1">
+        <h1 className="text-lg font-semibold">{session.topic || session.id}</h1>
+        <p className="text-xs text-muted-foreground">
+          {session.id} · {session.archived_at ? "archived" : session.status} ·{" "}
+          {formatDateTime(session.created_at)}
+        </p>
       </div>
       {session.archived_at && (
         <p className="rounded-md border border-border bg-muted px-3 py-2 text-xs text-muted-foreground">
           Archived: not taking responses.
         </p>
       )}
-      <nav className="flex gap-4 border-b border-border text-sm" aria-label="Session pages">
-        {tabs.map((t) => (
-          <Link
-            key={t.key}
-            href={t.href}
-            aria-current={t.key === current ? "page" : undefined}
-            className={`-mb-px border-b-2 pb-2 ${
-              t.key === current
-                ? "border-foreground font-medium text-foreground"
-                : "border-transparent text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            {t.label}
-          </Link>
-        ))}
-      </nav>
+      {/* Each tab's own buttons sit at the right end of the tab row, which has
+          one fixed height, so the title and tabs stay put between tabs. On a
+          phone they go under the tabs. */}
+      <div className="sm:flex sm:h-10 sm:items-end sm:justify-between sm:gap-3 sm:border-b sm:border-border">
+        <nav
+          className="flex gap-4 border-b border-border text-sm sm:border-b-0"
+          aria-label="Session pages"
+        >
+          {tabs.map((t) => (
+            <Link
+              key={t.key}
+              href={t.href}
+              aria-current={t.key === current ? "page" : undefined}
+              className={`-mb-px border-b-2 pb-2 ${
+                t.key === current
+                  ? "border-foreground font-medium text-foreground"
+                  : "border-transparent text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {t.label}
+            </Link>
+          ))}
+        </nav>
+        {actions && (
+          <div className="mt-3 flex flex-wrap items-center gap-2 sm:mt-0 sm:shrink-0 sm:pb-1.5">
+            {actions}
+          </div>
+        )}
+      </div>
     </header>
   );
 }
