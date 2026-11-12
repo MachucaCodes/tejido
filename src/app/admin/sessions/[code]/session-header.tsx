@@ -6,7 +6,7 @@ type Tab = "overview" | "synthesis" | "logs" | "settings";
 
 /**
  * One header for every page about a session: topic as the title, code ·
- * status · date under it, and tabs between the session's pages with the
+ * (archived/closed) · date under it, and tabs between the session's pages with the
  * current one marked.
  */
 export default function SessionHeader({
@@ -26,6 +26,13 @@ export default function SessionHeader({
   isAdmin: boolean;
   actions?: React.ReactNode;
 }) {
+  // Open is the normal state, so it isn't said. Archived always is. Closed
+  // is said except on Settings, whose Status row already shows it.
+  const stateNote = session.archived_at
+    ? "archived"
+    : session.status === "closed" && current !== "settings"
+      ? "closed"
+      : null;
   const base = `/admin/sessions/${session.id}`;
   const tabs: { key: Tab; label: string; href: string }[] = [
     { key: "overview", label: "Overview", href: base },
@@ -40,7 +47,7 @@ export default function SessionHeader({
       <div className="min-w-0 space-y-1">
         <h1 className="text-lg font-semibold">{session.topic || session.id}</h1>
         <p className="text-xs text-muted-foreground">
-          {session.id} · {session.archived_at ? "archived" : session.status} ·{" "}
+          {session.id} · {stateNote && `${stateNote} · `}
           {formatDateTime(session.created_at)}
         </p>
       </div>
