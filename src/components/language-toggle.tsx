@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useTransition } from "react";
 
 import { LOCALES, type Locale } from "@/i18n/locales";
@@ -14,6 +15,9 @@ import { cn } from "@/lib/utils";
  */
 export function LanguageToggle({ locale }: { locale: Locale }) {
   const [pending, startTransition] = useTransition();
+  const pathname = usePathname() ?? "";
+  // Admin isn't translated yet, so the switch would do nothing there.
+  if (pathname.startsWith("/admin")) return null;
 
   return (
     <div

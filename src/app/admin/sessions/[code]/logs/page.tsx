@@ -5,6 +5,7 @@ import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import SessionHeader from "../session-header";
 import { formatDateTime } from "@/lib/format-date";
+import LogsFilter from "./logs-filter";
 
 type SearchParams = Promise<{
   status?: string;
@@ -23,16 +24,23 @@ const STATUS_BADGE: Record<string, string> = {
   stream_aborted: "bg-amber-100 text-amber-800 border-amber-200",
 };
 
-const KIND_LABEL: Record<string, string> = {
-  facilitator_turn: "facilitator",
-  analyze_participant: "analyze",
-  summarize_session: "summary",
-  extract_points: "extract",
-  cluster_points: "cluster",
+const STATUS_LABEL: Record<string, string> = {
+  success: "Success",
+  error: "Error",
+  parse_error: "Couldn't read reply",
+  stream_aborted: "Cut off",
 };
 
-// Every kind the app can log. The chips only show the ones this session
-// actually has, so a filter never points at calls that don't exist.
+const KIND_LABEL: Record<string, string> = {
+  facilitator_turn: "Facilitator",
+  analyze_participant: "Analyze",
+  summarize_session: "Summary",
+  extract_points: "Extract",
+  cluster_points: "Cluster",
+};
+
+// Every kind the app can log. The filter only offers the ones this session
+// actually has, so a choice never points at calls that don't exist.
 const KINDS = Object.keys(KIND_LABEL);
 
 type LogRow = {
@@ -127,7 +135,7 @@ export default async function SessionLogsPage({
     countRows({ status, kind, participant }),
   ]);
   const kindsPresent = kindCounts.filter(([k, n]) => n > 0 || k === kind);
-  const counts = Object.fromEntries(statusCounts) as Record<string, number>;
+  const statusesPresent = statusCounts.filter(([s, n]) => n > 0 || s === status);
   const logs = (rows ?? []) as LogRow[];
   const olderCursor = logs.length === PAGE_SIZE ? logs[logs.length - 1].created_at : null;
 
@@ -158,59 +166,58 @@ export default async function SessionLogsPage({
         </div>
       )}
 
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className="text-muted-foreground">Status:</span>
-        {(["all", ...STATUSES] as const).map(
-          (s) => (
-            <Link
-              key={s}
-              href={filterHref({ status: s })}
-              className={`rounded border px-2 py-0.5 ${
-                (status ?? "all") === s
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-border bg-card hover:bg-accent"
-              }`}
-            >
-              {s}
-              {s !== "all" && counts[s] != null && (
-                <span className="ml-1 text-muted-foreground">{counts[s]}</span>
-              )}
-            </Link>
-          ),
-        )}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-muted-foreground">
+          {logs.length === 0
+            ? `0 of ${matching} matching calls`
+            : `Showing ${logs.length} of ${matching} matching calls${before ? " (older page)" : ", newest first"}`}
+        </p>
+        <LogsFilter
+          groups={[
+            {
+              label: "Status",
+              current: status ?? "all",
+              options: statusesPresent.length
+                ? [
+                    { value: "all", label: "All", count: 0, href: filterHref({ status: "all" }) },
+                    ...statusesPresent.map(([s, n]) => ({
+                      value: s,
+                      label: STATUS_LABEL[s] ?? s,
+                      count: n,
+                      href: filterHref({ status: s }),
+                    })),
+                  ]
+                : [],
+            },
+            {
+              label: "Kind",
+              current: kind ?? "all",
+              options: kindsPresent.length
+                ? [
+                    { value: "all", label: "All", count: 0, href: filterHref({ kind: "all" }) },
+                    ...kindsPresent.map(([k, n]) => ({
+                      value: k,
+                      label: KIND_LABEL[k] ?? k,
+                      count: n,
+                      href: filterHref({ kind: k }),
+                    })),
+                  ]
+                : [],
+            },
+          ]}
+          chips={[
+            ...(status && status !== "all"
+              ? [{ label: STATUS_LABEL[status] ?? status, removeHref: filterHref({ status: "all" }) }]
+              : []),
+            ...(kind && kind !== "all"
+              ? [{ label: KIND_LABEL[kind] ?? kind, removeHref: filterHref({ kind: "all" }) }]
+              : []),
+            ...(participant
+              ? [{ label: `Participant ${participant.slice(0, 8)}`, removeHref: filterHref({ participant: undefined }) }]
+              : []),
+          ]}
+        />
       </div>
-
-      <div className="flex flex-wrap items-center gap-2 text-xs">
-        <span className="text-muted-foreground">Kind:</span>
-        {[["all", 0] as const, ...kindsPresent].map(([k, n]) => (
-          <Link
-            key={k}
-            href={filterHref({ kind: k })}
-            className={`rounded border px-2 py-0.5 ${
-              (kind ?? "all") === k
-                ? "border-foreground bg-foreground text-background"
-                : "border-border bg-card hover:bg-accent"
-            }`}
-          >
-            {k === "all" ? "all" : (KIND_LABEL[k] ?? k)}
-            {k !== "all" && <span className="ml-1 text-muted-foreground">{n}</span>}
-          </Link>
-        ))}
-        {participant && (
-          <Link
-            href={filterHref({ participant: undefined })}
-            className="rounded border border-border bg-card px-2 py-0.5 hover:bg-accent"
-          >
-            ✕ participant: {participant.slice(0, 8)}
-          </Link>
-        )}
-      </div>
-
-      <p className="text-xs text-muted-foreground">
-        {logs.length === 0
-          ? `0 of ${matching} matching calls`
-          : `Showing ${logs.length} of ${matching} matching calls${before ? " (older page)" : ", newest first"}`}
-      </p>
 
       {logs.length === 0 ? (
         <p className="rounded border bg-card p-6 text-center text-sm text-muted-foreground">
@@ -230,7 +237,7 @@ export default async function SessionLogsPage({
                       STATUS_BADGE[row.status] ?? "bg-muted text-foreground"
                     }`}
                   >
-                    {row.status}
+                    {STATUS_LABEL[row.status] ?? row.status}
                   </span>
                   <span className="text-xs uppercase tracking-wide text-muted-foreground">
                     {KIND_LABEL[row.call_kind] ?? row.call_kind}

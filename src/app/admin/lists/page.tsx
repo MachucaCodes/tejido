@@ -16,14 +16,10 @@ export default async function AdminListsPage() {
 
   return (
     <div className="space-y-6">
-      <header className="space-y-1">
+      <header className="flex items-center justify-between">
         <h1 className="text-lg font-semibold">Lists</h1>
-        <p className="text-sm text-muted-foreground">
-          Named groups of phone numbers. A number can be in more than one list.
-        </p>
+        <CreateListForm />
       </header>
-
-      <CreateListForm />
 
       {/* A failed load must not look like an empty one, or an admin may
           re-create lists that are still there. */}

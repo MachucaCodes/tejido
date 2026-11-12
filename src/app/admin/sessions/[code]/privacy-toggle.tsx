@@ -2,15 +2,23 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { InfoIcon } from "lucide-react";
 
+import { InfoTip } from "@/components/info-tip";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 /**
- * Anonymous ↔ Connect. Separate from EditSessionForm for the same reason as
- * ArchiveToggle: it changes what participants are told and asked, so it
- * shouldn't ride along with a topic edit.
+ * Anonymous ↔ Connect as one labelled row. It changes what participants are
+ * told and asked, so switching always asks first (like ArchiveToggle), and
+ * the explanation lives in the tooltip and the confirm, not on the page.
  */
 export default function PrivacyToggle({
   code,
@@ -22,9 +30,11 @@ export default function PrivacyToggle({
   consentCount: number;
 }) {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const connect = privacy === "connect";
+  const optIns = `${consentCount} opted in`;
 
   async function toggle() {
     setBusy(true);
@@ -39,47 +49,70 @@ export default function PrivacyToggle({
       setError((await res.text()) || `failed (${res.status})`);
       return;
     }
+    setOpen(false);
     router.refresh();
   }
 
-  const explain = connect
-    ? "Participants are told the organizers may connect them with neighbors who share their interests, and can opt in. The summary and themes stay anonymous."
-    : "Nobody is asked to share their name. A Connect session lets participants opt in to being introduced to neighbors with similar interests.";
-
   return (
-    <section className="space-y-2 rounded-lg border border-border bg-card px-4 py-3">
-      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
-        <div className="flex min-w-0 items-center gap-1.5">
-          <h2 className="text-sm font-medium">
-            {connect ? "Connect session" : "Anonymous session"}
-          </h2>
-          <Tooltip>
-            <TooltipTrigger
-              aria-label={explain}
-              className="text-muted-foreground hover:text-foreground"
-            >
-              <InfoIcon className="size-3.5" aria-hidden />
-            </TooltipTrigger>
-            <TooltipContent className="max-w-xs">{explain}</TooltipContent>
-          </Tooltip>
-          {consentCount > 0 && (
-            <span className="text-xs text-muted-foreground">
-              · {consentCount} opted in{connect ? "" : " earlier"}
-            </span>
-          )}
-        </div>
+    <div className="flex flex-wrap items-center gap-2 text-sm">
+      <span className="text-muted-foreground">Privacy:</span>
+      <span className="font-medium">{connect ? "Connect" : "Anonymous"}</span>
+      {(connect || consentCount > 0) && (
+        <span className="text-xs text-muted-foreground">· {optIns}</span>
+      )}
+      <InfoTip label="About privacy">
+        {connect
+          ? "Participants are told the organizers may connect them with neighbors who share their interests, and can opt in. The summary and themes stay anonymous."
+          : "Nobody is asked to share their name. A Connect session lets participants opt in to being introduced to neighbors with similar interests."}
+      </InfoTip>
+
+      <Dialog
+        open={open}
+        onOpenChange={(next) => {
+          setOpen(next);
+          if (!next) setError(null);
+        }}
+      >
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           size="sm"
-          disabled={busy}
-          onClick={() => void toggle()}
+          className="ml-auto"
+          onClick={() => setOpen(true)}
         >
-          {busy ? "Saving…" : connect ? "Make anonymous" : "Make it a Connect session"}
+          {connect ? "Make anonymous" : "Make it a Connect session"}
         </Button>
-      </div>
-
-      {error && <p className="text-xs text-destructive">{error}</p>}
-    </section>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {connect ? "Make this session anonymous?" : "Make this a Connect session?"}
+            </DialogTitle>
+            <DialogDescription>
+              {connect ? (
+                <>
+                  New participants are no longer asked whether they want to be
+                  connected with neighbors.
+                  {consentCount > 0 &&
+                    ` The ${consentCount} earlier opt-in${consentCount === 1 ? " stays" : "s stay"} on file.`}
+                </>
+              ) : (
+                <>
+                  Participants are told the organizers may connect them with
+                  neighbors who share their interests, and can opt in. The
+                  summary and themes stay anonymous.
+                </>
+              )}
+            </DialogDescription>
+          </DialogHeader>
+          {error && <p className="text-xs text-destructive">{error}</p>}
+          <DialogFooter>
+            <DialogClose render={<Button variant="outline" />}>Cancel</DialogClose>
+            <Button type="button" disabled={busy} onClick={() => void toggle()}>
+              {busy ? "Saving…" : connect ? "Make anonymous" : "Make it a Connect session"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </div>
   );
 }

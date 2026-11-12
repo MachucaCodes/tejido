@@ -16,11 +16,12 @@ import { Button } from "@/components/ui/button";
 const OPENER =
   "Hi! I'll help you set up a session. What do you want people to open up about?";
 
+// Same labels as the manual form (create-session-form.tsx).
 const FIELDS: { key: keyof SessionDraft; label: string; rows: number }[] = [
-  { key: "code", label: "Slug", rows: 1 },
-  { key: "topic", label: "Topic", rows: 2 },
+  { key: "code", label: "Link name", rows: 1 },
+  { key: "topic", label: "Question people are asked", rows: 2 },
   { key: "intro_message", label: "Intro message", rows: 4 },
-  { key: "context", label: "Context (shared only if asked)", rows: 4 },
+  { key: "context", label: "Context", rows: 4 },
   { key: "instructions", label: "Instructions", rows: 6 },
   { key: "prompt_summary_system", label: "Summary focus", rows: 2 },
 ];

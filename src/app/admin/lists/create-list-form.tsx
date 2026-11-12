@@ -4,9 +4,20 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
+/** "New list" header button; the name field lives in a small dialog. */
 export default function CreateListForm() {
   const router = useRouter();
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -30,21 +41,44 @@ export default function CreateListForm() {
   };
 
   return (
-    <form onSubmit={submit} className="flex items-start gap-2 rounded-lg border bg-card p-4">
-      <div className="min-w-0 flex-1 space-y-1">
-        <input
-          aria-label="New list name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          placeholder="New list name, e.g. Tech group"
-          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
-          required
-        />
-        {error && <p className="text-xs text-destructive">{error}</p>}
-      </div>
-      <Button type="submit" disabled={busy}>
-        {busy ? "Creating…" : "Create list"}
-      </Button>
-    </form>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next);
+        if (!next) setError(null);
+      }}
+    >
+      <DialogTrigger className="rounded border border-border bg-card px-3 py-1.5 text-xs hover:bg-accent">
+        New list
+      </DialogTrigger>
+      <DialogContent>
+        <form onSubmit={submit} className="grid gap-4">
+          <DialogHeader>
+            <DialogTitle>New list</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-1">
+            <label className="text-xs font-medium" htmlFor="new-list-name">
+              Name
+            </label>
+            <input
+              id="new-list-name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Tech group"
+              className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+              autoFocus
+              required
+            />
+            {error && <p className="text-xs text-destructive">{error}</p>}
+          </div>
+          <DialogFooter>
+            <DialogClose render={<Button type="button" variant="outline" />}>Cancel</DialogClose>
+            <Button type="submit" disabled={busy}>
+              {busy ? "Creating…" : "Create list"}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
   );
 }
