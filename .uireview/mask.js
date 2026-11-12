@@ -1,0 +1,1 @@
+(() => { document.querySelectorAll('[role=dialog] .font-mono').forEach(e => e.textContent = '+506 0000 0000'); document.querySelectorAll('[role=dialog] li .text-xs.text-muted-foreground.ml-2').forEach(e => e.textContent = 'Name'); return 'ok'; })()

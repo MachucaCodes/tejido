@@ -1,0 +1,110 @@
+{
+  "tool": "clock-validate",
+  "name": "Before at phone width (main deploy)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-226194fa-ui-review-ui-mockup-overview-stacks",
+    "dirty": true
+  },
+  "environment": "main branch deploy (= production code), prod data, look only",
+  "base_url": "https://tejido-git-main-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:59:45.735Z",
+  "duration_ms": 12041,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/digital-tools",
+      "check": false,
+      "status": "pass",
+      "ms": 2100,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Overview\"",
+      "check": true,
+      "status": "pass",
+      "ms": 42,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2509,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "phone overview before",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Edit session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 67,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 805,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "`(document.getElementById('status').scrollIntoView({block:'center'}), 'ok')` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 507,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "phone status in edit form before",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

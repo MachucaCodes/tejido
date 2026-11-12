@@ -1,0 +1,90 @@
+{
+ "name": "After: session overview, settings, invites (PR preview)",
+ "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+ "environment": "PR #10 preview, prod data, look only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 500,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/digital-tools"
+  },
+  {
+   "do": "expect_text",
+   "text": "Settings"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "screenshot",
+   "label": "overview top"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.documentElement.scrollHeight > 0 && (console.log('H='+document.documentElement.scrollHeight), true)",
+   "equals": true,
+   "label": "overview height"
+  },
+  {
+   "do": "click",
+   "text": "Send invites"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "expect_js",
+   "js": "(() => { document.querySelectorAll('[role=dialog] .font-mono').forEach(e => e.textContent = '+506 0000 0000'); document.querySelectorAll('[role=dialog] li .text-xs.text-muted-foreground.ml-2').forEach(e => e.textContent = 'Name'); return 'ok'; })()",
+   "equals": "ok"
+  },
+  {
+   "do": "screenshot",
+   "label": "invites dialog"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/digital-tools/settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Status"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "settings top"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.documentElement.scrollHeight > 0 && (console.log('H='+document.documentElement.scrollHeight), true)",
+   "equals": true,
+   "label": "settings height"
+  },
+  {
+   "do": "expect_js",
+   "js": "(window.scrollTo(0, document.body.scrollHeight), 'ok')",
+   "equals": "ok"
+  },
+  {
+   "do": "wait",
+   "ms": 600
+  },
+  {
+   "do": "screenshot",
+   "label": "settings bottom"
+  }
+ ]
+}

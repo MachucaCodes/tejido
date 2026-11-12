@@ -1,0 +1,110 @@
+{
+  "tool": "clock-validate",
+  "name": "Before: session overview (prod)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-226194fa-ui-review-ui-mockup-overview-stacks",
+    "dirty": true
+  },
+  "environment": "main branch deploy (same code as production), prod data, look only",
+  "base_url": "https://tejido-git-main-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:58:37.561Z",
+  "duration_ms": 14990,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/digital-tools",
+      "check": false,
+      "status": "pass",
+      "ms": 1930,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Overview\"",
+      "check": true,
+      "status": "pass",
+      "ms": 59,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2510,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Edit session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 73,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 808,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "`(window.scrollTo(0, document.body.scrollHeight/3), 'ok')` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "edit open, middle",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "page height (expected to fail, just reads it)",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

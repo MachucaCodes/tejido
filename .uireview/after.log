@@ -1,0 +1,22 @@
+signed in on https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app as Dane (dane+clock-owner@danemyers.com, a new session just for this run)
+✓ 1. Open /admin/sessions/digital-tools
+✓ 2. Page shows "Settings"
+✓ 3. Wait 2500 ms
+✓ 4. overview top
+✓ 5. overview height
+✓ 6. Click "Send invites"
+✓ 7. Wait 1200 ms
+✓ 8. `(() => { document.querySelectorAll('[role=dialog] .font-mono').forEach(e => e.textContent = '+506 0000 0000'); document.querySelectorAll('[role=dialog] li .text-xs.text-muted-foreground.ml-2').forEach(e => e.textContent = 'Name'); return 'ok'; })()` is "ok"
+✓ 9. invites dialog
+✓ 10. Press Escape
+✓ 11. Open /admin/sessions/digital-tools/settings
+✓ 12. Page shows "Status"
+✓ 13. Wait 1500 ms
+✓ 14. settings top
+✓ 15. settings height
+✓ 16. `(window.scrollTo(0, document.body.scrollHeight), 'ok')` is "ok"
+✓ 17. Wait 600 ms
+✓ 18. settings bottom
+
+PASSED: evidence in /srv/agent-runs/226194fa/.uireview/out-after (evidence.json, evidence.md, flow.json, recording.webm, step-01.png, step-02.png, step-04.png, step-05.png, step-06.png, step-08.png, step-09.png, step-10.png, step-11.png, step-12.png, step-14.png, step-15.png, step-16.png, step-18.png, trace.zip, walkthrough.json)
+exit 0

@@ -1,0 +1,115 @@
+{
+  "title": "After: session overview, settings, invites (PR preview)",
+  "slug": "after-session-overview-settings-invites-pr-previ",
+  "out_dir": "/srv/agent-runs/226194fa/.uireview/out-after/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:58:03.736Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "After: session overview, settings, invites (PR preview)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-01.png",
+          "shows": "Open /admin/sessions/digital-tools",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-02.png",
+          "shows": "Page shows \"Settings\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-04.png",
+          "shows": "overview top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-05.png",
+          "shows": "overview height",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-06.png",
+          "shows": "Click \"Send invites\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-08.png",
+          "shows": "`(() => { document.querySelectorAll('[role=dialog] .font-mono').forEach(e => e.textContent = '+506 0000 0000'); document.querySelectorAll('[role=dialog] li .text-xs.text-muted-foreground.ml-2').forEach(e => e.textContent = 'Name'); return 'ok'; })()` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-09.png",
+          "shows": "invites dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-10.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-11.png",
+          "shows": "Open /admin/sessions/digital-tools/settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-12.png",
+          "shows": "Page shows \"Status\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-14.png",
+          "shows": "settings top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-15.png",
+          "shows": "settings height",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-16.png",
+          "shows": "`(window.scrollTo(0, document.body.scrollHeight), 'ok')` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-after/step-18.png",
+          "shows": "settings bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

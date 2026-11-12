@@ -1,0 +1,49 @@
+{
+ "name": "Before at phone width (main deploy)",
+ "base_url": "https://tejido-git-main-dane-myers-projects.vercel.app",
+ "environment": "main branch deploy (= production code), prod data, look only",
+ "viewport": {
+  "width": 390,
+  "height": 844
+ },
+ "pace_ms": 500,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/digital-tools"
+  },
+  {
+   "do": "expect_text",
+   "text": "Overview"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "screenshot",
+   "label": "phone overview before"
+  },
+  {
+   "do": "click",
+   "text": "Edit session"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "expect_js",
+   "js": "(document.getElementById('status').scrollIntoView({block:'center'}), 'ok')",
+   "equals": "ok"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "phone status in edit form before"
+  }
+ ]
+}

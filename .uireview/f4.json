@@ -1,0 +1,8 @@
+{"code":"F4","title":"On a phone, 'Make it a Connect session' runs past the right edge of the Settings card","kind":"responsive","severity":"low","confidence":"high",
+"where":"/admin/sessions/[code]/settings, 390px, admin",
+"what_happens":"The Status + Privacy row wraps awkwardly: Privacy's (i) drops to its own line and the 'Make it a Connect session' button text goes outside the card border on the right.",
+"who_hurts":"An admin on a phone sees a broken-looking top row; the button is still tappable.",
+"suggested_fix":"Put Status and Privacy on separate rows below sm (flex-col sm:flex-row), and drop ml-auto on the privacy button there.",
+"rule":"general: works at phone width",
+"origin":"this change (Privacy moved into the Status row)",
+"fingerprint":"/admin/sessions/[code]/settings|PrivacyToggle|responsive|connect button overflows phone"}

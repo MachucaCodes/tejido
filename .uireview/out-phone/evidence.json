@@ -1,0 +1,137 @@
+{
+  "tool": "clock-validate",
+  "name": "After at phone width + archived session",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-226194fa-ui-review-ui-mockup-overview-stacks",
+    "dirty": true
+  },
+  "environment": "PR #10 preview, prod data, look only",
+  "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:59:14.887Z",
+  "duration_ms": 17839,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/digital-tools",
+      "check": false,
+      "status": "pass",
+      "ms": 1990,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Settings\"",
+      "check": true,
+      "status": "pass",
+      "ms": 24,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "phone overview",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/digital-tools/settings",
+      "check": false,
+      "status": "pass",
+      "ms": 732,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Status\"",
+      "check": true,
+      "status": "pass",
+      "ms": 35,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "phone settings",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 752,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Archived\"",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2003,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "phone archived overview",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

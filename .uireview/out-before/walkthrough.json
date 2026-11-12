@@ -1,0 +1,66 @@
+{
+  "title": "Before: session overview (prod)",
+  "slug": "before-session-overview-prod",
+  "out_dir": "/srv/agent-runs/226194fa/.uireview/out-before/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:58:37.561Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Before: session overview (prod)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-before/step-01.png",
+          "shows": "Open /admin/sessions/digital-tools",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-before/step-02.png",
+          "shows": "Page shows \"Overview\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-before/step-04.png",
+          "shows": "overview top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-before/step-05.png",
+          "shows": "Click \"Edit session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-before/step-07.png",
+          "shows": "`(window.scrollTo(0, document.body.scrollHeight/3), 'ok')` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-before/step-08.png",
+          "shows": "edit open, middle",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/226194fa/.uireview/out-before/step-09.png",
+          "shows": "page height (expected to fail, just reads it)",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

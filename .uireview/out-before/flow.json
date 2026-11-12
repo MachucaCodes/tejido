@@ -1,0 +1,51 @@
+{
+ "name": "Before: session overview (prod)",
+ "base_url": "https://tejido-git-main-dane-myers-projects.vercel.app",
+ "environment": "main branch deploy (same code as production), prod data, look only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 500,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/digital-tools"
+  },
+  {
+   "do": "expect_text",
+   "text": "Overview"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "screenshot",
+   "label": "overview top"
+  },
+  {
+   "do": "click",
+   "text": "Edit session"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "expect_js",
+   "js": "(window.scrollTo(0, document.body.scrollHeight/3), 'ok')",
+   "equals": "ok"
+  },
+  {
+   "do": "screenshot",
+   "label": "edit open, middle"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.documentElement.scrollHeight > 0 && (console.log('H='+document.documentElement.scrollHeight), true)",
+   "equals": true,
+   "label": "page height (expected to fail, just reads it)"
+  }
+ ]
+}

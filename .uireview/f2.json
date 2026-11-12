@@ -1,0 +1,9 @@
+{"code":"F2","title":"Status sits at the top of Settings but only saves with Save changes at the bottom, next to Privacy that saves at once","kind":"clarity","severity":"medium","confidence":"high",
+"where":"/admin/sessions/[code]/settings, 1440x900, admin",
+"what_happens":"Status (Open/Closed) and Privacy share the first row of the form. Privacy saves by itself after its confirm. Status only saves with 'Save changes', about 1.5 screens down; the only hint is inside its (i) tooltip.",
+"who_hurts":"An admin who comes to close a session switches Status to Closed, sees the row look done (like Privacy beside it), and leaves. The session stays open and keeps taking answers.",
+"suggested_fix":"Make Status act like Privacy: save on change (with a confirm when closing), using the same PATCH route, and drop it from the form's dirty check. Or, smaller: keep Save in view (sticky footer) when the form is dirty.",
+"rule":"Dane's UI rule: 'A control should make sense from its label; text that explains what it does goes behind a small \"i\" icon' (here the save behaviour only shows in the tooltip); established pattern: Privacy and Archive act at once",
+"origin":"this change (Status moved away from the Save button)",
+"owners_call":"The PR lists 'Status still saves with the form's Save button' as a decision. Should Status save on its own like Privacy?",
+"fingerprint":"/admin/sessions/[code]/settings|EditSessionForm|clarity|status saves far below"}

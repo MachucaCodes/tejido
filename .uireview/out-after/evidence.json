@@ -1,0 +1,191 @@
+{
+  "tool": "clock-validate",
+  "name": "After: session overview, settings, invites (PR preview)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-226194fa-ui-review-ui-mockup-overview-stacks",
+    "dirty": true
+  },
+  "environment": "PR #10 preview, prod data, look only",
+  "base_url": "https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:58:03.736Z",
+  "duration_ms": 26420,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/digital-tools",
+      "check": false,
+      "status": "pass",
+      "ms": 2043,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Settings\"",
+      "check": true,
+      "status": "pass",
+      "ms": 59,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2506,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "overview height",
+      "check": true,
+      "status": "pass",
+      "ms": 12,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Send invites\"",
+      "check": false,
+      "status": "pass",
+      "ms": 57,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1200 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1212,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "`(() => { document.querySelectorAll('[role=dialog] .font-mono').forEach(e => e.textContent = '+506 0000 0000'); document.querySelectorAll('[role=dialog] li .text-xs.text-muted-foreground.ml-2').forEach(e => e.textContent = 'Name'); return 'ok'; })()` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "invites dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/digital-tools/settings",
+      "check": false,
+      "status": "pass",
+      "ms": 721,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Status\"",
+      "check": true,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1514,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "settings top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "settings height",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(window.scrollTo(0, document.body.scrollHeight), 'ok')` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 606,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "settings bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-18.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

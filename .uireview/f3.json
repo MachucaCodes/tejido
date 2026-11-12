@@ -1,0 +1,8 @@
+{"code":"F3","title":"Instructions still has an explanation line under the box, and the new (i) says the same thing","kind":"rule","severity":"medium","confidence":"high",
+"where":"/admin/sessions/[code]/settings, Instructions field, 1440x900",
+"what_happens":"Under the Instructions box the page still shows 'Injected into the facilitator system prompt and takes precedence over the global mechanics.' The PR added an (i) next to the label with the same text, so it now says it twice.",
+"who_hurts":"Admins editing the session get the one leftover paragraph the PR meant to tuck away, and the same explanation twice.",
+"suggested_fix":"Delete the <p> under the Instructions textarea (edit-session-form.tsx around line 397); the InfoTip already holds it.",
+"rule":"Dane's UI rule: 'Keep explanation off the top level of the page ... text that explains what it does goes behind a small \"i\" icon or tooltip'",
+"origin":"this change (missed while moving the others)",
+"fingerprint":"/admin/sessions/[code]/settings|EditSessionForm|rule|instructions helper text left"}

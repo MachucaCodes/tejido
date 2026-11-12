@@ -1,0 +1,8 @@
+{"code":"F1","title":"On a phone, the new Send invites button squeezes the session title to one word per line","kind":"responsive","severity":"medium","confidence":"high",
+"where":"/admin/sessions/[code] Overview header (SessionHeader actions), 390px, admin, open session with a long topic",
+"what_happens":"With Send invites, Copy join link and Archive all in the header row, the title gets about 75px: the topic runs to 10 lines, one word each, and the code/status/date line breaks into 5 lines. Before this PR the same header showed the title in 4 normal lines.",
+"who_hurts":"An admin opening a session on their phone sees a tall column of single words before any results, and the results start below the first screen.",
+"suggested_fix":"Let the actions wrap under the title on narrow screens (e.g. header row flex-col sm:flex-row in session-header.tsx), or show Send invites as an icon-only button below sm with an aria-label.",
+"rule":"general: the page must work at phone width; established pattern: the same header before this PR",
+"origin":"this change",
+"fingerprint":"/admin/sessions/[code]|SessionHeader|responsive|actions squeeze title on phone"}

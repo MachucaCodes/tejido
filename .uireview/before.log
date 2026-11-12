@@ -1,0 +1,5 @@
+✓ 1. Open /admin/sessions/digital-tools
+✗ 2. Page shows "Overview" — locator.waitFor: Timeout 10000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see "Signing in on previews" in clock-validate help))
+
+FAILED: evidence in /srv/agent-runs/226194fa/.uireview/out-before (evidence.json, evidence.md, flow.json, recording.webm, step-01.png, step-02.png, trace.zip, walkthrough.json)
+exit 1

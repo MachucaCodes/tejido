@@ -1,0 +1,8 @@
+{"code":"F5","title":"Archived session still shows a Send invites button that only opens a 'Un-archive' note","kind":"clarity","severity":"low","confidence":"high",
+"where":"/admin/sessions/[code] header, archived session, 390px and 1440",
+"what_happens":"On an archived session the header offers 'Send invites' (and Copy join link is rightly hidden). The dialog has the lists greyed out and 'Un-archive the session to send invites.'",
+"who_hurts":"An admin looking at an old session is offered an action that can't happen; Dane agreed before that an archived page shouldn't read like a live one.",
+"suggested_fix":"Hide InvitesButton when session.archived_at is set, like Copy join link (page.tsx, same !session.archived_at check).",
+"rule":"established pattern: Copy join link is hidden for archived sessions; earlier agreed finding on archived pages",
+"origin":"this change",
+"fingerprint":"/admin/sessions/[code]|InvitesButton|clarity|invites on archived session"}

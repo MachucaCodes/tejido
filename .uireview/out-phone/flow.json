@@ -1,0 +1,15 @@
+{"name":"After at phone width + archived session","base_url":"https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app","environment":"PR #10 preview, prod data, look only","viewport":{"width":390,"height":844},"pace_ms":500,
+"steps":[
+{"do":"goto","url":"/admin/sessions/digital-tools"},
+{"do":"expect_text","text":"Settings"},
+{"do":"wait","ms":2500},
+{"do":"screenshot","label":"phone overview"},
+{"do":"goto","url":"/admin/sessions/digital-tools/settings"},
+{"do":"expect_text","text":"Status"},
+{"do":"wait","ms":1500},
+{"do":"screenshot","label":"phone settings"},
+{"do":"goto","url":"/admin/sessions/why-statement-v2"},
+{"do":"expect_text","text":"Archived"},
+{"do":"wait","ms":2000},
+{"do":"screenshot","label":"phone archived overview"}
+]}
