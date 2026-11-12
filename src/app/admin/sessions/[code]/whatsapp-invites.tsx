@@ -1,12 +1,11 @@
 "use client";
 
-import { InfoIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { InfoTip } from "@/components/info-tip";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export type InviteList = { id: string; name: string; members: number };
 export type InviteRow = {
@@ -92,15 +91,7 @@ export default function WhatsAppInvites({
     <section className="space-y-3 rounded-lg border border-border bg-card p-4">
       <div className="flex items-center gap-1.5">
         <h2 className="text-sm font-medium">Send on WhatsApp</h2>
-        <Tooltip>
-          <TooltipTrigger
-            aria-label={INVITE_HELP}
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <InfoIcon className="size-3.5" aria-hidden />
-          </TooltipTrigger>
-          <TooltipContent className="max-w-xs">{INVITE_HELP}</TooltipContent>
-        </Tooltip>
+        <InfoTip label="About WhatsApp invites">{INVITE_HELP}</InfoTip>
       </div>
 
       {lists.length === 0 ? (

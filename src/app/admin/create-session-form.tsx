@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { InfoTip } from "@/components/info-tip";
 import { Button } from "@/components/ui/button";
 
 export default function CreateSessionForm() {
@@ -12,6 +13,7 @@ export default function CreateSessionForm() {
   const [introMessage, setIntroMessage] = useState("");
   const [context, setContext] = useState("");
   const [instructions, setInstructions] = useState("");
+  const [summaryFocus, setSummaryFocus] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -28,6 +30,7 @@ export default function CreateSessionForm() {
         intro_message: introMessage,
         context,
         instructions,
+        prompt_summary_system: summaryFocus,
       }),
     });
     setBusy(false);
@@ -42,9 +45,14 @@ export default function CreateSessionForm() {
   return (
     <form onSubmit={submit} className="space-y-3 rounded-lg border bg-card p-4">
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="slug">
-          Link name
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="slug">
+            Link name
+          </label>
+          <InfoTip label="About the link name">
+            Lowercase, no spaces. The join link is /s/&lt;link name&gt;.
+          </InfoTip>
+        </div>
         <input
           id="slug"
           value={code}
@@ -53,13 +61,10 @@ export default function CreateSessionForm() {
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           required
         />
-        <p className="text-xs text-muted-foreground">
-          Lowercase, no spaces. The join link is /s/&lt;link name&gt;.
-        </p>
       </div>
       <div className="space-y-1">
         <label className="text-xs font-medium" htmlFor="q">
-          Topic
+          Question people are asked
         </label>
         <input
           id="q"
@@ -68,48 +73,76 @@ export default function CreateSessionForm() {
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
           required
         />
-        <p className="text-xs text-muted-foreground">The question people are asked.</p>
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="intro">
-          Intro message
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="intro">
+            Intro message
+          </label>
+          <InfoTip label="About the intro message">
+            Shown as the first message in the chat. Leave blank for the default.
+          </InfoTip>
+        </div>
         <textarea
           id="intro"
           value={introMessage}
           onChange={(e) => setIntroMessage(e.target.value)}
           rows={3}
-          placeholder="Shown as the first message in the chat. Leave blank for the default."
+          placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="context">
-          Context
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="context">
+            Context
+          </label>
+          <InfoTip label="About context">
+            Background facts the facilitator AI can share only if a participant asks. Not shown otherwise.
+          </InfoTip>
+        </div>
         <textarea
           id="context"
           value={context}
           onChange={(e) => setContext(e.target.value)}
           rows={4}
-          placeholder="Background facts the facilitator can share only if asked. Optional."
+          placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
-        <p className="text-xs text-muted-foreground">
-          Surfaced to the facilitator AI as reference material; not shown to the
-          participant unless they ask.
-        </p>
       </div>
       <div className="space-y-1">
-        <label className="text-xs font-medium" htmlFor="instructions">
-          Instructions
-        </label>
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="instructions">
+            Instructions
+          </label>
+          <InfoTip label="About instructions">
+            Guidance for the facilitator AI in this session. Takes precedence over the general mechanics.
+          </InfoTip>
+        </div>
         <textarea
           id="instructions"
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
           rows={4}
-          placeholder="Per-session guidance for the facilitator AI. Takes precedence over the general mechanics."
+          placeholder="Optional"
+          className="w-full rounded-md border bg-background px-3 py-2 text-sm"
+        />
+      </div>
+      <div className="space-y-1">
+        <div className="flex items-center gap-1">
+          <label className="text-xs font-medium" htmlFor="summary-focus">
+            Summary focus
+          </label>
+          <InfoTip label="About summary focus">
+            Guidance for the AI that writes the session summary. Leave blank for the default.
+          </InfoTip>
+        </div>
+        <textarea
+          id="summary-focus"
+          value={summaryFocus}
+          onChange={(e) => setSummaryFocus(e.target.value)}
+          rows={2}
+          placeholder="Optional"
           className="w-full rounded-md border bg-background px-3 py-2 text-sm"
         />
       </div>

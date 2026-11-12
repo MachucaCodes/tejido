@@ -17,7 +17,7 @@ export default async function AdminHome() {
     .select("id, topic, status, created_at, archived_at")
     .order("created_at", { ascending: false });
   if (!guard.isAdmin) query = query.eq("created_by", guard.user.id);
-  const [{ data: sessions }, voiceCounts] = await Promise.all([
+  const [{ data: sessions, error }, voiceCounts] = await Promise.all([
     query,
     voiceCountsBySession(admin),
   ]);
@@ -40,7 +40,13 @@ export default async function AdminHome() {
         </Link>
       </header>
 
-      {active.length === 0 && archived.length === 0 ? (
+      {/* A failed load must not look like an empty one, or an admin may
+          re-create a session that is still there. */}
+      {error ? (
+        <p role="alert" className="text-sm text-destructive">
+          Couldn&apos;t load sessions. Reload the page to try again.
+        </p>
+      ) : active.length === 0 && archived.length === 0 ? (
         <p className="text-sm text-muted-foreground">No sessions yet.</p>
       ) : (
         <ul className="space-y-2">
