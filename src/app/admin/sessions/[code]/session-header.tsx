@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { formatDateTime } from "@/lib/format-date";
 
-type Tab = "overview" | "synthesis" | "logs";
+type Tab = "overview" | "synthesis" | "logs" | "settings";
 
 /**
  * One header for every page about a session: topic as the title, code ·
@@ -32,6 +32,7 @@ export default function SessionHeader({
     { key: "synthesis", label: "Synthesis", href: `${base}/synthesis` },
     // Logs are admin-only, matching the logs page guard.
     ...(isAdmin ? [{ key: "logs" as const, label: "Logs", href: `${base}/logs` }] : []),
+    { key: "settings", label: "Settings", href: `${base}/settings` },
   ];
 
   return (
