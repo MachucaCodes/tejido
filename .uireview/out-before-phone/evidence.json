@@ -1,0 +1,112 @@
+{
+  "tool": "clock-validate",
+  "name": "before-phone",
+  "outcome": "pass",
+  "commit": {
+    "sha": "c4eac4d2be18d06360fabb0785ff78d11ac95a32",
+    "branch": "clock-7e853e16-ui-review-ui-mockup-overview-stacks",
+    "dirty": true
+  },
+  "environment": "read-only look",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:21:42.008Z",
+  "duration_ms": 14274,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 439,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/settings",
+      "check": false,
+      "status": "pass",
+      "ms": 558,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2506,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "settings",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 679,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2511,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "archived",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "[data-private]"
+  ],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

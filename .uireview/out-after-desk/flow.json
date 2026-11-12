@@ -1,0 +1,7 @@
+{"name":"after-desk","base_url":"https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app","environment":"read-only look","viewport":{"width":1440,"height":900},"pace_ms":400,
+"redact":["[data-private]"],
+"steps":[
+{"do":"goto","url":"/admin/sessions/esm-rental-policy"},{"do":"wait","ms":2500},{"do":"screenshot","label":"overview"},
+{"do":"goto","url":"/admin/sessions/esm-rental-policy/settings"},{"do":"wait","ms":2500},{"do":"screenshot","label":"settings"},
+{"do":"goto","url":"/admin/sessions/why-statement-v2"},{"do":"wait","ms":2500},{"do":"screenshot","label":"archived"}
+]}

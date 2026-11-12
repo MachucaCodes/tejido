@@ -1,0 +1,59 @@
+{
+  "title": "after-phone",
+  "slug": "after-phone",
+  "out_dir": "/srv/agent-runs/7e853e16/.uireview/out-after-phone/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:23:47.276Z (commit c4eac4d2be). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "after-phone",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/7e853e16/.uireview/out-after-phone/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7e853e16/.uireview/out-after-phone/step-03.png",
+          "shows": "overview",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7e853e16/.uireview/out-after-phone/step-04.png",
+          "shows": "Open /admin/sessions/esm-rental-policy/settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7e853e16/.uireview/out-after-phone/step-06.png",
+          "shows": "settings",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7e853e16/.uireview/out-after-phone/step-07.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/7e853e16/.uireview/out-after-phone/step-09.png",
+          "shows": "archived",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

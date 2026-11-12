@@ -1,0 +1,12 @@
+no login for tejido-zeta.vercel.app and couldn't make one: login: sign-in refused (HTTP 403: Email link is invalid or has expired)
+✓ 1. Open /admin/sessions/esm-rental-policy
+✓ 2. Wait 2500 ms
+✓ 3. overview
+✓ 4. Open /admin/sessions/esm-rental-policy/settings
+✓ 5. Wait 2500 ms
+✓ 6. settings
+✓ 7. Open /admin/sessions/why-statement-v2
+✓ 8. Wait 2500 ms
+✓ 9. archived
+
+PASSED: evidence in /srv/agent-runs/7e853e16/.uireview/out-before-phone (evidence.json, evidence.md, flow.json, recording.webm, step-01.png, step-03.png, step-04.png, step-06.png, step-07.png, step-09.png, trace.zip, walkthrough.json)

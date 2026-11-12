@@ -1,0 +1,12 @@
+signed in on https://tejido-git-clock-34d425ea-ui-mockup-7e9a06-dane-myers-projects.vercel.app as Dane (dane+clock-owner@danemyers.com, a new session just for this run)
+✓ 1. Open /admin/sessions/esm-rental-policy
+✓ 2. Wait 2500 ms
+✓ 3. overview
+✓ 4. Open /admin/sessions/esm-rental-policy/settings
+✓ 5. Wait 2500 ms
+✓ 6. settings
+✓ 7. Open /admin/sessions/why-statement-v2
+✓ 8. Wait 2500 ms
+✓ 9. archived
+
+PASSED: evidence in /srv/agent-runs/7e853e16/.uireview/out-after-desk (evidence.json, evidence.md, flow.json, recording.webm, step-01.png, step-03.png, step-04.png, step-06.png, step-07.png, step-09.png, trace.zip, walkthrough.json)

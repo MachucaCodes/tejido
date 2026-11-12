@@ -1,0 +1,9 @@
+{"code":"F1","title":"On a phone, Status and Privacy rows put their buttons in different places",
+"kind":"consistency","severity":"low","confidence":"high",
+"where":"/admin/sessions/[code]/settings, StatusToggle + PrivacyToggle card, 390px, anonymous open session",
+"what_happens":"'Close session' sits on the same line as 'Status: Open', but 'Make it a Connect session' drops to its own line under 'Privacy: Anonymous'. The two rows of the same card look built differently.",
+"who_hurts":"An admin on a phone scanning the card; small polish only, nothing is blocked.",
+"suggested_fix":"Give both rows the same wrap: e.g. keep the label and value on one line and put the action on its own line for both on narrow screens (or shorten the privacy button label, e.g. 'Make it Connect'). status-toggle.tsx / privacy-toggle.tsx row classes.",
+"rule":"established pattern: the two rows are meant to match (StatusToggle comment: 'built like PrivacyToggle')",
+"origin":"this change",
+"fingerprint":"/admin/sessions/[code]/settings|StatusToggle|consistency|status privacy rows uneven phone"}

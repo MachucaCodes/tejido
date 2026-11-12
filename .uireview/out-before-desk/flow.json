@@ -1,0 +1,7 @@
+{"name":"before-desk","base_url":"https://tejido-zeta.vercel.app","environment":"read-only look","viewport":{"width":1440,"height":900},"pace_ms":400,
+"redact":["[data-private]"],
+"steps":[
+{"do":"goto","url":"/admin/sessions/esm-rental-policy"},{"do":"wait","ms":2500},{"do":"screenshot","label":"overview"},
+{"do":"goto","url":"/admin/sessions/esm-rental-policy/settings"},{"do":"wait","ms":2500},{"do":"screenshot","label":"settings"},
+{"do":"goto","url":"/admin/sessions/why-statement-v2"},{"do":"wait","ms":2500},{"do":"screenshot","label":"archived"}
+]}
