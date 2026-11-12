@@ -12,7 +12,7 @@ export const maxDuration = 60;
 
 type Body = {
   messages: BuilderMessage[];
-  // The draft as it stands in the panel, including the organizer's edits.
+  // What the form holds now, including the organizer's edits.
   currentDraft?: SessionDraft | null;
 };
 

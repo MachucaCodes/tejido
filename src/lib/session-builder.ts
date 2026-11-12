@@ -42,10 +42,13 @@ export const PROPOSE_TOOL: Tool = {
 
 // Each draft the model proposed was a tool_use; the API needs it paired with a
 // tool_result at the start of the next user turn. The result carries the
-// panel's current draft so the model sees any edits the organizer made.
+// form's current values so the model sees any edits the organizer made.
+// Before any draft, what the organizer typed into the form rides along with
+// their latest message instead.
 export function toApiMessages(messages: BuilderMessage[], currentDraft: SessionDraft | null) {
   const out: MessageParam[] = [];
   let pendingToolId: string | null = null;
+  const everDrafted = messages.some((m) => m.draft);
   messages.forEach((m, i) => {
     if (m.role === "assistant") {
       const content: MessageParam["content"] = [];
@@ -72,13 +75,26 @@ export function toApiMessages(messages: BuilderMessage[], currentDraft: SessionD
             type: "tool_result",
             tool_use_id: pendingToolId,
             content: shown
-              ? `Draft shown. The panel now holds (with any organizer edits):\n${JSON.stringify(shown, null, 2)}`
+              ? `Draft shown. The form now holds (with any organizer edits):\n${JSON.stringify(shown, null, 2)}`
               : "Draft shown to the organizer.",
           },
           { type: "text", text: m.content },
         ],
       });
       pendingToolId = null;
+      return;
+    }
+    if (!everDrafted && currentDraft && i === messages.length - 1) {
+      out.push({
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: `The organizer has typed this into the form so far:\n${JSON.stringify(currentDraft, null, 2)}`,
+          },
+          { type: "text", text: m.content },
+        ],
+      });
       return;
     }
     out.push({ role: "user", content: m.content });
