@@ -1,0 +1,258 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin home, nav and create-session (look only)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-270f2722-ui-audit-cold-audit-of-the-admin-home",
+    "dirty": true
+  },
+  "environment": "production, signed in as tejido login, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:50:01.695Z",
+  "duration_ms": 42306,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1305,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 505,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2004,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "home first screen",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 65,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 800 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 805,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "manual form open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollTo(0, 600); 1` is 1",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 510,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "manual form scrolled",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollTo(0, document.body.scrollHeight); 1` is 1",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "bottom of home",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions",
+      "check": false,
+      "status": "pass",
+      "ms": 712,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "sessions page",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 741,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "lists page",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/does-not-exist",
+      "check": false,
+      "status": "pass",
+      "ms": 555,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "admin 404",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/no-such-session-xyz",
+      "check": false,
+      "status": "pass",
+      "ms": 752,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2004,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "missing session 404 (styled)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-25.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "header > div > div:last-child > :last-child"
+  ],
+  "limitations": [
+    "Nothing submitted; builder chat not sent"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

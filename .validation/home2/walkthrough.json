@@ -1,0 +1,129 @@
+{
+  "title": "Admin home, nav and create-session (look only)",
+  "slug": "admin-home-nav-and-create-session-look-only",
+  "out_dir": "/srv/agent-runs/270f2722/.validation/home2/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:50:01.695Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin home, nav and create-session (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-04.png",
+          "shows": "home first screen",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-05.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-07.png",
+          "shows": "manual form open",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-08.png",
+          "shows": "`window.scrollTo(0, 600); 1` is 1",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-10.png",
+          "shows": "manual form scrolled",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-11.png",
+          "shows": "`window.scrollTo(0, document.body.scrollHeight); 1` is 1",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-13.png",
+          "shows": "bottom of home",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-14.png",
+          "shows": "Open /admin/sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-16.png",
+          "shows": "sessions page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-17.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-19.png",
+          "shows": "lists page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-20.png",
+          "shows": "Open /admin/does-not-exist",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-22.png",
+          "shows": "admin 404",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-23.png",
+          "shows": "Open /admin/sessions/no-such-session-xyz",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/home2/step-25.png",
+          "shows": "missing session 404 (styled)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

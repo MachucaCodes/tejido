@@ -1,0 +1,52 @@
+{
+  "title": "Admin sign-in signed out",
+  "slug": "admin-sign-in-signed-out",
+  "out_dir": "/srv/agent-runs/270f2722/.validation/login/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:47:55.483Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin sign-in signed out",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/login/step-01.png",
+          "shows": "Open /admin/login",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/login/step-03.png",
+          "shows": "login signed out",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/login/step-04.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/login/step-06.png",
+          "shows": "admin signed out redirects",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/270f2722/.validation/login/step-07.png",
+          "shows": "`location.pathname` is \"/admin/login\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

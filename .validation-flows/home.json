@@ -1,0 +1,121 @@
+{
+ "name": "Admin home, nav and create-session (look only)",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, signed in as tejido login, read-only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "limitations": [
+  "Nothing submitted; builder chat not sent"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "screenshot",
+   "label": "home first screen"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "manual form open"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollTo(0, 600); 1",
+   "equals": 1
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "manual form scrolled"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollTo(0, document.body.scrollHeight); 1",
+   "equals": 1
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "bottom of home"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "sessions page"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "lists page"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/does-not-exist"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "admin 404"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/no-such-session-xyz"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "screenshot",
+   "label": "missing session 404 (styled)"
+  }
+ ],
+ "redact": [
+  "header > div > div:last-child > :last-child"
+ ]
+}
