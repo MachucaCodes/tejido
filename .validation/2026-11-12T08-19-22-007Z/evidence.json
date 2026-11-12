@@ -1,0 +1,188 @@
+{
+  "tool": "clock-validate",
+  "name": "Ship check: share block states",
+  "outcome": "pass",
+  "commit": {
+    "sha": "9727d45accd64f11b2f0e05dabebfd41bdb445b7",
+    "branch": "clock-2836078f-ui-mockup-step-5-after-create-nothing",
+    "dirty": false
+  },
+  "environment": "production deployment of the #12 merge commit (its own Vercel address), read-only (nothing saved or sent)",
+  "base_url": "https://tejido-aul7afi0z-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:19:24.400Z",
+  "duration_ms": 44282,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 2056,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Archived\"",
+      "check": true,
+      "status": "pass",
+      "ms": 84,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "archived 0-voice session: no share block",
+      "check": true,
+      "status": "pass",
+      "ms": 3144,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"0 voices\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "archived, 0 voices: plain overview",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1232,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "capture what is copied",
+      "check": true,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Copy link\"",
+      "check": false,
+      "status": "pass",
+      "ms": 170,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Copied\"",
+      "check": true,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "copies the full join URL",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "copied",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "reload",
+      "description": "Reload the page",
+      "check": false,
+      "status": "pass",
+      "ms": 964,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "make the clipboard refuse",
+      "check": true,
+      "status": "pass",
+      "ms": 37,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Copy link\"",
+      "check": false,
+      "status": "pass",
+      "ms": 146,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Copy it by hand\"",
+      "check": true,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "link text selected",
+      "check": true,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "share card copy failed",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-17.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-56"
+  ],
+  "limitations": [
+    "Clipboard failure is forced by replacing navigator.clipboard in the page",
+    "No closed session exists to view; archived covers the not-open path",
+    "No session is created"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

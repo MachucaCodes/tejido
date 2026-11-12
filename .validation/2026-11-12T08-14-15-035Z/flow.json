@@ -1,0 +1,31 @@
+{
+  "name": "Rebased on Settings tab: share block until the first voice",
+  "base_url": "https://tejido-git-clock-2836078f-ui-mockup-631a91-dane-myers-projects.vercel.app",
+  "environment": "Vercel preview of PR #12, production Supabase, read-only (nothing saved or sent)",
+  "viewport": { "width": 390, "height": 844 },
+  "pace_ms": 700,
+  "redact": ["ul.max-h-56"],
+  "limitations": ["No session is created: ?created=1 is opened by hand on an existing 0-voice session", "Invites are not sent", "Clipboard failure is forced by replacing navigator.clipboard in the page"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/daily-life-together?created=1" },
+    { "do": "expect_text", "text": "Session created", "label": "created line shows after Create" },
+    { "do": "expect_text", "text": "/s/daily-life-together" },
+    { "do": "expect_text", "text": "Send on WhatsApp", "label": "invites card under the link" },
+    { "do": "expect_text", "text": "Settings" },
+    { "do": "expect_no_text", "text": "Copy join link", "label": "no second copy button in the header" },
+    { "do": "expect_no_text", "text": "Status:", "label": "no Status row on Overview" },
+    { "do": "screenshot", "label": "new session: link and invites lead" },
+    { "do": "expect_url", "match": "daily-life-together$", "label": "created param removed" },
+    { "do": "reload" },
+    { "do": "expect_no_text", "text": "Session created", "label": "reload doesn't repeat it" },
+    { "do": "goto", "url": "/admin/sessions/esm-rental-policy" },
+    { "do": "expect_text", "text": "3 voices" },
+    { "do": "expect_text", "text": "Copy join link" },
+    { "do": "expect_text", "text": "Send invites" },
+    { "do": "screenshot", "label": "session with voices: results lead, buttons in header" },
+    { "do": "expect_js", "js": "(Object.defineProperty(navigator, 'clipboard', { value: { writeText: () => Promise.reject(new Error('denied')) }, configurable: true }), true)", "equals": true, "label": "make the clipboard refuse" },
+    { "do": "click", "text": "Copy join link" },
+    { "do": "expect_js", "js": "String(window.getSelection()).endsWith('/s/esm-rental-policy')", "equals": true, "label": "failed copy shows the link, selected" },
+    { "do": "screenshot", "label": "header copy failed" }
+  ]
+}

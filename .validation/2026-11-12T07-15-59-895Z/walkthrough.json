@@ -1,0 +1,94 @@
+{
+  "title": "Edit dialog: field help behind info icons",
+  "slug": "edit-dialog-field-help-behind-info-icons",
+  "out_dir": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:16:01.631Z (commit 1526158108). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Edit dialog: field help behind info icons",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-02.png",
+          "shows": "Click \"Edit\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-03.png",
+          "shows": "Page shows \"Edit session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-04.png",
+          "shows": "no help line under Session code",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-05.png",
+          "shows": "no help line under Context",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-06.png",
+          "shows": "no help line under Instructions",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-07.png",
+          "shows": "`[aria-label='About the session code']` is visible",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-08.png",
+          "shows": "Edit dialog at 390",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-09.png",
+          "shows": "Click `[aria-label='About context']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-10.png",
+          "shows": "context help opens from the i",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-15-59-895Z/step-11.png",
+          "shows": "context help open",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

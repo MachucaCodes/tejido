@@ -1,0 +1,31 @@
+{
+  "name": "Round 2: Edit focus, header copy fallback, Status row",
+  "base_url": "https://tejido-git-clock-2836078f-ui-mockup-631a91-dane-myers-projects.vercel.app",
+  "environment": "Vercel preview of PR #12, production Supabase, read-only (nothing saved: Close is cancelled, Edit not saved)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 700,
+  "redact": ["ul.max-h-72"],
+  "limitations": ["Clipboard failure is forced by replacing navigator.clipboard in the page", "Status is not actually changed (production data): only the confirm is opened and cancelled"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/daily-life-together" },
+    { "do": "click", "text": "Edit" },
+    { "do": "expect_text", "text": "Edit session" },
+    { "do": "expect_js", "js": "document.activeElement && document.activeElement.id !== 'code'", "equals": true, "label": "Session code is not focused" },
+    { "do": "expect_js", "js": "!!document.getElementById('status')", "equals": false, "label": "Status is not in the Edit form" },
+    { "do": "screenshot", "label": "Edit dialog opens without a focused field" },
+    { "do": "press", "key": "Escape" },
+    { "do": "expect_text", "text": "Status:" },
+    { "do": "click", "text": "Close session" },
+    { "do": "expect_text", "text": "Close this session?" },
+    { "do": "screenshot", "label": "closing asks first" },
+    { "do": "click", "text": "Cancel" },
+    { "do": "expect_no_text", "text": "Close this session?" },
+    { "do": "screenshot", "label": "0-voice overview with Status and Privacy rows" },
+    { "do": "goto", "url": "/admin/sessions/esm-rental-policy" },
+    { "do": "expect_js", "js": "(Object.defineProperty(navigator, 'clipboard', { value: { writeText: () => Promise.reject(new Error('denied')) }, configurable: true }), true)", "equals": true, "label": "make the clipboard refuse" },
+    { "do": "click", "text": "Copy join link" },
+    { "do": "expect_text", "text": "/s/esm-rental-policy", "label": "failed copy shows the link" },
+    { "do": "expect_js", "js": "String(window.getSelection()).endsWith('/s/esm-rental-policy')", "equals": true, "label": "the link is selected" },
+    { "do": "screenshot", "label": "header copy failed: link shown, selected" }
+  ]
+}

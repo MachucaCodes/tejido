@@ -1,0 +1,130 @@
+{
+  "tool": "clock-validate",
+  "name": "Edit dialog: field help behind info icons",
+  "outcome": "pass",
+  "commit": {
+    "sha": "1526158108e2d6d49ff89e2575d02ef3774027e5",
+    "branch": "clock-2836078f-ui-mockup-step-5-after-create-nothing",
+    "dirty": true
+  },
+  "environment": "Vercel preview of PR #12, production Supabase, read-only (Edit opened, not saved)",
+  "base_url": "https://tejido-git-clock-2836078f-ui-mockup-631a91-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:16:01.631Z",
+  "duration_ms": 22005,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 2450,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Edit\"",
+      "check": false,
+      "status": "pass",
+      "ms": 114,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Edit session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no help line under Session code",
+      "check": true,
+      "status": "pass",
+      "ms": 3066,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no help line under Context",
+      "check": true,
+      "status": "pass",
+      "ms": 3074,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no help line under Instructions",
+      "check": true,
+      "status": "pass",
+      "ms": 3062,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`[aria-label='About the session code']` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 13,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Edit dialog at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='About context']`",
+      "check": false,
+      "status": "pass",
+      "ms": 55,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "context help opens from the i",
+      "check": true,
+      "status": "pass",
+      "ms": 12,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "context help open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Edit is opened, not saved"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

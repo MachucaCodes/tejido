@@ -1,0 +1,23 @@
+{
+  "name": "Round 3: header at 1440",
+  "base_url": "https://tejido-git-clock-2836078f-ui-mockup-631a91-dane-myers-projects.vercel.app",
+  "environment": "Vercel preview of PR #12, production Supabase, read-only",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 700,
+  "redact": ["ul.max-h-72"],
+  "limitations": ["Clipboard failure is forced by replacing navigator.clipboard in the page"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/esm-rental-policy" },
+    { "do": "expect_text", "text": "3 voices" },
+    { "do": "expect_js", "js": "document.querySelector('h1').getBoundingClientRect().width > 500", "equals": true, "label": "title keeps the full width" },
+    { "do": "screenshot", "label": "1440, session with voices" },
+    { "do": "expect_js", "js": "(Object.defineProperty(navigator, 'clipboard', { value: { writeText: () => Promise.reject(new Error('denied')) }, configurable: true }), true)", "equals": true, "label": "make the clipboard refuse" },
+    { "do": "click", "text": "Copy join link" },
+    { "do": "expect_text", "text": "/s/esm-rental-policy" },
+    { "do": "expect_js", "js": "document.documentElement.scrollWidth <= window.innerWidth", "equals": true, "label": "no sideways scroll" },
+    { "do": "screenshot", "label": "1440, failed copy shows the link" },
+    { "do": "goto", "url": "/admin/sessions/daily-life-together" },
+    { "do": "expect_text", "text": "Copy link" },
+    { "do": "screenshot", "label": "1440, 0-voice session" }
+  ]
+}

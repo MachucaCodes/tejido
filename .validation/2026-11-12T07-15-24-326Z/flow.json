@@ -1,0 +1,21 @@
+{
+  "name": "Edit dialog: field help behind info icons",
+  "base_url": "https://tejido-git-clock-2836078f-ui-mockup-631a91-dane-myers-projects.vercel.app",
+  "environment": "Vercel preview of PR #12, production Supabase, read-only (Edit opened, not saved)",
+  "viewport": { "width": 1280, "height": 800 },
+  "pace_ms": 700,
+  "limitations": ["Edit is opened, not saved"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/daily-life-together" },
+    { "do": "click", "text": "Edit" },
+    { "do": "expect_text", "text": "Edit session" },
+    { "do": "expect_no_text", "text": "Used in the join URL", "label": "no help line under Session code" },
+    { "do": "expect_no_text", "text": "Surfaced to the facilitator AI", "label": "no help line under Context" },
+    { "do": "expect_no_text", "text": "Injected into the facilitator", "label": "no help line under Instructions" },
+    { "do": "expect_visible", "selector": "[aria-label='About the session code']" },
+    { "do": "screenshot", "label": "Edit dialog at 1280" },
+    { "do": "click", "selector": "[aria-label='About context']" },
+    { "do": "expect_text", "text": "Surfaced to the facilitator AI", "label": "context help opens from the i" },
+    { "do": "screenshot", "label": "context help open" }
+  ]
+}

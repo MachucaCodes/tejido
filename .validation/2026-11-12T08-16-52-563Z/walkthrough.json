@@ -1,0 +1,31 @@
+{
+  "title": "Rebased on Settings tab: share block until the first voice",
+  "slug": "rebased-on-settings-tab-share-block-until-the-fi",
+  "out_dir": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-16-52-563Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:16:59.068Z (commit 9727d45acc). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Rebased on Settings tab: share block until the first voice",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-16-52-563Z/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together?created=1",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-16-52-563Z/step-02.png",
+          "shows": "created line shows after Create",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

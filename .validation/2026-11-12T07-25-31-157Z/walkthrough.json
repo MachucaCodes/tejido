@@ -1,0 +1,157 @@
+{
+  "title": "Round 2: Edit focus, header copy fallback, Status row",
+  "slug": "round-2-edit-focus-header-copy-fallback-status-r",
+  "out_dir": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:25:32.696Z (commit fc86e648f0). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Round 2: Edit focus, header copy fallback, Status row",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-02.png",
+          "shows": "Click \"Edit\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-03.png",
+          "shows": "Page shows \"Edit session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-04.png",
+          "shows": "Session code is not focused",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-05.png",
+          "shows": "Status is not in the Edit form",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-06.png",
+          "shows": "Edit dialog opens without a focused field",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-07.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-08.png",
+          "shows": "Page shows \"Status:\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-09.png",
+          "shows": "Click \"Close session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-10.png",
+          "shows": "Page shows \"Close this session?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-11.png",
+          "shows": "closing asks first",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-12.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-13.png",
+          "shows": "Page does not show \"Close this session?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-14.png",
+          "shows": "0-voice overview with Status and Privacy rows",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-15.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-16.png",
+          "shows": "make the clipboard refuse",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-17.png",
+          "shows": "Click \"Copy join link\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-18.png",
+          "shows": "failed copy shows the link",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-19.png",
+          "shows": "the link is selected",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-25-31-157Z/step-20.png",
+          "shows": "header copy failed: link shown, selected",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Ship check: share block states",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production after merge of #12, read-only (nothing saved or sent)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 600,
+  "redact": ["ul.max-h-56"],
+  "limitations": ["Clipboard failure is forced by replacing navigator.clipboard in the page", "No closed session exists to view; archived covers the not-open path", "No session is created"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/why-statement-v2" },
+    { "do": "expect_text", "text": "Archived" },
+    { "do": "expect_no_text", "text": "Copy link", "label": "archived 0-voice session: no share block" },
+    { "do": "expect_text", "text": "0 voices" },
+    { "do": "screenshot", "label": "archived, 0 voices: plain overview" },
+    { "do": "goto", "url": "/admin/sessions/daily-life-together" },
+    { "do": "expect_js", "js": "(Object.defineProperty(navigator, 'clipboard', { value: { writeText: (t) => { window.__copied = t; return Promise.resolve(); } }, configurable: true }), true)", "equals": true, "label": "capture what is copied" },
+    { "do": "click", "text": "Copy link" },
+    { "do": "expect_text", "text": "Copied" },
+    { "do": "expect_js", "js": "window.__copied === location.origin + '/s/daily-life-together'", "equals": true, "label": "copies the full join URL" },
+    { "do": "screenshot", "label": "copied" },
+    { "do": "reload" },
+    { "do": "expect_js", "js": "(Object.defineProperty(navigator, 'clipboard', { value: { writeText: () => Promise.reject(new Error('denied')) }, configurable: true }), true)", "equals": true, "label": "make the clipboard refuse" },
+    { "do": "click", "text": "Copy link" },
+    { "do": "expect_text", "text": "Copy it by hand" },
+    { "do": "expect_js", "js": "String(window.getSelection()).endsWith('/s/daily-life-together')", "equals": true, "label": "link text selected" },
+    { "do": "screenshot", "label": "share card copy failed" }
+  ]
+}

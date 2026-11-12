@@ -1,0 +1,136 @@
+{
+  "title": "Ship check: share block states",
+  "slug": "ship-check-share-block-states",
+  "out_dir": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:12:49.716Z (commit 9727d45acc). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Ship check: share block states",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-01.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-02.png",
+          "shows": "Page shows \"Archived\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-03.png",
+          "shows": "archived 0-voice session: no share block",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-04.png",
+          "shows": "Page shows \"0 voices\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-05.png",
+          "shows": "archived, 0 voices: plain overview",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-06.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-07.png",
+          "shows": "capture what is copied",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-08.png",
+          "shows": "Click \"Copy link\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-09.png",
+          "shows": "Page shows \"Copied\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-10.png",
+          "shows": "copies the full join URL",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-11.png",
+          "shows": "copied",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-12.png",
+          "shows": "Reload the page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-13.png",
+          "shows": "make the clipboard refuse",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-14.png",
+          "shows": "Click \"Copy link\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-15.png",
+          "shows": "Page shows \"Copy it by hand\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-16.png",
+          "shows": "link text selected",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-12-48-163Z/step-17.png",
+          "shows": "share card copy failed",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

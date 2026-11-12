@@ -1,0 +1,143 @@
+{
+  "title": "Session overview leads with the join link until the first voice",
+  "slug": "session-overview-leads-with-the-join-link-until-",
+  "out_dir": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:04:21.286Z (commit 5dac7ee7b5). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session overview leads with the join link until the first voice",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-01.png",
+          "shows": "Open /admin/sessions/daily-life-together?created=1",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-02.png",
+          "shows": "created line shows after Create",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-03.png",
+          "shows": "Page shows \"/s/daily-life-together\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-04.png",
+          "shows": "Page shows \"Send on WhatsApp\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-05.png",
+          "shows": "Page does not show \"No themes yet\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-06.png",
+          "shows": "new session: link and invites lead",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-07.png",
+          "shows": "created param removed from the URL",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-08.png",
+          "shows": "Reload the page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-09.png",
+          "shows": "reload doesn't repeat it",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-10.png",
+          "shows": "0-voice session, later visit",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-11.png",
+          "shows": "Click \"Edit\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-12.png",
+          "shows": "Page shows \"Edit session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-13.png",
+          "shows": "Edit session dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-14.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-15.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-16.png",
+          "shows": "Page shows \"Copy join link\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-17.png",
+          "shows": "Page shows \"3 voices\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-04-20-047Z/step-18.png",
+          "shows": "session with voices: results lead",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

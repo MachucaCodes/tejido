@@ -1,0 +1,29 @@
+{
+  "name": "Session overview leads with the join link until the first voice",
+  "base_url": "https://tejido-git-clock-2836078f-ui-mockup-631a91-dane-myers-projects.vercel.app",
+  "environment": "Vercel preview of PR #12, production Supabase, read-only (nothing saved or sent)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 700,
+  "redact": ["ul.max-h-72"],
+  "limitations": ["No session is created: ?created=1 is opened by hand on an existing 0-voice session", "Invites are not sent; Edit is opened, not saved", "Clipboard failure state not shown"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/daily-life-together?created=1" },
+    { "do": "expect_text", "text": "Session created", "label": "created line shows after Create" },
+    { "do": "expect_text", "text": "/s/daily-life-together" },
+    { "do": "expect_text", "text": "Send on WhatsApp" },
+    { "do": "expect_no_text", "text": "No themes yet" },
+    { "do": "screenshot", "label": "new session: link and invites lead" },
+    { "do": "expect_url", "match": "daily-life-together$", "label": "created param removed from the URL" },
+    { "do": "reload" },
+    { "do": "expect_no_text", "text": "Session created", "label": "reload doesn't repeat it" },
+    { "do": "screenshot", "label": "0-voice session, later visit" },
+    { "do": "click", "text": "Edit" },
+    { "do": "expect_text", "text": "Edit session" },
+    { "do": "screenshot", "label": "Edit session dialog" },
+    { "do": "press", "key": "Escape" },
+    { "do": "goto", "url": "/admin/sessions/esm-rental-policy" },
+    { "do": "expect_text", "text": "Copy join link" },
+    { "do": "expect_text", "text": "3 voices" },
+    { "do": "screenshot", "label": "session with voices: results lead" }
+  ]
+}

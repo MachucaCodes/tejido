@@ -1,0 +1,31 @@
+{
+  "title": "Ship check: share block states",
+  "slug": "ship-check-share-block-states",
+  "out_dir": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-17-17-868Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:17:24.848Z (commit 9727d45acc). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Ship check: share block states",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-17-17-868Z/step-01.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T08-17-17-868Z/step-02.png",
+          "shows": "Page shows \"Archived\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

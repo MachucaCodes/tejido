@@ -1,0 +1,101 @@
+{
+  "title": "Round 3: header on a phone",
+  "slug": "round-3-header-on-a-phone",
+  "out_dir": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:53:42.631Z (commit ad625524b5). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Round 3: header on a phone",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-02.png",
+          "shows": "Page shows \"3 voices\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-03.png",
+          "shows": "title keeps the full width",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-04.png",
+          "shows": "390, session with voices",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-05.png",
+          "shows": "make the clipboard refuse",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-06.png",
+          "shows": "Click \"Copy join link\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-07.png",
+          "shows": "Page shows \"/s/esm-rental-policy\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-08.png",
+          "shows": "no sideways scroll",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-09.png",
+          "shows": "390, failed copy shows the link",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-10.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-11.png",
+          "shows": "Page shows \"Copy link\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/2836078f/.validation/2026-11-12T07-53-41-002Z/step-12.png",
+          "shows": "390, 0-voice session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "tool": "clock-validate",
+  "name": "Rebased on Settings tab: share block until the first voice",
+  "outcome": "pass",
+  "commit": {
+    "sha": "9727d45accd64f11b2f0e05dabebfd41bdb445b7",
+    "branch": "clock-2836078f-ui-mockup-step-5-after-create-nothing",
+    "dirty": false
+  },
+  "environment": "Vercel preview of PR #12, production Supabase, read-only (nothing saved or sent)",
+  "base_url": "https://tejido-git-clock-2836078f-ui-mockup-631a91-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:14:16.317Z",
+  "duration_ms": 29718,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together?created=1",
+      "check": false,
+      "status": "pass",
+      "ms": 1953,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "created line shows after Create",
+      "check": true,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"/s/daily-life-together\"",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "invites card under the link",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Settings\"",
+      "check": true,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no second copy button in the header",
+      "check": true,
+      "status": "pass",
+      "ms": 3045,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no Status row on Overview",
+      "check": true,
+      "status": "pass",
+      "ms": 3048,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "new session: link and invites lead",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "created param removed",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "reload",
+      "description": "Reload the page",
+      "check": false,
+      "status": "pass",
+      "ms": 1032,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "reload doesn't repeat it",
+      "check": true,
+      "status": "pass",
+      "ms": 3076,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 790,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"3 voices\"",
+      "check": true,
+      "status": "pass",
+      "ms": 31,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Copy join link\"",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Send invites\"",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "session with voices: results lead, buttons in header",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "make the clipboard refuse",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Copy join link\"",
+      "check": false,
+      "status": "pass",
+      "ms": 48,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "failed copy shows the link, selected",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "header copy failed",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-20.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.max-h-56"
+  ],
+  "limitations": [
+    "No session is created: ?created=1 is opened by hand on an existing 0-voice session",
+    "Invites are not sent",
+    "Clipboard failure is forced by replacing navigator.clipboard in the page"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}
