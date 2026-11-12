@@ -1,0 +1,14 @@
+{
+ "code": "F1",
+ "title": "Logs filters are two rows of chips across the top, and Status offers choices with 0 results",
+ "kind": "rule",
+ "severity": "medium",
+ "confidence": "high",
+ "where": "/admin/sessions/<code>/logs, 1440px, any session (seen on evolving-why-statement and on an empty session)",
+ "what_happens": "Status and Kind are two always-open chip rows above the list. Status always lists error, parse_error and stream_aborted even at 0 (evolving-why-statement: error 0, parse_error 0, stream_aborted 0); on a session with no calls every Status chip reads 0. Labels are raw codes (parse_error, stream_aborted).",
+ "who_hurts": "Dane checking a session's AI calls: two rows of filter chips push the list down, and three of the four status choices lead to an empty list.",
+ "suggested_fix": "Put Status and Kind behind one 'Filter' dropdown next to the 'Showing 200 of 522' line; build the Status options from statuses with a count > 0 (as the Kind chips already do via kindsPresent, logs/page.tsx:118); show active filters (and the participant filter) as small removable chips. Plain labels: 'Error', 'Couldn't read reply', 'Cut off'.",
+ "rule": "Dane's UI rule: 'Filters stay tucked away, not spread across the top of the page. Put them behind one \"Filter\" button or dropdown ... Only offer choices that exist in the data.'",
+ "origin": "earlier: PR #3/#4 fixed the Kind chips but left Status and the layout",
+ "fingerprint": "/admin/sessions/[code]/logs|filter chips|rule|status chips spread zero options"
+}

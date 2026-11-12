@@ -1,0 +1,3 @@
+{"name":"measure overview height","base_url":"https://tejido-zeta.vercel.app","login":"tejido","viewport":{"width":1440,"height":900},
+"steps":[{"do":"goto","url":"/admin/sessions/evolving-why-statement"},{"do":"wait","ms":3000},
+{"do":"expect_js","js":"JSON.stringify({h:document.body.scrollHeight, wa: Math.round([...document.querySelectorAll('h2')].find(e=>e.textContent.includes('WhatsApp')).getBoundingClientRect().top + scrollY), themes: document.querySelectorAll('h3').length})","equals":"x"}]}

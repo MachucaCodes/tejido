@@ -1,0 +1,97 @@
+{
+  "tool": "clock-validate",
+  "name": "Logs tab click on a big session (look only)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-e50eb083-ui-audit-cold-audit-of-the-sessions",
+    "dirty": true
+  },
+  "environment": null,
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:51:22.632Z",
+  "duration_ms": 27868,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/frontlandpurchase/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 1714,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Synthesis\"",
+      "check": true,
+      "status": "pass",
+      "ms": 62,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `nav[aria-label='Session pages'] a[href$='/logs']`",
+      "check": false,
+      "status": "pass",
+      "ms": 40,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 3000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 3007,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "3s after clicking Logs",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Status:\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6374,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs arrived",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.list-disc",
+    "p.whitespace-pre-wrap",
+    "ul.max-h-72",
+    "pre"
+  ],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

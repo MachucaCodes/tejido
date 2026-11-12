@@ -1,0 +1,14 @@
+{
+ "code": "F6",
+ "title": "Empty logs say 'No log rows match these filters' when no filter is on",
+ "kind": "state",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions/daily-life-together/logs (a session with no AI calls yet), 1440px",
+ "what_happens": "With Status 'all' and Kind 'all', the page says '0 of 0 matching calls' and 'No log rows match these filters.', under a row of four Status chips all at 0.",
+ "who_hurts": "Dane may think a filter is hiding rows and start clicking chips, when the session simply has no calls yet.",
+ "suggested_fix": "When no filter is set and the session total is 0, show 'No AI calls yet for this session.' and hide the filters (logs/page.tsx:218).",
+ "rule": "general: empty state should say why it's empty",
+ "origin": "earlier",
+ "fingerprint": "/admin/sessions/[code]/logs|empty state|state|empty logs blame filters"
+}

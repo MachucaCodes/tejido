@@ -1,0 +1,14 @@
+{
+ "code": "F7",
+ "title": "Sessions list leads with the slug; the session page leads with the topic",
+ "kind": "consistency",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions list vs /admin/sessions/<code> header, 1440px",
+ "what_happens": "List rows show the code (e.g. 'evolving-why-statement') as the bold title and the topic as grey subtext; the session page shows the topic as the title and the code in the grey line. Rows are three lines tall with the status pill 'open' on almost every one, so 10 sessions need two screens.",
+ "who_hurts": "Dane scanning the list sees a different name than the page he lands on; two sessions with the same topic only differ by slug.",
+ "suggested_fix": "Make the row match the header: topic bold, 'code \u00b7 date' as one grey line under it (session-row.tsx:33-38). Show the status pill only when it isn't 'open'.",
+ "rule": "established pattern: SessionHeader (topic as title, code in the meta line)",
+ "origin": "spread by PR #4 (new header used topic; list kept the slug)",
+ "fingerprint": "/admin/sessions|SessionRow|consistency|list slug vs page topic"
+}

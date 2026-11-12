@@ -1,0 +1,195 @@
+{
+ "name": "Sessions admin cold audit (look only)",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "environment": "production, signed in with the tejido login, read-only",
+ "login": "tejido",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 800,
+ "redact": [
+  "ul.list-disc",
+  "p.whitespace-pre-wrap",
+  "ul.max-h-72",
+  "pre"
+ ],
+ "limitations": [
+  "Look only: nothing clicked that saves"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions"
+  },
+  {
+   "do": "expect_text",
+   "text": "Sessions"
+  },
+  {
+   "do": "screenshot",
+   "label": "list-top"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollTo(0, document.body.scrollHeight); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "list-bottom"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement"
+  },
+  {
+   "do": "expect_text",
+   "text": "Overview"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "screenshot",
+   "label": "overview-top"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollBy(0, 800); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "overview-2"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollBy(0, 800); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "overview-3"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollTo(0, document.body.scrollHeight); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "overview-bottom"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement/synthesis"
+  },
+  {
+   "do": "expect_text",
+   "text": "Synthesis"
+  },
+  {
+   "do": "screenshot",
+   "label": "synthesis-top"
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollBy(0, 800); true",
+   "equals": true
+  },
+  {
+   "do": "wait",
+   "ms": 400
+  },
+  {
+   "do": "screenshot",
+   "label": "synthesis-2"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement/logs"
+  },
+  {
+   "do": "expect_text",
+   "text": "Status:"
+  },
+  {
+   "do": "screenshot",
+   "label": "logs-top"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together"
+  },
+  {
+   "do": "wait",
+   "ms": 2000
+  },
+  {
+   "do": "screenshot",
+   "label": "empty-overview"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together/synthesis"
+  },
+  {
+   "do": "screenshot",
+   "label": "empty-synthesis"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together/logs"
+  },
+  {
+   "do": "screenshot",
+   "label": "empty-logs"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/no-such-session-xyz"
+  },
+  {
+   "do": "screenshot",
+   "label": "not-found"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/no-such-session-xyz/logs"
+  },
+  {
+   "do": "screenshot",
+   "label": "not-found-logs"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/why-statement-v2"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "archived-overview"
+  }
+ ]
+}

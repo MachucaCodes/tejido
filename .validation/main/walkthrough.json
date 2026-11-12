@@ -1,0 +1,255 @@
+{
+  "title": "Sessions admin cold audit (look only)",
+  "slug": "sessions-admin-cold-audit-look-only",
+  "out_dir": "/srv/agent-runs/e50eb083/.validation/main/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:48:43.296Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Sessions admin cold audit (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-01.png",
+          "shows": "Open /admin/sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-02.png",
+          "shows": "Page shows \"Sessions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-03.png",
+          "shows": "list-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-04.png",
+          "shows": "`window.scrollTo(0, document.body.scrollHeight); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-06.png",
+          "shows": "list-bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-07.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-08.png",
+          "shows": "Page shows \"Overview\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-10.png",
+          "shows": "overview-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-11.png",
+          "shows": "`window.scrollBy(0, 800); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-13.png",
+          "shows": "overview-2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-14.png",
+          "shows": "`window.scrollBy(0, 800); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-16.png",
+          "shows": "overview-3",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-17.png",
+          "shows": "`window.scrollTo(0, document.body.scrollHeight); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-19.png",
+          "shows": "overview-bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-20.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-21.png",
+          "shows": "Page shows \"Synthesis\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-22.png",
+          "shows": "synthesis-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-23.png",
+          "shows": "`window.scrollBy(0, 800); true` is true",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-25.png",
+          "shows": "synthesis-2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-26.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-27.png",
+          "shows": "Page shows \"Status:\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-28.png",
+          "shows": "logs-top",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-29.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-31.png",
+          "shows": "empty-overview",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-32.png",
+          "shows": "Open /admin/sessions/daily-life-together/synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-33.png",
+          "shows": "empty-synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-34.png",
+          "shows": "Open /admin/sessions/daily-life-together/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-35.png",
+          "shows": "empty-logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-36.png",
+          "shows": "Open /admin/sessions/no-such-session-xyz",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-37.png",
+          "shows": "not-found",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-38.png",
+          "shows": "Open /admin/sessions/no-such-session-xyz/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-39.png",
+          "shows": "not-found-logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-40.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/main/step-42.png",
+          "shows": "archived-overview",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

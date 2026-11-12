@@ -1,0 +1,5 @@
+{"name":"Logs tab click on a big session (look only)","base_url":"https://tejido-zeta.vercel.app","login":"tejido","viewport":{"width":1440,"height":900},
+"redact": ["ul.list-disc", "p.whitespace-pre-wrap", "ul.max-h-72", "pre"],
+"steps":[{"do":"goto","url":"/admin/sessions/frontlandpurchase/synthesis"},{"do":"expect_text","text":"Synthesis"},
+{"do":"click","selector":"nav[aria-label='Session pages'] a[href$='/logs']"},{"do":"wait","ms":3000},{"do":"screenshot","label":"3s after clicking Logs"},
+{"do":"expect_text","text":"Status:","timeout_ms":30000},{"do":"screenshot","label":"logs arrived"}]}

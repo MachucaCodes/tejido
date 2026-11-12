@@ -1,0 +1,14 @@
+{
+ "code": "F3",
+ "title": "Privacy gets its own card with a paragraph, shows a database column name, and switches with one click",
+ "kind": "rule",
+ "severity": "medium",
+ "confidence": "high",
+ "where": "/admin/sessions/<code> (Overview), bottom card 'Connect session' / 'Anonymous session', 1440px",
+ "what_happens": "A whole card exists to hold a paragraph explaining the setting. On a Connect session the text ends with '(participants.connect_consent_at)', a raw database column. 'Make anonymous' / 'Make it a Connect session' change what participants are told, but run on one click with no confirm (privacy-toggle.tsx). The 'Send on WhatsApp' card also opens with an explanation line.",
+ "who_hurts": "Dane or another organizer reading the page: the paragraph and column name are noise; a mis-click changes what new participants are asked, with no chance to back out.",
+ "suggested_fix": "Make privacy a labelled row (e.g. 'Privacy: Connect \u00b7 0 opted in') with the explanation behind an 'i' tooltip and in a confirm dialog on switch (reuse the ArchiveToggle Dialog pattern). Drop the column name. Move the WhatsApp explanation into an 'i' tooltip too.",
+ "rule": "Dane's UI rule: 'Keep explanation off the top level of the page ... Never give a control its own section or card just to hold a paragraph about it.'",
+ "origin": "earlier: a0ba74c (Connect sessions)",
+ "fingerprint": "/admin/sessions/[code]|PrivacyToggle|rule|privacy card paragraph column name"
+}

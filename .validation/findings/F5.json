@@ -1,0 +1,14 @@
+{
+ "code": "F5",
+ "title": "Synthesis puts a big 'Rebuild summary now' button on an empty 'Not in the summary yet' box",
+ "kind": "clarity",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions/<code>/synthesis, 1440px, a session whose latest summary already includes every answer",
+ "what_happens": "The first thing under the header is a card titled 'Not in the summary yet' with nothing in it (only an 'i' saying everything is included) and the page's only dark primary button, 'Rebuild summary now'. Above it sits an explanation line ('Each summary, newest first...'). The current summary is pushed below.",
+ "who_hurts": "Dane opening Synthesis to read the latest summary: the eye goes to a button that would just rebuild the same summary (an AI call), and the summary itself starts lower.",
+ "suggested_fix": "When nothing is pending, hide the empty card and show 'Rebuild' as a small outline button in the header next to 'Find sources' (the header action slot already exists); make the summary the first thing. Move the explanation line into an 'i'.",
+ "rule": "Dane's UI rule: 'One page, one main job ... give that the top of the page.'",
+ "origin": "earlier: PR #4",
+ "fingerprint": "/admin/sessions/[code]/synthesis|pending card|clarity|empty pending card primary rebuild"
+}

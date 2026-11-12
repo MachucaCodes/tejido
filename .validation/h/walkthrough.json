@@ -1,0 +1,31 @@
+{
+  "title": "measure overview height",
+  "slug": "measure-overview-height",
+  "out_dir": "/srv/agent-runs/e50eb083/.validation/h/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:50:39.106Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "measure overview height",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/h/step-01.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/h/step-03.png",
+          "shows": "`JSON.stringify({h:document.body.scrollHeight, wa: Math.round([...document.querySelectorAll('h2')].find(e=>e.textContent.includes('WhatsApp')).getBoundingClientRect().top + scrollY), themes: document.querySelectorAll('h3').length})` is \"x\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

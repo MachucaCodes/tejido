@@ -1,0 +1,14 @@
+{
+ "code": "F4",
+ "title": "Archived session page reads like a live one and tells you to 'Open the session' to send invites",
+ "kind": "clarity",
+ "severity": "low",
+ "confidence": "high",
+ "where": "/admin/sessions/why-statement-v2 (archived), Overview, 1440px",
+ "what_happens": "The only sign it's archived is the word 'archived' in the grey meta line. 'Copy join link' is still offered, the WhatsApp card says 'Open the session to send invites.' (the session's status is already open; it is archived), and the way back is an unlabelled icon in the corner. It also shares its title 'Evolving Why Statement' with the live session.",
+ "who_hurts": "Dane landing on an archived session may copy and share a dead link, or look for an 'open' setting that isn't the problem.",
+ "suggested_fix": "On archived sessions: a short muted notice under the header ('Archived: not taking responses'), hide Copy join link and the WhatsApp card (or say 'Un-archive to send invites'). session-header.tsx / whatsapp-invites.tsx:122.",
+ "rule": "established pattern: archived rows are dimmed and labelled on the Sessions list",
+ "origin": "earlier",
+ "fingerprint": "/admin/sessions/[code]|archived state|clarity|archived looks live wrong hint"
+}

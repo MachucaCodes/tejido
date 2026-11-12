@@ -1,0 +1,59 @@
+{
+  "title": "Logs tab click on a big session (look only)",
+  "slug": "logs-tab-click-on-a-big-session-look-only",
+  "out_dir": "/srv/agent-runs/e50eb083/.validation/slow/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:51:22.632Z (commit b75b29aa35). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Logs tab click on a big session (look only)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/slow/step-01.png",
+          "shows": "Open /admin/sessions/frontlandpurchase/synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/slow/step-02.png",
+          "shows": "Page shows \"Synthesis\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/slow/step-03.png",
+          "shows": "Click `nav[aria-label='Session pages'] a[href$='/logs']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/slow/step-05.png",
+          "shows": "3s after clicking Logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/slow/step-06.png",
+          "shows": "Page shows \"Status:\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/e50eb083/.validation/slow/step-07.png",
+          "shows": "logs arrived",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+ "code": "F2",
+ "title": "Session overview is 7 screens of full theme paragraphs; invites, Edit and privacy are buried at the bottom",
+ "kind": "clarity",
+ "severity": "medium",
+ "confidence": "high",
+ "where": "/admin/sessions/<code> (Overview), 1440px, a big session (evolving-why-statement: 28 themes)",
+ "what_happens": "Each theme shows its whole description (some 20+ lines). The page is 6,432px tall; 'Send on WhatsApp' starts at 6,057px, then 'Edit session' and the privacy card. Themes also have no link to their points or to the synthesis.",
+ "who_hurts": "Dane opening a session to send invites, edit it or check its privacy has to scroll ~7 screens past text he can't skim; a quick scan of 'what are the themes' is also hard because the titles are lost in paragraphs.",
+ "suggested_fix": "Clamp each theme description to 2 lines (line-clamp-2) with click-to-expand (a <details> per theme, the pattern 'Edit session' already uses), so all theme titles and counts fit on about one screen and the actions follow.",
+ "rule": "Dane's UI rule: 'One page, one main job ... give that the top of the page.' + established pattern: 'Edit session' collapsed on the same page",
+ "origin": "earlier",
+ "mockup": true,
+ "fingerprint": "/admin/sessions/[code]|themes list|clarity|theme paragraphs bury actions"
+}

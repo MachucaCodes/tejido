@@ -1,0 +1,414 @@
+{
+  "tool": "clock-validate",
+  "name": "Sessions admin cold audit (look only)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "b75b29aa3533bca157fbe5e4983ad294137c8d6a",
+    "branch": "clock-e50eb083-ui-audit-cold-audit-of-the-sessions",
+    "dirty": true
+  },
+  "environment": "production, signed in with the tejido login, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T05:48:43.296Z",
+  "duration_ms": 82944,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions",
+      "check": false,
+      "status": "pass",
+      "ms": 1100,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 25,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "list-top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollTo(0, document.body.scrollHeight); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 514,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "list-bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 1305,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Overview\"",
+      "check": true,
+      "status": "pass",
+      "ms": 42,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2012,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview-top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollBy(0, 800); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 408,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview-2",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollBy(0, 800); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 411,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview-3",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollTo(0, document.body.scrollHeight); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 407,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview-bottom",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 850,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Synthesis\"",
+      "check": true,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "synthesis-top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollBy(0, 800); true` is true",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 406,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "synthesis-2",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 6913,
+      "error": null,
+      "screenshot": "step-26.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Status:\"",
+      "check": true,
+      "status": "pass",
+      "ms": 2230,
+      "error": null,
+      "screenshot": "step-27.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs-top",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1182,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2016,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "empty-overview",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-31.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 743,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "empty-synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-33.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 862,
+      "error": null,
+      "screenshot": "step-34.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "empty-logs",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-35.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/no-such-session-xyz",
+      "check": false,
+      "status": "pass",
+      "ms": 584,
+      "error": null,
+      "screenshot": "step-36.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "not-found",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-37.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/no-such-session-xyz/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 597,
+      "error": null,
+      "screenshot": "step-38.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "not-found-logs",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-39.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "pass",
+      "ms": 847,
+      "error": null,
+      "screenshot": "step-40.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "archived-overview",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-42.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "ul.list-disc",
+    "p.whitespace-pre-wrap",
+    "ul.max-h-72",
+    "pre"
+  ],
+  "limitations": [
+    "Look only: nothing clicked that saves"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}
