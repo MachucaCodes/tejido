@@ -1,0 +1,14 @@
+{
+  "name": "Admin sign-in: field and button match, softer focus ring",
+  "base_url": "https://tejido-git-clock-b05f7733-ui-fix-lis-6fe2f9-dane-myers-projects.vercel.app",
+  "environment": "PR #14 Vercel preview, signed out; no code sent",
+  "viewport": { "width": 1440, "height": 900 },
+  "login": "none",
+  "limitations": ["Code step not opened: it needs a real SMS"],
+  "steps": [
+    { "do": "goto", "url": "/admin/login" },
+    { "do": "expect_text", "text": "Send code" },
+    { "do": "expect_js", "js": "document.querySelector('input[type=tel]').getBoundingClientRect().height === [...document.querySelectorAll('button[type=submit]')].pop().getBoundingClientRect().height", "equals": true, "label": "phone box and Send code are the same height" },
+    { "do": "screenshot", "label": "Sign-in as it opens (phone box focused)" }
+  ]
+}

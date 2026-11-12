@@ -1,0 +1,139 @@
+{
+  "tool": "clock-validate",
+  "name": "Failed loads show one alert line (local mock)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "14f93c37e64efbc0c86a4b65ada83b34661ec406",
+    "branch": "clock-b05f7733-ui-fix-list-page-has-a-lists-back-link",
+    "dirty": true
+  },
+  "environment": "next dev of this branch on the VM; admin guard stubbed and Supabase pointed at a local fake API that returns one made-up session and fails every other query. No real data.",
+  "base_url": "http://localhost:4180",
+  "browser": "Chrome 157.0.8103.38 (headless)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:38:09.982Z",
+  "duration_ms": 23039,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/fake-session",
+      "check": false,
+      "status": "pass",
+      "ms": 938,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Couldn't load this session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 27,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"No themes yet\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3047,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Overview: queries fail, alert instead of 0 opened / No themes yet",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/fake-session/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 273,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Couldn't load the summaries\"",
+      "check": true,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"No summary yet\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3048,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Synthesis: alert instead of No summary yet",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/fake-session/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 1297,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Couldn't load the logs\"",
+      "check": true,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"simulated failure\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3037,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Logs: alert instead of the raw error message",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Local mock, not the preview: a real failed query can't be forced on the preview"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

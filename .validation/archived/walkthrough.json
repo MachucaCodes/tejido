@@ -1,0 +1,45 @@
+{
+  "title": "Archived row readable",
+  "slug": "archived-row-readable",
+  "out_dir": "/srv/agent-runs/b05f7733/.validation/archived/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:40:12.858Z (commit 788043366b). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Archived row readable",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/archived/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/archived/step-02.png",
+          "shows": "Page shows \"Archived (1)\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/archived/step-03.png",
+          "shows": "archived row is not faded",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/archived/step-04.png",
+          "shows": "Archived section in view",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

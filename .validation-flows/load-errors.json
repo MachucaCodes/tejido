@@ -1,0 +1,22 @@
+{
+  "name": "Failed loads show one alert line (local mock)",
+  "base_url": "http://localhost:4180",
+  "environment": "next dev of this branch on the VM; admin guard stubbed and Supabase pointed at a local fake API that returns one made-up session and fails every other query. No real data.",
+  "viewport": { "width": 1440, "height": 900 },
+  "login": "none",
+  "limitations": ["Local mock, not the preview: a real failed query can't be forced on the preview"],
+  "steps": [
+    { "do": "goto", "url": "/admin/sessions/fake-session", "timeout_ms": 120000 },
+    { "do": "expect_text", "text": "Couldn't load this session", "timeout_ms": 60000 },
+    { "do": "expect_no_text", "text": "No themes yet" },
+    { "do": "screenshot", "label": "Overview: queries fail, alert instead of 0 opened / No themes yet" },
+    { "do": "goto", "url": "/admin/sessions/fake-session/synthesis", "timeout_ms": 120000 },
+    { "do": "expect_text", "text": "Couldn't load the summaries", "timeout_ms": 60000 },
+    { "do": "expect_no_text", "text": "No summary yet" },
+    { "do": "screenshot", "label": "Synthesis: alert instead of No summary yet" },
+    { "do": "goto", "url": "/admin/sessions/fake-session/logs", "timeout_ms": 120000 },
+    { "do": "expect_text", "text": "Couldn't load the logs", "timeout_ms": 60000 },
+    { "do": "expect_no_text", "text": "simulated failure" },
+    { "do": "screenshot", "label": "Logs: alert instead of the raw error message" }
+  ]
+}

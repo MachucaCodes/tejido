@@ -1,0 +1,52 @@
+{
+  "title": "After deploy: admin UI fixes on production",
+  "slug": "after-deploy-admin-ui-fixes-on-production",
+  "out_dir": "/srv/agent-runs/b05f7733/.validation/prod/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:42:33.115Z (commit 788043366b). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "After deploy: admin UI fixes on production",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/prod/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/prod/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/prod/step-03.png",
+          "shows": "Sessions home: filled New session, rows with gap, archived row",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/prod/step-04.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/prod/step-05.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

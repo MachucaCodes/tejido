@@ -1,0 +1,12 @@
+{
+  "name": "Archived row readable",
+  "base_url": "https://tejido-git-clock-b05f7733-ui-fix-lis-6fe2f9-dane-myers-projects.vercel.app",
+  "environment": "PR #14 Vercel preview, production Supabase, read-only",
+  "viewport": { "width": 1440, "height": 900 },
+  "steps": [
+    { "do": "goto", "url": "/admin" },
+    { "do": "expect_text", "text": "Archived (1)" },
+    { "do": "expect_js", "js": "(()=>{const a=[...document.querySelectorAll('h2')].find(h=>h.textContent.startsWith('Archived'));a.scrollIntoView();return getComputedStyle(a.parentElement.querySelector('a')).opacity})()", "equals": "1", "label": "archived row is not faded" },
+    { "do": "screenshot", "label": "Archived section in view" }
+  ]
+}

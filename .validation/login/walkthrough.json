@@ -1,0 +1,45 @@
+{
+  "title": "Admin sign-in: field and button match, softer focus ring",
+  "slug": "admin-sign-in-field-and-button-match-softer-focu",
+  "out_dir": "/srv/agent-runs/b05f7733/.validation/login/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:32:36.137Z (commit 14f93c37e6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin sign-in: field and button match, softer focus ring",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/login/step-01.png",
+          "shows": "Open /admin/login",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/login/step-02.png",
+          "shows": "Page shows \"Send code\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/login/step-03.png",
+          "shows": "phone box and Send code are the same height",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/login/step-04.png",
+          "shows": "Sign-in as it opens (phone box focused)",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

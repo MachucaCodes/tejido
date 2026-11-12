@@ -1,0 +1,67 @@
+{
+  "tool": "clock-validate",
+  "name": "Empty sessions home has a New session button (local mock)",
+  "outcome": "pass",
+  "commit": {
+    "sha": "14f93c37e64efbc0c86a4b65ada83b34661ec406",
+    "branch": "clock-b05f7733-ui-fix-list-page-has-a-lists-back-link",
+    "dirty": true
+  },
+  "environment": "next dev of this branch on the VM; admin guard stubbed, Supabase pointed at a local fake API that returns no sessions. No real data.",
+  "base_url": "http://localhost:4180",
+  "browser": "Chrome 157.0.8103.38 (headless)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:38:55.241Z",
+  "duration_ms": 4697,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 483,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"No sessions yet\"",
+      "check": true,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`main a[href='/admin/new']` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Empty home: No sessions yet + New session button",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Local mock: the real admin account has sessions, so the empty state can't show on the preview"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

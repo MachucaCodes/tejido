@@ -1,0 +1,14 @@
+{
+  "name": "Empty sessions home has a New session button (local mock)",
+  "base_url": "http://localhost:4180",
+  "environment": "next dev of this branch on the VM; admin guard stubbed, Supabase pointed at a local fake API that returns no sessions. No real data.",
+  "viewport": { "width": 1440, "height": 900 },
+  "login": "none",
+  "limitations": ["Local mock: the real admin account has sessions, so the empty state can't show on the preview"],
+  "steps": [
+    { "do": "goto", "url": "/admin", "timeout_ms": 120000 },
+    { "do": "expect_text", "text": "No sessions yet" },
+    { "do": "expect_visible", "selector": "main a[href='/admin/new']" },
+    { "do": "screenshot", "label": "Empty home: No sessions yet + New session button" }
+  ]
+}

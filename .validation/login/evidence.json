@@ -1,0 +1,67 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin sign-in: field and button match, softer focus ring",
+  "outcome": "pass",
+  "commit": {
+    "sha": "14f93c37e64efbc0c86a4b65ada83b34661ec406",
+    "branch": "clock-b05f7733-ui-fix-list-page-has-a-lists-back-link",
+    "dirty": true
+  },
+  "environment": "PR #14 Vercel preview, signed out; no code sent",
+  "base_url": "https://tejido-git-clock-b05f7733-ui-fix-lis-6fe2f9-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:32:36.137Z",
+  "duration_ms": 6454,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/login",
+      "check": false,
+      "status": "pass",
+      "ms": 1237,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Send code\"",
+      "check": true,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "phone box and Send code are the same height",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Sign-in as it opens (phone box focused)",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Code step not opened: it needs a real SMS"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "title": "Admin UI fixes on the PR preview",
+  "slug": "admin-ui-fixes-on-the-pr-preview",
+  "out_dir": "/srv/agent-runs/b05f7733/.validation/admin2/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:29:23.936Z (commit 14f93c37e6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin UI fixes on the PR preview",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-03.png",
+          "shows": "Sessions home: filled New session, rows with gap, archived row",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-04.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-05.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-06.png",
+          "shows": "Page does not show \"← Lists\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-07.png",
+          "shows": "List page: no back link under the Lists tab",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-08.png",
+          "shows": "Click \"Edit\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-09.png",
+          "shows": "Page shows \"Edit list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-10.png",
+          "shows": "Edit list: footer with trash left, Cancel + Save right",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-11.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-12.png",
+          "shows": "Click \"Add numbers\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-13.png",
+          "shows": "Page shows \"Add to list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-14.png",
+          "shows": "Add numbers: footer with Cancel + Add to list right",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-15.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-16.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-17.png",
+          "shows": "Lists index: filled New list",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-18.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-19.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-20.png",
+          "shows": "Page does not show \"← Sessions\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-21.png",
+          "shows": "New session: no back link",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-22.png",
+          "shows": "Open /admin/sessions/esm-rental-policy/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-23.png",
+          "shows": "Page shows \"matching calls\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/admin2/step-24.png",
+          "shows": "Page shows \"Voice 3\" in `summary`",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

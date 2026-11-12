@@ -1,0 +1,45 @@
+{
+  "title": "Empty sessions home has a New session button (local mock)",
+  "slug": "empty-sessions-home-has-a-new-session-button-loc",
+  "out_dir": "/srv/agent-runs/b05f7733/.validation/empty-home/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:38:55.241Z (commit 14f93c37e6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Empty sessions home has a New session button (local mock)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/empty-home/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/empty-home/step-02.png",
+          "shows": "Page shows \"No sessions yet\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/empty-home/step-03.png",
+          "shows": "`main a[href='/admin/new']` is visible",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/empty-home/step-04.png",
+          "shows": "Empty home: No sessions yet + New session button",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

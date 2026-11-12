@@ -1,0 +1,65 @@
+{
+  "tool": "clock-validate",
+  "name": "Archived row readable",
+  "outcome": "pass",
+  "commit": {
+    "sha": "788043366b5e61a0f011ebea479c3022f422663e",
+    "branch": "clock-b05f7733-ui-fix-list-page-has-a-lists-back-link",
+    "dirty": true
+  },
+  "environment": "PR #14 Vercel preview, production Supabase, read-only",
+  "base_url": "https://tejido-git-clock-b05f7733-ui-fix-lis-6fe2f9-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:40:12.858Z",
+  "duration_ms": 7725,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 2442,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Archived (1)\"",
+      "check": true,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "archived row is not faded",
+      "check": true,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Archived section in view",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

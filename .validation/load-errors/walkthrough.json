@@ -1,0 +1,101 @@
+{
+  "title": "Failed loads show one alert line (local mock)",
+  "slug": "failed-loads-show-one-alert-line-local-mock",
+  "out_dir": "/srv/agent-runs/b05f7733/.validation/load-errors/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T07:38:09.982Z (commit 14f93c37e6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Failed loads show one alert line (local mock)",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-01.png",
+          "shows": "Open /admin/sessions/fake-session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-02.png",
+          "shows": "Page shows \"Couldn't load this session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-03.png",
+          "shows": "Page does not show \"No themes yet\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-04.png",
+          "shows": "Overview: queries fail, alert instead of 0 opened / No themes yet",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-05.png",
+          "shows": "Open /admin/sessions/fake-session/synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-06.png",
+          "shows": "Page shows \"Couldn't load the summaries\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-07.png",
+          "shows": "Page does not show \"No summary yet\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-08.png",
+          "shows": "Synthesis: alert instead of No summary yet",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-09.png",
+          "shows": "Open /admin/sessions/fake-session/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-10.png",
+          "shows": "Page shows \"Couldn't load the logs\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-11.png",
+          "shows": "Page does not show \"simulated failure\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/b05f7733/.validation/load-errors/step-12.png",
+          "shows": "Logs: alert instead of the raw error message",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

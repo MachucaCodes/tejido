@@ -1,0 +1,341 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin UI fixes on the PR preview",
+  "outcome": "fail",
+  "commit": {
+    "sha": "14f93c37e64efbc0c86a4b65ada83b34661ec406",
+    "branch": "clock-b05f7733-ui-fix-list-page-has-a-lists-back-link",
+    "dirty": true
+  },
+  "environment": "PR #14 Vercel preview, production Supabase, read-only (no saves, no sends)",
+  "base_url": "https://tejido-git-clock-b05f7733-ui-fix-lis-6fe2f9-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T07:29:23.936Z",
+  "duration_ms": 53326,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 2354,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 40,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Sessions home: filled New session, rows with gap, archived row",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 849,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members\"",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"← Lists\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3054,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "List page: no back link under the Lists tab",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Edit\"",
+      "check": false,
+      "status": "pass",
+      "ms": 57,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Edit list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Edit list: footer with trash left, Cancel + Save right",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Add numbers\"",
+      "check": false,
+      "status": "pass",
+      "ms": 46,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Add to list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Add numbers: footer with Cancel + Add to list right",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 588,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Lists index: filled New list",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 834,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 25,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"← Sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3040,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "New session: no back link",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 1547,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"matching calls\"",
+      "check": true,
+      "status": "pass",
+      "ms": 233,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Voice 3\" in `summary`",
+      "check": true,
+      "status": "fail",
+      "ms": 10028,
+      "error": "locator.waitFor: Timeout 10000ms exceeded.",
+      "screenshot": "step-24.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Logs: rows end with Voice N",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together/logs",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"No AI calls yet\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"0 of 0\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Empty logs: only the empty card",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /me",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Manage your sessions\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "/me: Manage your sessions link",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Manage your sessions\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "li .font-mono",
+    "main header p.font-mono"
+  ],
+  "limitations": [
+    "Failed-load paths can't be forced on the preview; checked locally",
+    "Empty sessions home not shown: the account has sessions"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

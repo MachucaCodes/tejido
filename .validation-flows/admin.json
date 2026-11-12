@@ -1,0 +1,158 @@
+{
+ "name": "Admin UI fixes on the PR preview",
+ "base_url": "https://tejido-git-clock-b05f7733-ui-fix-lis-6fe2f9-dane-myers-projects.vercel.app",
+ "environment": "PR #14 Vercel preview, production Supabase, read-only (no saves, no sends)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "redact": [
+  "li .font-mono",
+  "main header p.font-mono"
+ ],
+ "limitations": [
+  "Failed-load paths can't be forced on the preview; checked locally",
+  "Empty sessions home not shown: the account has sessions"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "expect_text",
+   "text": "New session"
+  },
+  {
+   "do": "screenshot",
+   "label": "Sessions home: filled New session, rows with gap, archived row"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"
+  },
+  {
+   "do": "expect_text",
+   "text": "Members"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "\u2190 Lists"
+  },
+  {
+   "do": "screenshot",
+   "label": "List page: no back link under the Lists tab"
+  },
+  {
+   "do": "click",
+   "text": "Edit"
+  },
+  {
+   "do": "expect_text",
+   "text": "Edit list"
+  },
+  {
+   "do": "screenshot",
+   "label": "Edit list: footer with trash left, Cancel + Save right"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "text": "Add numbers"
+  },
+  {
+   "do": "expect_text",
+   "text": "Add to list"
+  },
+  {
+   "do": "screenshot",
+   "label": "Add numbers: footer with Cancel + Add to list right"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists"
+  },
+  {
+   "do": "screenshot",
+   "label": "Lists index: filled New list"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "expect_text",
+   "text": "New session"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "\u2190 Sessions"
+  },
+  {
+   "do": "screenshot",
+   "label": "New session: no back link"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy/logs"
+  },
+  {
+   "do": "expect_text",
+   "text": "matching calls"
+  },
+  {
+   "do": "expect_js",
+   "js": "[...document.querySelectorAll('summary')].some(s => /Voice \\d+$/.test(s.innerText.trim()))",
+   "equals": true,
+   "label": "log rows end with a Voice N label"
+  },
+  {
+   "do": "screenshot",
+   "label": "Logs: rows end with Voice N"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together/logs"
+  },
+  {
+   "do": "expect_text",
+   "text": "No AI calls yet"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "0 of 0"
+  },
+  {
+   "do": "screenshot",
+   "label": "Empty logs: only the empty card"
+  },
+  {
+   "do": "goto",
+   "url": "/me"
+  },
+  {
+   "do": "expect_text",
+   "text": "Manage your sessions"
+  },
+  {
+   "do": "screenshot",
+   "label": "/me: Manage your sessions link"
+  },
+  {
+   "do": "click",
+   "text": "Manage your sessions"
+  },
+  {
+   "do": "expect_url",
+   "match": "/admin"
+  }
+ ]
+}
