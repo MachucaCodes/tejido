@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
 import { voiceCountsBySession } from "@/lib/voice-counts";
+import { SessionRow } from "../session-row";
 
 export default async function AdminSessionsList() {
   const guard = await requireAdmin();
@@ -63,49 +64,5 @@ export default async function AdminSessionsList() {
         </section>
       )}
     </div>
-  );
-}
-
-type SessionListRow = {
-  id: string;
-  topic: string;
-  status: string;
-  created_at: string;
-};
-
-function SessionRow({
-  session: s,
-  count,
-  archived = false,
-}: {
-  session: SessionListRow;
-  count: number;
-  archived?: boolean;
-}) {
-  return (
-    <li>
-      <Link
-        href={`/admin/sessions/${s.id}`}
-        className={`flex items-center justify-between rounded-lg border bg-card p-3 transition-colors hover:bg-accent ${
-          archived ? "opacity-60" : ""
-        }`}
-      >
-        <div className="min-w-0">
-          <p className="font-medium">{s.id}</p>
-          <p className="truncate text-sm text-muted-foreground">{s.topic}</p>
-          <p className="text-xs text-muted-foreground">
-            {new Date(s.created_at).toLocaleString()}
-          </p>
-        </div>
-        <div className="flex shrink-0 items-center gap-3 text-xs text-muted-foreground">
-          <span>
-            {count} {count === 1 ? "voice" : "voices"}
-          </span>
-          <span className="rounded bg-secondary px-2 py-0.5">
-            {archived ? "archived" : s.status}
-          </span>
-        </div>
-      </Link>
-    </li>
   );
 }
