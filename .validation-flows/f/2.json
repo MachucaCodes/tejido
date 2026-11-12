@@ -1,0 +1,8 @@
+{"code":"F2","title":"\"Delete list\" sits at the top level of the List settings card","kind":"rule","severity":"medium","confidence":"high",
+"where":"/admin/lists/<id>, List settings card (bottom of page), 1440px",
+"what_happens":"A red \"Delete list\" text button sits on the same line as Save. It does ask twice (\"Click again to delete this list\"), but it is not inside a \"…\" menu.",
+"who_hurts":"An admin editing the name or description has Delete one row from Save; a quick double click deletes the whole list.",
+"suggested_fix":"Put Delete list in a \"…\" menu on the card (or page header menu) and keep the existing two-step confirm. src/app/admin/lists/[id]/edit-list-form.tsx:117-124.",
+"rule":"Dane's UI rule: \"Never put a Delete button (or any other destructive action: remove, archive, cancel, void) at the top level of a row, card or page header. It always goes inside a \\\"…\\\" actions menu, with a confirmation before it runs.\"",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin/lists/[id]|EditListForm|rule|top-level delete list"}

@@ -1,0 +1,8 @@
+{"code":"F5","title":"Language is blank for some members, so the admin can't tell what language they'll get","kind":"clarity","severity":"low","confidence":"high",
+"where":"/admin/lists/<id>, Members rows, 1440px",
+"what_happens":"Rows with a saved language show \"EN\"/\"ES\"; rows without one show nothing. The help text above says such numbers default by country (+506 Spanish, else English), but the row doesn't show that.",
+"who_hurts":"An admin checking who gets which language before sending invites has to work out the default in their head for each blank row.",
+"suggested_fix":"Show the effective language for every row, muted with \"(auto)\" when it is the default. src/app/admin/lists/[id]/page.tsx:80-82.",
+"rule":"opinion backed by the page's own help text",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin/lists/[id]|members row|clarity|blank language"}

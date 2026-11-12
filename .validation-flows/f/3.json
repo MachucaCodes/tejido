@@ -1,0 +1,8 @@
+{"code":"F3","title":"A failed load of lists shows \"No lists yet.\" instead of an error","kind":"state","severity":"medium","confidence":"medium",
+"where":"/admin/lists, when the lists query fails (from code, not seen)",
+"what_happens":"page.tsx reads only `data` from the query and falls back to `lists ?? []`, so a database error renders the normal empty state \"No lists yet.\" There is no error.tsx under /admin. Not seen in a browser: I can't make production fail without changing anything.",
+"who_hurts":"An admin would believe their lists are gone and may re-create them and re-add numbers, making duplicates.",
+"suggested_fix":"Read `error` from the query and show a short \"Couldn't load lists, try again\" line (or throw to an /admin error.tsx). src/app/admin/lists/page.tsx:12-15 and :27. Same pattern on the detail page's members query (src/app/admin/lists/[id]/page.tsx:37-43), which would show \"No numbers yet.\"",
+"rule":"general: empty and error states must differ",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin/lists|AdminListsPage|state|error shown as empty"}

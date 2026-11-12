@@ -1,0 +1,56 @@
+{
+  "tool": "clock-validate",
+  "name": "Lists index probe",
+  "outcome": "fail",
+  "commit": {
+    "sha": "a0ba74c90b5378b66b6b3605ba5df79023d6c7f3",
+    "branch": "clock-adf3df2a-ui-audit-cold-audit-of-the-lists-part",
+    "dirty": true
+  },
+  "environment": "production, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T03:47:42.880Z",
+  "duration_ms": 20325,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 2632,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Lists\"",
+      "check": true,
+      "status": "pass",
+      "ms": 28,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "probe",
+      "check": true,
+      "status": "fail",
+      "ms": 10008,
+      "error": "got \"[[\\\"1e22d2d0-e2aa-48f6-bf20-439f3539c5eb\\\",\\\"2 numbers\\\",4,true]]\"",
+      "screenshot": "step-03.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

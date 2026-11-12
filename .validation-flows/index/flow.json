@@ -1,0 +1,13 @@
+{
+  "name": "Lists index",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "login": "tejido",
+  "environment": "production, read-only",
+  "viewport": {"width": 1440, "height": 900},
+  "steps": [
+    {"do": "goto", "url": "/admin/lists"},
+    {"do": "expect_text", "text": "Named groups"},
+    {"do": "expect_js", "label": "hide header name", "js": "(()=>{document.querySelectorAll('body *').forEach(e=>{if(e.children.length===0&&/taylor/i.test(e.textContent))e.textContent='USER'});return 'ok'})()", "equals": "ok"},
+    {"do": "screenshot", "label": "lists index"}
+  ]
+}

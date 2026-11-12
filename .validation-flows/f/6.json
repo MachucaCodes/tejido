@@ -1,0 +1,8 @@
+{"code":"F6","title":"List description shows on the index but not on the list's own page","kind":"clarity","severity":"low","confidence":"high",
+"where":"/admin/lists/<id> header, 1440px",
+"what_happens":"The index card shows name + description. The detail header shows only the name and \"2 numbers\"; the description only appears as a value inside the Description input at the bottom of the page.",
+"who_hurts":"An admin opening a list to check what it is for loses the one line that explains it.",
+"suggested_fix":"Render the description under the h1 in the header, as the index does. src/app/admin/lists/[id]/page.tsx:53-58.",
+"rule":"established pattern: /admin/lists index card",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin/lists/[id]|header|clarity|description missing in header"}

@@ -1,0 +1,8 @@
+{"code":"F8","title":"Admin nav doesn't show which section you're in, and its left edge doesn't line up with the page","kind":"consistency","severity":"low","confidence":"high",
+"where":"/admin/lists and /admin/lists/<id> (admin layout), 1440px",
+"what_happens":"\"Sessions\" and \"Lists\" look identical whether or not you're on them. \"Admin\" starts at x≈272 while the page content starts at x≈288 and the logo at x≈367: three different left edges.",
+"who_hurts":"Small: an admin moving between Sessions and Lists gets no 'you are here' cue; the page looks slightly unaligned.",
+"suggested_fix":"Give the active link text-foreground (usePathname in a tiny client nav), and drop px-4 from the nav's outer div or add it to the inner one so edges match main. src/app/admin/layout.tsx:13-35.",
+"rule":"opinion (taste)",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin|AdminLayout|consistency|nav no active state"}

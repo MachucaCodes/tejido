@@ -1,0 +1,22 @@
+{
+  "name": "List states",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "login": "tejido",
+  "environment": "production, read-only",
+  "viewport": {"width": 1440, "height": 900},
+  "redact": ["main section ul li .font-mono", "main section ul li .font-medium"],
+  "steps": [
+    {"do": "goto", "url": "/admin/lists/00000000-0000-0000-0000-000000000000"},
+    {"do": "wait", "ms": 800},
+    {"do": "screenshot", "label": "missing list"},
+    {"do": "goto", "url": "/admin/lists/not-a-list"},
+    {"do": "wait", "ms": 800},
+    {"do": "screenshot", "label": "bad id"},
+    {"do": "goto", "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"},
+    {"do": "expect_text", "text": "Members"},
+    {"do": "fill", "selector": "#person-search", "value": "zzqxw"},
+    {"do": "wait", "ms": 1500},
+    {"do": "expect_js", "label": "hide header name", "js": "(()=>{document.querySelectorAll('header *').forEach(e=>{if(e.children.length===0&&/taylor/i.test(e.textContent))e.textContent='USER'});return 'ok'})()", "equals": "ok"},
+    {"do": "screenshot", "label": "search no match"}
+  ]
+}

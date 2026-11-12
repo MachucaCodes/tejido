@@ -1,0 +1,74 @@
+{
+  "tool": "clock-validate",
+  "name": "Missing list 404",
+  "outcome": "pass",
+  "commit": {
+    "sha": "a0ba74c90b5378b66b6b3605ba5df79023d6c7f3",
+    "branch": "clock-adf3df2a-ui-audit-cold-audit-of-the-lists-part",
+    "dirty": true
+  },
+  "environment": "production, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T03:49:55.918Z",
+  "duration_ms": 9734,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+      "check": false,
+      "status": "pass",
+      "ms": 1644,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"could not be found\"",
+      "check": true,
+      "status": "pass",
+      "ms": 100,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "hide header name",
+      "check": true,
+      "status": "pass",
+      "ms": 38,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "no admin nav or back link",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "missing list 404",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

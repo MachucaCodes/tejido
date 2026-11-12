@@ -1,0 +1,45 @@
+{
+  "title": "Lists index",
+  "slug": "lists-index",
+  "out_dir": "/srv/agent-runs/adf3df2a/.validation-flows/index/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T03:50:12.007Z (commit a0ba74c90b). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Lists index",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/index/step-01.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/index/step-02.png",
+          "shows": "Page shows \"Named groups\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/index/step-03.png",
+          "shows": "hide header name",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/index/step-04.png",
+          "shows": "lists index",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

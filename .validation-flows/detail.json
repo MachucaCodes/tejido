@@ -1,0 +1,46 @@
+{
+ "name": "List detail look",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "login": "tejido",
+ "environment": "production, read-only; names and phones replaced in page before screenshots",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "redact": [
+  "main ul li .font-mono",
+  "main ul li .font-medium"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"
+  },
+  {
+   "do": "expect_text",
+   "text": "Members"
+  },
+  {
+   "do": "expect_js",
+   "label": "hide member data",
+   "js": "(()=>{let i=0;document.querySelectorAll('main section ul li').forEach(li=>{i++;const ps=li.querySelectorAll('p');if(ps.length===2){ps[0].textContent='Participant '+i;ps[1].textContent='+506 0000 000'+i}else if(ps[0]){ps[0].textContent='+506 0000 000'+i}});document.querySelectorAll('header *').forEach(e=>{if(e.children.length===0&&/taylor/i.test(e.textContent))e.textContent='USER'});return 'ok'})()",
+   "equals": "ok"
+  },
+  {
+   "do": "screenshot",
+   "label": "detail top"
+  },
+  {
+   "do": "press",
+   "key": "End"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "detail bottom"
+  }
+ ]
+}

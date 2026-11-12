@@ -1,0 +1,8 @@
+{"code":"F7","title":"Removing a member fails silently","kind":"state","severity":"low","confidence":"medium",
+"where":"/admin/lists/<id>, Remove on a member row (from code, not clicked: production)",
+"what_happens":"RemoveMemberButton only refreshes when res.ok; on failure the label just goes back to \"Remove\" with no message. Not tried in a browser: clicking it would change real data.",
+"who_hurts":"An admin thinks the number was removed, and it keeps getting invites.",
+"suggested_fix":"Show a short error line on failure, like the other list forms do with text-destructive. src/app/admin/lists/[id]/remove-member-button.tsx:18-27.",
+"rule":"established pattern: create-list-form and edit-list-form show errors",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin/lists/[id]|RemoveMemberButton|state|silent remove failure"}

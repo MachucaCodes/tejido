@@ -1,0 +1,8 @@
+{"code":"F1","title":"Each member row has a bare \"Remove\" link that removes the number in one click, with no confirm","kind":"rule","severity":"medium","confidence":"high",
+"where":"/admin/lists/<id>, Members list, every row, 1440px",
+"what_happens":"Every member row shows a top-level \"Remove\" text button next to the language. One click sends the DELETE at once; there is no \"…\" menu and no confirmation.",
+"who_hurts":"An admin scanning or clicking near a row can drop a real participant from the list by accident, and they will silently miss the next invite sent to that list.",
+"suggested_fix":"Move Remove into a per-row \"…\" menu and ask before it runs (the same two-step pattern EditListForm already uses for Delete list). src/app/admin/lists/[id]/remove-member-button.tsx, used at src/app/admin/lists/[id]/page.tsx:83.",
+"rule":"Dane's UI rule: \"Never put a Delete button (or any other destructive action: remove, archive, cancel, void) at the top level of a row, card or page header. It always goes inside a \\\"…\\\" actions menu, with a confirmation before it runs.\"",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin/lists/[id]|RemoveMemberButton|rule|top-level remove no confirm"}

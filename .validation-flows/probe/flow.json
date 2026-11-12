@@ -1,0 +1,12 @@
+{
+  "name": "Lists index probe",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "login": "tejido",
+  "environment": "production, read-only",
+  "viewport": {"width": 1440, "height": 900},
+  "steps": [
+    {"do": "goto", "url": "/admin/lists"},
+    {"do": "expect_text", "text": "Lists"},
+    {"do": "expect_js", "label": "probe", "js": "JSON.stringify([...document.querySelectorAll('main li a')].map(a=>[a.getAttribute('href').split('/').pop(), a.querySelector('span.shrink-0')?.textContent, a.querySelector('p').textContent.length, !!a.querySelectorAll('p')[1]]))", "equals": "x"}
+  ]
+}

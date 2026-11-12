@@ -1,0 +1,80 @@
+{
+  "title": "List states",
+  "slug": "list-states",
+  "out_dir": "/srv/agent-runs/adf3df2a/.validation-flows/states/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T03:49:11.590Z (commit a0ba74c90b). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "List states",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-01.png",
+          "shows": "Open /admin/lists/00000000-0000-0000-0000-000000000000",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-03.png",
+          "shows": "missing list",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-04.png",
+          "shows": "Open /admin/lists/not-a-list",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-06.png",
+          "shows": "bad id",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-07.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-08.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-09.png",
+          "shows": "Type \"zzqxw\" into `#person-search`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-11.png",
+          "shows": "hide header name",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/adf3df2a/.validation-flows/states/step-12.png",
+          "shows": "search no match",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

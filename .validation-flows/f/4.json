@@ -1,0 +1,8 @@
+{"code":"F4","title":"A missing list opens a bare white 404 with no admin nav or way back","kind":"state","severity":"low","confidence":"high",
+"where":"/admin/lists/<unknown id> (also any malformed id), 1440px",
+"what_happens":"Next's default \"404 | This page could not be found.\" on plain white, outside the app's paper background, with no admin nav and no link back to Lists.",
+"who_hurts":"An admin opening an old link to a deleted list hits a dead end and has to edit the URL to get back.",
+"suggested_fix":"Add a small not-found.tsx under src/app/admin (or admin/lists/[id]) with \"This list doesn't exist (it may have been deleted)\" and a \"← Lists\" link, inside the admin layout.",
+"rule":"general: no dead ends",
+"origin":"earlier: shipped before this audit",
+"fingerprint":"/admin/lists/[id]|notFound|state|bare 404 no way back"}
