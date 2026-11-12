@@ -1,10 +1,12 @@
 "use client";
 
+import { InfoIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export type InviteList = { id: string; name: string; members: number };
 export type InviteRow = {
@@ -15,6 +17,9 @@ export type InviteRow = {
   error: string | null;
   sentAt: string | null;
 };
+
+const INVITE_HELP =
+  "Sends the invite template to everyone on the lists you pick. A number on several lists gets one invite.";
 
 const STATUS_ORDER = ["accepted", "sent", "declined", "failed", "pending"];
 
@@ -85,12 +90,17 @@ export default function WhatsAppInvites({
 
   return (
     <section className="space-y-3 rounded-lg border border-border bg-card p-4">
-      <div className="space-y-1">
+      <div className="flex items-center gap-1.5">
         <h2 className="text-sm font-medium">Send on WhatsApp</h2>
-        <p className="text-xs text-muted-foreground">
-          Sends the invite template to everyone on the lists you pick. A number on
-          several lists gets one invite.
-        </p>
+        <Tooltip>
+          <TooltipTrigger
+            aria-label={INVITE_HELP}
+            className="text-muted-foreground hover:text-foreground"
+          >
+            <InfoIcon className="size-3.5" aria-hidden />
+          </TooltipTrigger>
+          <TooltipContent className="max-w-xs">{INVITE_HELP}</TooltipContent>
+        </Tooltip>
       </div>
 
       {lists.length === 0 ? (
