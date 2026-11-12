@@ -75,10 +75,13 @@ export default async function AdminListDetail({
         )}
       </header>
 
-      <AddMembersForm listId={list.id} memberPhones={members.map((m) => m.phone)} />
-
       <section className="space-y-2">
-        <h2 className="text-sm font-medium">Members</h2>
+        <div className="flex items-center justify-between gap-2">
+          <h2 className="text-sm font-medium">Members</h2>
+          {!membersError && (
+            <AddMembersForm listId={list.id} memberPhones={members.map((m) => m.phone)} />
+          )}
+        </div>
         {membersError ? (
           <p role="alert" className="text-sm text-destructive">
             Couldn&apos;t load the numbers in this list. Reload the page to try again.
