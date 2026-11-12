@@ -1,0 +1,248 @@
+{
+  "title": "Admin UI fixes at 1440",
+  "slug": "admin-ui-fixes-at-1440",
+  "out_dir": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:20:53.395Z (commit 50d27e6d8c). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin UI fixes at 1440",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-01.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-02.png",
+          "shows": "Page shows \"New list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-03.png",
+          "shows": "Page does not show \"Named groups of phone numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-04.png",
+          "shows": "lists index",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-05.png",
+          "shows": "Click \"New list\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-06.png",
+          "shows": "`#new-list-name` is visible",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-07.png",
+          "shows": "new list dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-08.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-09.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-10.png",
+          "shows": "Page shows \"matching calls\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-11.png",
+          "shows": "Page does not show \"stream_aborted\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-12.png",
+          "shows": "logs populated",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-13.png",
+          "shows": "Click \"Filter\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-15.png",
+          "shows": "logs filter menu open",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-16.png",
+          "shows": "Click `[role=menuitemradio]:has-text('Facilitator')`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-17.png",
+          "shows": "URL matches kind=facilitator_turn",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-18.png",
+          "shows": "logs with kind chip",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-19.png",
+          "shows": "Click `[aria-label='Remove filter Facilitator']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-20.png",
+          "shows": "chip removes the filter",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-21.png",
+          "shows": "Open /admin/sessions/why-statement-v2/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-22.png",
+          "shows": "Page shows \"0 of 0 matching calls\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-23.png",
+          "shows": "no Filter button on an empty session",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-24.png",
+          "shows": "logs empty session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-25.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-26.png",
+          "shows": "Page shows \"Privacy:\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-27.png",
+          "shows": "Page does not show \"connect_consent_at\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-28.png",
+          "shows": "overview privacy row",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-29.png",
+          "shows": "Click \"Make anonymous\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-30.png",
+          "shows": "Page shows \"Make this session anonymous?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-31.png",
+          "shows": "privacy confirm dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-32.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-33.png",
+          "shows": "Page does not show \"Make this session anonymous?\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-20-51-819Z/step-34.png",
+          "shows": "Page shows \"Connect\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

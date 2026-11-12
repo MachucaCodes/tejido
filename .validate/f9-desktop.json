@@ -1,0 +1,127 @@
+{
+ "name": "Follow-up admin fixes at 1440",
+ "base_url": "https://tejido-git-clock-abe489d2-theme-titl-797def-dane-myers-projects.vercel.app",
+ "environment": "PR #9 preview, production Supabase, signed in as Dane (admin), read-only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 400,
+ "limitations": [
+  "Long theme title set in the page DOM only, no data changed",
+  "Loading skeletons not visible on a fast connection"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "expect_text",
+   "text": "New session"
+  },
+  {
+   "do": "expect_text",
+   "text": "why-statement-v2 \u00b7",
+   "label": "same-topic sessions differ by code line"
+  },
+  {
+   "do": "screenshot",
+   "label": "sessions index"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists"
+  },
+  {
+   "do": "expect_text",
+   "text": "New list"
+  },
+  {
+   "do": "screenshot",
+   "label": "lists index"
+  },
+  {
+   "do": "click",
+   "text": "New list"
+  },
+  {
+   "do": "expect_visible",
+   "selector": "#new-list-name"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"
+  },
+  {
+   "do": "expect_text",
+   "text": "Members ("
+  },
+  {
+   "do": "screenshot",
+   "label": "list page"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/why-statement-v2"
+  },
+  {
+   "do": "expect_text",
+   "text": "Archived: not taking responses."
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Copy join link"
+  },
+  {
+   "do": "screenshot",
+   "label": "archived session"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together"
+  },
+  {
+   "do": "expect_text",
+   "text": "Copy join link"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Archived: not taking responses."
+  },
+  {
+   "do": "screenshot",
+   "label": "live session"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together/logs"
+  },
+  {
+   "do": "expect_text",
+   "text": "No AI calls yet for this session."
+  },
+  {
+   "do": "screenshot",
+   "label": "empty logs"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement"
+  },
+  {
+   "do": "expect_js",
+   "js": "const s=document.querySelector('main li details summary span.font-medium'); s.textContent='A much longer theme title that keeps going well past today'; true",
+   "equals": true,
+   "label": "long theme title (DOM only)"
+  },
+  {
+   "do": "screenshot",
+   "label": "long theme title at 1440"
+  }
+ ]
+}

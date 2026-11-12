@@ -1,0 +1,130 @@
+{
+  "tool": "clock-validate",
+  "name": "Production smoke after merge",
+  "outcome": "fail",
+  "commit": {
+    "sha": "e8a0171bc0080d29cf0cd9d6f0f87ca477261e80",
+    "branch": "clock-abe489d2-ui-fix-lists-index-stacks-a-create-list",
+    "dirty": false
+  },
+  "environment": "production, signed in as Dane, read-only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:32:41.060Z",
+  "duration_ms": 16084,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 1063,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New list\"",
+      "check": true,
+      "status": "fail",
+      "ms": 10004,
+      "error": "locator.waitFor: Timeout 10000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see \"Signing in on previews\" in clock-validate help))",
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Screenshot",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/logs",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Filter\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Screenshot",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Privacy:\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Screenshot",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/does-not-exist",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Back to sessions\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Looks only; nothing saved"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

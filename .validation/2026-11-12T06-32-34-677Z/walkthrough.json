@@ -1,0 +1,24 @@
+{
+  "title": "Production smoke after merge",
+  "slug": "production-smoke-after-merge",
+  "out_dir": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-32-34-677Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:32:41.060Z (commit e8a0171bc0). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Production smoke after merge",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-32-34-677Z/step-02.png",
+          "shows": "Page shows \"New list\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

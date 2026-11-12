@@ -1,0 +1,275 @@
+{
+  "tool": "clock-validate",
+  "name": "Follow-up admin fixes at 1440",
+  "outcome": "fail",
+  "commit": {
+    "sha": "ac85fbad1674aeb89dd03b77fd9df227ec17f2ac",
+    "branch": "clock-abe489d2-theme-title-shrink",
+    "dirty": false
+  },
+  "environment": "PR #9 preview, production Supabase, signed in as Dane (admin), read-only",
+  "base_url": "https://tejido-git-clock-abe489d2-theme-titl-797def-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:36:38.625Z",
+  "duration_ms": 19958,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 3738,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 50,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "same-topic sessions differ by code line",
+      "check": true,
+      "status": "fail",
+      "ms": 10009,
+      "error": "locator.waitFor: Timeout 10000ms exceeded.",
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "sessions index",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New list\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "lists index",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"New list\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_visible",
+      "description": "`#new-list-name` is visible",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members (\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "list page",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Archived: not taking responses.\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Copy join link\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "archived session",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Copy join link\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Archived: not taking responses.\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "live session",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together/logs",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"No AI calls yet for this session.\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "empty logs",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "long theme title (DOM only)",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "long theme title at 1440",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Long theme title set in the page DOM only, no data changed",
+    "Loading skeletons not visible on a fast connection"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

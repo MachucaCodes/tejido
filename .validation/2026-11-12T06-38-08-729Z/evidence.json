@@ -1,0 +1,76 @@
+{
+  "tool": "clock-validate",
+  "name": "Follow-up admin fixes at 390",
+  "outcome": "pass",
+  "commit": {
+    "sha": "ac85fbad1674aeb89dd03b77fd9df227ec17f2ac",
+    "branch": "clock-abe489d2-theme-title-shrink",
+    "dirty": false
+  },
+  "environment": "PR #9 preview, production Supabase, signed in as Dane (admin), read-only",
+  "base_url": "https://tejido-git-clock-abe489d2-theme-titl-797def-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:38:10.335Z",
+  "duration_ms": 6067,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 1606,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "sessions index at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 1156,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "long theme title (DOM only)",
+      "check": true,
+      "status": "pass",
+      "ms": 10,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "long theme title at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Long theme title set in the page DOM only, no data changed"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

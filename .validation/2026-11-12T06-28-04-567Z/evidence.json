@@ -1,0 +1,545 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin UI fixes at 1440",
+  "outcome": "pass",
+  "commit": {
+    "sha": "e8a0171bc0080d29cf0cd9d6f0f87ca477261e80",
+    "branch": "clock-abe489d2-ui-fix-lists-index-stacks-a-create-list",
+    "dirty": false
+  },
+  "environment": "PR #8 preview, production Supabase, signed in as Dane (admin), read-only clicks",
+  "base_url": "https://tejido-git-clock-abe489d2-ui-fix-lis-1c9b44-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:28:06.551Z",
+  "duration_ms": 112283,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 3124,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 29,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Named groups of phone numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3050,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "lists index",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"New list\"",
+      "check": false,
+      "status": "pass",
+      "ms": 74,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`#new-list-name` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "new list dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 6962,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"matching calls\"",
+      "check": true,
+      "status": "pass",
+      "ms": 2447,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"stream_aborted\"",
+      "check": true,
+      "status": "pass",
+      "ms": 5707,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs populated",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Filter\"",
+      "check": false,
+      "status": "pass",
+      "ms": 2467,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 439,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "logs filter menu open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[role=menuitemradio]:has-text('Facilitator')`",
+      "check": false,
+      "status": "pass",
+      "ms": 124,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches kind=facilitator_turn",
+      "check": true,
+      "status": "pass",
+      "ms": 3692,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs with kind chip",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Remove filter Facilitator']`",
+      "check": false,
+      "status": "pass",
+      "ms": 112,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "chip removes the filter",
+      "check": true,
+      "status": "pass",
+      "ms": 3028,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 829,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"0 of 0 matching calls\"",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "no Filter button on an empty session",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs empty session",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-24.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1164,
+      "error": null,
+      "screenshot": "step-25.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Privacy:\"",
+      "check": true,
+      "status": "pass",
+      "ms": 45,
+      "error": null,
+      "screenshot": "step-26.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"connect_consent_at\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3083,
+      "error": null,
+      "screenshot": "step-27.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "overview privacy row",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-28.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Make anonymous\"",
+      "check": false,
+      "status": "pass",
+      "ms": 49,
+      "error": null,
+      "screenshot": "step-29.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Make this session anonymous?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-30.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "privacy confirm dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-31.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "pass",
+      "ms": 50,
+      "error": null,
+      "screenshot": "step-32.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Make this session anonymous?\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3055,
+      "error": null,
+      "screenshot": "step-33.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "still Connect after Cancel",
+      "check": true,
+      "status": "pass",
+      "ms": 8,
+      "error": null,
+      "screenshot": "step-34.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 1132,
+      "error": null,
+      "screenshot": "step-35.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Find sources\"",
+      "check": true,
+      "status": "pass",
+      "ms": 38,
+      "error": null,
+      "screenshot": "step-36.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-37.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1471,
+      "error": null,
+      "screenshot": "step-38.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "no language switch on admin",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-39.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 145,
+      "error": null,
+      "screenshot": "step-40.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Summary focus\"",
+      "check": true,
+      "status": "pass",
+      "ms": 26,
+      "error": null,
+      "screenshot": "step-41.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "admin home with manual form",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-42.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 754,
+      "error": null,
+      "screenshot": "step-43.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "sessions list",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-44.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/does-not-exist",
+      "check": false,
+      "status": "pass",
+      "ms": 754,
+      "error": null,
+      "screenshot": "step-45.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Back to sessions\"",
+      "check": true,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-46.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "admin 404",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-47.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 736,
+      "error": null,
+      "screenshot": "step-48.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Add numbers\"",
+      "check": false,
+      "status": "pass",
+      "ms": 136,
+      "error": null,
+      "screenshot": "step-49.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='How to paste numbers']`",
+      "check": false,
+      "status": "pass",
+      "ms": 192,
+      "error": null,
+      "screenshot": "step-50.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Numbers without a + are read as Costa Rica\"",
+      "check": true,
+      "status": "pass",
+      "ms": 38,
+      "error": null,
+      "screenshot": "step-51.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "paste help opened by click at 1440",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-52.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-53.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement",
+      "check": false,
+      "status": "pass",
+      "ms": 1159,
+      "error": null,
+      "screenshot": "step-54.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `main li details summary`",
+      "check": false,
+      "status": "pass",
+      "ms": 56,
+      "error": null,
+      "screenshot": "step-55.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`a[target=_blank][href*='/points?theme=']` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 11,
+      "error": null,
+      "screenshot": "step-56.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "theme points link opens in a new tab",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-57.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Nothing saved: privacy confirm is cancelled, Rebuild and Create are not clicked",
+    "Session load error state not reproducible on a working DB"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

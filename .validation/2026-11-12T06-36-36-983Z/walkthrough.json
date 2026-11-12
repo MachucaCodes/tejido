@@ -1,0 +1,38 @@
+{
+  "title": "Follow-up admin fixes at 1440",
+  "slug": "follow-up-admin-fixes-at-1440",
+  "out_dir": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-36-36-983Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:36:38.625Z (commit ac85fbad16). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Follow-up admin fixes at 1440",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-36-36-983Z/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-36-36-983Z/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-36-36-983Z/step-03.png",
+          "shows": "same-topic sessions differ by code line",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

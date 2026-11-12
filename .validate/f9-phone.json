@@ -1,0 +1,37 @@
+{
+ "name": "Follow-up admin fixes at 390",
+ "base_url": "https://tejido-git-clock-abe489d2-theme-titl-797def-dane-myers-projects.vercel.app",
+ "environment": "PR #9 preview, production Supabase, signed in as Dane (admin), read-only",
+ "viewport": {
+  "width": 390,
+  "height": 844
+ },
+ "pace_ms": 400,
+ "limitations": [
+  "Long theme title set in the page DOM only, no data changed"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin"
+  },
+  {
+   "do": "screenshot",
+   "label": "sessions index at 390"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/evolving-why-statement"
+  },
+  {
+   "do": "expect_js",
+   "js": "const s=document.querySelector('main li details summary span.font-medium'); s.textContent='A much longer theme title that keeps going well past today'; true",
+   "equals": true,
+   "label": "long theme title (DOM only)"
+  },
+  {
+   "do": "screenshot",
+   "label": "long theme title at 390"
+  }
+ ]
+}

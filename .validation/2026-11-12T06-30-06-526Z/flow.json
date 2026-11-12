@@ -1,0 +1,87 @@
+{
+ "name": "Info icon opens on tap at 390",
+ "base_url": "https://tejido-git-clock-abe489d2-ui-fix-lis-1c9b44-dane-myers-projects.vercel.app",
+ "environment": "PR #8 preview, production Supabase, signed in as Dane (admin)",
+ "viewport": {
+  "width": 390,
+  "height": 844
+ },
+ "pace_ms": 500,
+ "limitations": [
+  "Mouse click, not a real touch event"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "click",
+   "selector": "[aria-label='About the link name']"
+  },
+  {
+   "do": "expect_text",
+   "text": "The join link is /s/"
+  },
+  {
+   "do": "screenshot",
+   "label": "form info opened by click at 390"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"
+  },
+  {
+   "do": "click",
+   "text": "Add numbers"
+  },
+  {
+   "do": "click",
+   "selector": "[aria-label='How to paste numbers']"
+  },
+  {
+   "do": "expect_text",
+   "text": "Numbers without a + are read as Costa Rica"
+  },
+  {
+   "do": "screenshot",
+   "label": "paste help opened by click at 390"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together"
+  },
+  {
+   "do": "click",
+   "selector": "[aria-label='About privacy']"
+  },
+  {
+   "do": "expect_text",
+   "text": "can opt in"
+  },
+  {
+   "do": "screenshot",
+   "label": "privacy help opened by click at 390"
+  },
+  {
+   "do": "press",
+   "key": "Escape"
+  },
+  {
+   "do": "click",
+   "selector": "[aria-label='About WhatsApp invites']"
+  },
+  {
+   "do": "expect_text",
+   "text": "A number on several lists gets one invite"
+  },
+  {
+   "do": "screenshot",
+   "label": "invites help opened by click at 390"
+  }
+ ]
+}

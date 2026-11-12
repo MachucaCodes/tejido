@@ -1,0 +1,15 @@
+{
+  "name": "Info icon opens on tap at 390",
+  "base_url": "https://tejido-git-clock-abe489d2-ui-fix-lis-1c9b44-dane-myers-projects.vercel.app",
+  "environment": "PR #8 preview, production Supabase, signed in as Dane (admin)",
+  "viewport": { "width": 390, "height": 844 },
+  "pace_ms": 500,
+  "limitations": ["Mouse click, not a real touch event"],
+  "steps": [
+    { "do": "goto", "url": "/admin" },
+    { "do": "click", "text": "Or fill in the form yourself" },
+    { "do": "click", "selector": "[aria-label='About the link name']" },
+    { "do": "expect_text", "text": "The join link is /s/" },
+    { "do": "screenshot", "label": "info opened by click at 390" }
+  ]
+}

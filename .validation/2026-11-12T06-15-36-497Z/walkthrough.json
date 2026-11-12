@@ -1,0 +1,122 @@
+{
+  "title": "Admin UI fixes at 1440",
+  "slug": "admin-ui-fixes-at-1440",
+  "out_dir": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:15:38.296Z (commit 9501a090ca). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Admin UI fixes at 1440",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-01.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-02.png",
+          "shows": "Page shows \"New list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-03.png",
+          "shows": "Page does not show \"Named groups of phone numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-04.png",
+          "shows": "lists index",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-05.png",
+          "shows": "Click \"New list\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-06.png",
+          "shows": "`#new-list-name` is visible",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-07.png",
+          "shows": "new list dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-08.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-09.png",
+          "shows": "Open /admin/sessions/evolving-why-statement/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-10.png",
+          "shows": "Page shows \"matching calls\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-11.png",
+          "shows": "Page does not show \"stream_aborted\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-12.png",
+          "shows": "logs populated",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-13.png",
+          "shows": "Click \"Filter\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-15.png",
+          "shows": "logs filter menu open",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-15-36-497Z/step-16.png",
+          "shows": "Click \"Facilitator\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

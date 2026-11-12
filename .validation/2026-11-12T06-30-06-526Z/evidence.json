@@ -1,0 +1,193 @@
+{
+  "tool": "clock-validate",
+  "name": "Info icon opens on tap at 390",
+  "outcome": "pass",
+  "commit": {
+    "sha": "e8a0171bc0080d29cf0cd9d6f0f87ca477261e80",
+    "branch": "clock-abe489d2-ui-fix-lists-index-stacks-a-create-list",
+    "dirty": false
+  },
+  "environment": "PR #8 preview, production Supabase, signed in as Dane (admin)",
+  "base_url": "https://tejido-git-clock-abe489d2-ui-fix-lis-1c9b44-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:30:08.506Z",
+  "duration_ms": 15734,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1972,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 62,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='About the link name']`",
+      "check": false,
+      "status": "pass",
+      "ms": 66,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"The join link is /s/\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "form info opened by click at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 675,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Add numbers\"",
+      "check": false,
+      "status": "pass",
+      "ms": 60,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='How to paste numbers']`",
+      "check": false,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Numbers without a + are read as Costa Rica\"",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "paste help opened by click at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "pass",
+      "ms": 1220,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='About privacy']`",
+      "check": false,
+      "status": "pass",
+      "ms": 57,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"can opt in\"",
+      "check": true,
+      "status": "pass",
+      "ms": 13,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "privacy help opened by click at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='About WhatsApp invites']`",
+      "check": false,
+      "status": "pass",
+      "ms": 67,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"A number on several lists gets one invite\"",
+      "check": true,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "invites help opened by click at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-18.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Mouse click, not a real touch event"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

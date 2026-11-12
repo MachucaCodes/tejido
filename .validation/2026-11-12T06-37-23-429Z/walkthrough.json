@@ -1,0 +1,206 @@
+{
+  "title": "Follow-up admin fixes at 1440",
+  "slug": "follow-up-admin-fixes-at-1440",
+  "out_dir": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:37:24.637Z (commit ac85fbad16). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Follow-up admin fixes at 1440",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-03.png",
+          "shows": "same-topic sessions differ by code line",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-04.png",
+          "shows": "sessions index",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-05.png",
+          "shows": "Open /admin/lists",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-06.png",
+          "shows": "Page shows \"New list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-07.png",
+          "shows": "lists index",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-08.png",
+          "shows": "Click \"New list\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-09.png",
+          "shows": "`#new-list-name` is visible",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-10.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-11.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-12.png",
+          "shows": "Page shows \"Members (\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-13.png",
+          "shows": "list page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-14.png",
+          "shows": "Open /admin/sessions/why-statement-v2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-15.png",
+          "shows": "Page shows \"Archived: not taking responses.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-16.png",
+          "shows": "Page does not show \"Copy join link\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-17.png",
+          "shows": "archived session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-18.png",
+          "shows": "Open /admin/sessions/daily-life-together",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-19.png",
+          "shows": "Page shows \"Copy join link\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-20.png",
+          "shows": "Page does not show \"Archived: not taking responses.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-21.png",
+          "shows": "live session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-22.png",
+          "shows": "Open /admin/sessions/daily-life-together/logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-23.png",
+          "shows": "Page shows \"No AI calls yet for this session.\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-24.png",
+          "shows": "empty logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-25.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-26.png",
+          "shows": "long theme title (DOM only)",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-37-23-429Z/step-27.png",
+          "shows": "long theme title at 1440",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

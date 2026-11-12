@@ -1,0 +1,76 @@
+{
+  "tool": "clock-validate",
+  "name": "Info icon opens on tap at 390",
+  "outcome": "pass",
+  "commit": {
+    "sha": "50d27e6d8ccfb87909b82bfa3b5c04d86fbfb178",
+    "branch": "clock-abe489d2-ui-fix-lists-index-stacks-a-create-list",
+    "dirty": true
+  },
+  "environment": "PR #8 preview, production Supabase, signed in as Dane (admin)",
+  "base_url": "https://tejido-git-clock-abe489d2-ui-fix-lis-1c9b44-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:20:33.961Z",
+  "duration_ms": 5809,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "pass",
+      "ms": 2157,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 65,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='About the link name']`",
+      "check": false,
+      "status": "pass",
+      "ms": 63,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"The join link is /s/\"",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "info opened by click at 390",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Mouse click, not a real touch event"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

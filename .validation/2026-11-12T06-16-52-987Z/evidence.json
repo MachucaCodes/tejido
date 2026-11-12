@@ -1,0 +1,455 @@
+{
+  "tool": "clock-validate",
+  "name": "Admin UI fixes at 1440",
+  "outcome": "fail",
+  "commit": {
+    "sha": "9501a090ca06eb4b59f145477bba84794f44f87b",
+    "branch": "clock-abe489d2-ui-fix-lists-index-stacks-a-create-list",
+    "dirty": true
+  },
+  "environment": "PR #8 preview, production Supabase, signed in as Dane (admin), read-only clicks",
+  "base_url": "https://tejido-git-clock-abe489d2-ui-fix-lis-1c9b44-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:16:54.257Z",
+  "duration_ms": 67056,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists",
+      "check": false,
+      "status": "pass",
+      "ms": 1799,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Named groups of phone numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3046,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "lists index",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"New list\"",
+      "check": false,
+      "status": "pass",
+      "ms": 107,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_visible",
+      "description": "`#new-list-name` is visible",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "new list dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 16,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/logs",
+      "check": false,
+      "status": "pass",
+      "ms": 5997,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"matching calls\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3015,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"stream_aborted\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6109,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs populated",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Filter\"",
+      "check": false,
+      "status": "pass",
+      "ms": 3261,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 400 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 488,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "logs filter menu open",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[role=menuitemradio]:has-text('Facilitator')`",
+      "check": false,
+      "status": "pass",
+      "ms": 121,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches kind=facilitator_turn",
+      "check": true,
+      "status": "pass",
+      "ms": 3619,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "logs with kind chip",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Remove filter Facilitator']`",
+      "check": false,
+      "status": "fail",
+      "ms": 10057,
+      "error": "locator.click: Timeout 10000ms exceeded.",
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "chip removes the filter",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/why-statement-v2/logs",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"0 of 0 matching calls\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Filter\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "logs empty session",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/daily-life-together",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Privacy:\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"connect_consent_at\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "overview privacy row",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Make anonymous\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Make this session anonymous?\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "privacy confirm dialog",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Make this session anonymous?\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Connect\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/evolving-why-statement/synthesis",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Find sources\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "synthesis",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_no_text",
+      "description": "no language switch on admin",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Summary focus\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "admin home with manual form",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "sessions list",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/does-not-exist",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Back to sessions\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "admin 404",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Nothing saved: privacy confirm is cancelled, Rebuild and Create are not clicked",
+    "Session load error state not reproducible on a working DB"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

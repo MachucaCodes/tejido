@@ -1,0 +1,52 @@
+{
+  "title": "Follow-up admin fixes at 390",
+  "slug": "follow-up-admin-fixes-at-390",
+  "out_dir": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-38-08-729Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 390,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:38:10.335Z (commit ac85fbad16). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Follow-up admin fixes at 390",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-38-08-729Z/step-01.png",
+          "shows": "Open /admin",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-38-08-729Z/step-02.png",
+          "shows": "sessions index at 390",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-38-08-729Z/step-03.png",
+          "shows": "Open /admin/sessions/evolving-why-statement",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-38-08-729Z/step-04.png",
+          "shows": "long theme title (DOM only)",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/abe489d2/.validation/2026-11-12T06-38-08-729Z/step-05.png",
+          "shows": "long theme title at 390",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+**Browser check — Admin UI fixes at 1440: PASSED** (20/20 checks, 57/57 steps)
+
+- Kind: continuous browser recording (Playwright video + trace) of an automated run, not a hand-made demo
+- Commit: `e8a0171bc0` on `clock-abe489d2-ui-fix-lists-index-stacks-a-create-list`
+- Environment: PR #8 preview, production Supabase, signed in as Dane (admin), read-only clicks — https://tejido-git-clock-abe489d2-ui-fix-lis-1c9b44-dane-myers-projects.vercel.app, Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after), 1440×900, on clock-fsn1
+- Ran: 2026-11-12T06:28:06.551Z (112.3s)
+
+**Steps**
+
+1. ✅ Open /admin/lists (3124 ms)
+2. ✅ **Check:** Page shows "New list" (29 ms)
+3. ✅ **Check:** Page does not show "Named groups of phone numbers" (3050 ms)
+4. ✅ lists index (0 ms)
+5. ✅ Click "New list" (74 ms)
+6. ✅ **Check:** `#new-list-name` is visible (5 ms)
+7. ✅ new list dialog (0 ms)
+8. ✅ Press Escape (21 ms)
+9. ✅ Open /admin/sessions/evolving-why-statement/logs (6962 ms)
+10. ✅ **Check:** Page shows "matching calls" (2447 ms)
+11. ✅ **Check:** Page does not show "stream_aborted" (5707 ms)
+12. ✅ logs populated (0 ms)
+13. ✅ Click "Filter" (2467 ms)
+14. ✅ Wait 400 ms (439 ms)
+15. ✅ logs filter menu open (0 ms)
+16. ✅ Click `[role=menuitemradio]:has-text('Facilitator')` (124 ms)
+17. ✅ **Check:** URL matches kind=facilitator_turn (3692 ms)
+18. ✅ logs with kind chip (0 ms)
+19. ✅ Click `[aria-label='Remove filter Facilitator']` (112 ms)
+20. ✅ **Check:** chip removes the filter (3028 ms)
+21. ✅ Open /admin/sessions/why-statement-v2/logs (829 ms)
+22. ✅ **Check:** Page shows "0 of 0 matching calls" (15 ms)
+23. ✅ **Check:** no Filter button on an empty session (3 ms)
+24. ✅ logs empty session (0 ms)
+25. ✅ Open /admin/sessions/daily-life-together (1164 ms)
+26. ✅ **Check:** Page shows "Privacy:" (45 ms)
+27. ✅ **Check:** Page does not show "connect_consent_at" (3083 ms)
+28. ✅ overview privacy row (0 ms)
+29. ✅ Click "Make anonymous" (49 ms)
+30. ✅ **Check:** Page shows "Make this session anonymous?" (8 ms)
+31. ✅ privacy confirm dialog (0 ms)
+32. ✅ Click "Cancel" (50 ms)
+33. ✅ **Check:** Page does not show "Make this session anonymous?" (3055 ms)
+34. ✅ **Check:** still Connect after Cancel (8 ms)
+35. ✅ Open /admin/sessions/evolving-why-statement/synthesis (1132 ms)
+36. ✅ **Check:** Page shows "Find sources" (38 ms)
+37. ✅ synthesis (0 ms)
+38. ✅ Open /admin/new (1471 ms)
+39. ✅ **Check:** no language switch on admin (11 ms)
+40. ✅ Click "Or fill in the form yourself" (145 ms)
+41. ✅ **Check:** Page shows "Summary focus" (26 ms)
+42. ✅ admin home with manual form (0 ms)
+43. ✅ Open /admin (754 ms)
+44. ✅ sessions list (0 ms)
+45. ✅ Open /admin/does-not-exist (754 ms)
+46. ✅ **Check:** Page shows "Back to sessions" (33 ms)
+47. ✅ admin 404 (0 ms)
+48. ✅ Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb (736 ms)
+49. ✅ Click "Add numbers" (136 ms)
+50. ✅ Click `[aria-label='How to paste numbers']` (192 ms)
+51. ✅ **Check:** Page shows "Numbers without a + are read as Costa Rica" (38 ms)
+52. ✅ paste help opened by click at 1440 (0 ms)
+53. ✅ Press Escape (36 ms)
+54. ✅ Open /admin/sessions/evolving-why-statement (1159 ms)
+55. ✅ Click `main li details summary` (56 ms)
+56. ✅ **Check:** `a[target=_blank][href*='/points?theme=']` is visible (11 ms)
+57. ✅ theme points link opens in a new tab (0 ms)
+
+**What this does not show**
+
+- Nothing saved: privacy confirm is cancelled, Rebuild and Create are not clicked
+- Session load error state not reproducible on a working DB
+- A browser recording shows what the page displayed; it does not prove back-end or security rules on its own.
