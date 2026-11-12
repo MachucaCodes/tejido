@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
+import { Suspense } from "react";
 
 import { requireOrganizer } from "@/lib/admin-guard";
 import { createAdmin } from "@/lib/supabase/admin";
@@ -7,8 +7,20 @@ import ArchiveToggle from "./archive-toggle";
 import PrivacyToggle from "./privacy-toggle";
 import CopyJoinLink from "./copy-join-link";
 import EditSessionForm from "./edit-session-form";
+import SessionHeader from "./session-header";
 import WhatsAppInvites, { type InviteList, type InviteRow } from "./whatsapp-invites";
-import { formatDateTime } from "@/lib/format-date";
+
+async function loadSession(code: string) {
+  const admin = createAdmin();
+  const { data: session } = await admin
+    .from("sessions")
+    .select(
+      "id, created_by, topic, topic_es, intro_message, intro_message_es, context, instructions, status, privacy, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
+    )
+    .eq("id", code)
+    .single();
+  return session;
+}
 
 export default async function AdminSessionDetail({
   params,
@@ -20,22 +32,10 @@ export default async function AdminSessionDetail({
   const { code } = await params;
   const admin = createAdmin();
 
-  const { data: session } = await admin
-    .from("sessions")
-    .select(
-      "id, created_by, topic, topic_es, intro_message, intro_message_es, context, instructions, status, privacy, created_at, archived_at, prompt_task_framing, prompt_mechanics, prompt_pacing, prompt_perspectives_instructions, prompt_analysis_system, prompt_analysis_prompt, prompt_summary_system, prompt_summary_prompt",
-    )
-    .eq("id", code)
-    .single();
+  const session = await loadSession(code);
   if (!session) notFound();
   // Non-admins only reach sessions they created — and don't learn that others exist.
   if (!guard.isAdmin && session.created_by !== guard.user.id) notFound();
-
-  const { data: participants } = await admin
-    .from("participants")
-    .select("id, phase, created_at, completed_at, connect_consent_at")
-    .eq("session_id", code)
-    .order("created_at", { ascending: true });
 
   // Voices = participants whose answers turned into at least one point —
   // the same count the room view shows. Opening the link alone doesn't count.
@@ -44,6 +44,58 @@ export default async function AdminSessionDetail({
     .select("id, extracted_points!inner(id)")
     .eq("session_id", code);
   const voiceCount = voiceRows?.length ?? 0;
+
+  return (
+    <div className="space-y-8">
+      <SessionHeader
+        session={session}
+        current="overview"
+        isAdmin={guard.isAdmin}
+        actions={
+          <>
+            <CopyJoinLink code={session.id} />
+            {/* Set apart: archiving changes what participants see. */}
+            <span className="mx-1 h-5 w-px bg-border" aria-hidden />
+            <ArchiveToggle
+              code={session.id}
+              topic={session.topic ?? ""}
+              archivedAt={session.archived_at}
+              voiceCount={voiceCount}
+            />
+          </>
+        }
+      />
+      {/* The rest needs several queries: stream it in behind a skeleton so
+          opening a session shows something at once. */}
+      <Suspense fallback={<SessionBodySkeleton />}>
+        <SessionBody session={session} isAdmin={guard.isAdmin} voiceCount={voiceCount} />
+      </Suspense>
+    </div>
+  );
+}
+
+type SessionRowData = NonNullable<
+  Awaited<ReturnType<typeof loadSession>>
+>;
+
+async function SessionBody({
+  session,
+  isAdmin,
+  voiceCount,
+}: {
+  session: SessionRowData;
+  isAdmin: boolean;
+  voiceCount: number;
+}) {
+  const code = session.id;
+  const admin = createAdmin();
+  const guard = { isAdmin };
+
+  const { data: participants } = await admin
+    .from("participants")
+    .select("id, phase, created_at, completed_at, connect_consent_at")
+    .eq("session_id", code)
+    .order("created_at", { ascending: true });
 
   const { data: themes } = await admin
     .from("themes")
@@ -102,42 +154,7 @@ export default async function AdminSessionDetail({
   }, {});
 
   return (
-    <div className="space-y-8">
-      <header className="flex items-start justify-between gap-3">
-        <div className="min-w-0 space-y-1">
-          <h1 className="text-lg font-semibold">{session.topic || session.id}</h1>
-          <p className="text-xs text-muted-foreground">
-            {session.id} · {session.archived_at ? "archived" : session.status} ·{" "}
-            {formatDateTime(session.created_at)}
-          </p>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
-          <CopyJoinLink code={session.id} />
-          <Link
-            href={`/admin/sessions/${session.id}/synthesis`}
-            className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
-          >
-            Synthesis history →
-          </Link>
-          {guard.isAdmin && (
-            <Link
-              href={`/admin/sessions/${session.id}/logs`}
-              className="rounded border border-border bg-card px-2 py-1 text-xs hover:bg-accent"
-            >
-              LLM logs →
-            </Link>
-          )}
-          {/* Set apart from the links: archiving changes what participants see. */}
-          <span className="mx-1 h-5 w-px bg-border" aria-hidden />
-          <ArchiveToggle
-            code={session.id}
-            topic={session.topic ?? ""}
-            archivedAt={session.archived_at}
-            voiceCount={voiceCount}
-          />
-        </div>
-      </header>
-
+    <>
       <section className="space-y-2">
         <h2 className="text-sm font-medium text-muted-foreground">Voices</h2>
         <p className="text-sm">
@@ -224,6 +241,20 @@ export default async function AdminSessionDetail({
           }
         />
       )}
+    </>
+  );
+}
+
+function SessionBodySkeleton() {
+  return (
+    <div className="space-y-3" aria-busy="true" aria-label="Loading">
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="space-y-2 rounded-lg border bg-card p-4">
+          <div className="h-4 w-1/4 animate-pulse rounded bg-muted" />
+          <div className="h-3 w-full animate-pulse rounded bg-muted" />
+          <div className="h-3 w-5/6 animate-pulse rounded bg-muted" />
+        </div>
+      ))}
     </div>
   );
 }
