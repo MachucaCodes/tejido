@@ -1,0 +1,92 @@
+{
+  "tool": "clock-validate",
+  "name": "Before: create error on production",
+  "outcome": "fail",
+  "commit": {
+    "sha": "5999778a2eacd6f44ec1b4ca28fb71ab528d6dea",
+    "branch": "clock-c04d863f-ui-fix-explanations-sit-on-the-page",
+    "dirty": true
+  },
+  "environment": "production, one refused Create (link name exists), nothing written",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:26:25.917Z",
+  "duration_ms": 15246,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 756,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "fail",
+      "ms": 10004,
+      "error": "locator.click: Timeout 10000ms exceeded. (stopped at the app's sign-in page: no login for this address on this machine (see \"Signing in on previews\" in clock-validate help))",
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"esm-rental-policy\" into `#slug`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "fill",
+      "description": "Type \"(test) Is this link name free?\" into `#q`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click `form:has(#slug) button[type=submit]`",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"code already taken\"",
+      "check": true,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Before: database words, away from the field",
+      "check": false,
+      "status": "not run",
+      "ms": null,
+      "error": null,
+      "screenshot": null
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

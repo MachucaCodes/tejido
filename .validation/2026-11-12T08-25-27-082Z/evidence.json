@@ -1,0 +1,248 @@
+{
+  "tool": "clock-validate",
+  "name": "New session: link name, plain errors, draft kept on reload",
+  "outcome": "pass",
+  "commit": {
+    "sha": "5999778a2eacd6f44ec1b4ca28fb71ab528d6dea",
+    "branch": "clock-c04d863f-ui-fix-explanations-sit-on-the-page",
+    "dirty": true
+  },
+  "environment": "PR #15 Vercel preview, production database. One Create with a link name that already exists: refused, nothing written.",
+  "base_url": "https://tejido-git-clock-c04d863f-ui-fix-exp-435661-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:25:28.348Z",
+  "duration_ms": 31237,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1961,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"New session\"",
+      "check": true,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 51,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"ESM Rental Policy\" into `#slug`",
+      "check": false,
+      "status": "pass",
+      "ms": 28,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "spaces became hyphens, capitals lowercased",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "full join link under the field",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"(test) Is this link name free?\" into `#q`",
+      "check": false,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Link name with the join link under it",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "reload",
+      "description": "Reload the page",
+      "check": false,
+      "status": "pass",
+      "ms": 704,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "form survives a reload",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "(test setup) saved chat with a draft and no reply text, to avoid a paid AI call",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "reload",
+      "description": "Reload the page",
+      "check": false,
+      "status": "pass",
+      "ms": 737,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "draft without words gets a line in the chat",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Chat and form restored after reload",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `form:has(#slug) button[type=submit]`",
+      "check": false,
+      "status": "pass",
+      "ms": 46,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "plain error (link name exists, nothing created)",
+      "check": true,
+      "status": "pass",
+      "ms": 185,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "error sits under Link name",
+      "check": true,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "Create turns back on after a refusal",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Taken link name: message under the field",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Sessions\"",
+      "check": false,
+      "status": "pass",
+      "ms": 63,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin$",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1195,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "form survives going to Sessions and back",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "(cleanup) clear the test draft",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-24.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "No real session created, so 'Create stays off while the new page loads' and 'cleared after create' are checked in code only",
+    "No live chat turn (paid AI call): the chat's draft line is shown from a saved test chat"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

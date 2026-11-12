@@ -1,0 +1,129 @@
+{
+ "name": "New session: link name, plain errors, draft kept on reload",
+ "base_url": "https://tejido-git-clock-c04d863f-ui-fix-exp-435661-dane-myers-projects.vercel.app",
+ "environment": "PR #15 Vercel preview, production database. One Create with a link name that already exists: refused, nothing written.",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "limitations": [
+  "No real session created, so 'Create stays off while the new page loads' and 'cleared after create' are checked in code only",
+  "No live chat turn (paid AI call): the chat's draft line is shown from a saved test chat"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "expect_text",
+   "text": "New session"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "fill",
+   "selector": "#slug",
+   "value": "ESM Rental Policy"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('#slug').value",
+   "equals": "esm-rental-policy",
+   "label": "spaces became hyphens, capitals lowercased"
+  },
+  {
+   "do": "expect_text",
+   "text": "/s/esm-rental-policy",
+   "label": "full join link under the field"
+  },
+  {
+   "do": "fill",
+   "selector": "#q",
+   "value": "(test) Is this link name free?"
+  },
+  {
+   "do": "screenshot",
+   "label": "Link name with the join link under it"
+  },
+  {
+   "do": "reload"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('#slug')?.value ?? 'missing'",
+   "equals": "esm-rental-policy",
+   "label": "form survives a reload"
+  },
+  {
+   "do": "expect_js",
+   "js": "(()=>{const k=Object.keys(sessionStorage).find(k=>k.startsWith(\"tejido:new-session:\"));if(!k)return \"no key\";const v=JSON.parse(sessionStorage.getItem(k));v.messages=[{role:\"user\",content:\"(test) a session about rentals\"},{role:\"assistant\",content:\"\",draft:v.values}];sessionStorage.setItem(k,JSON.stringify(v));return \"ok\"})()",
+   "equals": "ok",
+   "label": "(test setup) saved chat with a draft and no reply text, to avoid a paid AI call"
+  },
+  {
+   "do": "reload"
+  },
+  {
+   "do": "expect_text",
+   "text": "Here's a draft in the form below",
+   "label": "draft without words gets a line in the chat"
+  },
+  {
+   "do": "screenshot",
+   "label": "Chat and form restored after reload"
+  },
+  {
+   "do": "click",
+   "selector": "form:has(#slug) button[type=submit]"
+  },
+  {
+   "do": "expect_text",
+   "text": "That link name is already used. Try another.",
+   "label": "plain error (link name exists, nothing created)"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('#code-error') !== null && document.querySelector('#slug').getAttribute('aria-invalid')",
+   "equals": "true",
+   "label": "error sits under Link name"
+  },
+  {
+   "do": "expect_js",
+   "js": "String(document.querySelector('form:has(#slug) button[type=submit]').disabled)",
+   "equals": "false",
+   "label": "Create turns back on after a refusal"
+  },
+  {
+   "do": "screenshot",
+   "label": "Taken link name: message under the field"
+  },
+  {
+   "do": "click",
+   "text": "Sessions"
+  },
+  {
+   "do": "expect_url",
+   "match": "/admin$"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('#slug')?.value ?? 'missing'",
+   "equals": "esm-rental-policy",
+   "label": "form survives going to Sessions and back"
+  },
+  {
+   "do": "expect_js",
+   "js": "(Object.keys(sessionStorage).filter(k=>k.startsWith('tejido:new-session:')).forEach(k=>sessionStorage.removeItem(k)), 'cleared')",
+   "equals": "cleared",
+   "label": "(cleanup) clear the test draft"
+  }
+ ]
+}

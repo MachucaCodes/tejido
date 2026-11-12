@@ -1,0 +1,247 @@
+{
+  "tool": "clock-validate",
+  "name": "Session pages: steady header, themes, Edit labels",
+  "outcome": "pass",
+  "commit": {
+    "sha": "5999778a2eacd6f44ec1b4ca28fb71ab528d6dea",
+    "branch": "clock-c04d863f-ui-fix-explanations-sit-on-the-page",
+    "dirty": true
+  },
+  "environment": "PR #15 Vercel preview, production database, read-only (nothing saved)",
+  "base_url": "https://tejido-git-clock-c04d863f-ui-fix-exp-435661-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:23:32.951Z",
+  "duration_ms": 39845,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 3761,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes\"",
+      "check": true,
+      "status": "pass",
+      "ms": 31,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Overview: themes with points, empty ones folded",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "note the tab row position",
+      "check": true,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"empty themes\"",
+      "check": false,
+      "status": "pass",
+      "ms": 36,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Empty themes opened, dimmed",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Synthesis\"",
+      "check": false,
+      "status": "pass",
+      "ms": 27,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /synthesis",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1513,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "tabs at the same height on Synthesis",
+      "check": true,
+      "status": "pass",
+      "ms": 2,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Synthesis",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Logs\"",
+      "check": false,
+      "status": "pass",
+      "ms": 32,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /logs",
+      "check": true,
+      "status": "pass",
+      "ms": 941,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1512,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "tabs at the same height on Logs",
+      "check": true,
+      "status": "pass",
+      "ms": 7,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Logs",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Settings\"",
+      "check": false,
+      "status": "pass",
+      "ms": 239,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /settings",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Question people are asked\"",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-19.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "tabs at the same height on Settings",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-20.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Summary focus\"",
+      "check": true,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-21.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Link name\"",
+      "check": true,
+      "status": "pass",
+      "ms": 18,
+      "error": null,
+      "screenshot": "step-22.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Auto-translated after you save\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3062,
+      "error": null,
+      "screenshot": "step-23.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Settings: Edit form with the create form's labels",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-24.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Read-only: Save changes not clicked"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

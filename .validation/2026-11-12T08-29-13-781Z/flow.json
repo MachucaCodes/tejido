@@ -1,0 +1,56 @@
+{
+ "name": "After deploy: main build of the merge",
+ "base_url": "https://tejido-7x8idbx1u-dane-myers-projects.vercel.app",
+ "environment": "production deployment of the merge commit, read-only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "limitations": [
+  "Read-only: Save changes not clicked"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy"
+  },
+  {
+   "do": "expect_text",
+   "text": "Themes"
+  },
+  {
+   "do": "screenshot",
+   "label": "Overview: themes with points, empty ones folded"
+  },
+  {
+   "do": "expect_js",
+   "js": "(sessionStorage.setItem(\"navtop\", Math.round(document.querySelector(\"nav[aria-label='Session pages']\").getBoundingClientRect().top)), \"ok\")",
+   "equals": "ok",
+   "label": "note the tab row position"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "fill",
+   "selector": "#slug",
+   "value": "Maple Garden 2026"
+  },
+  {
+   "do": "expect_js",
+   "js": "document.querySelector('#slug').value",
+   "equals": "maple-garden-2026"
+  },
+  {
+   "do": "expect_js",
+   "js": "(Object.keys(sessionStorage).filter(k=>k.startsWith('tejido:new-session:')).forEach(k=>sessionStorage.removeItem(k)),'cleared')",
+   "equals": "cleared"
+  }
+ ]
+}

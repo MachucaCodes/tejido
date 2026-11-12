@@ -1,0 +1,31 @@
+{
+  "title": "Before: create error on production",
+  "slug": "before-create-error-on-production",
+  "out_dir": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-26-18-701Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:26:25.917Z (commit 5999778a2e). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Before: create error on production",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-26-18-701Z/step-01.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-26-18-701Z/step-02.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

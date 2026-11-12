@@ -1,0 +1,119 @@
+{
+ "name": "Session pages: steady header, themes, Edit labels",
+ "base_url": "https://tejido-git-clock-c04d863f-ui-fix-exp-435661-dane-myers-projects.vercel.app",
+ "environment": "PR #15 Vercel preview, production database, read-only (nothing saved)",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "limitations": [
+  "Read-only: Save changes not clicked"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/sessions/esm-rental-policy"
+  },
+  {
+   "do": "expect_text",
+   "text": "Themes"
+  },
+  {
+   "do": "screenshot",
+   "label": "Overview: themes with points, empty ones folded"
+  },
+  {
+   "do": "expect_js",
+   "js": "(sessionStorage.setItem(\"navtop\", Math.round(document.querySelector(\"nav[aria-label='Session pages']\").getBoundingClientRect().top)), \"ok\")",
+   "equals": "ok",
+   "label": "note the tab row position"
+  },
+  {
+   "do": "click",
+   "text": "empty themes"
+  },
+  {
+   "do": "screenshot",
+   "label": "Empty themes opened, dimmed"
+  },
+  {
+   "do": "click",
+   "text": "Synthesis"
+  },
+  {
+   "do": "expect_url",
+   "match": "/synthesis"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "expect_js",
+   "js": "String(Math.round(document.querySelector(\"nav[aria-label='Session pages']\").getBoundingClientRect().top) === Number(sessionStorage.getItem(\"navtop\")))",
+   "equals": "true",
+   "label": "tabs at the same height on Synthesis"
+  },
+  {
+   "do": "screenshot",
+   "label": "Synthesis"
+  },
+  {
+   "do": "click",
+   "text": "Logs"
+  },
+  {
+   "do": "expect_url",
+   "match": "/logs"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "expect_js",
+   "js": "String(Math.round(document.querySelector(\"nav[aria-label='Session pages']\").getBoundingClientRect().top) === Number(sessionStorage.getItem(\"navtop\")))",
+   "equals": "true",
+   "label": "tabs at the same height on Logs"
+  },
+  {
+   "do": "screenshot",
+   "label": "Logs"
+  },
+  {
+   "do": "click",
+   "text": "Settings"
+  },
+  {
+   "do": "expect_url",
+   "match": "/settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Question people are asked"
+  },
+  {
+   "do": "expect_js",
+   "js": "String(Math.round(document.querySelector(\"nav[aria-label='Session pages']\").getBoundingClientRect().top) === Number(sessionStorage.getItem(\"navtop\")))",
+   "equals": "true",
+   "label": "tabs at the same height on Settings"
+  },
+  {
+   "do": "expect_text",
+   "text": "Summary focus"
+  },
+  {
+   "do": "expect_text",
+   "text": "Link name"
+  },
+  {
+   "do": "expect_no_text",
+   "text": "Auto-translated after you save"
+  },
+  {
+   "do": "screenshot",
+   "label": "Settings: Edit form with the create form's labels"
+  }
+ ]
+}

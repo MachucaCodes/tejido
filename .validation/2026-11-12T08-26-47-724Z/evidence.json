@@ -1,0 +1,92 @@
+{
+  "tool": "clock-validate",
+  "name": "Before: create error on production",
+  "outcome": "pass",
+  "commit": {
+    "sha": "5999778a2eacd6f44ec1b4ca28fb71ab528d6dea",
+    "branch": "clock-c04d863f-ui-fix-explanations-sit-on-the-page",
+    "dirty": true
+  },
+  "environment": "main deployment (same code as production), one refused Create (link name exists), nothing written",
+  "base_url": "https://tejido-aul7afi0z-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:26:49.140Z",
+  "duration_ms": 10239,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 2431,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 59,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"esm-rental-policy\" into `#slug`",
+      "check": false,
+      "status": "pass",
+      "ms": 31,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"(test) Is this link name free?\" into `#q`",
+      "check": false,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `form:has(#slug) button[type=submit]`",
+      "check": false,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"code already taken\"",
+      "check": true,
+      "status": "pass",
+      "ms": 790,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Before: database words, away from the field",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

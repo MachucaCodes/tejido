@@ -1,0 +1,185 @@
+{
+  "title": "New session: link name, plain errors, draft kept on reload",
+  "slug": "new-session-link-name-plain-errors-draft-kept-on",
+  "out_dir": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:25:28.348Z (commit 5999778a2e). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "New session: link name, plain errors, draft kept on reload",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-01.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-02.png",
+          "shows": "Page shows \"New session\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-03.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-04.png",
+          "shows": "Type \"ESM Rental Policy\" into `#slug`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-05.png",
+          "shows": "spaces became hyphens, capitals lowercased",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-06.png",
+          "shows": "full join link under the field",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-07.png",
+          "shows": "Type \"(test) Is this link name free?\" into `#q`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-08.png",
+          "shows": "Link name with the join link under it",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-09.png",
+          "shows": "Reload the page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-10.png",
+          "shows": "form survives a reload",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-11.png",
+          "shows": "(test setup) saved chat with a draft and no reply text, to avoid a paid AI call",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-12.png",
+          "shows": "Reload the page",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-13.png",
+          "shows": "draft without words gets a line in the chat",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-14.png",
+          "shows": "Chat and form restored after reload",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-15.png",
+          "shows": "Click `form:has(#slug) button[type=submit]`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-16.png",
+          "shows": "plain error (link name exists, nothing created)",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-17.png",
+          "shows": "error sits under Link name",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-18.png",
+          "shows": "Create turns back on after a refusal",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-19.png",
+          "shows": "Taken link name: message under the field",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-20.png",
+          "shows": "Click \"Sessions\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-21.png",
+          "shows": "URL matches /admin$",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-22.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-23.png",
+          "shows": "form survives going to Sessions and back",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-25-27-082Z/step-24.png",
+          "shows": "(cleanup) clear the test draft",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

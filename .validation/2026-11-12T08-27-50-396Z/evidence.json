@@ -1,0 +1,67 @@
+{
+  "tool": "clock-validate",
+  "name": "Session header at phone width",
+  "outcome": "pass",
+  "commit": {
+    "sha": "5999778a2eacd6f44ec1b4ca28fb71ab528d6dea",
+    "branch": "clock-c04d863f-ui-fix-explanations-sit-on-the-page",
+    "dirty": true
+  },
+  "environment": "PR #15 Vercel preview, production database, read-only (nothing saved)",
+  "base_url": "https://tejido-git-clock-c04d863f-ui-fix-exp-435661-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 390,
+    "height": 844
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:27:51.656Z",
+  "duration_ms": 5255,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 1899,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes\"",
+      "check": true,
+      "status": "pass",
+      "ms": 30,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Overview at 390px",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "no sideways scroll",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-04.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Read-only: Save changes not clicked"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

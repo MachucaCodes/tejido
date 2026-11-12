@@ -1,0 +1,42 @@
+{
+ "name": "Before: create error on production",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "environment": "production, one refused Create (link name exists), nothing written",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 400,
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "fill",
+   "selector": "#slug",
+   "value": "esm-rental-policy"
+  },
+  {
+   "do": "fill",
+   "selector": "#q",
+   "value": "(test) Is this link name free?"
+  },
+  {
+   "do": "click",
+   "selector": "form:has(#slug) button[type=submit]"
+  },
+  {
+   "do": "expect_text",
+   "text": "code already taken"
+  },
+  {
+   "do": "screenshot",
+   "label": "Before: database words, away from the field"
+  }
+ ]
+}

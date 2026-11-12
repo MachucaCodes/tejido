@@ -1,0 +1,171 @@
+{
+  "title": "Session pages: steady header, themes, Edit labels",
+  "slug": "session-pages-steady-header-themes-edit-labels",
+  "out_dir": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:23:32.951Z (commit 5999778a2e). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Session pages: steady header, themes, Edit labels",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-03.png",
+          "shows": "Overview: themes with points, empty ones folded",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-04.png",
+          "shows": "note the tab row position",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-05.png",
+          "shows": "Click \"empty themes\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-06.png",
+          "shows": "Empty themes opened, dimmed",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-07.png",
+          "shows": "Click \"Synthesis\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-08.png",
+          "shows": "URL matches /synthesis",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-10.png",
+          "shows": "tabs at the same height on Synthesis",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-11.png",
+          "shows": "Synthesis",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-12.png",
+          "shows": "Click \"Logs\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-13.png",
+          "shows": "URL matches /logs",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-15.png",
+          "shows": "tabs at the same height on Logs",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-16.png",
+          "shows": "Logs",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-17.png",
+          "shows": "Click \"Settings\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-18.png",
+          "shows": "URL matches /settings",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-19.png",
+          "shows": "Page shows \"Question people are asked\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-20.png",
+          "shows": "tabs at the same height on Settings",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-21.png",
+          "shows": "Page shows \"Summary focus\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-22.png",
+          "shows": "Page shows \"Link name\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-23.png",
+          "shows": "Page does not show \"Auto-translated after you save\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-23-30-915Z/step-24.png",
+          "shows": "Settings: Edit form with the create form's labels",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "tool": "clock-validate",
+  "name": "After deploy: main build of the merge",
+  "outcome": "pass",
+  "commit": {
+    "sha": "5999778a2eacd6f44ec1b4ca28fb71ab528d6dea",
+    "branch": "clock-c04d863f-ui-fix-explanations-sit-on-the-page",
+    "dirty": true
+  },
+  "environment": "production deployment of the merge commit, read-only",
+  "base_url": "https://tejido-7x8idbx1u-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T08:29:15.065Z",
+  "duration_ms": 15412,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/sessions/esm-rental-policy",
+      "check": false,
+      "status": "pass",
+      "ms": 3056,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Themes\"",
+      "check": true,
+      "status": "pass",
+      "ms": 40,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Overview: themes with points, empty ones folded",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "note the tab row position",
+      "check": true,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1325,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Or fill in the form yourself\"",
+      "check": false,
+      "status": "pass",
+      "ms": 67,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Maple Garden 2026\" into `#slug`",
+      "check": false,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`document.querySelector('#slug').value` is \"maple-garden-2026\"",
+      "check": true,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`(Object.keys(sessionStorage).filter(k=>k.startsWith('tejido:new-session:')).forEach(k=>sessionStorage.removeItem(k)),'cleared')` is \"cleared\"",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [],
+  "limitations": [
+    "Read-only: Save changes not clicked"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

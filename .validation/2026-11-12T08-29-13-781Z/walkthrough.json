@@ -1,0 +1,80 @@
+{
+  "title": "After deploy: main build of the merge",
+  "slug": "after-deploy-main-build-of-the-merge",
+  "out_dir": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T08:29:15.065Z (commit 5999778a2e). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "After deploy: main build of the merge",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-01.png",
+          "shows": "Open /admin/sessions/esm-rental-policy",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-02.png",
+          "shows": "Page shows \"Themes\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-03.png",
+          "shows": "Overview: themes with points, empty ones folded",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-04.png",
+          "shows": "note the tab row position",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-05.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-06.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-07.png",
+          "shows": "Type \"Maple Garden 2026\" into `#slug`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-08.png",
+          "shows": "`document.querySelector('#slug').value` is \"maple-garden-2026\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/c04d863f/.validation/2026-11-12T08-29-13-781Z/step-09.png",
+          "shows": "`(Object.keys(sessionStorage).filter(k=>k.startsWith('tejido:new-session:')).forEach(k=>sessionStorage.removeItem(k)),'cleared')` is \"cleared\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}
