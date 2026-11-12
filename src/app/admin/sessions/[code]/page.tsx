@@ -194,7 +194,7 @@ async function SessionBody({
                           className="size-3.5 shrink-0 text-muted-foreground transition-transform group-open:rotate-90"
                           aria-hidden
                         />
-                        <span className="min-w-0 font-medium sm:shrink-0">{t.short_name}</span>
+                        <span className="min-w-0 font-medium sm:max-w-1/2 sm:shrink-0 sm:truncate">{t.short_name}</span>
                         <span className="hidden min-w-0 flex-1 truncate text-sm text-muted-foreground group-open:invisible sm:block">
                           {t.description}
                         </span>
