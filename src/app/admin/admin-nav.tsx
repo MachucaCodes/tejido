@@ -10,20 +10,18 @@ import { usePathname } from "next/navigation";
 export default function AdminNav({ isAdmin }: { isAdmin: boolean }) {
   const pathname = usePathname() ?? "";
   const links = [
-    { href: "/admin", label: isAdmin ? "Home" : "Your sessions", exact: true },
-    ...(isAdmin
-      ? [
-          { href: "/admin/sessions", label: "Sessions", exact: false },
-          { href: "/admin/lists", label: "Lists", exact: false },
-        ]
-      : []),
+    // One entry for the sessions list; creating one and a session's own
+    // pages count as part of it.
+    { href: "/admin", label: isAdmin ? "Sessions" : "Your sessions", match: ["/admin/new", "/admin/sessions"] },
+    ...(isAdmin ? [{ href: "/admin/lists", label: "Lists", match: [] as string[] }] : []),
   ];
-  const isCurrent = (href: string, exact: boolean) =>
-    exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
+  const under = (p: string) => pathname === p || pathname.startsWith(`${p}/`);
+  const isCurrent = (href: string, match: string[]) =>
+    pathname === href || match.some(under) || (href !== "/admin" && under(href));
 
   const [home, ...rest] = links;
   const item = (l: (typeof links)[number]) => {
-    const current = isCurrent(l.href, l.exact);
+    const current = isCurrent(l.href, l.match);
     return (
       <Link
         key={l.href}

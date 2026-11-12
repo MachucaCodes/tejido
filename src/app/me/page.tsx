@@ -103,7 +103,7 @@ export default async function ProfilePage() {
       {/* Any phone-verified account can start its own session. */}
       {!isGuest && (
         <Link
-          href="/admin"
+          href="/admin/new"
           className="mt-8 inline-flex items-center gap-2 rounded-full border border-border/80 bg-background/60 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted-foreground transition-colors hover:border-[var(--accent)]/60 hover:text-foreground"
         >
           {t("createQuestion")}

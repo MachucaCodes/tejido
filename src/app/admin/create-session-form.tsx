@@ -35,12 +35,8 @@ export default function CreateSessionForm() {
       setError(await res.text());
       return;
     }
-    setCode("");
-    setTopic("");
-    setIntroMessage("");
-    setContext("");
-    setInstructions("");
-    router.refresh();
+    // Same as the builder: open the new session.
+    router.push(`/admin/sessions/${code}`);
   };
 
   return (
