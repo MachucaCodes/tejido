@@ -238,6 +238,48 @@ async function SessionBody({
     );
   }
 
+  const sorted = [...(themes ?? [])].sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0));
+  const withPoints = sorted.filter((t) => (counts[t.id] ?? 0) > 0);
+  const empty = sorted.filter((t) => (counts[t.id] ?? 0) === 0);
+  const themeRow = (t: { id: string; short_name: string; description: string }) => {
+    const n = counts[t.id] ?? 0;
+    return (
+      <li key={t.id}>
+        <details className="group">
+          <summary className="flex cursor-pointer list-none items-center gap-3 px-3 py-2 hover:bg-muted/40 [&::-webkit-details-marker]:hidden">
+            <ChevronRight
+              className="size-3.5 shrink-0 text-muted-foreground transition-transform group-open:rotate-90"
+              aria-hidden
+            />
+            <span className="min-w-0 font-medium sm:max-w-1/2 sm:shrink-0 sm:truncate">{capitalize(t.short_name)}</span>
+            <span className="hidden min-w-0 flex-1 truncate text-sm text-muted-foreground group-open:invisible sm:block">
+              {t.description}
+            </span>
+            <span className="ml-auto shrink-0 text-xs tabular-nums text-muted-foreground">
+              {n} {n === 1 ? "point" : "points"}
+            </span>
+          </summary>
+          <div className="space-y-2 px-3 pb-3 pl-9">
+            <p className="text-sm text-muted-foreground">{t.description}</p>
+            {n > 0 && (
+              <Link
+                href={`/s/${code}/points?theme=${t.id}`}
+                // The participant-side points page has no admin nav;
+                // a new tab keeps this overview where it was.
+                target="_blank"
+                rel="noopener"
+                className="inline-flex items-center gap-1 text-xs underline underline-offset-2 hover:text-foreground"
+              >
+                See the {n} {n === 1 ? "point" : "points"}
+                <ExternalLinkIcon className="size-3" aria-hidden />
+              </Link>
+            )}
+          </div>
+        </details>
+      </li>
+    );
+  };
+
   return (
     <>
       <section className="space-y-1">
@@ -261,60 +303,46 @@ async function SessionBody({
 
       <section className="space-y-3">
         <h2 className="text-sm font-medium text-muted-foreground">
-          Themes{themes && themes.length > 0 && ` · ${themes.length}`}
+          Themes{withPoints.length > 0 && ` · ${withPoints.length}`}
         </h2>
         {!themes || themes.length === 0 ? (
           <p className="text-sm text-muted-foreground/80">No themes yet.</p>
         ) : (
-          // One line per theme so the titles scan and the actions below stay
-          // close; the full description opens in place.
-          <ul className="divide-y divide-border rounded-lg border bg-card">
-            {[...themes]
-              .sort((a, b) => (counts[b.id] ?? 0) - (counts[a.id] ?? 0))
-              .map((t) => {
-                const n = counts[t.id] ?? 0;
-                return (
-                  <li key={t.id}>
-                    <details className="group">
-                      <summary className="flex cursor-pointer list-none items-center gap-3 px-3 py-2 hover:bg-muted/40 [&::-webkit-details-marker]:hidden">
-                        <ChevronRight
-                          className="size-3.5 shrink-0 text-muted-foreground transition-transform group-open:rotate-90"
-                          aria-hidden
-                        />
-                        <span className="min-w-0 font-medium sm:max-w-1/2 sm:shrink-0 sm:truncate">{t.short_name}</span>
-                        <span className="hidden min-w-0 flex-1 truncate text-sm text-muted-foreground group-open:invisible sm:block">
-                          {t.description}
-                        </span>
-                        <span className="ml-auto shrink-0 text-xs tabular-nums text-muted-foreground">
-                          {n} {n === 1 ? "point" : "points"}
-                        </span>
-                      </summary>
-                      <div className="space-y-2 px-3 pb-3 pl-9">
-                        <p className="text-sm text-muted-foreground">{t.description}</p>
-                        {n > 0 && (
-                          <Link
-                            href={`/s/${code}/points?theme=${t.id}`}
-                            // The participant-side points page has no admin nav;
-                            // a new tab keeps this overview where it was.
-                            target="_blank"
-                            rel="noopener"
-                            className="inline-flex items-center gap-1 text-xs underline underline-offset-2 hover:text-foreground"
-                          >
-                            See the {n} {n === 1 ? "point" : "points"}
-                            <ExternalLinkIcon className="size-3" aria-hidden />
-                          </Link>
-                        )}
-                      </div>
-                    </details>
-                  </li>
-                );
-              })}
-          </ul>
+          <>
+            {/* One line per theme so the titles scan and the actions below stay
+                close; the full description opens in place. */}
+            {withPoints.length > 0 && (
+              <ul className="divide-y divide-border rounded-lg border bg-card">
+                {withPoints.map(themeRow)}
+              </ul>
+            )}
+            {/* Themes no point landed in say nothing about the results: fold
+                them away so they aren't read or counted as findings. */}
+            {empty.length > 0 && (
+              <details className="group/empty">
+                <summary className="flex cursor-pointer list-none items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground [&::-webkit-details-marker]:hidden">
+                  <ChevronRight
+                    className="size-3.5 transition-transform group-open/empty:rotate-90"
+                    aria-hidden
+                  />
+                  {empty.length} empty {empty.length === 1 ? "theme" : "themes"}
+                </summary>
+                <ul className="mt-2 divide-y divide-border rounded-lg border bg-card text-muted-foreground">
+                  {empty.map(themeRow)}
+                </ul>
+              </details>
+            )}
+          </>
         )}
       </section>
 
     </>
   );
+}
+
+// Theme titles come from the model in mixed case; show them as titles.
+function capitalize(s: string) {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 function SessionBodySkeleton() {
