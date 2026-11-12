@@ -1,13 +1,13 @@
 "use client";
 
-import { InfoIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 import type { PersonMatch } from "@/app/api/admin/people/route";
+import { InfoTip } from "@/components/info-tip";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 /**
  * "Add numbers" button for the Members heading. Search and paste live in a
@@ -165,20 +165,11 @@ export default function AddMembersForm({ listId, memberPhones }: { listId: strin
                 <label className="text-xs font-medium" htmlFor="numbers">
                   Or paste numbers
                 </label>
-                <Tooltip>
-                  <TooltipTrigger
-                    type="button"
-                    aria-label="How to paste numbers"
-                    className="rounded p-0.5 text-muted-foreground hover:text-foreground"
-                  >
-                    <InfoIcon className="size-3.5" aria-hidden />
-                  </TooltipTrigger>
-                  <TooltipContent className="max-w-xs">
-                    One per line: phone, then an optional name and language (en or es), separated by commas or
-                    tabs. Numbers without a + are read as Costa Rica. With no language, +506 numbers get
-                    Spanish and the rest English.
-                  </TooltipContent>
-                </Tooltip>
+                <InfoTip label="How to paste numbers">
+                  One per line: phone, then an optional name and language (en or es), separated by commas or
+                  tabs. Numbers without a + are read as Costa Rica. With no language, +506 numbers get
+                  Spanish and the rest English.
+                </InfoTip>
               </div>
               <textarea
                 id="numbers"
