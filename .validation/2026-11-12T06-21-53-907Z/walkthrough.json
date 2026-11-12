@@ -1,0 +1,150 @@
+{
+  "title": "List page: header + members; add and edit in dialogs",
+  "slug": "list-page-header-members-add-and-edit-in-dialogs",
+  "out_dir": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:21:55.250Z (commit d9024d7cea). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "List page: header + members; add and edit in dialogs",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-01.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-02.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-03.png",
+          "shows": "Page does not show \"List settings\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-04.png",
+          "shows": "Page does not show \"Or paste numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-05.png",
+          "shows": "Page is the header and the members",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-06.png",
+          "shows": "Click \"Add numbers\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-07.png",
+          "shows": "Page shows \"Or paste numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-08.png",
+          "shows": "Add numbers dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-09.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-10.png",
+          "shows": "Click `button:has-text('Edit')`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-11.png",
+          "shows": "Page shows \"Edit list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-12.png",
+          "shows": "Edit list dialog: Name, Description, Save, delete apart",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-13.png",
+          "shows": "Click `[aria-label='Delete list']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-14.png",
+          "shows": "Page shows \"Its numbers are kept\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-15.png",
+          "shows": "Delete asks to confirm",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-16.png",
+          "shows": "Click \"Cancel\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-17.png",
+          "shows": "Page shows \"Edit list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-18.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-21-53-907Z/step-19.png",
+          "shows": "Page does not show \"Edit list\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "name": "List page: members first, add numbers in a dialog",
+  "base_url": "http://127.0.0.1:4173",
+  "login": "tejido",
+  "environment": "next start of this branch, production Supabase, read-only (nothing added)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 600,
+  "redact": ["main ul li p"],
+  "limitations": ["Does not add any number (production data)"],
+  "steps": [
+    { "do": "goto", "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb" },
+    { "do": "expect_text", "text": "Members" },
+    { "do": "expect_no_text", "text": "Or paste numbers" },
+    { "do": "screenshot", "label": "List page opens on Members" },
+    { "do": "click", "text": "Add numbers" },
+    { "do": "expect_text", "text": "Or paste numbers" },
+    { "do": "screenshot", "label": "Add numbers dialog" },
+    { "do": "click", "selector": "[aria-label='How to paste numbers']" },
+    { "do": "wait", "ms": 600 },
+    { "do": "screenshot", "label": "Paste help behind the info icon" },
+    { "do": "press", "key": "Escape" },
+    { "do": "expect_no_text", "text": "Or paste numbers" }
+  ]
+}

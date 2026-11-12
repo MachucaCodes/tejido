@@ -1,0 +1,204 @@
+{
+  "tool": "clock-validate",
+  "name": "List page: header + members; add and edit in dialogs",
+  "outcome": "pass",
+  "commit": {
+    "sha": "d9024d7ceaa23148bace6f9285495f3142fc59e4",
+    "branch": "clock-02d9bcf8-ui-mockup-list-page-opens-on-a-big-add",
+    "dirty": true
+  },
+  "environment": "production after merge, read-only (nothing saved, added or deleted)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:21:55.250Z",
+  "duration_ms": 34908,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 1819,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members\"",
+      "check": true,
+      "status": "pass",
+      "ms": 25,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"List settings\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3038,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Or paste numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3057,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Page is the header and the members",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Add numbers\"",
+      "check": false,
+      "status": "pass",
+      "ms": 57,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Or paste numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 14,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Add numbers dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 49,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `button:has-text('Edit')`",
+      "check": false,
+      "status": "pass",
+      "ms": 49,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Edit list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 4,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Edit list dialog: Name, Description, Save, delete apart",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='Delete list']`",
+      "check": false,
+      "status": "pass",
+      "ms": 95,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Its numbers are kept\"",
+      "check": true,
+      "status": "pass",
+      "ms": 17,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Delete asks to confirm",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Cancel\"",
+      "check": false,
+      "status": "pass",
+      "ms": 44,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Edit list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-17.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 12,
+      "error": null,
+      "screenshot": "step-18.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Edit list\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3055,
+      "error": null,
+      "screenshot": "step-19.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "main ul li p"
+  ],
+  "limitations": [
+    "Does not save, add or delete anything (production data)"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

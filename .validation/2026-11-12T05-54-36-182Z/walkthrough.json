@@ -1,0 +1,31 @@
+{
+  "title": "List page: members first, add numbers in a dialog",
+  "slug": "list-page-members-first-add-numbers-in-a-dialog",
+  "out_dir": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T05-54-36-182Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T05:54:38.468Z (commit da2c2519e6). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "List page: members first, add numbers in a dialog",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T05-54-36-182Z/step-01.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T05-54-36-182Z/step-02.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

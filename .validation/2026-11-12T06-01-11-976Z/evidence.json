@@ -1,0 +1,141 @@
+{
+  "tool": "clock-validate",
+  "name": "List page: members first, add numbers in a dialog",
+  "outcome": "pass",
+  "commit": {
+    "sha": "68553791a060d5bf1fe79ab5737d338886a207bd",
+    "branch": "clock-02d9bcf8-ui-mockup-list-page-opens-on-a-big-add",
+    "dirty": true
+  },
+  "environment": "PR preview, production Supabase, read-only (nothing added)",
+  "base_url": "https://tejido-git-clock-02d9bcf8-ui-mockup-e5f195-dane-myers-projects.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-12T06:01:32.174Z",
+  "duration_ms": 24506,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+      "check": false,
+      "status": "pass",
+      "ms": 3055,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Members\"",
+      "check": true,
+      "status": "pass",
+      "ms": 38,
+      "error": null,
+      "screenshot": "step-02.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Or paste numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3079,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "List page opens on Members",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"Add numbers\"",
+      "check": false,
+      "status": "pass",
+      "ms": 74,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "expect_text",
+      "description": "Page shows \"Or paste numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "Add numbers dialog",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `[aria-label='How to paste numbers']`",
+      "check": false,
+      "status": "pass",
+      "ms": 74,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 600 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 607,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "Paste help behind the info icon",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-10.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Escape",
+      "check": false,
+      "status": "pass",
+      "ms": 21,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "expect_no_text",
+      "description": "Page does not show \"Or paste numbers\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3045,
+      "error": null,
+      "screenshot": "step-12.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "main ul li p"
+  ],
+  "limitations": [
+    "Does not add any number (production data)"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

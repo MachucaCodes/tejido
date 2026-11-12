@@ -1,0 +1,94 @@
+{
+  "title": "List page: members first, add numbers in a dialog",
+  "slug": "list-page-members-first-add-numbers-in-a-dialog",
+  "out_dir": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-12T06:01:32.174Z (commit 68553791a0). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "List page: members first, add numbers in a dialog",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-01.png",
+          "shows": "Open /admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-02.png",
+          "shows": "Page shows \"Members\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-03.png",
+          "shows": "Page does not show \"Or paste numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-04.png",
+          "shows": "List page opens on Members",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-05.png",
+          "shows": "Click \"Add numbers\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-06.png",
+          "shows": "Page shows \"Or paste numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-07.png",
+          "shows": "Add numbers dialog",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-08.png",
+          "shows": "Click `[aria-label='How to paste numbers']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-10.png",
+          "shows": "Paste help behind the info icon",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-11.png",
+          "shows": "Press Escape",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/02d9bcf8/.validation/2026-11-12T06-01-11-976Z/step-12.png",
+          "shows": "Page does not show \"Or paste numbers\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

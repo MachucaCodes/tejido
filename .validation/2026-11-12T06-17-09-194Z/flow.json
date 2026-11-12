@@ -1,0 +1,94 @@
+{
+  "name": "List page: header + members; add and edit in dialogs",
+  "base_url": "https://tejido-git-clock-02d9bcf8-ui-mockup-e5f195-dane-myers-projects.vercel.app",
+  "environment": "PR preview, production Supabase, read-only (nothing added)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "pace_ms": 600,
+  "redact": [
+    "main ul li p"
+  ],
+  "limitations": [
+    "Does not save, add or delete anything (production data)"
+  ],
+  "steps": [
+    {
+      "do": "goto",
+      "url": "/admin/lists/1e22d2d0-e2aa-48f6-bf20-439f3539c5eb"
+    },
+    {
+      "do": "expect_text",
+      "text": "Members"
+    },
+    {
+      "do": "expect_no_text",
+      "text": "List settings"
+    },
+    {
+      "do": "expect_no_text",
+      "text": "Or paste numbers"
+    },
+    {
+      "do": "screenshot",
+      "label": "Page is the header and the members"
+    },
+    {
+      "do": "click",
+      "text": "Add numbers"
+    },
+    {
+      "do": "expect_text",
+      "text": "Or paste numbers"
+    },
+    {
+      "do": "screenshot",
+      "label": "Add numbers dialog"
+    },
+    {
+      "do": "press",
+      "key": "Escape"
+    },
+    {
+      "do": "click",
+      "selector": "button:has-text('Edit')"
+    },
+    {
+      "do": "expect_text",
+      "text": "Edit list"
+    },
+    {
+      "do": "screenshot",
+      "label": "Edit list dialog: Name, Description, Save, delete apart"
+    },
+    {
+      "do": "click",
+      "selector": "[aria-label='Delete list']"
+    },
+    {
+      "do": "expect_text",
+      "text": "Its numbers are kept"
+    },
+    {
+      "do": "screenshot",
+      "label": "Delete asks to confirm"
+    },
+    {
+      "do": "click",
+      "text": "Cancel"
+    },
+    {
+      "do": "expect_text",
+      "text": "Edit list"
+    },
+    {
+      "do": "press",
+      "key": "Escape"
+    },
+    {
+      "do": "expect_no_text",
+      "text": "Edit list"
+    }
+  ]
+}
