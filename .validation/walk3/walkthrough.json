@@ -1,0 +1,108 @@
+{
+  "title": "Start a session: chat builder to a draft, stop before Create",
+  "slug": "start-a-session-chat-builder-to-a-draft-stop-bef",
+  "out_dir": "/srv/agent-runs/275983d2/.validation/walk3/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-13T19:07:26.362Z (commit fa2062dfcf). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Start a session: chat builder to a draft, stop before Create",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-01.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-03.png",
+          "shows": "Type \"I want to hear how neighbours feel about the shared tool library and how it should be run.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-04.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-06.png",
+          "shows": "5a waiting for the first reply",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-07.png",
+          "shows": "reply 1 done",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-08.png",
+          "shows": "Type \"Everyone who lives here. Keep it simple, anonymous is fine. You have enough, please draft it now.\" into `input[placeholder^='Describe']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-09.png",
+          "shows": "Press Enter",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-11.png",
+          "shows": "reply 2 done",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-13.png",
+          "shows": "5b after reply 2",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-14.png",
+          "shows": "form shown",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-15.png",
+          "shows": "`window.scrollTo(0,0); 'ok'` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-16.png",
+          "shows": "5c top of page after draft",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk3/step-17.png",
+          "shows": "measure numbers (expected to fail, prints values)",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

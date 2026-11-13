@@ -1,0 +1,59 @@
+{
+  "title": "Measure: home, sessions hover",
+  "slug": "measure-home-sessions-hover",
+  "out_dir": "/srv/agent-runs/275983d2/.validation/m1/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-13T19:10:21.470Z (commit fa2062dfcf). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Measure: home, sessions hover",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m1/step-01.png",
+          "shows": "Open /",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m1/step-03.png",
+          "shows": "Home",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m1/step-04.png",
+          "shows": "Click `header a[href='/me']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m1/step-06.png",
+          "shows": "Click `main a[href='/admin']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m1/step-07.png",
+          "shows": "URL matches /admin",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m1/step-09.png",
+          "shows": "hover colours (prints)",
+          "proves": "Checked automatically: fail.",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "title": "Start a session: manual form states and the landing page",
+  "slug": "start-a-session-manual-form-states-and-the-landi",
+  "out_dir": "/srv/agent-runs/275983d2/.validation/walk4/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-13T19:09:19.170Z (commit fa2062dfcf). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Start a session: manual form states and the landing page",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-01.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-03.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-05.png",
+          "shows": "manual form empty",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-06.png",
+          "shows": "Click \"Create session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-08.png",
+          "shows": "empty Create: browser validation",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-09.png",
+          "shows": "Type \"Tool Library \" into `#slug`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-11.png",
+          "shows": "trailing hyphen",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-12.png",
+          "shows": "Open /admin/sessions/daily-life-together?created=1",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-14.png",
+          "shows": "7 landing with created",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-16.png",
+          "shows": "`window.scrollTo(0, document.body.scrollHeight); 'ok'` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-17.png",
+          "shows": "7 landing bottom",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-18.png",
+          "shows": "Open /admin/sessions/no-such-session-zz",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk4/step-20.png",
+          "shows": "not found",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

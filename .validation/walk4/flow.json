@@ -1,0 +1,100 @@
+{
+ "name": "Start a session: manual form states and the landing page",
+ "base_url": "https://tejido-zeta.vercel.app",
+ "environment": "production, signed in as Dane, look only",
+ "viewport": {
+  "width": 1440,
+  "height": 900
+ },
+ "pace_ms": 600,
+ "redact": [
+  "header a[href='/me']"
+ ],
+ "limitations": [
+  "Create session not clicked; landing page shown on an existing 0-voice session with ?created=1"
+ ],
+ "steps": [
+  {
+   "do": "goto",
+   "url": "/admin/new"
+  },
+  {
+   "do": "wait",
+   "ms": 1200
+  },
+  {
+   "do": "click",
+   "text": "Or fill in the form yourself"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "manual form empty"
+  },
+  {
+   "do": "click",
+   "text": "Create session"
+  },
+  {
+   "do": "wait",
+   "ms": 800
+  },
+  {
+   "do": "screenshot",
+   "label": "empty Create: browser validation"
+  },
+  {
+   "do": "fill",
+   "selector": "#slug",
+   "value": "Tool Library "
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "screenshot",
+   "label": "trailing hyphen"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/daily-life-together?created=1"
+  },
+  {
+   "do": "wait",
+   "ms": 2500
+  },
+  {
+   "do": "screenshot",
+   "label": "7 landing with created"
+  },
+  {
+   "do": "wait",
+   "ms": 500
+  },
+  {
+   "do": "expect_js",
+   "js": "window.scrollTo(0, document.body.scrollHeight); 'ok'",
+   "equals": "ok"
+  },
+  {
+   "do": "screenshot",
+   "label": "7 landing bottom"
+  },
+  {
+   "do": "goto",
+   "url": "/admin/sessions/no-such-session-zz"
+  },
+  {
+   "do": "wait",
+   "ms": 1500
+  },
+  {
+   "do": "screenshot",
+   "label": "not found"
+  }
+ ]
+}

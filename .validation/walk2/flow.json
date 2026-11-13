@@ -1,0 +1,20 @@
+{
+  "name": "Start a session: chat builder draft, stop before Create",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production, signed in as Dane, look only (chat drafts only, nothing created)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 700,
+  "redact": ["header a[href='/me']"],
+  "limitations": ["Create session not clicked"],
+  "steps": [
+    { "do": "goto", "url": "/admin/new" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "fill", "selector": "input[placeholder^='Describe']", "value": "I want to hear how neighbours feel about the shared tool library and how it should be run." },
+    { "do": "press", "key": "Enter" },
+    { "do": "wait", "ms": 2500 },
+    { "do": "screenshot", "label": "5 chat replying (loading)" },
+    { "do": "wait", "ms": 30000 },
+    { "do": "screenshot", "label": "6 after first reply" },
+    { "do": "expect_js", "js": "String(!!document.getElementById('slug'))", "equals": "true", "label": "form filled?", "timeout_ms": 45000 }
+  ]
+}

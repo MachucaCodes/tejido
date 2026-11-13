@@ -1,0 +1,8 @@
+{"code":"F6","title":"Step 5: the focused form field gets a red-orange ring that reads as an error","kind":"consistency","severity":"low","confidence":"high",
+"where":"/admin/new, any focused field (global outline-ring/50, --ring is terracotta), 1440×900",
+"what_happens":"The Question box I'd just filled shows a red-orange outline, the same look as the invalid Link name a moment before. Dane agreed with this on the sign-in page; it's the same global ring here.",
+"who_hurts":"An admin editing the draft: each field they click looks like it has an error.",
+"suggested_fix":"Same fix as agreed for sign-in: a neutral or primary-green focus ring (--ring in globals.css), so red stays for errors.",
+"rule":"established pattern: earlier agreed finding on sign-in focus ring","origin":"earlier",
+"screen":"New session","path":"Start a session","step":"5: edit the draft in the form",
+"fingerprint":"/admin/new|globals.css|consistency|focus ring looks like error"}

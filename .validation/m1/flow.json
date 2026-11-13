@@ -1,0 +1,19 @@
+{
+  "name": "Measure: home, sessions hover",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production, signed in as Dane, look only",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 500,
+  "redact": ["header a[href='/me']", "main h1", "main header p"],
+  "steps": [
+    { "do": "goto", "url": "/" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "measure", "boxes": { "F1": "header a[href='/me']" }, "label": "Home" },
+    { "do": "click", "selector": "header a[href='/me']" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "click", "selector": "main a[href='/admin']" },
+    { "do": "expect_url", "match": "/admin" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "expect_js", "js": "(()=>{const a=document.querySelector(\"a[href='/admin/sessions/esm-rental-policy']\"); const s=getComputedStyle(a), p=getComputedStyle(a.querySelectorAll('p')[1]); return s.backgroundColor+' | '+p.color+' | hover='+a.matches(':hover')})()", "equals": "x", "label": "hover colours (prints)" }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "Start a session: front door to New session",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production, signed in as Dane, look only",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 700,
+  "redact": ["a[href='/me']", "main h1", "main header p"],
+  "limitations": ["Look only: nothing saved"],
+  "steps": [
+    { "do": "goto", "url": "/" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "screenshot", "label": "1 home" },
+    { "do": "click", "selector": "header a[href='/me']" },
+    { "do": "expect_url", "match": "/me" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "screenshot", "label": "2 profile" },
+    { "do": "click", "selector": "main a[href='/admin']" },
+    { "do": "expect_url", "match": "/admin" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "screenshot", "label": "3 admin sessions" },
+    { "do": "click", "text": "New session" },
+    { "do": "expect_url", "match": "/admin/new" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "screenshot", "label": "4 new session" }
+  ]
+}

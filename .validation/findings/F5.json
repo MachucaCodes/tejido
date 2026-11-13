@@ -1,0 +1,8 @@
+{"code":"F5","title":"Step 4: after one failed chat reply, a '…' stays forever and every later message fails too","kind":"state","severity":"medium","confidence":"medium",
+"where":"/admin/new, SessionBuilder (src/app/admin/session-builder.tsx), chat error state; from code, not seen",
+"what_happens":"From code, not seen (an error can't be forced on production without breaking something). When a reply fails, the empty reply bubble stays as a grey '…' that looks like it's still thinking, under 'Something went wrong. Try again.'. Trying again sends that empty assistant message back to the model; toApiMessages (src/lib/session-builder.ts) turns it into an assistant turn with no content, which the Anthropic API rejects, so every retry fails the same way and adds another '…'. Only a reload clears it (loadSaved drops empty replies).",
+"who_hurts":"An admin building a session with the chat: one hiccup (timeout, model overload) and the chat looks stuck and keeps failing; they don't know a reload fixes it and may give up on the chat.",
+"suggested_fix":"In the catch in session-builder.tsx send(), drop the empty last assistant message (setMessages(prev => prev.at(-1)?.content || prev.at(-1)?.draft ? prev : prev.slice(0,-1))), and put the user's text back in the input. Optionally skip empty assistant turns in toApiMessages too.",
+"rule":"general: error state must let you retry","origin":"earlier: chat builder (before #13)",
+"screen":"New session","path":"Start a session","step":"4: describe the session in the chat",
+"fingerprint":"/admin/new|SessionBuilder|state|failed reply blocks retries"}

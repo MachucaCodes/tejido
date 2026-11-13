@@ -1,0 +1,186 @@
+{
+  "tool": "clock-validate",
+  "name": "Start a session: chat builder to a draft, stop before Create",
+  "outcome": "fail",
+  "commit": {
+    "sha": "fa2062dfcf7ecf713d12dfa6052b8c59d99f6003",
+    "branch": "clock-275983d2-ui-audit-walk-start-a-session-as-an",
+    "dirty": true
+  },
+  "environment": "production, signed in as Dane, look only (chat drafts only, nothing created)",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-13T19:07:26.362Z",
+  "duration_ms": 39927,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /admin/new",
+      "check": false,
+      "status": "pass",
+      "ms": 1869,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "fill",
+      "description": "Type \"I want to hear how neighbours feel about the shared tool library and how it should be run.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 9,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1200 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1203,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "5a waiting for the first reply",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "reply 1 done",
+      "check": true,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "fill",
+      "description": "Type \"Everyone who lives here. Keep it simple, anonymous is fine. You have enough, please draft it now.\" into `input[placeholder^='Describe']`",
+      "check": false,
+      "status": "pass",
+      "ms": 6,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "press",
+      "description": "Press Enter",
+      "check": false,
+      "status": "pass",
+      "ms": 5,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 5000 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 5002,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "reply 2 done",
+      "check": true,
+      "status": "pass",
+      "ms": 408,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 2500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 2504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "5b after reply 2",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "form shown",
+      "check": true,
+      "status": "pass",
+      "ms": 2,
+      "error": null,
+      "screenshot": "step-14.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "`window.scrollTo(0,0); 'ok'` is \"ok\"",
+      "check": true,
+      "status": "pass",
+      "ms": 3,
+      "error": null,
+      "screenshot": "step-15.png"
+    },
+    {
+      "do": "screenshot",
+      "description": "5c top of page after draft",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-16.png"
+    },
+    {
+      "do": "expect_js",
+      "description": "measure numbers (expected to fail, prints values)",
+      "check": true,
+      "status": "fail",
+      "ms": 10161,
+      "error": "got \"{\\\"slug\\\":\\\"tool-library\\\",\\\"scrollH\\\":1502,\\\"btnY\\\":1421}\"",
+      "screenshot": "step-17.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "header a[href='/me']"
+  ],
+  "limitations": [
+    "Create session not clicked"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

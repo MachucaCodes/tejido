@@ -1,0 +1,115 @@
+{
+  "tool": "clock-validate",
+  "name": "Measure: home, sessions hover",
+  "outcome": "fail",
+  "commit": {
+    "sha": "fa2062dfcf7ecf713d12dfa6052b8c59d99f6003",
+    "branch": "clock-275983d2-ui-audit-walk-start-a-session-as-an",
+    "dirty": true
+  },
+  "environment": "production, signed in as Dane, look only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-13T19:10:21.470Z",
+  "duration_ms": 25837,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /",
+      "check": false,
+      "status": "pass",
+      "ms": 1631,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1504,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "measure",
+      "description": "Home",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png",
+      "boxes": "step-03.boxes.json"
+    },
+    {
+      "do": "click",
+      "description": "Click `header a[href='/me']`",
+      "check": false,
+      "status": "pass",
+      "ms": 22,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "click",
+      "description": "Click `main a[href='/admin']`",
+      "check": false,
+      "status": "pass",
+      "ms": 19,
+      "error": null,
+      "screenshot": "step-06.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "expect_js",
+      "description": "hover colours (prints)",
+      "check": true,
+      "status": "fail",
+      "ms": 10172,
+      "error": "got \"lab(50.1952 38.9085 37.0691) | lab(39.9367 -4.76244 6.47206) | hover=true\"",
+      "screenshot": "step-09.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "header a[href='/me']",
+    "main h1",
+    "main header p"
+  ],
+  "limitations": [],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

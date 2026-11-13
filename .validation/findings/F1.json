@@ -1,0 +1,8 @@
+{"code":"F1","title":"Steps 1–2: no way into admin from the home page; it hides behind your name, then the profile page","kind":"clarity","severity":"medium","confidence":"high",
+"where":"/ (site header) and /me, 1440×900, signed in as admin",
+"what_happens":"The home page is the participant directory with no admin or 'New session' link. The only way in is the name chip at the top right (it doesn't look like a menu), which opens the participant profile, where 'Manage your sessions' and 'Create a new session' sit as small mono-caps pills next to Log out. That's 2 extra screens and a guess before admin starts.",
+"who_hurts":"An admin starting the main path from the front door: they have to know that their name leads to admin; a new organizer may not find it at all.",
+"suggested_fix":"For organizers, add a quiet 'Admin' (or 'Sessions') link in the site header beside the name chip (site-header.tsx already loads the user; requireOrganizer gives the role).",
+"rule":"project user path: Start a session starts with 'Open admin'; keep the trip short","origin":"earlier",
+"screen":"Home","path":"Start a session","step":"1: open admin from the home page",
+"fingerprint":"/|site-header|clarity|no admin entry from home"}

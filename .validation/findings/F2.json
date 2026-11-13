@@ -1,0 +1,8 @@
+{"code":"F2","title":"Step 3: hovering a session row turns it terracotta, and its grey second line and voice count become unreadable","kind":"access","severity":"low","confidence":"high",
+"where":"/admin sessions list, SessionRow hover (hover:bg-accent), 1440×900",
+"what_happens":"On hover the row background becomes the accent terracotta (lab L≈50) while the code, date and '3 voices' stay muted grey (L≈40): about 1.4:1 contrast. The dark title is about 3:1.",
+"who_hurts":"An admin moving the mouse down the list to find a session: the row under the pointer is the one they can't read.",
+"suggested_fix":"Use a light hover like the theme rows (hover:bg-muted/40) in session-row.tsx, or set text-accent-foreground on hover.",
+"rule":"general: WCAG 2.2 1.4.3; established pattern: theme rows on the session Overview use hover:bg-muted/40","origin":"earlier",
+"screen":"Sessions","path":"Start a session","step":"3: sessions list, click New session",
+"fingerprint":"/admin|SessionRow|access|hover row low contrast"}

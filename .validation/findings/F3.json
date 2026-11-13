@@ -1,0 +1,9 @@
+{"code":"F3","title":"Step 6: Create puts the session on everyone's front page at once, and nothing says so","kind":"clarity","severity":"medium","confidence":"medium",
+"where":"/admin/new, Create session (create-session-form.tsx) → POST /api/admin/sessions; public home src/app/page.tsx; from code",
+"what_happens":"From code. The insert sets no status, so it gets the default 'open'. The public home page lists every open, unarchived session under 'Open conversations' for anyone who visits, so the new session shows there the moment Create is clicked. The form has no hint of this and no way to create it unlisted or as a draft. The admin lands on 'Session created. Share the link to start.', which suggests nobody sees it until they share.",
+"who_hurts":"An admin trying out a draft or a test question: it shows up straight away for the whole community on the home page, and they can't tell this from the form or the page they land on.",
+"suggested_fix":"Smallest: say it on the landing message ('Session created. It's open and listed on the home page.') or in the Create button's confirm. Bigger (owner's call): create as closed or unlisted until the admin shares it.",
+"rule":"opinion / clarity: a clear sign of what happened after each step (project user-path rules)","origin":"earlier",
+"owners_call":"Is it intended that every new session goes straight onto the public home page?",
+"screen":"New session","path":"Start a session","step":"6: Create session (not clicked; read from code)",
+"fingerprint":"/admin/new|create-session-form|clarity|new session listed publicly"}

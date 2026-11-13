@@ -1,0 +1,25 @@
+{
+  "name": "Measure: sessions hover, new session form",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production, signed in as Dane, look only",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 500,
+  "redact": ["header a[href='/me']"],
+  "steps": [
+    { "do": "goto", "url": "/me" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "click", "selector": "main a[href='/admin']" },
+    { "do": "expect_url", "match": "/admin" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "measure", "boxes": { "F2": "a[href='/admin/sessions/esm-rental-policy']" }, "label": "Sessions" },
+    { "do": "goto", "url": "/admin/new" },
+    { "do": "wait", "ms": 1200 },
+    { "do": "click", "text": "Or fill in the form yourself" },
+    { "do": "wait", "ms": 600 },
+    { "do": "fill", "selector": "#slug", "value": "Tool Library " },
+    { "do": "fill", "selector": "#q", "value": "How do you feel about our shared tool library?" },
+    { "do": "expect_js", "js": "window.scrollTo(0, 300); 'ok'", "equals": "ok" },
+    { "do": "wait", "ms": 600 },
+    { "do": "measure", "boxes": { "F3": {"text": "Create session"}, "F4": "#join-url", "F5": "input[placeholder^='Describe']", "F6": "#q" }, "label": "New session" }
+  ]
+}

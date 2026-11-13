@@ -1,0 +1,94 @@
+{
+  "title": "Start a session: front door to New session",
+  "slug": "start-a-session-front-door-to-new-session",
+  "out_dir": "/srv/agent-runs/275983d2/.validation/walk1/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-13T19:04:39.173Z (commit fa2062dfcf). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Start a session: front door to New session",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-01.png",
+          "shows": "Open /",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-03.png",
+          "shows": "1 home",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-04.png",
+          "shows": "Click `header a[href='/me']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-05.png",
+          "shows": "URL matches /me",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-07.png",
+          "shows": "2 profile",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-08.png",
+          "shows": "Click `main a[href='/admin']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-09.png",
+          "shows": "URL matches /admin",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-11.png",
+          "shows": "3 admin sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-12.png",
+          "shows": "Click \"New session\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-13.png",
+          "shows": "URL matches /admin/new",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/walk1/step-15.png",
+          "shows": "4 new session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

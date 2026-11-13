@@ -1,0 +1,170 @@
+{
+  "tool": "clock-validate",
+  "name": "Start a session: front door to New session",
+  "outcome": "pass",
+  "commit": {
+    "sha": "fa2062dfcf7ecf713d12dfa6052b8c59d99f6003",
+    "branch": "clock-275983d2-ui-audit-walk-start-a-session-as-an",
+    "dirty": true
+  },
+  "environment": "production, signed in as Dane, look only",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "browser": "Chrome 157.0.8103.38 (headless), signed in as Dane (copy of his base VM Chrome), app signed in as Dane (dane+clock-owner@danemyers.com, a session made for this run and signed out after)",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "host": "clock-fsn1",
+  "started_at": "2026-11-13T19:04:39.173Z",
+  "duration_ms": 26616,
+  "steps": [
+    {
+      "do": "goto",
+      "description": "Open /",
+      "check": false,
+      "status": "pass",
+      "ms": 3283,
+      "error": null,
+      "screenshot": "step-01.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1503,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "1 home",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-03.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `header a[href='/me']`",
+      "check": false,
+      "status": "pass",
+      "ms": 52,
+      "error": null,
+      "screenshot": "step-04.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /me",
+      "check": true,
+      "status": "pass",
+      "ms": 607,
+      "error": null,
+      "screenshot": "step-05.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "2 profile",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-07.png"
+    },
+    {
+      "do": "click",
+      "description": "Click `main a[href='/admin']`",
+      "check": false,
+      "status": "pass",
+      "ms": 15,
+      "error": null,
+      "screenshot": "step-08.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-09.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "3 admin sessions",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-11.png"
+    },
+    {
+      "do": "click",
+      "description": "Click \"New session\"",
+      "check": false,
+      "status": "pass",
+      "ms": 33,
+      "error": null,
+      "screenshot": "step-12.png"
+    },
+    {
+      "do": "expect_url",
+      "description": "URL matches /admin/new",
+      "check": true,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-13.png"
+    },
+    {
+      "do": "wait",
+      "description": "Wait 1500 ms",
+      "check": false,
+      "status": "pass",
+      "ms": 1502,
+      "error": null,
+      "screenshot": null
+    },
+    {
+      "do": "screenshot",
+      "description": "4 new session",
+      "check": false,
+      "status": "pass",
+      "ms": 0,
+      "error": null,
+      "screenshot": "step-15.png"
+    }
+  ],
+  "page_errors": [],
+  "redacted": [
+    "a[href='/me']",
+    "main h1",
+    "main header p"
+  ],
+  "limitations": [
+    "Look only: nothing saved"
+  ],
+  "files": {
+    "recording": "recording.webm",
+    "trace": "trace.zip"
+  }
+}

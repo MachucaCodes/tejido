@@ -1,0 +1,28 @@
+{
+  "name": "Start a session: chat builder to a draft, stop before Create",
+  "base_url": "https://tejido-zeta.vercel.app",
+  "environment": "production, signed in as Dane, look only (chat drafts only, nothing created)",
+  "viewport": { "width": 1440, "height": 900 },
+  "pace_ms": 600,
+  "redact": ["header a[href='/me']"],
+  "limitations": ["Create session not clicked"],
+  "steps": [
+    { "do": "goto", "url": "/admin/new" },
+    { "do": "wait", "ms": 1500 },
+    { "do": "fill", "selector": "input[placeholder^='Describe']", "value": "I want to hear how neighbours feel about the shared tool library and how it should be run." },
+    { "do": "press", "key": "Enter" },
+    { "do": "wait", "ms": 1200 },
+    { "do": "screenshot", "label": "5a waiting for the first reply" },
+    { "do": "expect_js", "js": "String(!document.querySelector(\"input[placeholder^='Describe']\").disabled)", "equals": "true", "timeout_ms": 60000, "label": "reply 1 done" },
+    { "do": "fill", "selector": "input[placeholder^='Describe']", "value": "Everyone who lives here. Keep it simple, anonymous is fine. You have enough, please draft it now." },
+    { "do": "press", "key": "Enter" },
+    { "do": "wait", "ms": 5000 },
+    { "do": "expect_js", "js": "String(!document.querySelector(\"input[placeholder^='Describe']\").disabled)", "equals": "true", "timeout_ms": 90000, "label": "reply 2 done" },
+    { "do": "wait", "ms": 2500 },
+    { "do": "screenshot", "label": "5b after reply 2" },
+    { "do": "expect_js", "js": "String(!!document.getElementById('slug'))", "equals": "true", "label": "form shown" },
+    { "do": "expect_js", "js": "window.scrollTo(0,0); 'ok'", "equals": "ok" },
+    { "do": "screenshot", "label": "5c top of page after draft" },
+    { "do": "expect_js", "js": "JSON.stringify({slug: document.getElementById('slug').value, scrollH: document.documentElement.scrollHeight, btnY: document.querySelector('form button[type=submit]:not([size])') && [...document.querySelectorAll('button')].find(b=>b.textContent.includes('Create session')).getBoundingClientRect().top})", "equals": "x", "label": "measure numbers (expected to fail, prints values)" }
+  ]
+}

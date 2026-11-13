@@ -1,0 +1,87 @@
+{
+  "title": "Measure: sessions hover, new session form",
+  "slug": "measure-sessions-hover-new-session-form",
+  "out_dir": "/srv/agent-runs/275983d2/.validation/m2/walkthrough",
+  "theme": "dark",
+  "lang": "en",
+  "width": 1440,
+  "captions": "panel",
+  "source": "Stills from the clock-validate run at 2026-11-13T19:11:27.739Z (commit fa2062dfcf). A walkthrough rendered from these is a demonstration; the run's video and trace are the recording.",
+  "chapters": [
+    {
+      "title": "Measure: sessions hover, new session form",
+      "frames": [
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-01.png",
+          "shows": "Open /me",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-03.png",
+          "shows": "Click `main a[href='/admin']`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-04.png",
+          "shows": "URL matches /admin",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-06.png",
+          "shows": "Sessions",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-07.png",
+          "shows": "Open /admin/new",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-09.png",
+          "shows": "Click \"Or fill in the form yourself\"",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-11.png",
+          "shows": "Type \"Tool Library \" into `#slug`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-12.png",
+          "shows": "Type \"How do you feel about our shared tool library?\" into `#q`",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-13.png",
+          "shows": "`window.scrollTo(0, 300); 'ok'` is \"ok\"",
+          "proves": "Checked automatically: passed.",
+          "say": "",
+          "seconds": 4
+        },
+        {
+          "image": "/srv/agent-runs/275983d2/.validation/m2/step-15.png",
+          "shows": "New session",
+          "proves": "",
+          "say": "",
+          "seconds": 4
+        }
+      ]
+    }
+  ]
+}

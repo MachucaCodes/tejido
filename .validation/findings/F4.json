@@ -1,0 +1,8 @@
+{"code":"F4","title":"Step 5: typing 'Tool Library ' makes the link 'tool-library-' with a stray hyphen, and Create accepts it","kind":"clarity","severity":"low","confidence":"high",
+"where":"/admin/new, Link name field, 1440×900",
+"what_happens":"Typing a name with a trailing space (common when typing words) leaves a hyphen at the end: the preview shows …/s/tool-library-. CODE_RE allows a trailing hyphen, so Create would save it as the permanent link.",
+"who_hurts":"An admin typing the link name by hand: they share an odd link ending in '-' and only notice after people have it.",
+"suggested_fix":"Trim trailing '-'/'_' when sending (in submit, code.replace(/[-_]+$/, '')) and in the preview line; keep it while typing.",
+"rule":"opinion / clarity","origin":"earlier: toLinkName (link-name.ts)",
+"screen":"New session","path":"Start a session","step":"5: edit the draft in the form",
+"fingerprint":"/admin/new|create-session-form|clarity|trailing hyphen in link"}
