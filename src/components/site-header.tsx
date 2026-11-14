@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { AccountMenu } from "@/components/account-menu";
+import { AdminLink } from "@/components/admin-link";
 import { LanguageToggle } from "@/components/language-toggle";
 import { SiteHeaderGrid } from "@/components/site-header-grid";
 import { type Locale } from "@/i18n/locales";
@@ -22,14 +23,19 @@ export async function SiteHeader() {
   const isAuthed = Boolean(user) && !user!.is_anonymous;
 
   let fullName: string | null = null;
+  // Organizers (admins, or anyone who has made a session) get a link into
+  // admin, same rule as the profile page.
+  let isOrganizer = false;
   if (user) {
     const admin = createAdmin();
-    const { data: row } = await admin
-      .from("users")
-      .select("full_name")
-      .eq("id", user.id)
-      .maybeSingle();
+    const [{ data: row }, { count: created }] = await Promise.all([
+      admin.from("users").select("full_name, role").eq("id", user.id).maybeSingle(),
+      isAuthed
+        ? admin.from("sessions").select("id", { count: "exact", head: true }).eq("created_by", user.id)
+        : Promise.resolve({ count: 0 }),
+    ]);
     fullName = row?.full_name?.trim() || null;
+    isOrganizer = isAuthed && (row?.role === "admin" || (created ?? 0) > 0);
   }
 
   return (
@@ -56,6 +62,7 @@ export async function SiteHeader() {
         </div>
         <div className="flex items-center gap-2 sm:gap-2.5">
           <LanguageToggle locale={locale} />
+          {isOrganizer && <AdminLink label={t("admin")} />}
           <AccountMenu fullName={fullName} isAuthed={isAuthed} />
         </div>
       </SiteHeaderGrid>

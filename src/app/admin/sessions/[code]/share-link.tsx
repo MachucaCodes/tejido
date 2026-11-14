@@ -49,7 +49,7 @@ export default function ShareLink({
       {created && (
         <p className="flex items-center gap-1.5 text-sm font-medium">
           <CheckCircle2Icon className="size-4 text-primary" aria-hidden />
-          Session created. Share the link to start.
+          Session created. It’s open and listed on the home page.
         </p>
       )}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center">

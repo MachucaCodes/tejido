@@ -25,7 +25,7 @@ export function SessionRow({
     <li>
       <Link
         href={`/admin/sessions/${s.id}`}
-        className="flex items-center justify-between gap-3 rounded-lg border bg-card p-3 transition-colors hover:bg-accent"
+        className="flex items-center justify-between gap-3 rounded-lg border bg-card p-3 transition-colors hover:bg-muted/40"
       >
         {/* Same as SessionHeader: topic as the title, code · date under it.
             The code keeps two sessions with the same topic apart. */}

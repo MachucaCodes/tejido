@@ -3,6 +3,7 @@
     "description": "A conversation woven from many voices."
   },
   "header": {
+    "admin": "Admin",
     "homeLink": "Go to home page",
     "signIn": "Sign in",
     "account": "Account",

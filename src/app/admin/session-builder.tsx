@@ -51,6 +51,9 @@ export default function SessionBuilder({
         return next;
       });
 
+    let failed: string | null = null;
+    let reply = "";
+    let drafted = false;
     try {
       const res = await fetch("/api/admin/session-builder", {
         method: "POST",
@@ -62,7 +65,6 @@ export default function SessionBuilder({
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let buffer = "";
-      let reply = "";
       for (;;) {
         const { done, value } = await reader.read();
         if (done) break;
@@ -81,14 +83,25 @@ export default function SessionBuilder({
             updateLast({ content: reply });
           }
           if (event.draft) {
+            drafted = true;
             updateLast({ draft: event.draft });
             onDraft(event.draft);
           }
-          if (event.error) setError(event.error);
+          if (event.error) failed = event.error;
         }
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
+      failed = err instanceof Error ? err.message : "Something went wrong.";
+    }
+    if (failed) {
+      setError(failed);
+      // A reply that never started would sit as a '…' forever and be sent
+      // back as an empty turn on the next try: drop it and the message it
+      // answered, and give the text back so Send retries it.
+      if (!reply && !drafted) {
+        setMessages(messages);
+        setInput((cur) => cur || text);
+      }
     }
     setBusy(false);
   };
