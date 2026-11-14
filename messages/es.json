@@ -3,6 +3,7 @@
     "description": "Una conversación tejida con muchas voces."
   },
   "header": {
+    "admin": "Admin",
     "homeLink": "Ir a la página de inicio",
     "signIn": "Iniciar sesión",
     "account": "Mi cuenta",

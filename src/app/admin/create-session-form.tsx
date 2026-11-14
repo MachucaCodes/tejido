@@ -33,6 +33,9 @@ export default function CreateSessionForm({
 }) {
   const router = useRouter();
   const code = values.code;
+  // A trailing space types as a trailing hyphen ("tool-library-"); keep it
+  // while typing, but not in the link that is shown or saved.
+  const linkCode = code.replace(/[-_]+$/, "");
   const topic = values.topic;
   const introMessage = values.intro_message ?? "";
   const context = values.context ?? "";
@@ -62,7 +65,7 @@ export default function CreateSessionForm({
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        code,
+        code: linkCode,
         topic,
         intro_message: introMessage,
         context,
@@ -86,7 +89,7 @@ export default function CreateSessionForm({
     }
     onCreated?.();
     // Open the new session.
-    router.push(`/admin/sessions/${code}?created=1`);
+    router.push(`/admin/sessions/${linkCode}?created=1`);
   };
 
   const fieldError = (field: CreateSessionError["field"]) =>
@@ -122,7 +125,7 @@ export default function CreateSessionForm({
         />
         {fieldError("code") ?? (
           <p id="join-url" className="truncate text-xs text-muted-foreground">
-            {origin}/s/{code || "…"}
+            {origin}/s/{linkCode || "…"}
           </p>
         )}
       </div>

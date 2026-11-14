@@ -62,7 +62,8 @@ export function toApiMessages(messages: BuilderMessage[], currentDraft: SessionD
           input: m.draft,
         });
       }
-      out.push({ role: "assistant", content });
+      // An empty reply (a failed turn) is not a valid assistant turn.
+      if (content.length) out.push({ role: "assistant", content });
       return;
     }
     if (pendingToolId) {
