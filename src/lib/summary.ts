@@ -227,7 +227,8 @@ async function buildSummary(
   ];
   const requestParams = {
     model: CLUSTERING_MODEL,
-    max_tokens: 2000,
+    // Room for thinking plus a multi-paragraph summary when a session asks for one.
+    max_tokens: 8000,
     thinking: { type: "adaptive" as const },
     output_config: {
       // Opus 5.5 defaults to medium; pinned to the high this ran at on Opus 5.

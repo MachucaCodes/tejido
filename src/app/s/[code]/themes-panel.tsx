@@ -352,7 +352,7 @@ export function ThemesPanel({
           {t("neighborsFeeling")}
         </p>
         {summaryText && (
-          <p className="mt-3 font-sans text-[0.98rem] leading-[1.6] text-foreground/85 sm:text-[1.02rem]">
+          <p className="mt-3 whitespace-pre-line font-sans text-[0.98rem] leading-[1.6] text-foreground/85 sm:text-[1.02rem]">
             {summaryText}
           </p>
         )}
