@@ -279,6 +279,17 @@ export function ThemesPanel({
     return map;
   }, [pointsByTheme]);
 
+  // Biggest themes first, by voices. Realtime appends new themes at the
+  // end, so the incoming order can't be trusted.
+  const sortedThemes = useMemo(
+    () =>
+      [...themes].sort(
+        (a, b) =>
+          (themeVoiceCounts.get(b.id) ?? 0) - (themeVoiceCounts.get(a.id) ?? 0),
+      ),
+    [themes, themeVoiceCounts],
+  );
+
   // Outliers: surface_phrases of points that are genuinely rare in the
   // room — either unclustered, or belonging only to tiny clusters (every
   // assigned theme has count ≤ 2). The previous "at or below median" rule
@@ -376,7 +387,7 @@ export function ThemesPanel({
             </span>
           </div>
           <ol className="flex flex-col divide-y divide-border/70 border-y border-border/70">
-            {(showAllThemes ? themes : themes.slice(0, 3)).map((theme, i) => {
+            {(showAllThemes ? sortedThemes : sortedThemes.slice(0, 3)).map((theme, i) => {
               const isExpanded = expandedThemeId === theme.id;
               const themePoints = pointsByTheme.get(theme.id) ?? [];
               const allPhrases = Array.from(
